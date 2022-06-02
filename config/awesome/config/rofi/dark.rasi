@@ -1,0 +1,70 @@
+// Dark mode
+
+configuration {
+    modi: "drun";
+    display-drun: "";
+    drun-display-format: " {name}";
+    font: "SFMono Nerd Font 14";
+}
+
+
+* {
+    bg: #131417;
+    fg: #FBFBFB;
+    alt: #3F8CFF;
+    rad: 8px;
+
+    background-color: @bg;
+    text-color: @fg;
+    font: "Cascadia Code 14";
+}
+
+window { 
+    location: center;
+    anchor: center;
+    width: 20%;
+    background-color: #0000;
+    border-radius: @rad; 
+}
+
+mainbox { 
+    children: [ inputbar, listview ];
+    spacing: 2%;
+    background-color: #0000;
+}
+
+inputbar {
+    children: [ entry ];
+    padding: 0.8em 0 0.8em 0;
+    border-radius: @rad;
+    background-color: @bg;
+    text-color: @fg;
+}
+
+element-text, entry { vertical-align: 0.5; }
+
+entry {
+    padding: 1.5% 3%;
+    placeholder: "Search App";
+    border-radius: @rad;
+    
+}
+
+listview {
+    cycle: false;
+    border-radius: @rad;
+    layout: vertical;
+    lines: 3;
+}
+
+element {
+    padding: 2% 3%;
+    border-radius: @rad;
+}
+
+element selected, element-text selected { 
+    text-color: @alt; 
+}
+
+listview, element, element-selected, element-text { cursor: pointer; }
+entry { cursor: text; }

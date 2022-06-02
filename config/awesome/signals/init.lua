@@ -1,0 +1,5 @@
+require("signals.cpu")
+require("signals.volume")
+require("signals.ram")
+require("signals.popup")
+require("signals.weather")
