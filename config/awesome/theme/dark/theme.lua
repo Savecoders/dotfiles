@@ -105,13 +105,6 @@ theme.snap_border_width = dpi(2)
 
 -- icons
 
-theme.dark_toggle = gfs.get_configuration_dir() .. "icons/bar/light.png"
-theme.darkmode = gfs.get_configuration_dir() .. "icons/bar/darkmode.png"
-
-theme.clear_icon = gfs.get_configuration_dir() .. "icons/notif-center/clear.png"
-theme.clear_filled = gfs.get_configuration_dir() .. "icons/notif-center/clear_filled.png"
-theme.delete_icon = gfs.get_configuration_dir() .. "icons/notif-center/delete.png"
-
 theme.profile = gfs.get_configuration_dir() .. "icons/bar/elric.png"
 
 theme.home = gfs.get_configuration_dir() .. "icons/tag/terminal-outline.svg"
@@ -135,17 +128,20 @@ theme.document_selected = gfs.get_configuration_dir() .. "icons/tag/document_sel
 theme.settings = gfs.get_configuration_dir() .. "icons/tag/settings.png"
 theme.settings_selected = gfs.get_configuration_dir() .. "icons/tag/settings_selected.png"
 
+-- icons
+
+theme.notif_icon = gfs.get_configuration_dir() .. "icons/notif-center/notif.png"
+theme.darkmode = gfs.get_configuration_dir() .. "icons/bar/darkmode.png"
+
+theme.clear_icon = gfs.get_configuration_dir() .. "icons/notif-center/clear.png"
+theme.clear_filled = gfs.get_configuration_dir() .. "icons/notif-center/clear_filled.png"
+theme.delete_icon = gfs.get_configuration_dir() .. "icons/notif-center/delete.png"
+
 theme.wide_icon = gfs.get_configuration_dir() .. "icons/bar/wide.png"
 
 theme.music_icon = gfs.get_configuration_dir() .. "icons/bar/music.png"
 
 theme.vol = gfs.get_configuration_dir() .. "icons/bar/vol.png"
-
-theme.temp = gfs.get_configuration_dir() .. "icons/bar/temp.png"
-theme.cpu = gfs.get_configuration_dir() .. "icons/bar/cpu.png"
-theme.ram = gfs.get_configuration_dir() .. "icons/bar/ram.png"
-
-theme.notif_icon = gfs.get_configuration_dir() .. "icons/notif-center/notif.png"
 
 theme.search_icon = gfs.get_configuration_dir() .. "icons/bar/search.png"
 theme.search_bar_icon = colorize_icon(theme.search_icon, theme.icon_normal)
@@ -154,22 +150,7 @@ theme.logo = gfs.get_configuration_dir() .. "icons/bar/align.png"
 theme.logo_normal = colorize_icon(theme.logo, theme.icon_normal) 
 theme.logo_selected = colorize_icon(theme.logo, theme.icon_selected) 
 
-theme.moon = gfs.get_configuration_dir() .. "icons/bar/moon.png"
-
-theme.shutdown = gfs.get_configuration_dir() .. "icons/power/shutdown.png"
-theme.restart = gfs.get_configuration_dir() .. "icons/power/restart.png"
-theme.logout = gfs.get_configuration_dir() .. "icons/power/logout.png"
-
-theme.dots = gfs.get_configuration_dir() .. "icons/bar/dots.png"
-
--- dock icons
-
-theme.spotify = gfs.get_configuration_dir() .. "icons/dock/Spotify.icns"
-theme.chrome = gfs.get_configuration_dir() .. "icons/dock/Safari.icns"
-theme.mail = gfs.get_configuration_dir() .. "icons/dock/Mail.icns"
-theme.file = gfs.get_configuration_dir() .. "icons/dock/Finder.icns"
-theme.netflix = gfs.get_configuration_dir() .. "icons/dock/Netflix.icns"
-theme.vscode = gfs.get_configuration_dir() .. "icons/dock/Vscode.icns"
+theme.icon_change_theme = gfs.get_configuration_dir() .. "icons/ichange_theme.png"
 
 -- notif
 

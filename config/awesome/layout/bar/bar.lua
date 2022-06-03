@@ -302,19 +302,25 @@ awful.screen.connect_for_each_screen(function(s)
     local sidebar_icon = wibox.widget {
         {
             {
-                image = beautiful.profile,
+                image = beautiful.icon_change_theme,
                 widget = wibox.widget.imagebox,
                 resize = true
             },
             forced_height = dpi(50),
             widget = wibox.container.constraint
         },
-        margins = dpi(18),
+        margins = {
+            right = dpi(18),
+            left = dpi(18),
+            bottom = dpi(18),
+        },
+        
         widget = wibox.container.margin
     }
 
     sidebar_icon:buttons(gears.table.join(awful.button({}, 1, function()
-        sidebar_toggle()
+        require("theme.selection_theme") 
+        awesome.emit_signal('module::theme_screen:show') 
     end)))
 
     -- Wrap
@@ -365,12 +371,12 @@ awful.screen.connect_for_each_screen(function(s)
                 margins = dpi(0),
                 widget = wibox.container.margin
             }), ]]
-            sidebar_icon,
             {
                 clock,
                 bottom = dpi(25),
                 widget = wibox.container.margin
             },
+            sidebar_icon,
             spacing = dpi(10),
             layout = wibox.layout.fixed.vertical
 

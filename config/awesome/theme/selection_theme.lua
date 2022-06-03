@@ -11,8 +11,14 @@ local helpers       = require("helpers")
 
 -- icons
 local icons = {
-    dark = "",
-    light = "",
+    dark = {
+		outline = "",
+		glyph = ""
+	},
+    light = {
+		outline = "",
+		glyph = "盛"
+	},
 }
 
 local change_dark_theme = function ()
@@ -28,8 +34,8 @@ local change_light_theme = function ()
 end
 
 local cr_btn = require("widgets.button").create
-local dark  = cr_btn(icons.dark, dpi(100), dpi(0), beautiful.bg, beautiful.icon_normal, beautiful.red, change_dark_theme)
-local light = cr_btn(icons.light, dpi(100), dpi(0), beautiful.bg, beautiful.icon_normal, beautiful.red, change_light_theme)
+local dark  = cr_btn(icons.dark.outline, dpi(100), dpi(0), beautiful.bg, beautiful.icon_normal, beautiful.red, change_dark_theme)
+local light = cr_btn(icons.light.outline, dpi(100), dpi(0), beautiful.bg, beautiful.icon_normal, beautiful.red, change_light_theme)
 
 local theme_list = function(s)
 	s.theme_screen = wibox{

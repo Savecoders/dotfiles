@@ -3,64 +3,32 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 -- icons
 
-local icons = {}
+local icon = {}
 
-icons.dark_toggle = gfs.get_configuration_dir() .. "icons/bar/light.png"
-icons.darkmode = gfs.get_configuration_dir() .. "icons/bar/darkmode.png"
+-- icons
 
-icons.clear_icon = gfs.get_configuration_dir() .. "icons/notif-center/clear.png"
-icons.clear_filled = gfs.get_configuration_dir() .. "icons/notif-center/clear_filled.png"
-icons.delete_icon = gfs.get_configuration_dir() .. "icons/notif-center/delete.png"
+icon.notif_icon = gfs.get_configuration_dir() .. "icons/notif-center/notif.png"
+icon.darkmode = gfs.get_configuration_dir() .. "icons/bar/darkmode.png"
 
-icons.profile = gfs.get_configuration_dir() .. "icons/bar/elric.png"
+icon.clear_icon = gfs.get_configuration_dir() .. "icons/notif-center/clear.png"
+icon.clear_filled = gfs.get_configuration_dir() .. "icons/notif-center/clear_filled.png"
+icon.delete_icon = gfs.get_configuration_dir() .. "icons/notif-center/delete.png"
 
-icons.home = gfs.get_configuration_dir() .. "icons/tag/terminal-outline.svg"
-icons.home_selected = gfs.get_configuration_dir() .. "icons/tag/terminal.svg"
+icon.wide_icon = gfs.get_configuration_dir() .. "icons/bar/wide.png"
 
-icons.dashboard = gfs.get_configuration_dir() .. "icons/tag/dashboard.png"
-icons.dashboard_selected = gfs.get_configuration_dir() .. "icons/tag/dashboard_selected.png"
+icon.music_icon = gfs.get_configuration_dir() .. "icons/bar/music.png"
 
-icons.folder = gfs.get_configuration_dir() .. "icons/tag/code-outline.svg"
-icons.folder_selected = gfs.get_configuration_dir() .. "icons/tag/code.svg"
+icon.vol = gfs.get_configuration_dir() .. "icons/bar/vol.png"
 
-icons.report = gfs.get_configuration_dir() .. "icons/tag/headset-outline.svg"
-icons.report_selected = gfs.get_configuration_dir() .. "icons/tag/headset.svg"
+icon.search_icon = gfs.get_configuration_dir() .. "icons/bar/search.png"
+icon.search_bar_icon = colorize_icon(icon.search_icon, icon.icon_normal)
 
-icons.cal = gfs.get_configuration_dir() .. "icons/tag/cal.png"
-icons.cal_selected = gfs.get_configuration_dir() .. "icons/tag/cal_selected.png"
+icon.logo = gfs.get_configuration_dir() .. "icons/bar/align.png"
+icon.logo_normal = colorize_icon(icon.logo, icon.icon_normal) 
+icon.logo_selected = colorize_icon(theme.logo, icon.icon_selected) 
 
-icons.document = gfs.get_configuration_dir() .. "icons/tag/document.png"
-icons.document_selected = gfs.get_configuration_dir() .. "icons/tag/document_selected.png"
+icon.icon_change_theme = gfs.get_configuration_dir() .. "icons/ichange_theme.png"
 
-icons.settings = gfs.get_configuration_dir() .. "icons/tag/settings.png"
-icons.settings_selected = gfs.get_configuration_dir() .. "icons/tag/settings_selected.png"
-
-icons.wide_icon = gfs.get_configuration_dir() .. "icons/bar/wide.png"
-
-icons.music_icon = gfs.get_configuration_dir() .. "icons/bar/music.png"
-
-icons.vol = gfs.get_configuration_dir() .. "icons/bar/vol.png"
-
-icons.temp = gfs.get_configuration_dir() .. "icons/bar/temp.png"
-icons.cpu = gfs.get_configuration_dir() .. "icons/bar/cpu.png"
-icons.ram = gfs.get_configuration_dir() .. "icons/bar/ram.png"
-
-icons.notif_icon = gfs.get_configuration_dir() .. "icons/notif-center/notif.png"
-
-icons.search_icon = gfs.get_configuration_dir() .. "icons/bar/search.png"
-icons.search_bar_icon = colorize_icon(icons.search_icon, icons.icon_normal)
-
-icons.logo = gfs.get_configuration_dir() .. "icons/bar/align.png"
-icons.logo_normal = colorize_icon(icons.logo, icons.icon_normal) 
-icons.logo_selected = colorize_icon(icons.logo, icons.icon_selected) 
-
-icons.moon = gfs.get_configuration_dir() .. "icons/bar/moon.png"
-
-icons.shutdown = gfs.get_configuration_dir() .. "icons/power/shutdown.png"
-icons.restart = gfs.get_configuration_dir() .. "icons/power/restart.png"
-icons.logout = gfs.get_configuration_dir() .. "icons/power/logout.png"
-
-icons.dots = gfs.get_configuration_dir() .. "icons/bar/dots.png"
 
 
 return icons
