@@ -4,9 +4,8 @@ configuration {
     modi: "drun";
     display-drun: "";
     drun-display-format: " {name}";
-    font: "SFMono Nerd Font 14";
+    font: "SF Pro Display Medium 14";
 }
-
 
 * {
     bg: #131417;
@@ -16,7 +15,7 @@ configuration {
 
     background-color: @bg;
     text-color: @fg;
-    font: "Cascadia Code 14";
+    font: "SF Pro Display Medium 14";
 }
 
 window { 

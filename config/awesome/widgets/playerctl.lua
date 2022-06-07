@@ -66,7 +66,7 @@ local art = wibox.widget {
 }
 
 local music_pos = wibox.widget({
-	font = "Sofia Pro 11.2",
+	font = "Font Awesome 5 Free 11.2",
     align = 'left',
 	valign = "center",
 	widget = wibox.widget.textbox,
@@ -77,7 +77,7 @@ local title_widget = wibox.widget {
     align = 'left',
     valign = 'center',
     forced_height = dpi(26),
-    font = "Sofia Pro SemiBold 12",
+    font = "Font Awesome 5 Free 12",
     widget = wibox.widget.textbox
 }
 
@@ -85,7 +85,7 @@ local artist_widget = wibox.widget {
     markup = helpers.colorize_text('No Music?', beautiful.fg_sidebar),
     align = 'left',
     valign = 'center',
-    font = "Sofia Pro 11.3",
+    font = "Font Awesome 5 Free 11.3",
     widget = wibox.widget.textbox
 }
 
