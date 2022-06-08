@@ -6,42 +6,39 @@ local helpers = require("helpers")
 local rubato = require("modules.rubato")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
-local container = require("widgets.container")
+local button = require("widgets.button")
 
 -- Info
 
-
---local perfil_box = container.create_boxed_widget(perfil_image, dpi(130), dpi(130), dpi(14), dpi(0), beautiful.bg_widget)
 local userprofile = require("widgets.userprofile")
-local user_box = container.create_boxed_widget(userprofile, dpi(280), dpi(130), dpi(14), dpi(15), beautiful.bg_widget)
-
+local user_box = button.create_boxed_widget(userprofile, dpi(280), dpi(130), dpi(14), dpi(15), beautiful.bg_widget)
 
 
 -- Cpu
 
 local cpu_bar = require("widgets.cpu_arc")
-local cpu = container.progress_bar(cpu_bar, helpers.colorize_text("ﲟ", beautiful.fg_sidebar),"24")
-local cpu_details = container.details(cpu)
-local cpu_box = container.create_boxed_widget(cpu_details, dpi(130), dpi(130), dpi(14), dpi(0), beautiful.bg_widget)
+local cpu = button.progress_bar(cpu_bar, helpers.colorize_text("ﲟ", beautiful.fg_sidebar),"24")
+local cpu_details = button.details(cpu)
+local cpu_box = button.create_boxed_widget(cpu_details, dpi(130), dpi(130), dpi(14), dpi(0), beautiful.bg_widget)
 
 -- Ram
 
 local ram_bar = require("widgets.ram_arc")
-local ram = container.progress_bar(ram_bar, helpers.colorize_text("", beautiful.fg_sidebar),"24")
-local ram_details = container.details(ram)
-local ram_box = container.create_boxed_widget(ram_details, dpi(130), dpi(130), dpi(14), dpi(0), beautiful.bg_widget)
+local ram = button.progress_bar(ram_bar, helpers.colorize_text("", beautiful.fg_sidebar),"24")
+local ram_details = button.details(ram)
+local ram_box = button.create_boxed_widget(ram_details, dpi(130), dpi(130), dpi(14), dpi(0), beautiful.bg_widget)
 
 -- Tmp 
 
 local temp_bar = require("widgets.temp_arc")
-local temp = container.progress_bar(temp_bar, helpers.colorize_text("", beautiful.fg_sidebar),"24")
-local temp_details = container.details(temp)
-local temp_box = container.create_boxed_widget(temp_details, dpi(130), dpi(130), dpi(14), dpi(0), beautiful.bg_widget)
+local temp = button.progress_bar(temp_bar, helpers.colorize_text("", beautiful.fg_sidebar),"24")
+local temp_details = button.details(temp)
+local temp_box = button.create_boxed_widget(temp_details, dpi(130), dpi(130), dpi(14), dpi(0), beautiful.bg_widget)
 
 -- weather
 
 local weather_bar = require("widgets.weather")
-local weather_box = container.create_boxed_widget(weather_bar, dpi(130), dpi(130), dpi(14), dpi(14), beautiful.bg_selected)
+local weather_box = button.create_boxed_widget(weather_bar, dpi(130), dpi(130), dpi(14), dpi(14), beautiful.bg_selected)
 
 -- notif
 
@@ -64,10 +61,11 @@ local notif_center = wibox.widget {
 }
 
 local playerctl = require("widgets.playerctl")
-local playercomand_box = container.create_boxed_widget(playerctl.playercomand, dpi(364), dpi(130), dpi(14), dpi(3),
+local playercomand_box = button.create_boxed_widget(playerctl.playercomand, dpi(364), dpi(130), dpi(14), dpi(3),
     beautiful.bg_widget)
-local controlpanel_box = container.create_boxed_widget(playerctl.controlpanel, dpi(44), dpi(130), dpi(14), dpi(0),
+local controlpanel_box = button.create_boxed_widget(playerctl.controlpanel, dpi(44), dpi(130), dpi(14), dpi(0),
     beautiful.bg_widget)
+
 -- Search
 
 local search_text = wibox.widget {
@@ -80,7 +78,6 @@ local search_text = wibox.widget {
 }
 
 local search = wibox.widget {
-    -- search_bar,
     {
         {
             {
@@ -107,7 +104,6 @@ local search = wibox.widget {
     shape = helpers.rrect(dpi(10)),
     bg = beautiful.search_bar,
     widget = wibox.container.background()
-    -- layout = wibox.layout.stack
 }
 
 function sidebar_activate_prompt(action)
@@ -123,14 +119,13 @@ end)))
 
 local sidebar = wibox({
     ontop = true,
-    height = screen_height - dpi(100),
-    width = dpi(500)
-    -- screen = screen.primary
+    height = screen_height - dpi(99),
+    width = dpi(480),
+    bg = "#00000000",
+    fg = beautiful.fg_normal,
+    y = dpi(50),
+    screen = screen.primary
 })
-
-sidebar.bg = "#00000000"
-sidebar.fg = beautiful.fg_normal
-sidebar.y = dpi(50)
 
 local sidebar_timed = rubato.timed {
     intro = 0.2,
@@ -144,9 +139,9 @@ local sidebar_timed = rubato.timed {
 sidebar_normal = function()
     if sidebar.visible == false then
         sidebar.visible = not sidebar.visible
-        sidebar_timed.target = dpi(170)
+        sidebar_timed.target = dpi(130)
     else
-        sidebar_timed.target = -dpi(450)
+        sidebar_timed.target = -dpi(140)
         sidebar.visible = false
     end
 end
@@ -174,11 +169,9 @@ sidebar:setup{
                     helpers.vertical_pad(dpi(22)),
                     {
                         {
-                            --perfil_box,
                             user_box,
                             layout = wibox.layout.fixed.vertical
                         },
-                        --user_box,
                         weather_box,
                         spacing = dpi(22),
                         layout = wibox.layout.fixed.horizontal
@@ -191,7 +184,6 @@ sidebar:setup{
                         cpu_box,
                         ram_box,
                         temp_box,
-                        -- vol_box,
                         spacing = dpi(22),
                         layout = wibox.layout.fixed.horizontal
                     },

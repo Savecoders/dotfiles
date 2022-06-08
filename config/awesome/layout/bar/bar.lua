@@ -63,8 +63,6 @@ awful.screen.connect_for_each_screen(function(s)
 
     set_wallpaper(s)
 
-    -- Taglist
-
     -- buttons
 
     local taglist_buttons = gears.table.join(awful.button({}, 1, function(t)
@@ -366,11 +364,6 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.vertical
         },
         { 
-            --[[ wrap_widget({
-                dark_toggle,
-                margins = dpi(0),
-                widget = wibox.container.margin
-            }), ]]
             {
                 clock,
                 bottom = dpi(25),
@@ -379,7 +372,6 @@ awful.screen.connect_for_each_screen(function(s)
             sidebar_icon,
             spacing = dpi(10),
             layout = wibox.layout.fixed.vertical
-
         }
     }
 
@@ -426,7 +418,7 @@ awful.screen.connect_for_each_screen(function(s)
         bottom = dpi(7)
     }
 
-    s.mywibox.x = dpi(30)
+    --s.mywibox.x = dpi(30)
 
     awful.placement.left(s.mywibox, {
         margins = beautiful.useless_gap * 1.5
@@ -453,8 +445,3 @@ end
 client.connect_signal("property::fullscreen", remove_wibar)
 
 client.connect_signal("request::unmanage", add_wibar)
-
-function systray_toggle()
-    local s = awful.screen.focused()
-    s.traybox.visible = not s.traybox.visible
-end

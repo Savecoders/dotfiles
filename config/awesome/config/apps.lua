@@ -9,6 +9,8 @@ return {
 		full_screenshot = utils_dir .. "scrott full",
 		-- Area screenshot
 		area_screenshot = utils_dir .. "scrott area",
+		--screenrect
+		screenrect = utils_dir .. "screenrec",
 		-- blue light
 		blue_light = utils_dir .. "bluelight"
 	},

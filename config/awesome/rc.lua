@@ -77,21 +77,28 @@ awful.rules.rules = {{
         size_hints_honor = false
     }
 }, 
+
 -- Floating clients.
 {
     rule_any = {
-        instance = {"DTA", -- Firefox addon DownThemAll.
-        "copyq", -- Includes session name in class.
-        "pinentry"},
-        class = {"Viewnior", "Sxiv", "feh"},
-
+        instance = {
+            "copyq", -- Includes session name in class.
+            "pinentry"
+        },
+        class = {
+            "Viewnior", 
+            "Sxiv", 
+            "feh"
+        },
         -- Note that the name property shown in xprop might be set slightly after creation of the client
         -- and the name shown there might not match defined rules here.
-        name = {"Event Tester" -- xev.
+        name = {
+            "Event Tester" -- xev.
         },
-        role = {"AlarmWindow", -- Thunderbird's calendar.
-        "ConfigManager", -- Thunderbird's about:config.
-        "pop-up" -- e.g. Google Chrome's (detached) Developer Tools.
+        role = {
+            "AlarmWindow", -- Thunderbird's calendar.
+            "ConfigManager", -- Thunderbird's about:config.
+            "pop-up" -- e.g. Google Chrome's (detached) Developer Tools.
         }
     },
     properties = {
