@@ -124,7 +124,6 @@ local sidebar = wibox({
     bg = "#00000000",
     fg = beautiful.fg_normal,
     y = dpi(50),
-    screen = screen.primary
 })
 
 local sidebar_timed = rubato.timed {

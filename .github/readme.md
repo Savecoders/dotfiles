@@ -63,3 +63,31 @@ Here are some details about my setup
 
 </details>
 
+<h3>Install necessary dependencies and others programs</h3>
+
+   ```sh
+   paru -Sy awesome-git picom-git kitty rofi  acpi acpid acpi_call upower \
+   jq inotify-tools xdotool xclip gpick ffmpeg blueman \
+   pamixer brightnessctl scrot redshift rainfall\
+   feh mpv mpd mpc mpdris2 ncmpcpp playerctl --needed 
+   ```
+
+<h3>Enable Services</h3>
+
+   ```sh
+   systemctl --user enable mpd.service
+   systemctl --user start mpd.service
+   ```
+
+<h3>Clone this repository</h3>
+
+   ```sh
+   git clone --recurse-submodules https://github.com/Savecoders/dotfiles.git
+   cd dotfiles && git submodule update --remote --merge
+   ```
+
+<h3> Use config</h3>
+
+   ```sh
+   cp -r config/* ~/.config/
+   ```

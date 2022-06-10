@@ -146,17 +146,9 @@ globalkeys = gears.table.join(
     -- Dark toggle
     awful.key({modkey}, "x", function()
     
-        --[[ if theme == themes[1] then
-            awful.spawn.with_shell(gears.filesystem.get_configuration_dir() .. "scripts/themes/dark")
-            awesome.restart()
-        else
-            awful.spawn.with_shell(gears.filesystem.get_configuration_dir() .. "scripts/themes/light")
-            awesome.restart()
-        end ]]
-
         require("theme.selection_theme") 
-        awesome.emit_signal('module::theme_screen:show') 
-    
+        theme_toogle()
+
         end, {
         description = "color theme change",
         group = "launcher"

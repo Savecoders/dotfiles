@@ -318,7 +318,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     sidebar_icon:buttons(gears.table.join(awful.button({}, 1, function()
         require("theme.selection_theme") 
-        awesome.emit_signal('module::theme_screen:show') 
+        theme_toogle()
     end)))
 
     -- Wrap

@@ -28,7 +28,6 @@ local circle_animate = wibox.widget{
 -- actual popup
 local pop = wibox({
 	type    = "popup_menu",
---	screen  = screen.primary,
 	height  = dpi(160),
 	width   = dpi(160),
 	shape   = helpers.rrect(beautiful.border_radius),
