@@ -317,11 +317,11 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     sidebar_icon:buttons(gears.table.join(awful.button({}, 1, function()
-        require("theme.selection_theme") 
-        theme_toogle()
+        require("layout.panel.panel") 
+        slider_how()
     end)))
 
-    -- Wrap
+    -- Wrapaaa
 
     local wrap_widget = function(w)
         return {

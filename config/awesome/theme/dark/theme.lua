@@ -19,7 +19,7 @@ theme.font = "SF Pro Display Medium 11"
 
 theme.icon_font = "JetBrainsMono Nerd Font "
 
-theme.icon_var = "Font Awesome 5 Free 18 "
+theme.icon_var = "Font Awesome 6 Free 18 "
 
 
 theme.dir = string.format('%s/.config/awesome/theme', os.getenv('HOME'))

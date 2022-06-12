@@ -9,9 +9,11 @@ return {
 		full_screenshot = utils_dir .. "scrott full",
 		-- Area screenshot
 		area_screenshot = utils_dir .. "scrott area",
-		--screenrect
-		screenrect = utils_dir .. "screenrec",
+		-- screenrect
+		recorded = utils_dir .. "recorded",
 		-- blue light
-		blue_light = utils_dir .. "bluelight"
+		blue_light = utils_dir .. "bluelight",
+		-- bluetooth
+		bluetooth = utils_dir .. "bluetooth"
 	},
 }

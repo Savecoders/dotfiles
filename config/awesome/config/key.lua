@@ -192,8 +192,8 @@ globalkeys = gears.table.join(
     -- Screenrect
 
     awful.key({ modkey, "Control"}, "Print", function()
-        awful.spawn.easy_async_with_shell(apps.utils.screenrect, function() end)
-        end, { description = "take a area screenshot", group = "hotkeys" }),
+        awful.spawn.easy_async_with_shell(apps.utils.recorded, function() end)
+        end, { description = "take a area recorded", group = "hotkeys" }),
         
     -- mode for screen aplication
 

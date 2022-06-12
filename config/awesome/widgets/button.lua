@@ -10,7 +10,7 @@ button.create = function(icon_cc, size, margin, bg, bg_hover, bg_press, command)
     local button_icon = wibox.widget {
         align = "center",
         valign = "center",
-        font = beautiful.icon_font .. "28",
+        font = beautiful.icon_var,
         markup = helpers.colorize_text(icon_cc, bg_hover),
         widget = wibox.widget.textbox()
     }
@@ -31,11 +31,6 @@ button.create = function(icon_cc, size, margin, bg, bg_hover, bg_press, command)
     button:connect_signal("button::press", function()
         button.bg = bg_press
         command()
-    end)
-
-    button:connect_signal("button::leave", function() 
-        button_icon.markup = helpers.colorize_text(icon_cc, bg_hover)
-        button.bg = bg
     end)
 
     button:connect_signal("mouse::enter", function() 

@@ -42,9 +42,7 @@ local theme_screen = wibox({
     height = dpi(120),
     width = dpi(280),
     shape = helpers.rrect(beautiful.border_radius),
-    bg = beautiful.bg_sidebar, -- active
-    halign  = "center",
-	valign  = "center",
+    bg = "#00000000", -- active
 	ontop   = true,
 	visible = false,
 })
