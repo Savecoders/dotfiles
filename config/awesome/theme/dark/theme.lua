@@ -10,27 +10,23 @@ local helpers = require("helpers")
 
 local theme = {}
 
--- wallpaper scripts
-
-
 -- themes 
 
 theme.font = "SF Pro Display Medium 11"
 
-theme.icon_font = "JetBrainsMono Nerd Font "
+theme.icon_var = "Font Awesome 6 Free "
 
-theme.icon_var = "Font Awesome 6 Free 18 "
+theme.font_screen = "SF Pro Display Medium  "
 
-
-theme.dir = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
+-- wallpaper scripts
 
 theme.dir = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
 
 theme.wallpaper = gfs.get_configuration_dir() .. "wallpapers/japan.jpg"
 
-
 theme.useless_gap = 20
 theme.useless_less = 8
+
 -- colors
 
 theme.bg = "#131417"
@@ -38,26 +34,8 @@ theme.bg_sidebar = "#131417"
 theme.bg_selected = "#1D1F22" --
 theme.bg_widget = "#1D1F22"
 theme.border_color = "#252628"
-
---the exit-scren
-
 theme.accent = "#d6E7fc"
-theme.accent_2       = theme.accent .. "66"
-theme.bg_color         = "#101012"
 theme.transparent = "#000000"
-theme.ext_light_fg = "#170e14"
-theme.rounded       = dpi(10)
-theme.ext_light_bg = "#E1F0E3"
-theme.rounded_wids  = dpi(16)
-theme.font_screen = "SF Pro Display Medium  "
-theme.bg_2 = "#1B1B1B"
-theme.bg_3 = "#303030"
-theme.bg_4 = "#1e1d22"
-
---theme.icon_var = "Material Icons Round "
-
-------
-
 theme.fg_normal = "#8A8E97"
 theme.fg_focus      = "#FFFFFF"
 theme.fg_urgent     = "#8A8E97"
@@ -94,11 +72,11 @@ theme.arc_color = "#6192FB"
 
 -- radius
 
-theme.bar_radius = dpi(6) -- 25
+theme.bar_radius = dpi(6)
 theme.border_radius = dpi(9)
 theme.client_radius = dpi(8)
-theme.sidebar_radius = dpi(12)
-theme.dock_radius = dpi(14)
+theme.sidebar_radius = dpi(10)
+theme.dock_radius = dpi(12)
 
 theme.snap_bg = theme.border_color
 theme.snap_border_width = dpi(2)

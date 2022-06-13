@@ -208,6 +208,6 @@ sidebar:setup{
         nil
     },
     bg = beautiful.bg_sidebar,
-    shape = helpers.rrect(beautiful.dock_radius - 2),
+    shape = helpers.rrect(beautiful.dock_radius),
     widget = wibox.container.background
 }

@@ -46,10 +46,10 @@ local cr_btn = require("widgets.button").create
 -- ~~~~~~~~~~~~~~~~~~
 
 -- Create the buttons
-local poweroff  = cr_btn(icons.poweroff, dpi(100), dpi(0), beautiful.bg, beautiful.icon_normal, beautiful.red, poweroff_command)
-local reboot    = cr_btn(icons.reboot, dpi(100), dpi(0), beautiful.bg, beautiful.icon_normal, beautiful.red, reboot_command)
-local suspend   = cr_btn(icons.suspend,dpi(100), dpi(0), beautiful.bg, beautiful.icon_normal, beautiful.red, suspend_command)
-local exit      = cr_btn(icons.exit, dpi(100), dpi(0), beautiful.bg, beautiful.icon_normal, beautiful.red, exit_command)
+local poweroff  = cr_btn(icons.poweroff, dpi(100), dpi(0), beautiful.icon_var .. "22", beautiful.bg,beautiful.icon_normal, beautiful.red, poweroff_command)
+local reboot    = cr_btn(icons.reboot, dpi(100), dpi(0), beautiful.icon_var .. "22", beautiful.bg,beautiful.icon_normal, beautiful.red, reboot_command)
+local suspend   = cr_btn(icons.suspend,dpi(100), dpi(0), beautiful.icon_var .. "22", beautiful.bg,beautiful.icon_normal, beautiful.red, suspend_command)
+local exit      = cr_btn(icons.exit, dpi(100), dpi(0), beautiful.icon_var .. "22", beautiful.bg,beautiful.icon_normal, beautiful.red, exit_command)
 
 -- exit screen
 local exit_screen_f = function(s)

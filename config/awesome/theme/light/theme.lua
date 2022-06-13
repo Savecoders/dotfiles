@@ -13,11 +13,12 @@ local theme = {}
 -- themes 
 
 theme.font = "SF Pro Display Medium 12"
---theme.icon_font = "SFMono Nerd Font 12"
 
-theme.icon_font = "JetBrainsMono Nerd Font "
+theme.icon_var = "Font Awesome 6 Free "
 
-theme.icon_var = "Font Awesome 5 Free 20 "
+theme.font_screen = "SF Pro Display Medium  "
+
+-- wallpaper scripts
 
 theme.dir = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
 
@@ -33,30 +34,13 @@ theme.bg_sidebar = "#FFFFFF"
 theme.bg_selected = "#F7F8FC"
 theme.bg_widget = "#F7F8FB"
 theme.border_color = "#ECECEC"
-
---the exit-scren
-
 theme.accent = "#d6E7fc"
-theme.accent_2       = theme.accent .. "66"
-theme.bg_color         = "#101012"
 theme.transparent = "#000000"
-theme.ext_light_fg = "#170e14"
-theme.rounded       = dpi(10)
-theme.rounded_wids  = dpi(16)
-theme.ext_light_bg = "#E1F0E3"
-theme.font_screen = "SF Pro Display Medium "
-theme.bg_2 = "#1B1B1B"
-theme.bg_3 = "#303030"
-theme.bg_4 = "#fcfdff"
---theme.icon_var = "Material Icons Round "
-------
-
 theme.fg_normal = "#b0b2bf"
 theme.fg_focus      = "#6192FB"
 theme.fg_urgent     = "#b0b2bf"
 theme.fg_minimize   = "#b0b2bf"
 theme.fg_sidebar    = "#2A3256"
-
 theme.taglist_bg_focus = "#F7F8FC"
 
 theme.active = "#6A6E78"
@@ -82,11 +66,11 @@ theme.arc_color = "#6192FB"
 
 -- radius
 
-theme.bar_radius = dpi(6) -- 25
+theme.bar_radius = dpi(6)
 theme.border_radius = dpi(9)
 theme.client_radius = dpi(8)
-theme.sidebar_radius = dpi(10) -- 40
-theme.dock_radius = dpi(14)
+theme.sidebar_radius = dpi(10)
+theme.dock_radius = dpi(12)
 
 
 theme.snap_bg = theme.border_color

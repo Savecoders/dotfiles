@@ -5,12 +5,12 @@ local gears = require("gears")
 local helpers       = require("helpers")
 local button = {}
 
-button.create = function(icon_cc, size, margin, bg, bg_hover, bg_press, command)
+button.create = function(icon_cc, size, margin, icon_font, bg, bg_hover, bg_press, command)
 
     local button_icon = wibox.widget {
         align = "center",
         valign = "center",
-        font = beautiful.icon_var,
+        font = icon_font,
         markup = helpers.colorize_text(icon_cc, bg_hover),
         widget = wibox.widget.textbox()
     }
@@ -24,7 +24,7 @@ button.create = function(icon_cc, size, margin, bg, bg_hover, bg_press, command)
         forced_height = size,
         forced_width = size,
         bg = bg,
-        shape = helpers.rrect(beautiful.bar_radius),
+        shape = helpers.rrect(beautiful.border_radius),
         widget = wibox.container.background
     }
 
@@ -121,7 +121,7 @@ end
 button.progress_bar =  function (bar, icon, size)
 
     local textIcon = wibox.widget {
-        font = beautiful.icon_font .. size,
+        font = beautiful.icon_var .. size,
         align = "center",
         valign = "center",
         markup = icon,
@@ -157,7 +157,7 @@ button.create_boxed_widget = function (widget_to_be_boxed, width, height, radius
     box_container.bg = bg_color
     box_container.forced_height = height
     box_container.forced_width = width
-    box_container.shape = helpers.rrect(beautiful.dock_radius - 6)
+    box_container.shape = helpers.rrect(beautiful.dock_radius - 4)
     box_container.border_width = beautiful.widget_border_width
     box_container.border_color = beautiful.widget_border_color
 

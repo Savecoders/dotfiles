@@ -11,7 +11,7 @@ local create_button = function(symbol, color, command, playpause)
 
     local icon = wibox.widget {
         markup = helpers.colorize_text(symbol, color),
-        font = beautiful.icon_var,
+        font = beautiful.icon_var .. "18",
         align = "center",
         halign = "center",
         valign = "center",

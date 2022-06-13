@@ -29,7 +29,7 @@ local pfp_overlay = wibox.widget{
 local icon = wibox.widget{
     widget = wibox.widget.textbox,
     markup = lock_screen_symbol,
-    font = beautiful.icon_font,
+    font = beautiful.icon_var .. "12",
     align = "center",
     valign = "center"
 }

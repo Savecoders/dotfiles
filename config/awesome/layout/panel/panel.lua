@@ -29,6 +29,8 @@ local icons = {
     wifi            = "",
 }
 
+local size_icon = "14"
+
 -- blocked
 
 local blocked_cmd = function()
@@ -36,7 +38,7 @@ local blocked_cmd = function()
         awesome.emit_signal('module::exit_screen:show')
 end
 
-local blocked = cr_btn(icons.blocked, dpi(50), dpi(5),beautiful.bg_widget, beautiful.icon_normal, beautiful.red, blocked_cmd)
+local blocked = cr_btn(icons.blocked, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar,beautiful.icon_normal, beautiful.red, blocked_cmd)
 
 -- blue_light
 
@@ -44,7 +46,7 @@ local blue_light_cmd = function()
     awful.spawn.easy_async_with_shell(utils.blue_light, function() end)
 end
 
-local blue_light = cr_btn(icons.blue_light, dpi(50), dpi(5),beautiful.bg_widget, beautiful.icon_normal, beautiful.red, blue_light_cmd)
+local blue_light = cr_btn(icons.blue_light, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, blue_light_cmd)
 
 -- bluetooth
 
@@ -52,7 +54,7 @@ local bluetooth_cmd = function()
     awful.spawn.easy_async_with_shell(utils.area_screenshot, function() end)
 end
 
-local bluetooth = cr_btn(icons.bluetooth, dpi(50), dpi(5), beautiful.bg_widget, beautiful.icon_normal, beautiful.red, bluetooth_cmd)
+local bluetooth = cr_btn(icons.bluetooth, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, bluetooth_cmd)
 
 -- microphone
 
@@ -60,7 +62,7 @@ local microphone_cmd = function()
     awful.spawn.easy_async_with_shell(utils.area_screenshot, function() end)
 end
 
-local microphone = cr_btn(icons.microphone, dpi(50), dpi(5), beautiful.bg_widget, beautiful.icon_normal, beautiful.red, microphone_cmd)
+local microphone = cr_btn(icons.microphone, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, microphone_cmd)
 
 -- recorded
 
@@ -68,7 +70,7 @@ local recorded_cmd = function()
     awful.spawn.easy_async_with_shell(utils.recorded, function() end)
 end
 
-local recorded = cr_btn(icons.recorded, dpi(50), dpi(5), beautiful.bg_widget, beautiful.icon_normal, beautiful.red, recorded_cmd)
+local recorded = cr_btn(icons.recorded, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, recorded_cmd)
 
 -- themes
 
@@ -77,7 +79,7 @@ local themes_cmd = function()
         theme_toogle()
 end
 
-local themes = cr_btn(icons.themes, dpi(50), dpi(5),beautiful.bg_widget, beautiful.icon_normal, beautiful.red, themes_cmd)
+local themes = cr_btn(icons.themes, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, themes_cmd)
 
 -- screenshot
 
@@ -85,7 +87,7 @@ local screenshot_cmd = function()
     awful.spawn.easy_async_with_shell(utils.full_screenshot, function() end)
 end
 
-local screenshot = cr_btn(icons.screenshot, dpi(50), dpi(5), beautiful.bg_widget, beautiful.icon_normal, beautiful.red, screenshot_cmd)
+local screenshot = cr_btn(icons.screenshot, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, screenshot_cmd)
 
 -- shot_area
 
@@ -93,7 +95,7 @@ local shot_area_cmd = function()
     awful.spawn.easy_async_with_shell(utils.area_screenshot, function() end)
 end
 
-local shot_area = cr_btn(icons.shot_area, dpi(50), dpi(5), beautiful.bg_widget, beautiful.icon_normal, beautiful.red, shot_area_cmd)
+local shot_area = cr_btn(icons.shot_area, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, shot_area_cmd)
 
 -- wifi
 
@@ -101,7 +103,7 @@ local wifi_cmd = function()
     awful.spawn.easy_async_with_shell(utils.area_screenshot, function() end)
 end
 
-local wifi = cr_btn(icons.wifi, dpi(50), dpi(5), beautiful.bg_widget, beautiful.icon_normal, beautiful.red, wifi_cmd)
+local wifi = cr_btn(icons.wifi, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, wifi_cmd)
 
 
 
@@ -177,6 +179,6 @@ slider_options:setup{
     },
     bg = beautiful.bg_sidebar,
     expand = "none",
-    shape = helpers.rrect(beautiful.dock_radius - 2),
+    shape = helpers.rrect(beautiful.border_radius),
     widget = wibox.container.background
 }

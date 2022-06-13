@@ -32,9 +32,9 @@ local change_light_theme = function()
 end
 
 local cr_btn = require("widgets.button").create
-local dark = cr_btn(icons.dark.outline, dpi(100), dpi(0), beautiful.bg, beautiful.icon_normal, beautiful.red,
+local dark = cr_btn(icons.dark.outline, dpi(100), dpi(0), beautiful.icon_var .. "22", beautiful.bg, beautiful.icon_normal, beautiful.red,
     change_dark_theme)
-local light = cr_btn(icons.light.outline, dpi(100), dpi(0), beautiful.bg, beautiful.icon_normal, beautiful.red,
+local light = cr_btn(icons.light.outline, dpi(100), dpi(0), beautiful.icon_var .. "22", beautiful.bg, beautiful.icon_normal, beautiful.red,
     change_light_theme)
 
 local theme_screen = wibox({

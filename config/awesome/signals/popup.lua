@@ -63,16 +63,16 @@ end
 -- volumen icons and progress_bar
 
 -- icons
-local vol_default = helpers.colorize_text("墳", beautiful.fg_sidebar)
+local vol_default = helpers.colorize_text("", beautiful.fg_sidebar)
 local vol_high = helpers.colorize_text("", beautiful.fg_sidebar)
-local vol_mid = helpers.colorize_text("墳", beautiful.fg_sidebar)
+local vol_mid = helpers.colorize_text("", beautiful.fg_sidebar)
 local vol_low = helpers.colorize_text("", beautiful.fg_sidebar)
 local vol_off = helpers.colorize_text("",beautiful.fg_sidebar)
-local vol_muted = helpers.colorize_text( "ﱝ", beautiful.fg_sidebar)
+local vol_muted = helpers.colorize_text( "", beautiful.fg_sidebar)
 
 -- progress_bar
 local textIcon = wibox.widget {
-	font = beautiful.icon_font .. "34",
+	font = beautiful.icon_var .. "26",
 	align = "center",
 	valign = "center",
 	markup = vol_default,
@@ -139,7 +139,7 @@ awesome.connect_signal("signals::volume", function(value, muted)
 		textIcon.markup = vol_off
 	elseif value < 25 then
 		textIcon.markup = vol_low
-	elseif value < 60 then
+	elseif value < 45 then
 		textIcon.markup = vol_mid
 	else
 		textIcon.markup = vol_high

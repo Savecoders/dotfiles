@@ -229,7 +229,7 @@ awful.screen.connect_for_each_screen(function(s)
         screen = s,
         filter = awful.widget.taglist.filter.all,
         style = {
-            shape = helpers.rrect(beautiful.border_radius - 5),
+            shape = helpers.rrect(beautiful.bar_radius),
         },
         layout = {
             spacing = dpi(16),
