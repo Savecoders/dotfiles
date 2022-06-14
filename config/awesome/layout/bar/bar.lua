@@ -84,129 +84,61 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Tags
 
-    local tag_home = awful.tag.add("Web", {
-        icon = colorize_icon(beautiful.home_selected, beautiful.icon_normal),
-        screen = s,
-        layout = awful.layout.suit.tile,
-        selected = true
-    })
+    local create_tag = function(name, icon, color)
+        return awful.tag.add(name, {
+            icon = colorize_icon(icon, color),
+            screen = s,
+            layout = awful.layout.suit.tile,
+            selected = true
+        })
+    end
 
-    local tag_dashboard = awful.tag.add("Code", {
-        icon = colorize_icon(beautiful.dashboard, beautiful.icon_normal),
-        screen = s,
-        layout = awful.layout.suit.tile,
-        selected = true
-    })
+    local tag_home = create_tag("Web",beautiful.home_selected, beautiful.icon_normal)
+    
+    local tag_dashboard = create_tag("Code",beautiful.dashboard, beautiful.icon_normal)
+    
+    local tag_folder = create_tag("Terminal",beautiful.folder, beautiful.icon_normal)
+    
+    local tag_report = create_tag("Music",beautiful.report, beautiful.icon_normal)
 
-    local tag_folder = awful.tag.add("Terminal", {
-        icon = colorize_icon(beautiful.folder, beautiful.icon_normal),
-        screen = s,
-        layout = awful.layout.suit.tile,
-        selected = true
-    })
+    local tag_cal = create_tag("Calendar",beautiful.cal, beautiful.icon_normal)
+    
+    local tag_document = create_tag("Documents",beautiful.document, beautiful.icon_normal)
 
-    local tag_report = awful.tag.add("Music", {
-        icon = colorize_icon(beautiful.report, beautiful.icon_normal),
-        screen = s,
-        layout = awful.layout.suit.tile,
-        selected = true
-    })
-
-    local tag_cal = awful.tag.add("Calendar", {
-        icon = colorize_icon(beautiful.cal, beautiful.icon_normal),
-        screen = s,
-        layout = awful.layout.suit.tile,
-        selected = true
-    })
-
-    local tag_document = awful.tag.add("Documents", {
-        icon = colorize_icon(beautiful.document, beautiful.icon_normal),
-        screen = s,
-        layout = awful.layout.suit.tile,
-        selected = true
-    })
-
-    local tag_setting = awful.tag.add("Settings", {
-        icon = colorize_icon(beautiful.settings, beautiful.icon_normal),
-        screen = s,
-        layout = awful.layout.suit.tile,
-        selected = true
-    })
+    local tag_setting = create_tag("Settings",beautiful.settings, beautiful.icon_normal)
 
     -- Update tags(suck)
 
+
     local update_tags = function(self, c3)
-
-        local update_home = function(self, c3)
-            if c3.selected then
-                tag_home.icon = colorize_icon(beautiful.home_selected, beautiful.icon_selected)
-            elseif #c3:clients() == 0 then
-                tag_home.icon = colorize_icon(beautiful.home, beautiful.icon_normal)
-            else
-                tag_home.icon = colorize_icon(beautiful.home_selected, beautiful.icon_normal)
+        
+        -- update tags(suck)
+        local update_icon_tag = function(tag, icon, icon_select, self, c3)
+            return function(self,c3)
+                if c3.selected then
+                    tag.icon = colorize_icon(icon_select, beautiful.icon_selected)
+                elseif #c3:clients() == 0 then
+                    tag.icon = colorize_icon(icon, beautiful.icon_normal)
+                else
+                    tag.icon = colorize_icon(icon_select, beautiful.icon_normal)
+                end
             end
         end
 
-        local update_dashboard = function(self, c3)
-            if c3.selected then
-                tag_dashboard.icon = colorize_icon(beautiful.dashboard_selected, beautiful.icon_selected)
-            elseif #c3:clients() == 0 then
-                tag_dashboard.icon = colorize_icon(beautiful.dashboard, beautiful.icon_normal)
-            else
-                tag_dashboard.icon = colorize_icon(beautiful.dashboard_selected, beautiful.icon_normal)
-            end
-        end
+        local update_home = update_icon_tag(tag_home, beautiful.home, beautiful.home_selected, self, c3)
 
-        local update_folder = function(self, c3)
-            if c3.selected then
-                tag_folder.icon = colorize_icon(beautiful.folder_selected, beautiful.icon_selected)
-            elseif #c3:clients() == 0 then
-                tag_folder.icon = colorize_icon(beautiful.folder, beautiful.icon_normal)
-            else
-                tag_folder.icon = colorize_icon(beautiful.folder_selected, beautiful.icon_normal)
-            end
-        end
+        local update_dashboard = update_icon_tag(tag_dashboard, beautiful.dashboard, beautiful.dashboard_selected, self, c3)
 
-        local update_report = function(self, c3)
-            if c3.selected then
-                tag_report.icon = colorize_icon(beautiful.report_selected, beautiful.icon_selected)
-            elseif #c3:clients() == 0 then
-                tag_report.icon = colorize_icon(beautiful.report, beautiful.icon_normal)
-            else
-                tag_report.icon = colorize_icon(beautiful.report_selected, beautiful.icon_normal)
-            end
-        end
+        local update_folder = update_icon_tag(tag_folder, beautiful.folder, beautiful.folder_selected, self, c3)
 
-        local update_cal = function(self, c3)
-            if c3.selected then
-                tag_cal.icon = colorize_icon(beautiful.cal_selected, beautiful.icon_selected)
-            elseif #c3:clients() == 0 then
-                tag_cal.icon = colorize_icon(beautiful.cal, beautiful.icon_normal)
-            else
-                tag_cal.icon = colorize_icon(beautiful.cal_selected, beautiful.icon_normal)
-            end
-        end
+        local update_report = update_icon_tag(tag_report, beautiful.report, beautiful.report_selected, self, c3)
 
-        local update_document = function(self, c3)
-            if c3.selected then
-                tag_document.icon = colorize_icon(beautiful.document_selected, beautiful.icon_selected)
-            elseif #c3:clients() == 0 then
-                tag_document.icon = colorize_icon(beautiful.document, beautiful.icon_normal)
-            else
-                tag_document.icon = colorize_icon(beautiful.document_selected, beautiful.icon_normal)
-            end
-        end
+        local update_cal = update_icon_tag(tag_cal, beautiful.cal, beautiful.cal_selected, self, c3)
 
-        local update_setting = function(self, c3)
-            if c3.selected then
-                tag_setting.icon = colorize_icon(beautiful.settings_selected, beautiful.icon_selected)
-            elseif #c3:clients() == 0 then
-                tag_setting.icon = colorize_icon(beautiful.settings, beautiful.icon_normal)
-            else
-                tag_setting.icon = colorize_icon(beautiful.settings_selected, beautiful.icon_normal)
-            end
-        end
+        local update_document = update_icon_tag(tag_document, beautiful.document, beautiful.document_selected, self, c3)
 
+        local update_setting = update_icon_tag(tag_setting, beautiful.settings, beautiful.settings_selected, self, c3)
+        
         update_home(self, c3)
         update_dashboard(self, c3)
         update_folder(self, c3)
@@ -264,6 +196,8 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = taglist_buttons
     }
 
+    helpers.add_hover_cursor(s.mytaglist, "hand1")
+
     -- logo
 
     local logo_icon = wibox.widget {
@@ -287,6 +221,8 @@ awful.screen.connect_for_each_screen(function(s)
     logo:connect_signal("mouse::leave", function()
         logo_icon.image = beautiful.logo_normal
     end)
+
+    helpers.add_hover_cursor(logo, "hand1")
 
     sidebar_toggle = function()
         if s.mywibox.visible == true then
@@ -321,6 +257,7 @@ awful.screen.connect_for_each_screen(function(s)
         slider_how()
     end)))
 
+    helpers.add_hover_cursor(sidebar_icon, "hand1")
     -- Wrapaaa
 
     local wrap_widget = function(w)

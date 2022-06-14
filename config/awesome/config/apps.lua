@@ -14,6 +14,10 @@ return {
 		-- blue light
 		blue_light = utils_dir .. "bluelight",
 		-- bluetooth
-		bluetooth = utils_dir .. "bluetooth"
+		bluetooth = utils_dir .. "bluetooth",
+		-- unmute microphone
+		unmute = utils_dir .. "unmute",
+		-- pick_color
+		color_pick = "xcolor-pick" 
 	},
 }

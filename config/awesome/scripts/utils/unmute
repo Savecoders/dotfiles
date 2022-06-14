@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+mute=~/.config/awesome/icons/notif-center/mute.svg
+unmute=~/.config/awesome/icons/notif-center/unmute.svg
+
+CURRENT_SOURCE=$(pactl info | grep "Default Source" | cut -d':' -f 2)
+
+ISMUTE=$(pactl list sources | grep -A 10 $CURRENT_SOURCE | grep "Mute:" | cut -d':' -f 2)
+if [ $ISMUTE == "no" ]
+then
+	amixer set Capture nocap; echo -e "\n\e[31;1;4;5mMICROPHONE OFF"
+    notify-send -i $mute "Microphone off"
+else
+	amixer set Capture cap; echo -e "\n\e[32;1;4;5mMICROPHONE ON"
+    notify-send -i $unmute "Microphone on"
+fi
+

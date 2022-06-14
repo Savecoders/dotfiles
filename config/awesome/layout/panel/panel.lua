@@ -25,7 +25,7 @@ local icons = {
     recorded        = "",
     themes          = "",
     screenshot      = "",
-    shot_area       = "",
+    color_pick       = "",
     wifi            = "",
 }
 
@@ -59,7 +59,7 @@ local bluetooth = cr_btn(icons.bluetooth, dpi(50), dpi(5), beautiful.icon_var ..
 -- microphone
 
 local microphone_cmd = function() 
-    awful.spawn.easy_async_with_shell(utils.area_screenshot, function() end)
+    awful.spawn.easy_async_with_shell(utils.unmute, function() end)
 end
 
 local microphone = cr_btn(icons.microphone, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, microphone_cmd)
@@ -89,13 +89,13 @@ end
 
 local screenshot = cr_btn(icons.screenshot, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, screenshot_cmd)
 
--- shot_area
+-- pick_color "color_pick"
 
-local shot_area_cmd = function()
-    awful.spawn.easy_async_with_shell(utils.area_screenshot, function() end)
+local color_pick_cmd = function()
+    awful.spawn.with_shell(utils.color_pick)
 end
 
-local shot_area = cr_btn(icons.shot_area, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, shot_area_cmd)
+local color_pick = cr_btn(icons.color_pick, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, color_pick_cmd)
 
 -- wifi
 
@@ -152,7 +152,7 @@ slider_options:setup{
             {
                 recorded,
                 screenshot,
-                shot_area,
+                color_pick,
                 spacing = dpi(20),
                 layout = wibox.layout.fixed.horizontal,
             },

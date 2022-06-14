@@ -7,11 +7,11 @@ local bling = require("modules.bling")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
-local create_button = function(symbol, color, command, playpause)
+local create_button = function(symbol, size_symbol, color, command, playpause)
 
     local icon = wibox.widget {
         markup = helpers.colorize_text(symbol, color),
-        font = beautiful.icon_var .. "18",
+        font = beautiful.icon_var .. size_symbol,
         align = "center",
         halign = "center",
         valign = "center",
@@ -28,9 +28,9 @@ local create_button = function(symbol, color, command, playpause)
     awesome.connect_signal("bling::playerctl::status", function(playing)
         if playpause then
             if playing then
-                icon.markup = helpers.colorize_text("", color)
+                icon.markup = helpers.colorize_text("", color)
             else
-                icon.markup = helpers.colorize_text("", color)
+                icon.markup = helpers.colorize_text("", color)
             end
         end
     end)
@@ -114,9 +114,9 @@ local play_command = function() Playerctl:play_pause() end
 local prev_command = function() Playerctl:previous() end
 local next_command = function() Playerctl:next() end
 
-local playerctl_play_symbol = create_button("", beautiful.fg_sidebar, play_command, true)
-local playerctl_prev_symbol = create_button("", beautiful.fg_sidebar, prev_command, false)-- 
-local playerctl_next_symbol = create_button("", beautiful.fg_sidebar, next_command, false)
+local playerctl_play_symbol = create_button("", "14", beautiful.fg_sidebar, play_command, true)
+local playerctl_prev_symbol = create_button("", "12", beautiful.fg_sidebar, prev_command, false)-- 
+local playerctl_next_symbol = create_button("", "12", beautiful.fg_sidebar, next_command, false)
 
 
 local info = wibox.widget {
@@ -155,11 +155,9 @@ local box_music_pos = wibox.widget{
 }
 
 local control = wibox.widget {
-    helpers.vertical_pad(4),
+    helpers.vertical_pad(9),
     {
         playerctl_prev_symbol,
-        right = dpi(2),
-        left  = dpi(2),
         margins = {
             left = dpi(4),
             right = dpi(4),
@@ -168,13 +166,10 @@ local control = wibox.widget {
     },
     {
         playerctl_play_symbol,
-        
         widget = wibox.container.margin
     },
     {
         playerctl_next_symbol,
-        right = dpi(2),
-        left  = dpi(2),
         margins = {
             left = dpi(4),
             right = dpi(4),

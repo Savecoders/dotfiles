@@ -17,21 +17,21 @@ local user_box = button.create_boxed_widget(userprofile, dpi(280), dpi(130), dpi
 -- Cpu
 
 local cpu_bar = require("widgets.cpu_arc")
-local cpu = button.progress_bar(cpu_bar, helpers.colorize_text("ﲟ", beautiful.fg_sidebar),"24")
+local cpu = button.progress_bar(cpu_bar, helpers.colorize_text("", beautiful.fg_sidebar),"18")
 local cpu_details = button.details(cpu)
 local cpu_box = button.create_boxed_widget(cpu_details, dpi(130), dpi(130), dpi(14), dpi(0), beautiful.bg_widget)
 
 -- Ram
 
 local ram_bar = require("widgets.ram_arc")
-local ram = button.progress_bar(ram_bar, helpers.colorize_text("", beautiful.fg_sidebar),"24")
+local ram = button.progress_bar(ram_bar, helpers.colorize_text("", beautiful.fg_sidebar),"18")
 local ram_details = button.details(ram)
 local ram_box = button.create_boxed_widget(ram_details, dpi(130), dpi(130), dpi(14), dpi(0), beautiful.bg_widget)
 
 -- Tmp 
 
 local temp_bar = require("widgets.temp_arc")
-local temp = button.progress_bar(temp_bar, helpers.colorize_text("", beautiful.fg_sidebar),"24")
+local temp = button.progress_bar(temp_bar, helpers.colorize_text("", beautiful.fg_sidebar),"18")
 local temp_details = button.details(temp)
 local temp_box = button.create_boxed_widget(temp_details, dpi(130), dpi(130), dpi(14), dpi(0), beautiful.bg_widget)
 
