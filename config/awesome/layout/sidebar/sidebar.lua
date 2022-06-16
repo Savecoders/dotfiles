@@ -82,7 +82,7 @@ local search = wibox.widget {
         {
             {
                 {
-                    image = beautiful.search_bar_icon,
+                    image = colorize_icon(beautiful.search_icon, beautiful.icon_normal),
                     widget = wibox.widget.imagebox
                 },
                 margins = dpi(15),

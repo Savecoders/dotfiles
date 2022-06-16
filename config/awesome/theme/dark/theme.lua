@@ -22,7 +22,7 @@ theme.font_screen = "SF Pro Display Medium  "
 
 theme.dir = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
 
-theme.wallpaper = gfs.get_configuration_dir() .. "wallpapers/japan.jpg"
+theme.wallpaper = gfs.get_configuration_dir() .. "wallpapers/dark/dark.jpg"
 
 theme.useless_gap = 20
 theme.useless_less = 8

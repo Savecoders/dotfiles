@@ -3,10 +3,26 @@
 
 ## __Hi!__
 
+
 to my dotfiles!
 Here are some details about my setup
 
+<!-- Dark theme -->
+<div align="center">
+   <a href="#--------">
+      <img src="assets/rice_dark.png" alt="Rice dark theme Preview">
+   </a>
+</div>
 
+<!-- light theme -->
+<div align="center">
+   <a href="#--------">
+      <img src="assets/rice_light.png" alt="Rice dark theme Preview">
+   </a>
+</div>
+
+
+<!-- information about -->
 <details close>
     <summary>
         <samp><b>Info</b></samp>

@@ -15,7 +15,7 @@ local utils = require("config.apps").utils
 
 local cr_btn = require("widgets.button").create
 
--- icons
+-- icons in the panel
 
 local icons = {
     blocked         = "",
