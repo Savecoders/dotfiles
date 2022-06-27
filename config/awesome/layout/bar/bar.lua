@@ -39,7 +39,7 @@ end
 local clock = wibox.widget{
     {
         widget = wibox.widget.textclock,
-        format = helpers.colorize_text("%I",beautiful.icon_normal),
+        format = helpers.colorize_text("%H",beautiful.icon_normal),
         font = beautiful.font_screen .. "14",
         valign = "center",
         align = "center"
@@ -52,7 +52,7 @@ local clock = wibox.widget{
         align = "center"
     },
     layout = wibox.layout.fixed.vertical,
-    spacing = dpi(4),
+    spacing = dpi(5),
     margins = dpi(18)
 }
 

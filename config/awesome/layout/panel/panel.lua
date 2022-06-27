@@ -25,7 +25,7 @@ local icons = {
     recorded        = "",
     themes          = "",
     screenshot      = "",
-    color_pick       = "",
+    color_pick      = "",
     wifi            = "",
 }
 

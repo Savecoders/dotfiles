@@ -15,7 +15,7 @@ require("awful.hotkeys_popup.keys")
 require("awful.autofocus")
 
 terminal = "kitty"
-browser = "google-chrome-stable"
+browser = "microsoft-edge-stable"
 music_player = "spotify"
 fm = "nautilus"
 vscode = "code"
@@ -99,8 +99,8 @@ globalkeys = gears.table.join(
     }), 
 
     awful.key({ modkey }, "p", function()
-		awful.spawn.with_shell("xcolor-pick")
-	    end,{
+        awful.spawn.with_shell(apps.utils.color_pick)
+        end,{
             description = "open color-picker", 
             group = "launcher" 
     }), 
@@ -295,10 +295,10 @@ globalkeys = gears.table.join(
     awful.key({modkey}, "r", function()
         if theme == themes[1] then
             awful.spawn.easy_async_with_shell(
-                'rofi -show drun -theme ' .. gfs.get_configuration_dir() ..'/config/rofi/light.rasi')
+                'rofi -show drun -theme ' .. gfs.get_configuration_dir() ..'/config/rofi/light.rasi' .. ' -show-icons')
         else
             awful.spawn.easy_async_with_shell(
-                'rofi -show drun -theme ' .. gfs.get_configuration_dir() ..'/config/rofi/dark.rasi')
+                'rofi -show drun -theme ' .. gfs.get_configuration_dir() ..'/config/rofi/dark.rasi' ..' -show-icons')
         end
         end, {
             description = "show the menubar",

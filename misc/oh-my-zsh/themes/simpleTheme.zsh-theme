@@ -1,6 +1,6 @@
 # !SAVE ZSH Theme
 # user names
-function Users_name() {
+function user_name() {
     
     if  [[ ${GIT_INFO} == "" ]];
         then
@@ -89,7 +89,7 @@ function update_command_status() {
         user="%{$fg_bold[red]%} ";
         line="%{$fg_bold[red]%} ";#
     fi
-    default="${user}$(Users_name)${line}";
+    default="${user}$(user_name)${line}";
     COMMAND_STATUS="${default}${reset_font}${color_reset}";
 }
 update_command_status true;

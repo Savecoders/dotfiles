@@ -45,9 +45,9 @@ Here are some details about my setup:
 
    ```sh
    paru -Sy awesome-git picom-git kitty rofi  acpi acpid acpi_call upower \
-   jq inotify-tools xdotool xclip gpick ffmpeg blueman \
-   pamixer brightnessctl scrot redshift rainfall\
-   feh mpv mpd mpc mpdris2 ncmpcpp playerctl --needed 
+   jq inotify-tools xdotool xclip gpick ffmpeg blueman zsh-autosuggestions \
+   pamixer brightnessctl scrot redshift rainfall zsh-syntax-highlighting \
+   feh mpv mpd mpc mpdris2 ncmpcpp playerctl zsh --needed 
    ```
 
 <h3>Enable Services</h3>
@@ -70,7 +70,15 @@ Here are some details about my setup:
    cp -r config/* ~/.config/
    cp -r misc/fonts/* ~/.local/share/fonts/
    cp -r misc/oh-my-zsh ~/.oh-my-zsh
+   cp -r misc/.zshrc ~
    ```
+
+<h3> Install ohmyzsh</h3>
+
+   ```sh
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+   ```  
+   
 
 <!-- information about -->
 <details close>

@@ -14,10 +14,10 @@ local helpers       = require("helpers")
 
 -- icons
 local icons = {
-    poweroff = "",
-    suspend  = "",
-    reboot   = "",
-    exit     = ""
+    poweroff = "",
+    suspend  = "",
+    reboot   = "",
+    exit     = ""
 }
 
 -- Commands
@@ -91,8 +91,8 @@ local exit_screen_f = function(s)
 				{
 					{
 						{
-							suspend,
 							exit,
+							suspend,
 							spacing = dpi(20),
 							layout = wibox.layout.fixed.horizontal
 						},

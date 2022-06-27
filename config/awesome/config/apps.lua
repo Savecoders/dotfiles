@@ -18,6 +18,6 @@ return {
 		-- unmute microphone
 		unmute = utils_dir .. "unmute",
 		-- pick_color
-		color_pick = "xcolor-pick" 
+		color_pick = utils_dir .."xcolor" 
 	},
 }

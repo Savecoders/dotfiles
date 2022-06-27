@@ -110,7 +110,7 @@ function helpers.prompt(action, textbox, prompt, callback)
                 if not input or #input == 0 then
                     return
                 end
-                awful.spawn.with_shell("google-chrome-stable https://www.google.com/search?q=" .. "'" .. input .. "'")
+                awful.spawn.with_shell("microsoft-edge-stable https://www.google.com/search?q=" .. "'" .. input .. "'")
             end
         }
     end

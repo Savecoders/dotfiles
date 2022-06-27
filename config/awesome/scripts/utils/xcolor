@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+COLOR=$(gpick --no-newline -pso)
+TMP_IMAGE=/tmp/picked_$COLOR.png
+
+
+convert -size 120x120 xc:"$COLOR" "$TMP_IMAGE"
+printf %s "$COLOR" | xclip -selection clipboard
+
+notify-send -a "Color picker" \
+        -i "$TMP_IMAGE" \
+        -t 2000 \
+        "Color Picked" "$COLOR"
