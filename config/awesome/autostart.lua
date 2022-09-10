@@ -12,7 +12,7 @@ end
 
 -- picom
 
-run_once("picom --experimental-backends --config " .. gears.filesystem.get_configuration_dir() ..
+run_once("picom --config " .. gears.filesystem.get_configuration_dir() ..
              "config/compositor/picom.conf")
 
 return autostart
