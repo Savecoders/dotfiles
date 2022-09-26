@@ -8,7 +8,7 @@ sed -i "2s/.*/gtk-icon-theme-name=Mkos-Big-Sur/g" ~/.config/gtk-3.0/settings.ini
 sed -i "4s/.*/gtk-theme-name=WhiteSur-light/g" ~/.config/gtk-3.0/settings.ini
 
 # Picom
-sed -i "7s/.*/shadow-opacity = 0.05;/g" ~/.config/awesome/config/compositor/picom.conf
+sed -i "7s/.*/shadow-opacity = 0.05;/g" ~/.config/picom/picom.conf
 
 # Spotify
 spicetify config color_scheme white

@@ -12,7 +12,6 @@ end
 
 -- picom
 
-run_once("picom --config " .. gears.filesystem.get_configuration_dir() ..
-             "config/compositor/picom.conf")
+run_once("picom --config ~/.config/picom/picom.conf")
 
 return autostart

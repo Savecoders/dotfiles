@@ -4,7 +4,7 @@ configuration {
     modi: "drun";
     display-drun: "";
     drun-display-format: " {name}";
-    font: "SF Pro Display Medium 15";
+    font: "SF Pro Display Bold 15";
 }
 
 * {
