@@ -73,6 +73,8 @@ keys = [
 
     # ------------ Other stuff ------------
     Key([mod], "h", lazy.spawn("roficlip"), desc='clipboard'),
+    Key([mod], "p", lazy.spawn(
+        home + "/.config/qtile/scripts/xcolor"), desc='screenshot'),
     Key([mod], "s", lazy.spawn(
         [home + "/.config/qtile/scripts/shoot.sh"]), desc="Screenshot"),
     Key([mod, "control"], "s", lazy.spawncmd(
