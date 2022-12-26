@@ -1,3 +1,4 @@
+#!/bin/bash
 
 img="shotArea$(date '+%m%d%H%M%S').png"
 

@@ -133,7 +133,7 @@ local slider_timed = rubato.timed {
 slider_how = function()
     if slider_options.visible == false then
         slider_options.visible = not slider_options.visible
-        slider_timed.target = dpi(130)
+        slider_timed.target = dpi(108)
     else
         slider_timed.target = -dpi(130)
         slider_options.visible = false
@@ -142,7 +142,7 @@ end
 
 awful.placement.bottom(slider_options, {
     margins = {
-        bottom = beautiful.useless_gap * 2.4
+        bottom = 32,
     }
 })
 

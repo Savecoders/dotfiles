@@ -51,7 +51,7 @@ keys = [
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     # Toggle E tween different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod], "c", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod], "x", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     #    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
@@ -72,11 +72,20 @@ keys = [
     )),
 
     # ------------ Other stuff ------------
-    Key([mod], "h", lazy.spawn("roficlip"), desc='clipboard'),
+    Key([mod], "t", lazy.spawn("roficlip"), desc='clipboard'),
+
     Key([mod], "p", lazy.spawn(
-        home + "/.config/qtile/scripts/xcolor"), desc='screenshot'),
+        home + "/.config/qtile/scripts/xcolor"), desc='picker color'),
+
     Key([mod], "s", lazy.spawn(
-        [home + "/.config/qtile/scripts/shoot.sh"]), desc="Screenshot"),
-    Key([mod, "control"], "s", lazy.spawncmd(
-        [home + "/.config/qtile/scripts/scroot.sh"]), desc="Screenshot"),
+        [home + "/.config/qtile/scripts/shoot"]), desc="Screenshot"),
+
+    Key([mod, "shift"], "s", lazy.spawn(
+        [home + "/.config/qtile/scripts/scroot"]), desc="Screenshot area"),
+
+    Key([mod, "shift"], "c", lazy.spawn(
+        [home + "/.config/qtile/scripts/bluelight"]), desc="BlueLight"),
+
+    Key([mod, "shift"], "l", lazy.spawn(
+        "betterlockscreen -l"), desc='lockscreen'),
 ]

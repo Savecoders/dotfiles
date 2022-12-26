@@ -52,8 +52,8 @@ local clock = wibox.widget{
         align = "center"
     },
     layout = wibox.layout.fixed.vertical,
-    spacing = dpi(5),
-    margins = dpi(18)
+    spacing = dpi(0),
+    margins = dpi(0)
 }
 
 
@@ -278,7 +278,7 @@ awful.screen.connect_for_each_screen(function(s)
         position = "left",
         screen = s,
         ontop = true,
-        height = s.geometry.height - dpi(93),
+        height = s.geometry.height  - dpi(56),
         width = dpi(65),
         visible = true
     })
@@ -349,16 +349,14 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- screen padding
     s.padding = {
-        left = dpi(24),
-        right = dpi(7),
-        top = dpi(7),
-        bottom = dpi(7)
+        left = dpi(beautiful.useless_gap * 2),
+        right = dpi(beautiful.useless_gap),
+        top = dpi(beautiful.useless_gap),
+        bottom = dpi(beautiful.useless_gap)
     }
 
-    --s.mywibox.x = dpi(30)
-
     awful.placement.left(s.mywibox, {
-        margins = beautiful.useless_gap * 1.5
+        margins = beautiful.useless_gap * 2,
     })
 
 end)

@@ -33,7 +33,7 @@ end
 
 local suspend_command = function()
 	awesome.emit_signal('module::exit_screen:hide')
-    awful.spawn.with_shell("systemctl suspend")
+    awful.spawn("betterlockscreen -l")
 end
 
 local exit_command = function() awesome.quit() end

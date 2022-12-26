@@ -1,5 +1,3 @@
-# Copyright (c) 2010 Aldo Cortesi
-
 import subprocess
 import os
 

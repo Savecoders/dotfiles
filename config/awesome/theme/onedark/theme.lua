@@ -1,8 +1,8 @@
+local awful = require("awful")
 local gears = require("gears")
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
-local xrdb = xresources.get_current_theme()
 local gfs = require('gears.filesystem')
 local themes_path = gfs.get_themes_dir()
 local beautiful = require("beautiful")
@@ -12,7 +12,7 @@ local theme = {}
 
 -- themes 
 
-theme.font = "SF Pro Display Medium 12"
+theme.font = "SF Pro Display Medium 11"
 
 theme.icon_var = "Font Awesome 6 Free "
 
@@ -22,46 +22,53 @@ theme.font_screen = "SF Pro Display Medium  "
 
 theme.dir = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
 
-theme.wallpaper = gfs.get_configuration_dir() .. "wallpapers/light/light.jpg"
+theme.wallpaper = gfs.get_configuration_dir() .. "wallpapers/dark/awesome.jpg"
 
 theme.useless_gap = 10
 theme.useless_less = 8
 
 -- colors
 
-theme.bg = "#FFFFFF"
-theme.bg_sidebar = "#FFFFFF"
-theme.bg_selected = "#F7F8FC"
-theme.bg_widget = "#F7F8FB"
-theme.border_color = "#ECECEC"
+-- theme.bg = "#131417"
+theme.bg = "#1E2227"
+theme.bg_sidebar = "#1E2227"
+theme.bg_selected = "#1D1F22" --
+theme.bg_widget = "#1D1F22"
+theme.border_color = "#252628"
 theme.accent = "#d6E7fc"
 theme.transparent = "#000000"
-theme.fg_normal = "#b0b2bf"
-theme.fg_focus      = "#6192FB"
-theme.fg_urgent     = "#b0b2bf"
-theme.fg_minimize   = "#b0b2bf"
-theme.fg_sidebar    = "#2A3256"
-theme.taglist_bg_focus = "#F7F8FC"
+theme.fg_normal = "#8A8E97"
+theme.fg_focus      = "#FFFFFF"
+theme.fg_urgent     = "#8A8E97"
+theme.fg_minimize   = "#8A8E97"
+theme.fg_sidebar = "#FFFFFF"
+
+theme.taglist_bg_focus = {
+  type = "linear",
+  from = { 00, 00, 10 },
+  to = { 100, 100, 30 },
+  stops = { { 0, "#3F8CFF" }, { 1, "#5197FF" } }
+} 
 
 theme.active = "#6A6E78"
 
-theme.icon_bg = "#b0b2bf"
-theme.icon_normal = "#b0b2bf"
-theme.icon_selected = "#6192FB"
+theme.icon_bg = "#FFFFFF"
+theme.icon_normal = "#8A8E97"
+theme.icon_selected = "#FFFFFF"
 
 theme.red = "#db7272"
 
-theme.grey = "#383D44"
+theme.grey = "#8B8B8B"
 
-theme.titlebar_unfocused = "#EFEFEF"
+theme.titlebar_unfocused = "#252628"
 
-theme.fg_contrast = "#555B6E"
+theme.fg_contrast = "#FFFFFF"
 
-theme.search_bar = "#F7F8FA"
+theme.search_bar = "#1D1F22"
 
-theme.dark_slider_bg = "#E6E9EB"
+theme.dark_slider_bg = "#3F8CFF"
 
-theme.arc_bg = "#D8E4FA"
+theme.arc_bg = "#1E2227"
 theme.arc_color = "#6192FB"
 
 -- radius
@@ -72,16 +79,10 @@ theme.client_radius = dpi(8)
 theme.sidebar_radius = dpi(10)
 theme.dock_radius = dpi(12)
 
-
 theme.snap_bg = theme.border_color
 theme.snap_border_width = dpi(2)
 
--- wibar
-
-theme.wibar_height = 1080 
-theme.popup_left = 150
-
--- Listages
+-- icons
 
 theme.profile = gfs.get_configuration_dir() .. "icons/bar/elric.png"
 
@@ -105,7 +106,6 @@ theme.document_selected = gfs.get_configuration_dir() .. "icons/tag/document_sel
 
 theme.settings = gfs.get_configuration_dir() .. "icons/tag/settings.png"
 theme.settings_selected = gfs.get_configuration_dir() .. "icons/tag/settings_selected.png"
-
 
 -- icons
 
@@ -135,7 +135,7 @@ theme.icon_change_theme = gfs.get_configuration_dir() .. "icons/ichange_theme.pn
 
 theme.notification_icon = colorize_icon(theme.notif_icon, theme.icon_normal) 
 theme.delete = colorize_icon(theme.delete_icon, theme.red)
-theme.delete_hover = colorize_icon(theme.delete_icon, theme.red .."80")
+theme.delete_hover = colorize_icon(theme.delete_icon, theme.red .. "80")
 theme.clear = colorize_icon(theme.clear_icon, theme.grey)
 theme.clear_hover = colorize_icon(theme.clear_filled, theme.grey)
 

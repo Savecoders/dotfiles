@@ -17,11 +17,9 @@ require("awful.autofocus")
 terminal = "kitty"
 browser = "microsoft-edge-stable"
 music_player = "spotify"
-fm = "nautilus"
 vscode = "code"
 discord = "discord"
-editor = os.getenv("EDITOR") or "nvim"
-editor_cmd = terminal .. " -e " .. editor
+lockscreen = "betterlockscreen -l"
 
 clientbuttons = gears.table.join(awful.button({}, 1, function(c)
     
@@ -93,6 +91,12 @@ globalkeys = gears.table.join(
     }), 
 
     awful.key({modkey}, "e", function()
+        awful.spawn(discord) end, {
+            description = "discord social app",
+            group = "launcher"
+    }),
+
+    awful.key({modkey}, "s", function()
         awful.spawn(music_player) end, {
             description = "spawn music player",
             group = "launcher"
@@ -104,6 +108,12 @@ globalkeys = gears.table.join(
             description = "open color-picker", 
             group = "launcher" 
     }), 
+
+    awful.key({modkey, 'Shift'}, "l", function()
+         awful.spawn(lockscreen) end, {
+            description = "lock screen",
+            group = "launcher"
+    }),
 
     awful.key({modkey, "Shift"}, "q", awesome.quit, {
         description = "quit awesome",
@@ -253,7 +263,8 @@ globalkeys = gears.table.join(
         group = "layout"
     }), 
 
-    --help
+    -- sidebar screen
+
     awful.key({modkey}, "z", function()
         sidebar_toggle()
         end, {

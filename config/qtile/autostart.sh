@@ -1,6 +1,3 @@
 #!/usr/bin/bash
-
-feh --bg-scale Pictures/Wallpapers/wallpaper.jpg Pictures/Wallpapers/wallpaper.jpg &
+feh --bg-scale Pictures/Wallpapers/qtileWallpaper.jpg &
 picom --config ~/.config/picom/picomQtile.conf & 
-pavucontrol & 
-kitty &

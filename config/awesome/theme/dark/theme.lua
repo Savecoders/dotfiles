@@ -22,17 +22,18 @@ theme.font_screen = "SF Pro Display Medium  "
 
 theme.dir = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
 
-theme.wallpaper = gfs.get_configuration_dir() .. "wallpapers/dark/dark.jpg"
+theme.wallpaper = gfs.get_configuration_dir() .. "wallpapers/dark/awesome.jpg"
 
-theme.useless_gap = 20
+theme.useless_gap = 10
 theme.useless_less = 8
 
 -- colors
+-- #18181A - #theme.bg = "#131417" #18191D
 
 theme.bg = "#131417"
 theme.bg_sidebar = "#131417"
-theme.bg_selected = "#1D1F22" --
-theme.bg_widget = "#1D1F22"
+theme.bg_selected = "#18191D" --
+theme.bg_widget = "#18191D"
 theme.border_color = "#252628"
 theme.accent = "#d6E7fc"
 theme.transparent = "#000000"
@@ -63,7 +64,7 @@ theme.titlebar_unfocused = "#252628"
 
 theme.fg_contrast = "#FFFFFF"
 
-theme.search_bar = "#1D1F22"
+theme.search_bar = "#18191D"
 
 theme.dark_slider_bg = "#3F8CFF"
 

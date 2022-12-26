@@ -7,17 +7,26 @@
 to my dotfiles!
 Here are some details about my setup
 
+### AwesomeWM
+
 <!-- Dark theme -->
 <div align="center">
    <a href="#--------">
-      <img src="assets/rice_dark.png" alt="Rice dark theme Preview">
+      <img src="assets/Awesome/rice_dark.png" alt="Rice dark theme Preview">
    </a>
 </div>
 
 <!-- light theme -->
 <div align="center">
    <a href="#--------">
-      <img src="assets/rice_light.png" alt="Rice dark theme Preview">
+      <img src="assets/Awesome/rice_light.png" alt="Rice dark theme Preview">
+   </a>
+</div>
+
+### QTile
+<div align="center">
+   <a href="#--------">
+      <img src="assets/Qtile/rice_dark.png" alt="Rice dark theme Preview">
    </a>
 </div>
 
@@ -29,7 +38,7 @@ Here are some details about my setup
 Here are some details about my setup:
 
 - **OS:** [Arch Linux](https://archlinux.org)
-- **WM:** [awesome](https://github.com/awesomeWM/awesome)
+- __WM:__ [awesome](https://github.com/awesomeWM/awesome) or [Qtile](http://www.qtile.org/)
 - **Terminal:** [alacritty](https://github.com/alacritty/alacritty)
 - **Shell:** [zsh](https://www.zsh.org/)
 - **Editor:** [neovim](https://github.com/neovim/neovim) / [vscode](https://github.com/microsoft/vscode)
@@ -47,7 +56,7 @@ Here are some details about my setup:
    paru -Sy awesome-git picom-git kitty rofi  acpi acpid acpi_call upower \
    jq inotify-tools xdotool xclip gpick ffmpeg blueman zsh-autosuggestions \
    pamixer brightnessctl scrot redshift rainfall zsh-syntax-highlighting \
-   feh mpv mpd mpc mpdris2 ncmpcpp playerctl zsh --needed 
+   feh mpv mpd mpc mpdris2 ncmpcpp playerctl qtile Thunar zsh --needed 
    ```
 
 <h3>Enable Services</h3>

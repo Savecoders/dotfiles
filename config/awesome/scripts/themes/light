@@ -10,9 +10,6 @@ sed -i "4s/.*/gtk-theme-name=WhiteSur-light/g" ~/.config/gtk-3.0/settings.ini
 # Picom
 sed -i "7s/.*/shadow-opacity = 0.05;/g" ~/.config/picom/picom.conf
 
-# Spotify
-spicetify config color_scheme white
-spicetify update
 
 #terminal 
 kitty +kitten themes --reload-in=all Light

@@ -8,22 +8,26 @@ local dpi = xresources.apply_dpi
 local helpers = require("helpers")
 
 
+-- Default notification theme
+
 naughty.config.defaults.ontop = true
 naughty.config.defaults.icon_size = dpi(30)
 naughty.config.defaults.screen = awful.screen.focused()
-naughty.config.defaults.timeout = 3
+naughty.config.defaults.timeout = 5
 naughty.config.defaults.title = "Notification"
 naughty.config.defaults.position = "top_right"
 
+
+-- icons for notifications
+
 naughty.config.icon_dirs = {
-    "/usr/share/icons/Papirus-Dark/24x24/apps/", "/usr/share/pixmaps/"
+    "/usr/share/icons/Mkos-Big-Sur/", "/usr/share/Mkos-Big-Sur/"
 }
-naughty.config.icon_formats = {"png", "svg"}
+naughty.config.icon_formats = {"png", "svg", "jpg"}
 
 -- Timeouts
-naughty.config.presets.low.timeout = 3
+naughty.config.presets.low.timeout = 5
 naughty.config.presets.critical.timeout = 0
-
 naughty.config.presets.ok = naughty.config.presets.normal
 naughty.config.presets.info = naughty.config.presets.normal
 naughty.config.presets.warn = naughty.config.presets.critical
@@ -32,7 +36,7 @@ naughty.connect_signal("request::display", function(notify)
 
     local time = os.date "%I:%M"
 
-    notify.timeout = 8
+    notify.timeout = 10
 
     local appicon = notify.icon or notify.app_icon
     if not appicon then appicon = beautiful.notification_icon end
