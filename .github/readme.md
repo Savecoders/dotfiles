@@ -3,7 +3,6 @@
 
 ## __Hi!__
 
-
 to my dotfiles!
 Here are some details about my setup
 
@@ -24,6 +23,7 @@ Here are some details about my setup
 </div>
 
 ### QTile
+
 <div align="center">
    <a href="#--------">
       <img src="assets/Qtile/rice_dark.png" alt="Rice dark theme Preview">
@@ -32,19 +32,17 @@ Here are some details about my setup
 
 <!-- INFORMATION -->
 
-
 ## <samp>Information</samp>
 
 Here are some details about my setup:
 
-- **OS:** [Arch Linux](https://archlinux.org)
+- __OS:__ [Arch Linux](https://archlinux.org)
 - __WM:__ [awesome](https://github.com/awesomeWM/awesome) or [Qtile](http://www.qtile.org/)
-- **Terminal:** [alacritty](https://github.com/alacritty/alacritty)
-- **Shell:** [zsh](https://www.zsh.org/)
-- **Editor:** [neovim](https://github.com/neovim/neovim) / [vscode](https://github.com/microsoft/vscode)
-- **Compositor:** [picom](https://github.com/yshui/picom)
-- **Application Launcher:** [rofi](https://github.com/davatorium/rofi)
-
+- __Terminal:__ [alacritty](https://github.com/alacritty/alacritty)
+- __Shell:__ [zsh](https://www.zsh.org/)
+- __Editor:__ [neovim](https://github.com/neovim/neovim) / [vscode](https://github.com/microsoft/vscode)
+- __Compositor:__ [picom](https://github.com/yshui/picom)
+- __Application Launcher:__ [rofi](https://github.com/davatorium/rofi)
 
 <!-- Install dependencies-->
 
@@ -87,7 +85,6 @@ Here are some details about my setup:
    ```sh
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
    ```  
-   
 
 <!-- information about -->
 <details close>
@@ -97,29 +94,28 @@ Here are some details about my setup:
 
 <br>
 
-* **Fonts and icons**
-    * as for fonts, the setup uses 4 fonts in total
-        - *[SF Pro Display](https://github.com/sahibjotsagguSan-Francisco-Pro-Fonts)* - my main ui font
-        - *[Font Awesome 6 Free](https://fontawesome.com/download)* - for icons the weather
-        - *[JetBrainsMono NF](https://www.jetbrains.com/es-es/lp/mono/)* - icons of signals
-        - *[Cascadia Code](https://github.com/microsoft/cascadia-code)* - Editor/terminal
-    * in the tag config, using images for icons, the images They're in `awesome/icons/tag/`
-
-
-<br>
-
-* **custom theme?**
-    * for dark, edit `theme/dark/dark.lua`
-    * for light, edit `theme/light/light.lua`
-    * agg display theme selection `theme/selection_theme.lua`
+- __Fonts and icons__
+  - as for fonts, the setup uses 4 fonts in total
+    - *[SF Pro Display](https://github.com/sahibjotsagguSan-Francisco-Pro-Fonts)* - my main ui font
+    - *[Font Awesome 6 Free](https://fontawesome.com/download)* - for icons the weather
+    - *[JetBrainsMono NF](https://www.jetbrains.com/es-es/lp/mono/)* - icons of signals
+    - *[Cascadia Code](https://github.com/microsoft/cascadia-code)* - Editor/terminal
+  - in the tag config, using images for icons, the images They're in `awesome/icons/tag/`
 
 <br>
 
-* **wallpapers and profile**
-    * by default wallpapers are found by theme
-        - example: `theme.wallpaper = gfs.get_configuration_dir() .. "wallpapers/hands.jpg"`
-        - in wallpapers folder add new wallpapers  `awesome/wallpapers`
-        - replace existing wallpapers with new ones in: `"wallpapers/new_walpapers.jpg"`
+- __custom theme?__
+  - for dark, edit `theme/dark/dark.lua`
+  - for light, edit `theme/light/light.lua`
+  - agg display theme selection `theme/selection_theme.lua`
+
+<br>
+
+- __wallpapers and profile__
+  - by default wallpapers are found by theme
+    - example: `theme.wallpaper = gfs.get_configuration_dir() .. "wallpapers/hands.jpg"`
+    - in wallpapers folder add new wallpapers  `awesome/wallpapers`
+    - replace existing wallpapers with new ones in: `"wallpapers/new_walpapers.jpg"`
 <br>
 
 </details>
@@ -130,18 +126,16 @@ Here are some details about my setup:
     </summary>
 
 <br>
-    
-* **[Bling](https://blingcorp.github.io/bling/)**
 
-    * use in Playerctl widget, layout
-* **[Rubato](https://github.com/andOrlando/rubato)**
+- **[Bling](https://blingcorp.github.io/bling/)**
 
-    * Create animation for aweosmeWM
+  - use in Playerctl widget, layout
+- **[Rubato](https://github.com/andOrlando/rubato)**
 
+  - Create animation for aweosmeWM
 
-* **[Better resize](https://github.com/JavaCafe01/dotfiles/blob/master/config/awesome/module/better-resize.lua)**
+- **[Better resize](https://github.com/JavaCafe01/dotfiles/blob/master/config/awesome/module/better-resize.lua)**
 
-    * An improved method of resizing clients in the tiled layout, and maded by [javacafe01](https://github.com/JavaCafe01)
-
+  - An improved method of resizing clients in the tiled layout, and maded by [javacafe01](https://github.com/JavaCafe01)
 
 </details>

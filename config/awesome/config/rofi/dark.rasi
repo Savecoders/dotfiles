@@ -1,33 +1,49 @@
 // Dark mode
 
 configuration {
-    modi: "drun";
-    display-drun: "";
-    drun-display-format: " {name}";
-    font: "SF Pro Display Bold 15";
+    modi: "run,drun,window";
+    icon-theme: "Oranchelo";
+    show-icons: true;
+    terminal: "kitty";
+    drun-display-format: "{icon} {name}";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "  ";
+    display-run: "  ";
+    display-window: "  ";
+    display-Network: " 󰤨 ";
+    sidebar-mode: true;
 }
 
 * {
-    bg: #131417;
+    bg-col:  #131417;
+    bg-col-light: #18191D;
+    border-col: #18191D;
+    selected-col: #131417;
     fg: #FBFBFB;
-    alt: #3F8CFF;
-    rad: 8px;
-
-    background-color: @bg;
+    blue: #3F8CFF;
+    fg-col: #FBFBFB;
+    fg-col2: #f38ba8;
+    grey: #6c7086;
+    rad: 10px;
     text-color: @fg;
     font: "SF Pro Display Medium 15";
 }
 
-window { 
-    location: center;
-    anchor: center;
-    width: 20%;
-    background-color: #0000;
-    border-radius: @rad; 
+element-text, element-icon , mode-switcher {
+    background-color: inherit;
+    text-color:       inherit;
 }
 
-mainbox { 
-    children: [ inputbar, listview ];
+window {
+    location: center;
+    width: 18%;
+    border-radius: @rad; 
+    background-color: #0000;
+}
+
+mainbox {
     spacing: 2%;
     background-color: #0000;
 }
@@ -36,17 +52,28 @@ inputbar {
     children: [ entry ];
     padding: 0.8em 0 0.8em 0;
     border-radius: @rad;
-    background-color: @bg;
+    background-color: @bg-col;
     text-color: @fg;
 }
 
-element-text, entry { vertical-align: 0.5; }
+prompt {
+    background-color: @blue;
+    padding: 6px;
+    text-color: @bg-col;
+    border-radius: 3px;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: ":";
+}
 
 entry {
     padding: 1.5% 3%;
     placeholder: "Search App";
     border-radius: @rad;
-    
+    background-color: @bg-col;
+
 }
 
 listview {
@@ -54,16 +81,45 @@ listview {
     border-radius: @rad;
     layout: vertical;
     lines: 3;
+    background-color: @bg-col;
+
 }
 
 element {
     padding: 2% 3%;
     border-radius: @rad;
+    background-color: @bg-col;
+
+}
+
+element-icon {
+    size: 22px;
+}
+
+element selected {
+    background-color: @bg-col;
+    text-color: @fg-col2  ;
 }
 
 element selected, element-text selected { 
-    text-color: @alt; 
+    text-color: @blue; 
 }
 
 listview, element, element-selected, element-text { cursor: pointer; }
 entry { cursor: text; }
+
+mode-switcher {
+    spacing: 16;
+  }
+
+button {
+    padding: 1% 0 1% 0;
+    background-color: @bg-col-light;
+    text-color: @grey;
+    border-radius: @rad;
+}
+
+button selected {
+  background-color: @bg-col;
+  text-color: @fg;
+}
