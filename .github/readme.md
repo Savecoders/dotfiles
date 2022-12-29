@@ -1,54 +1,48 @@
+<!-- inspired by rxyhn's and AlphaTechnolog readme -->
 
-<h2 align="center" style="font-weight: bold">My dotfiles for rice AwesomeWM</h2>
+<img
+ align="center"
+ src="assets/Awesome/rofiAndOthers.png"
+ alt="Rice Preview"
+/>
 
-## __Hi!__
+<br>
+
+<!-- BADGES -->
+<h1>
+  <a href="#">
+    <img alt="" align="left" src="https://img.shields.io/github/stars/Savecoders/dotfiles?color=1D1F22&labelColor=FF9CAC&style=for-the-badge"/>
+  </a>
+  <a href="#">
+    <img alt="" align="right" src="https://badges.pufler.dev/visits/AlphaTechnolog/dotfiles?style=for-the-badge&color=7ddac5&logoColor=white&labelColor=7ddac5"/>
+  </a>
+</h1>
+
+<h2 align="center" style="font-weight:mediun; padding:30px;">💻 My dotfiles for rice AwesomeWM</h2>
 
 to my dotfiles!
 Here are some details about my setup
 
-### AwesomeWM
-
-<!-- Dark theme -->
-<div align="center">
-   <a href="#--------">
-      <img src="assets/Awesome/rice_dark.png" alt="Rice dark theme Preview">
-   </a>
-</div>
-
-<!-- light theme -->
-<div align="center">
-   <a href="#--------">
-      <img src="assets/Awesome/rice_light.png" alt="Rice dark theme Preview">
-   </a>
-</div>
-
-### QTile
-
-<div align="center">
-   <a href="#--------">
-      <img src="assets/Qtile/rice_dark.png" alt="Rice dark theme Preview">
-   </a>
-</div>
-
 <!-- INFORMATION -->
 
-## <samp>Information</samp>
+## <samp>🧰 __Information__ </samp>
 
 Here are some details about my setup:
 
-- __OS:__ [Arch Linux](https://archlinux.org)
+- __OS:__ [Arco Linux](https://arcolinux.com/)
 - __WM:__ [awesome](https://github.com/awesomeWM/awesome) or [Qtile](http://www.qtile.org/)
-- __Terminal:__ [alacritty](https://github.com/alacritty/alacritty)
+- __Terminal:__ [kitty](https://sw.kovidgoyal.net/kitty/)
 - __Shell:__ [zsh](https://www.zsh.org/)
-- __Editor:__ [neovim](https://github.com/neovim/neovim) / [vscode](https://github.com/microsoft/vscode)
-- __Compositor:__ [picom](https://github.com/yshui/picom)
 - __Application Launcher:__ [rofi](https://github.com/davatorium/rofi)
+- __Compositor:__ [picom](https://github.com/yshui/picom)
+- __Editor:__ [neovim](https://github.com/neovim/neovim) | [vscode](https://github.com/microsoft/vscode)
+- __System Font:__ [SF Pro Display](https://github.com/sahibjotsagguSan-Francisco-Pro-Fonts)
 
 <!-- Install dependencies-->
 
-## <samp>Setup</samp>
+## <samp>📷 __Setup__ </samp>
 
-<h3>Install necessary dependencies and others programs</h3>
+> <h3>Install necessary dependencies and others programs</h3>
 
    ```sh
    paru -Sy awesome-git picom-git kitty rofi  acpi acpid acpi_call upower \
@@ -57,7 +51,7 @@ Here are some details about my setup:
    feh mpv mpd mpc mpdris2 ncmpcpp playerctl qtile Thunar zsh --needed 
    ```
 
-<h3>Enable Services</h3>
+<b><h3>Enable Services</h3></b>
 
    ```sh
    systemctl --user enable mpd.service
@@ -80,11 +74,83 @@ Here are some details about my setup:
    cp -r misc/.zshrc ~
    ```
 
+<h3> Use others rxfetch</h3>
+
+   ```sh
+   cd neofetch && chmod +x singfetch
+   sudo cp -r singfetch /usr/bin/ 
+   ```
+
 <h3> Install ohmyzsh</h3>
 
    ```sh
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
    ```  
+
+### 🔵 AwesomeWM
+
+<!-- Dark theme -->
+<div align="center">
+   <a href="#--------">
+      <img src="assets/Awesome/rice_dark.png" alt="Rice dark theme Preview">
+   </a>
+</div>
+
+<!-- light theme -->
+<div align="center">
+   <a href="#--------">
+      <img src="assets/Awesome/rice_light.png" alt="Rice dark theme Preview">
+   </a>
+</div>
+
+### 🟢 QTile
+
+<div align="center">
+   <a href="#--------">
+      <img src="assets/Qtile/rice_dark.png" alt="Rice dark theme Preview">
+   </a>
+</div>
+
+<details open>
+    <summary>
+        <samp><b>Galery</b></samp>
+    </summary>
+
+   <!-- Dark theme -->
+
+   <div align="center">
+      <a href="#--------">
+         <img src="assets/Awesome/rice_dark_home.png" alt="Rice dark theme Preview">
+      </a>
+   </div>
+
+   <div align="center">
+      <a href="#--------">
+         <img src="assets/Awesome/rofiAndOthers.png" alt="Rice dark theme Preview">
+      </a>
+   </div>
+
+   <div align="center">
+      <a href="#--------">
+         <img src="assets/Awesome/rice_dark_terminal.png" alt="Rice dark theme Preview">
+      </a>
+   </div>
+
+   <!-- light theme -->
+
+   <div align="center">
+      <a href="#--------">
+         <img src="assets/Awesome/rice_light_home.png" alt="Rice light theme Preview">
+      </a>
+   </div>
+
+   <div align="center">
+      <a href="#--------">
+         <img src="assets/Awesome/rice_light_terminal.png" alt="Rice light theme Preview">
+      </a>
+   </div>
+
+</details>
 
 <!-- information about -->
 <details close>

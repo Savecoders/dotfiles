@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# the config file for singfetch
+# the credits is 
+# https://github.com/Mangeshrex/rxfetch/issues/21
 
 #colors
 #bold="(tput bold)"
