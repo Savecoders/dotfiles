@@ -152,6 +152,14 @@ Here are some details about my setup:
 
 </details>
 
+## Special Thanks
+
+The dotfiles is based in
+and the other parts of code is the others devs :)
+
+- [Rayhan's](https://github.com/rxyhn) [Dotfiles](https://github.com/rxyhn/AwesomeWM-Dotfiles)
+- [ChocolateBread799](https://github.com/ChocolateBread799) [Dotfiles](https://github.com/ChocolateBread799/dotfiles)
+
 <!-- information about -->
 <details close>
     <summary>
