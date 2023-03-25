@@ -55,7 +55,7 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     #    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod], "r", lazy.spawn("rofi -show drun -theme ~/.config/awesome/config/rofi/dark.rasi"),
+    Key([mod], "r", lazy.spawn("rofi -show drun -theme ~/.config/rofi/dark.rasi"),
         desc="Spawn a command using a prompt widget"),
 
     # ------------ Hardware Configs ------------

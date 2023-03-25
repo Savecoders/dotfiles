@@ -20,6 +20,7 @@ music_player = "spotify"
 vscode = "code"
 discord = "discord"
 lockscreen = "betterlockscreen -l"
+modkey = "Mod4"
 
 clientbuttons = gears.table.join(awful.button({}, 1, function(c)
     
@@ -37,7 +38,6 @@ clientbuttons = gears.table.join(awful.button({}, 1, function(c)
     end)
 )
 
-modkey = "Mod4"
 
 mykeyboardlayout = awful.widget.keyboardlayout()
 
@@ -306,10 +306,10 @@ globalkeys = gears.table.join(
     awful.key({modkey}, "r", function()
         if theme == themes[1] then
             awful.spawn.easy_async_with_shell(
-                'rofi -show drun -theme ' .. gfs.get_configuration_dir() ..'/config/rofi/light.rasi' .. ' -show-icons')
+                'rofi -show drun -theme ' ..'~/.config/rofi/light.rasi' .. ' -show-icons')
         else
             awful.spawn.easy_async_with_shell(
-                'rofi -show drun -theme ' .. gfs.get_configuration_dir() ..'/config/rofi/dark.rasi' ..' -show-icons')
+                'rofi -show drun -theme ' ..'~/.config/rofi/dark.rasi' ..' -show-icons')
         end
         end, {
             description = "show the menubar",
