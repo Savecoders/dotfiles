@@ -1,0 +1,50 @@
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+[color]
+
+;; main colors
+background = #282828
+background-alt = #D4CFC1
+foreground = #E5D5AE
+foreground-alt = #808080
+primary = #BB553F
+
+#282828
+ #black: '#282828'
+  #  red: '#cc241d'
+  # green: '#98971a'
+  #  yellow: '#d79921'
+   # blue: '#458588'
+  #  magenta: '#b16286'
+  #  cyan: '#689d6a'
+  #  white: '#a89984'
+
+#background = #24283B
+#background-alt = #282828
+#foreground = #9CA5CA
+#foreground-alt = #808080
+#primary = #61AEFE
+#alpha = #00000000
+
+
+
+#black = #000000
+#white = #FFFFFF
+#red = #e06c75
+#green = #98c379
+#yellow = #e5c07b
+#blue = #61afef
+#purple = #c678dd
+#cyan = #56b6c2
+
+black = 0x1D202F
+red = 0xf7768e
+green = 0x9ece6a
+yellow = 0xe0af68
+blue = 0x7aa2f7
+magenta = 0xbb9af7
+cyan = 0x7dcfff
+white = 0xa9b1d6
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
