@@ -48,7 +48,7 @@ Here are some details about my setup:
    paru -Sy awesome-git picom-git kitty rofi  acpi acpid acpi_call upower \
    jq inotify-tools xdotool xclip gpick ffmpeg blueman zsh-autosuggestions \
    pamixer brightnessctl scrot redshift rainfall zsh-syntax-highlighting \
-   feh mpv mpd mpc mpdris2 ncmpcpp playerctl qtile Thunar zsh --needed 
+   feh mpv mpd mpc mpdris2 ncmpcpp playerctl qtile tunar zsh --needed 
    ```
 
 <b><h3>Enable Services</h3></b>
@@ -211,5 +211,19 @@ and the other parts of code is the others devs :)
 - **[Better resize](https://github.com/JavaCafe01/dotfiles/blob/master/config/awesome/module/better-resize.lua)**
 
   - An improved method of resizing clients in the tiled layout, and maded by [javacafe01](https://github.com/JavaCafe01)
+
+</details>
+
+
+<details open>
+    <summary>
+        <samp><b>Installation bugs</b></samp>
+    </summary>
+
+<br>
+
+- Installing to submodules git layout-machi
+  - clone the repo [layout-achi](https://github.com/xinhaoyuan/layout-machi)
+  - copy the content and page in ~/.config/awesome/modules/layout-machi
 
 </details>
