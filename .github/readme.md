@@ -40,9 +40,28 @@ Here are some details about my setup:
 
 <!-- Install dependencies-->
 
-## <samp>📷 __Setup__ </samp>
+## <samp>🎢 __installation__ </samp>
 
-> <h3>Install necessary dependencies and others programs</h3>
+<b><h3>Clone this repository</h3></b>
+
+   ```sh
+   git clone --recurse-submodules https://github.com/Savecoders/dotfiles.git
+   cd dotfiles && git submodule update --remote --merge
+   ```
+<b><h3>use the script</h3></b>
+
+   ```sh
+   chmod +x resources/install.sh && ./resources/install.sh
+   ```
+
+<samp> __Do you want to install manually?__ </samp>
+
+<details close>
+    <summary>
+        <samp><b>Installation Manual Dotfiles</b></samp>
+    </summary>
+
+<b><h3>Install Dependencies</h3></b>
 
    ```sh
    paru -Sy awesome-git picom-git kitty rofi  acpi acpid acpi_call upower \
@@ -58,14 +77,14 @@ Here are some details about my setup:
    systemctl --user start mpd.service
    ```
 
-<h3>Clone this repository</h3>
+<b><h3>Clone this repository</h3></b>
 
    ```sh
    git clone --recurse-submodules https://github.com/Savecoders/dotfiles.git
    cd dotfiles && git submodule update --remote --merge
    ```
 
-<h3> Use config</h3>
+<b><h3> Use config</h3></b>
 
    ```sh
    cp -r config/* ~/.config/
@@ -74,18 +93,20 @@ Here are some details about my setup:
    cp -r misc/.zshrc ~
    ```
 
-<h3> Use others rxfetch</h3>
+<b><h3> Use others rxfetch</h3></b>
 
    ```sh
    cd neofetch && chmod +x singfetch
    sudo cp -r singfetch /usr/bin/ 
    ```
 
-<h3> Install ohmyzsh</h3>
+<b><h3> Install ohmyzsh</h3></b>
 
    ```sh
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
    ```  
+
+</details>
 
 ### 🔵 AwesomeWM
 
