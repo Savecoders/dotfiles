@@ -46,8 +46,21 @@ Here are some details about my setup:
 
    ```sh
    git clone --recurse-submodules https://github.com/Savecoders/dotfiles.git
-   cd dotfiles && git submodule update --remote --merge
+   cd dotfiles && git submodule update --remote --merge 
    ```
+
+<b><h3>⁉ Error clone submodules?</h3></b>
+
+   ```sh
+   mkdir dev && cd dev && git clone https://github.com/Savecoders/dotfiles.git
+   git clone https://github.com/xinhaoyuan/layout-machi.git
+   git clone https://github.com/BlingCorp/bling.git
+   git clone https://github.com/Savecoders/simpleTheme-zsh-theme
+   cp -r layout-machi/* dotfiles/config/awesome/modules/layout-machi/
+   cp -r bling/* dotfiles/config/awesome/modules/bling/
+   cp -r simpleTheme-zsh-theme/* dotfiles/misc/oh-my-zsh/themes/simpleTheme-zsh-theme
+   ```
+
 <b><h3>use the script</h3></b>
 
    ```sh
@@ -80,8 +93,8 @@ Here are some details about my setup:
 <b><h3>Clone this repository</h3></b>
 
    ```sh
-   git clone --recurse-submodules https://github.com/Savecoders/dotfiles.git
-   cd dotfiles && git submodule update --remote --merge
+   git clone https://github.com/Savecoders/dotfiles.git
+   cd dotfiles 
    ```
 
 <b><h3> Use config</h3></b>
@@ -234,7 +247,6 @@ and the other parts of code is the others devs :)
   - An improved method of resizing clients in the tiled layout, and maded by [javacafe01](https://github.com/JavaCafe01)
 
 </details>
-
 
 <details open>
     <summary>

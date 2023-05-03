@@ -15,7 +15,7 @@ require("awful.hotkeys_popup.keys")
 require("awful.autofocus")
 
 terminal = "kitty"
-browser = "microsoft-edge-stable"
+browser = "brave"
 music_player = "spotify"
 vscode = "code"
 discord = "discord"
@@ -188,14 +188,15 @@ globalkeys = gears.table.join(
         group = "awesome"
     }), 
 
-    -- Screenshots
+    -- Screenshot 
     
 	awful.key({}, "Print", function()
 		awful.spawn.easy_async_with_shell(apps.utils.full_screenshot, function() end)
 	end, { description = "take a full screenshot", group = "hotkeys" }),
 
+    -- short screenshot
 
-	awful.key({ modkey }, "Print", function()
+	awful.key({ modkey, "Shift" }, "s", function()
 		awful.spawn.easy_async_with_shell(apps.utils.area_screenshot, function() end)
 	    end, { description = "take a area screenshot", group = "hotkeys" }),
 

@@ -64,3 +64,6 @@ cp -r config/* ~/.config/
 cp -r misc/fonts/* ~/.local/share/fonts/
 cp -r misc/oh-my-zsh ~/.oh-my-zsh
 cp -r misc/.zshrc ~
+
+# Wallpapers
+mkdir -p ~/Wallpapers && cp -r misc/wallpapers/* ~/Wallpapers

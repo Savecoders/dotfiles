@@ -1,9 +1,9 @@
-[submodule "config/awesome/modules/layout-machi"]
-	path = config/awesome/modules/layout-machi
-	url = https://github.com/xinhaoyuan/layout-machi.git
-[submodule "config/awesome/modules/bling"]
-	path = config/awesome/modules/bling
-	url = https://github.com/BlingCorp/bling.git
 [submodule "misc/zsh/simpleTheme-zsh-theme"]
 	path = misc/zsh/simpleTheme-zsh-theme
 	url = https://github.com/Savecoders/simpleTheme-zsh-theme
+[submodule "config/awesome/modules/bling"]
+	path = config/awesome/modules/bling
+	url = https://github.com/BlingCorp/bling.git
+[submodule "config/awesome/modules/layout-machi"]
+	path = config/awesome/modules/layout-machi
+	url = https://github.com/xinhaoyuan/layout-machi.git
