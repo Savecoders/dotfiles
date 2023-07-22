@@ -14,7 +14,6 @@ gpick
 ffmpeg
 blueman
 zsh-autosuggestions
-pamixer 
 brightnessctl
 scrot
 redshift
@@ -27,6 +26,9 @@ mpc
 mpdris2
 ncmpcpp
 playerctl
-qtile
-tunar
+thunar
 zsh
+noto-fonts-emoji
+cava
+ttf-cascadia-code
+ttf-firacode-nerd

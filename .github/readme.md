@@ -58,7 +58,7 @@ Here are some details about my setup:
    git clone https://github.com/Savecoders/simpleTheme-zsh-theme
    cp -r layout-machi/* dotfiles/config/awesome/modules/layout-machi/
    cp -r bling/* dotfiles/config/awesome/modules/bling/
-   cp -r simpleTheme-zsh-theme/* dotfiles/misc/oh-my-zsh/themes/simpleTheme-zsh-theme
+   cp -r simpleTheme-zsh-theme/* dotfiles/misc/zsh/simpleTheme-zsh-theme
    ```
 
 <b><h3>use the script</h3></b>

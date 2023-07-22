@@ -17,8 +17,9 @@ source $ZSH/oh-my-zsh.sh
 alias ls="exa --icons --group-directories-first"
 alias cat="bat"
 alias tree="exa --icons -T"
-
-
+alias py="python3"
+alias icat="kitty +kitten icat"
+alias rmNM="find . -name "node_modules" -exec rm -rf '{}' +; find . -name "package-lock.json" -exec rm -rf '{}' +"
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -87,3 +88,10 @@ function rmk(){
 	scrub -p dod $1
 	shred -zun 10 -v $1
 }
+
+# Android config 
+# export ANDROID_HOME=$HOME/Android/Sdk
+# export PATH=$PATH:$ANDROID_HOME/emulator
+# export PATH=$PATH:$ANDROID_HOME/tools
+# export PATH=$PATH:$ANDROID_HOME/tools/bin
+# export PATH=$PATH:$ANDROID_HOME/platform-tools
