@@ -20,6 +20,7 @@ alias tree="exa --icons -T"
 alias py="python3"
 alias icat="kitty +kitten icat"
 alias rmNM="find . -name "node_modules" -exec rm -rf '{}' +; find . -name "package-lock.json" -exec rm -rf '{}' +"
+
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

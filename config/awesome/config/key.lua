@@ -168,10 +168,8 @@ globalkeys = gears.table.join(
     awful.key({modkey}, "Return", function()
         if theme == themes[1] then
             awful.spawn.with_shell(terminal)
-        -- awful.spawn.with_shell("wezterm --config-file ~/.config/awesome/config/wezterm/light.lua")
         else
             awful.spawn.with_shell(terminal)
-        -- awful.spawn.with_shell("wezterm --config-file ~/.config/awesome/config/wezterm/dark.lua")
         end
         end, {
             description = "open a terminal",

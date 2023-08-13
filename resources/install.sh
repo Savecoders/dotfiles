@@ -79,9 +79,29 @@ do
       esac
 done
 
+while true
+do
+      read -r -p "Do you want to install zsh and ohmyzsh? [Y/n] " input
+
+      case $input in
+            [yY][eE][sS]|[yY])
+                  echo Installing!
+                  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+                  break
+                  ;;
+            [nN][oO]|[nN])
+                  echo "Okay!"
+                  break
+                  ;;
+            *)
+                  echo "Invalid input..."
+                  ;;
+      esac
+done
+
 # enable services
-# systemctl enable mpd.service
-# systemctl start mpd.service
+systemctl enable mpd.service
+systemctl start mpd.service
 
 # Install Oh My Zsh
 # sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended 
@@ -100,8 +120,9 @@ cp -r ../misc/zsh/.zshrc ~
 # Fonts
 
 echo "Copying fonts..."
-
 cp -r ../misc/fonts/* ~/.local/share/fonts/
 
+
 # Wallpapers
-mkdir -p ~/Wallpapers && cp -r ../misc/wallpapers/* ~/Wallpapers
+echo "Copying Wallpapers..."
+mkdir -p ~/Pictures/Wallpapers && cp -r ../misc/wallpapers/* ~/Pictures/Wallpapers

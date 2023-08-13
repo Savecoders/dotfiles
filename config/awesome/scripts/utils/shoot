@@ -2,7 +2,7 @@
 
 img="shot_$(date '+%m%d%H%M%S').png"
 
-file="$HOME/Pictures/$img"
+file="$HOME/Pictures/Screenshots/$img"
 
 case $1 in
     "sel")
