@@ -32,3 +32,5 @@ noto-fonts-emoji
 cava
 ttf-cascadia-code
 ttf-firacode-nerd
+lightdm
+lightdm-webkit2-greeter

@@ -103,25 +103,21 @@ done
 systemctl enable mpd.service
 systemctl start mpd.service
 
-# Install Oh My Zsh
-# sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended 
-
 # copy config files
-
 echo "Copying config files..."
-
 cp -r ../config/* ~/.config/
 
+# copy misc resources
 echo "Copying misc resources..."
-
 cp -r ../misc/zsh/simpleTheme-zsh-theme/* ~/.oh-my-zsh/themes/
 cp -r ../misc/zsh/.zshrc ~
 
 # Fonts
-
 echo "Copying fonts..."
 cp -r ../misc/fonts/* ~/.local/share/fonts/
 
+# lightdm
+cp -r ~/Dev/MyConfig/dotfiles/config/lightdm/* /usr/share/lightdm-webkit/themes/
 
 # Wallpapers
 echo "Copying Wallpapers..."

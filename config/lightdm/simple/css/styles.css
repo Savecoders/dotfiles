@@ -1,0 +1,229 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../images/bg.jpg");
+  background-repeat: no-repeat;
+  z-index: -999;
+  overflow: hidden;
+}
+
+#wrapper>* {
+  transition: opacity .5s;
+}
+
+#wrapper.inactive>* {
+  opacity: 0;
+}
+
+#wrapper.active>* {
+  opacity: 1;
+}
+
+#wrapper.inactive>#time {
+  opacity: 1;
+}
+
+body {
+  font-family: "SF Pro Text", sans-serif;
+}
+
+/* time*/
+
+#time {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  text-align: right;
+  color: white;
+  padding: 20px;
+  text-shadow: 0 0 5px #000;
+}
+
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0.2;
+  background-attachment: fixed;
+  filter: brightness(60%);
+}
+
+#time h1 {
+  font-size: 96px;
+  font-style: normal;
+  font-weight: 1;
+}
+
+#time h2 {
+  font-weight: 1;
+}
+
+/* user */
+#users {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+}
+
+.user {
+  position: relative;
+  padding: 10px 15px;
+  display: table;
+  height: 64px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+#alt-users>div {
+  cursor: pointer;
+}
+
+#alt-users>div:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.user .background {
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.user h1 {
+  font-size: 15px;
+  color: #fff;
+  margin-left: 20px;
+  text-shadow: 0 0 5px #000;
+}
+
+#main-user h1 {
+  margin-top: -5px;
+  margin-bottom: 5px;
+}
+
+#main-user .warn {
+  font-size: 10px;
+  margin-left: 20px;
+  margin-top: 5px;
+  margin-bottom: -3px;
+  color: #ddd;
+}
+
+.user input[type="password"] {
+  width: 100%;
+  padding: 5px 20px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+.user .avatar {
+  width: 64px;
+  height: 64px;
+  margin-right: 10px;
+  background-size: contain;
+  cursor: pointer;
+}
+
+/*alt user */
+#alt-users {
+  transition: margin-left 0.3s;
+}
+
+#alt-users.hidden {
+  margin-left: -280px;
+}
+
+#alt-users.shown {
+  margin-left: 0;
+}
+
+/*btns */
+#actions {
+  position: absolute;
+  right: 40px;
+  top: 40px;
+  padding: 5px 15px;
+  height: 42px;
+  border-radius: 20px;
+}
+
+#actions .background {
+  border-radius: 20px;
+}
+
+#actions span {
+  display: inline-block;
+  width: 32px;
+  height: 33px;
+  cursor: pointer;
+  background-position: center;
+  border-bottom: 1px solid transparent;
+  margin-right: 5px;
+}
+
+#actions span:last-child {
+  margin-right: 0;
+}
+
+#actions span:hover {
+  border-bottom: 1px solid #fff;
+}
+
+#poweroff {
+  background-image: url("../icons/system-shutdown.svg");
+}
+
+#reboot {
+  background-image: url("../icons/reboot.svg");
+}
+
+#suspend {
+  background-image: url("../icons/system-suspend.svg");
+}
+
+#hibernate {
+  background-image: url("../icons/system-suspend-hibernate.svg");
+}
+
+/*session bar*/
+#session-bar {
+  position: absolute;
+  left: 40px;
+  bottom: 10px;
+  list-style-type: none;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#session-bar .background {
+  border-radius: 10px;
+}
+
+#session-bar li {
+  display: inline-block;
+  border-right: 1px solid #aaa;
+  padding: 0 10px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+#session-bar li:last-child {
+  border: 0 none;
+}
+
+#session-bar li.active {
+  color: #fff;
+  font-weight: bold;
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>login</title>
+    <meta charset='utf-8' />
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div id="wrapper" class="inactive">
+        <div id="actions">
+            <div class="background"></div>
+            <span id="poweroff" title="poweroff"></span>
+            <span id="reboot" title="reboot"></span>
+            <span id="suspend" title="suspend"></span>
+            <span id="hibernate" title="hibernate"></span>
+        </div>
+        <ul id="session-bar">
+            <div class="background"></div>
+            <div class="container"></div>
+        </ul>
+        <div id="users">
+            <div id="alt-users" class="hidden"></div>
+            <div class="user" id="main-user">
+                <div class="background"></div>
+                <div style='display:table-cell; vertical-align: bottom;'>
+                    <div class="avatar"></div>
+                </div>
+                <div style='display:table-cell; vertical-align: bottom;'>
+                    <h1>name</h1>
+                    <input class="password" type="password" placeholder="パスワード" />
+                    <p class="warn" style="display:none;">try again?</p>
+                </div>
+            </div>
+        </div>
+        <div id="time">
+            <h1 id="time-text">00:00</h1>
+            <h2 id="date-text">monday, jan 1</h2>
+        </div>
+    </div>
+    <script src="./js/query.js">
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+[theme]
+name=simple
+description=Simple Lightdm theme
+engine=lightdm-webkit-greeter
+url=index.html
+session=qshell
