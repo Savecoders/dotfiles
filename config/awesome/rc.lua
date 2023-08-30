@@ -25,7 +25,8 @@ screen_height = awful.screen.focused().geometry.height
 
 themes = {
     "light", 
-    "dark"
+    "dark",
+    "gruvbox"
 }
 
 theme = themes[1]
