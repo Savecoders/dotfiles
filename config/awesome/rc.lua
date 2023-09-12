@@ -29,7 +29,7 @@ themes = {
     "gruvbox"
 }
 
-theme = themes[1]
+theme = themes[3]
 
 beautiful.init(gfs.get_configuration_dir() .. "theme/" .. theme .. "/theme.lua")
 
