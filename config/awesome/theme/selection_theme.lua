@@ -78,17 +78,19 @@ theme_screen:setup {
 			spacing = dpi(20),
 			layout = wibox.layout.fixed.horizontal,
 		},
+		
+		{
+			gruvbox,
+			spacing = dpi(20),
+			layout = wibox.layout.fixed.horizontal,
+		},
+		
 		{
 			light,
 			spacing = dpi(20),
 			layout = wibox.layout.fixed.horizontal,
 		},
 
-		{
-			gruvbox,
-			spacing = dpi(20),
-			layout = wibox.layout.fixed.horizontal,
-		},
 		layout = wibox.layout.fixed.horizontal,
 		spacing = dpi(24)
 	},

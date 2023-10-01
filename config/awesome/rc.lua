@@ -24,12 +24,12 @@ screen_height = awful.screen.focused().geometry.height
 -- 🎨 Theme
 
 themes = {
+    "gruvbox",
     "light", 
     "dark",
-    "gruvbox"
 }
 
-theme = themes[3]
+theme = themes[1]
 
 beautiful.init(gfs.get_configuration_dir() .. "theme/" .. theme .. "/theme.lua")
 

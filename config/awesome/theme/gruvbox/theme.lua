@@ -29,6 +29,7 @@ theme.useless_less = 8
 
 -- colors
 -- #131417
+
 theme.bg = "#1d2021"
 theme.bg_sidebar = "#1d2021"
 theme.bg_selected = "#1b2021" --

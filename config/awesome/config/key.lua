@@ -166,11 +166,8 @@ globalkeys = gears.table.join(
     
     -- Standard program
     awful.key({modkey}, "Return", function()
-        if theme == themes[1] then
             awful.spawn.with_shell(terminal)
-        else
-            awful.spawn.with_shell(terminal)
-        end
+       
         end, {
             description = "open a terminal",
             group = "launcher"
@@ -306,9 +303,12 @@ globalkeys = gears.table.join(
         if theme == themes[1] then
             awful.spawn.easy_async_with_shell(
                 'rofi -show drun -theme ' ..'~/.config/rofi/light.rasi' .. ' -show-icons')
-        else
+        elseif theme == themes[2] then
             awful.spawn.easy_async_with_shell(
                 'rofi -show drun -theme ' ..'~/.config/rofi/dark.rasi' ..' -show-icons')
+        elseif theme == themes[3] then
+            awful.spawn.easy_async_with_shell(
+                'rofi -show drun -theme ' ..'~/.config/rofi/gruvbox.rasi' ..' -show-icons')
         end
         end, {
             description = "show the menubar",
