@@ -92,8 +92,12 @@ end
 button.create_image_onclick = function(image, image_hover, onclick)
     local image = button.create_image(image, image_hover)
 
-    local container = wibox.widget {image, widget = wibox.container.background}
-
+    local container = wibox.widget {
+        image, 
+        widget = wibox.container.background
+    }
+    
+    helpers.add_hover_cursor(container, "hand1")
     container:connect_signal("button::press", onclick)
 
     return container

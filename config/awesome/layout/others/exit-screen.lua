@@ -94,13 +94,13 @@ local exit_screen_f = function(s)
 							exit,
 							suspend,
 							spacing = dpi(20),
-							layout = wibox.layout.fixed.horizontal
+							layout = wibox.layout.fixed.vertical
 						},
 						{
 							reboot,
 							poweroff,
 							spacing = dpi(20),
-							layout = wibox.layout.fixed.horizontal
+							layout = wibox.layout.fixed.vertical
 						},
 						layout = wibox.layout.fixed.horizontal,
 						spacing = dpi(20)

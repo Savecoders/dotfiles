@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Color
-sed -i "31s/.*/theme = themes[3]/g" ~/.config/awesome/rc.lua
+sed -i "32s/.*/theme = themes[3]/g" ~/.config/awesome/rc.lua
 
 # Gtk
 sed -i "2s/.*/gtk-icon-theme-name=Mkos-Big-Sur-Night/g" ~/.config/gtk-3.0/settings.ini
@@ -11,4 +11,4 @@ sed -i "4s/.*/gtk-theme-name=WhiteSur-dark/g" ~/.config/gtk-3.0/settings.ini
 sed -i "7s/.*/shadow-opacity = 0.4;/g" ~/.config/picom/picom.conf
 
 #terminal 
-kitty +kitten themes --reload-in=all Gruvbox Hard
+kitty +kitten themes --reload-in=all GruvboxHard

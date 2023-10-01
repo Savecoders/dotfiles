@@ -29,9 +29,9 @@ end
 
 -- search image for rice
 
-local dark_img = "~/Pictures/Wallpapers/dark/darkmode.jpg"
-local light_img = "~/Pictures/Wallpapers/light/lightmode.jpg"
-local gruvbox_img = "~/Pictures/Wallpapers/gruvbox/gruvbox.jpg"
+local dark_img = gfs.get_configuration_dir() .. "theme/dark/darkmode.jpg"
+local light_img = gfs.get_configuration_dir() .. "theme/light/lightmode.jpg"
+local gruvbox_img = gfs.get_configuration_dir() .. "theme/gruvbox/gruvbox.jpg"
 
 
 -- create img container
@@ -50,18 +50,15 @@ dark.forced_height = dpi(180)
 light.forced_height = dpi(180)
 gruvbox.forced_height = dpi(180)
 
-dark.forced_width = dpi(360)
-light.forced_width = dpi(360)
-gruvbox.forced_width = dpi(360)
-
+dark.forced_width = dpi(280)
+light.forced_width = dpi(280)
+gruvbox.forced_width = dpi(280)
 
 local theme_screen = wibox({
-    height  = dpi(240),
-    width   = dpi(770),
+    height  = dpi(200),
+    width   = dpi(960),
 		shape   = helpers.rrect(beautiful.border_radius),
 		bg      = beautiful.bg,
-		halign  = "center",
-		valign  = "center",
 		visible = false,
 		ontop 	= true,
 })
@@ -73,29 +70,31 @@ awful.placement.centered(theme_screen, {
 })
 
 theme_screen:setup {
+	
 	{
 
 		{
 			dark,
 			spacing = dpi(20),
-			layout = wibox.layout.fixed.horizontal
+			layout = wibox.layout.fixed.horizontal,
 		},
 		{
 			light,
 			spacing = dpi(20),
-			layout = wibox.layout.fixed.horizontal
+			layout = wibox.layout.fixed.horizontal,
 		},
+
 		{
 			gruvbox,
 			spacing = dpi(20),
-			layout = wibox.layout.fixed.horizontal
-		}
-
+			layout = wibox.layout.fixed.horizontal,
+		},
 		layout = wibox.layout.fixed.horizontal,
-		spacing = dpi(20)
+		spacing = dpi(24)
 	},
+
 	widget = wibox.container.margin,
-	margins = dpi(20)
+	margins = dpi(28)
 }
 
 theme_toogle  = function()
