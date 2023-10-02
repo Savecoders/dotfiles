@@ -71,6 +71,11 @@ theme.dark_slider_bg = "#3F8CFF"
 theme.arc_bg = "#131417"
 theme.arc_color = "#6192FB"
 
+-- wibar
+
+theme.wibar_height = 1080 
+theme.popup_left = 150
+
 -- radius
 
 theme.bar_radius = dpi(6)

@@ -302,13 +302,13 @@ globalkeys = gears.table.join(
     awful.key({modkey}, "r", function()
         if theme == themes[1] then
             awful.spawn.easy_async_with_shell(
-                'rofi -show drun -theme ' ..'~/.config/rofi/light.rasi' .. ' -show-icons')
+                'rofi -show drun -theme ' ..'~/.config/rofi/gruvbox.rasi' .. ' -show-icons')
         elseif theme == themes[2] then
             awful.spawn.easy_async_with_shell(
-                'rofi -show drun -theme ' ..'~/.config/rofi/dark.rasi' ..' -show-icons')
+                'rofi -show drun -theme ' ..'~/.config/rofi/light.rasi' ..' -show-icons')
         elseif theme == themes[3] then
             awful.spawn.easy_async_with_shell(
-                'rofi -show drun -theme ' ..'~/.config/rofi/gruvbox.rasi' ..' -show-icons')
+                'rofi -show drun -theme ' ..'~/.config/rofi/dark.rasi' ..' -show-icons')
         end
         end, {
             description = "show the menubar",
