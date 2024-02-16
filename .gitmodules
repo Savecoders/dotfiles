@@ -1,6 +1,6 @@
-[submodule "misc/zsh/simpleTheme-zsh-theme"]
-	path = misc/zsh/simpleTheme-zsh-theme
-	url = https://github.com/Savecoders/simpleTheme-zsh-theme
+[submodule "misc/zsh/Arrow-zsh-theme"]
+	path = misc/zsh/Arrow-zsh-theme
+	url = https://github.com/Savecoders/Arrow-zsh-theme.git
 [submodule "config/awesome/modules/bling"]
 	path = config/awesome/modules/bling
 	url = https://github.com/BlingCorp/bling.git

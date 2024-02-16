@@ -6,7 +6,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # .oh-my-zsh/themes/
-ZSH_THEME="simpleTheme"
+ZSH_THEME="Arrow"
 
 # User configuration
 source $ZSH/oh-my-zsh.sh
@@ -17,8 +17,10 @@ source $ZSH/oh-my-zsh.sh
 alias ls="exa --icons --group-directories-first"
 alias cat="bat"
 alias tree="exa --icons -T"
+alias treel="exa --icons -T -L"
 alias py="python3"
 alias icat="kitty +kitten icat"
+alias theme="kitty +kitten themes --reload-in=all"
 alias rmNM="find . -name "node_modules" -exec rm -rf '{}' +; find . -name "package-lock.json" -exec rm -rf '{}' +"
 
 # fzf
