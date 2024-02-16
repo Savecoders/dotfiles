@@ -16,7 +16,7 @@ configuration{
 }
 
 * {
-    bg-col:  #F9FEFE;
+    bg-col:  #F2F8FB;
     bg-col-light: #F2F8FB;
     border-col: #F2F8FB;
     selected-col: #F9FEFE;
@@ -25,9 +25,9 @@ configuration{
     fg-col: #B0B2BF;
     fg-col2: #f38ba8;
     grey: #6c7086;
-    rad: 8px;
+    rad: 10px;
     text-color: @fg;
-    font: "SF Pro Display Medium 15";
+    font: "SF Pro Display Medium 16";
 }
 
 element-text, element-icon , mode-switcher {
@@ -37,7 +37,7 @@ element-text, element-icon , mode-switcher {
 
 window {
     location: center;
-    width: 18%;
+    width: 20%;
     border-radius: @rad; 
     background-color: #0000;
 }
