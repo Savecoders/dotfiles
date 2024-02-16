@@ -164,7 +164,7 @@ awful.screen.connect_for_each_screen(function(s)
             shape = helpers.rrect(beautiful.bar_radius),
         },
         layout = {
-            spacing = dpi(16),
+            spacing = dpi(20),
             layout = wibox.layout.fixed.vertical
         },
         widget_template = {
@@ -178,13 +178,13 @@ awful.screen.connect_for_each_screen(function(s)
                             halign = "center",
                             widget = wibox.widget.imagebox
                         },
-                        width = dpi(40),
+                        width = dpi(50),
                         widget = wibox.container.constraint
                     },
-                    spacing = dpi(25),
+                    spacing = dpi(20),
                     layout = wibox.layout.fixed.horizontal
                 },
-                margins = dpi(3.6),
+                margins = dpi(3),
                 widget = wibox.container.margin
             },
             id = 'background_role',
@@ -278,8 +278,8 @@ awful.screen.connect_for_each_screen(function(s)
         position = "left",
         screen = s,
         ontop = true,
-        height = s.geometry.height  - dpi(56),
-        width = dpi(65),
+        height = s.geometry.height  - dpi(beautiful.useless_gap * 4),
+        width = dpi(60),
         visible = true
     })
 
@@ -329,7 +329,6 @@ awful.screen.connect_for_each_screen(function(s)
         -- border radius for bar
         shape = helpers.rrect(beautiful.border_radius),
         widget = wibox.container.background
-
     }
 
     logo:connect_signal("button::press", function()
@@ -350,9 +349,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- screen padding
     s.padding = {
         left = dpi(beautiful.useless_gap * 2),
-        right = dpi(beautiful.useless_gap),
-        top = dpi(beautiful.useless_gap),
-        bottom = dpi(beautiful.useless_gap)
+        right = dpi(beautiful.useless_gap * 2),
     }
 
     awful.placement.left(s.mywibox, {

@@ -24,7 +24,7 @@ theme.dir = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
 
 theme.wallpaper = "~/Pictures/Wallpapers/gruvbox/houses.jpg"
 
-theme.useless_gap = 10
+theme.useless_gap = 6
 theme.useless_less = 8
 
 -- colors

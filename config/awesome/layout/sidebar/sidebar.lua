@@ -119,11 +119,11 @@ end)))
 
 local sidebar = wibox({
     ontop = true,
-    height = screen_height - dpi(60),
+    height = screen_height  - dpi(beautiful.useless_gap * 4),
     width = dpi(480),
     bg = "#00000000",
     fg = beautiful.fg_normal,
-    y = dpi(30),
+    y = dpi(beautiful.useless_gap * 2),
 })
 
 local sidebar_timed = rubato.timed {
@@ -138,7 +138,7 @@ local sidebar_timed = rubato.timed {
 sidebar_normal = function()
     if sidebar.visible == false then
         sidebar.visible = not sidebar.visible
-        sidebar_timed.target = dpi(105)
+        sidebar_timed.target = dpi(85)
     else
         sidebar_timed.target = -dpi(140)
         sidebar.visible = false

@@ -17,7 +17,7 @@ client.connect_signal("request::titlebars", function(c)
                 bg = beautiful.border_color,
                 widget = wibox.container.background
             },
-            right = dpi(1),
+            right = dpi(2),
             widget = wibox.container.margin
         },
         bg = beautiful.bg,

@@ -17,10 +17,11 @@ local dpi = xresources.apply_dpi
                     bg = beautiful.border_color,
                     widget = wibox.container.background
                 },
-                left = dpi(1),
+                left = dpi(2),
                 widget = wibox.container.margin
             },
             bg = beautiful.bg,
             widget = wibox.container.background
         }
-    end)
+    end
+)

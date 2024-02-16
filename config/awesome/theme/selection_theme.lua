@@ -65,7 +65,7 @@ local theme_screen = wibox({
 
 awful.placement.centered(theme_screen, {
     margins = {
-        center = beautiful.useless_gap * 2
+        center = beautiful.useless_gap
     }
 })
 

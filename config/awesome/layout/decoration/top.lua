@@ -99,7 +99,7 @@ client.connect_signal("request::titlebars", function(c)
 
     awful.titlebar(c, {
         position = "top",
-        size = dpi(45),
+        size = dpi(40),
         bg = "#00000000",
     }):setup{
             {   -- left

@@ -12,7 +12,7 @@ client.connect_signal("request::titlebars", function(c)
 
 awful.titlebar(c, {
     position = "bottom",
-    size = dpi(24),
+    size = dpi(12),
     bg = "#00000000"
 }):setup{
     bg = beautiful.bg,
