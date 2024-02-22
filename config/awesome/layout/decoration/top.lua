@@ -90,7 +90,7 @@ client.connect_signal("request::titlebars", function(c)
     local wrap_widget = function(w)
         return {
             w,
-            top = dpi(20),
+            top = dpi(16),
             widget = wibox.container.margin
         }
     end
