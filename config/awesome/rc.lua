@@ -90,15 +90,13 @@ awful.rules.rules = {{
             "Sxiv", 
             "feh"
         },
-        -- Note that the name property shown in xprop might be set slightly after creation of the client
-        -- and the name shown there might not match defined rules here.
         name = {
             "Event Tester" -- xev.
         },
         role = {
             "AlarmWindow", -- Thunderbird's calendar.
             "ConfigManager", -- Thunderbird's about:config.
-            "zoom" -- zoom
+            "zoom",
         }
     },
     properties = {
@@ -119,9 +117,22 @@ awful.rules.rules = {{
         instance = {"Thunar"}
     },
     properties = {
-        floating = true
+        floating = true,
+        placement = awful.placement.centered
     }
-}}
+},{
+    rule_any = {
+        class = {"warp", "warp-terminal"},
+        instance = {"warp", "warp-terminal"}
+    },
+    properties = {
+        titlebars_enabled = false,
+        placement = awful.placement.centered
+    }
+}
+
+
+}
 
 if awesome.startup_errors then
     naughty.notify({
