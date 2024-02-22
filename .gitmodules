@@ -1,9 +1,10 @@
-[submodule "misc/zsh/Arrow-zsh-theme"]
-	path = misc/zsh/Arrow-zsh-theme
-	url = https://github.com/Savecoders/Arrow-zsh-theme.git
 [submodule "config/awesome/modules/bling"]
 	path = config/awesome/modules/bling
 	url = https://github.com/BlingCorp/bling.git
 [submodule "config/awesome/modules/layout-machi"]
 	path = config/awesome/modules/layout-machi
 	url = https://github.com/xinhaoyuan/layout-machi.git
+
+[submodule "misc/zsh/Savior-zsh-theme"]
+	path = misc/zsh/Savior-zsh-theme
+	url = https://github.com/Savecoders/Savior-zsh-theme
