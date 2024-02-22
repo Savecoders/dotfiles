@@ -78,7 +78,7 @@ globalkeys = gears.table.join(
 
     -- aplication
     
-    awful.key({modkey}, "q", function()
+    awful.key({modkey}, "e", function()
         awful.spawn(vscode) end, {
             description = "spawn code",
             group = "launcher"
@@ -102,20 +102,20 @@ globalkeys = gears.table.join(
             group = "launcher"
     }), 
 
-    awful.key({ modkey }, "p", function()
+    awful.key({ modkey }, "z", function()
         awful.spawn.with_shell(apps.utils.color_pick)
         end,{
             description = "open color-picker", 
             group = "launcher" 
     }), 
 
-    awful.key({modkey, 'Shift'}, "l", function()
+    awful.key({ modkey }, "p", function()
          awful.spawn(lockscreen) end, {
             description = "lock screen",
             group = "launcher"
     }),
 
-    awful.key({modkey, "Shift"}, "q", awesome.quit, {
+    awful.key({modkey, "Shift"}, "x", awesome.quit, {
         description = "quit awesome",
         group = "awesome"
     }), 
@@ -173,12 +173,12 @@ globalkeys = gears.table.join(
             group = "launcher"
     }), 
     
-    awful.key({modkey, "Control"}, "r", awesome.restart, {
+    awful.key({modkey, "Shift"}, "r", awesome.restart, {
         description = "reload awesome",
         group = "awesome"   
     }), 
     
-    awful.key({modkey, "Shift"}, "q", awesome.quit, {
+    awful.key({modkey, "Control"}, "r", awesome.quit, {
         description = "quit awesome",
         group = "awesome"
     }), 
@@ -191,7 +191,7 @@ globalkeys = gears.table.join(
 
     -- short screenshot
 
-	awful.key({ modkey, "Shift" }, "s", function()
+	awful.key({ modkey }, "Print", function()
 		awful.spawn.easy_async_with_shell(apps.utils.area_screenshot, function() end)
 	    end, { description = "take a area screenshot", group = "hotkeys" }),
 
@@ -210,14 +210,14 @@ globalkeys = gears.table.join(
             group = "layout"
     }), 
     
-    awful.key({modkey}, "h", function()
+    awful.key({modkey}, "-", function()
         awful.tag.incmwfact(-0.05)
         end, {
             description = "decrease master width factor",
             group = "layout"
     }), 
     
-    awful.key({modkey, "Shift"}, "h", function()
+    awful.key({modkey, "Shift"}, "-", function()
         awful.tag.incnmaster(1, nil, true)
         end, {
             description = "increase the number of master clients",
@@ -231,7 +231,7 @@ globalkeys = gears.table.join(
             group = "layout"
     }), 
     
-    awful.key({modkey, "Control"}, "h", function()
+    awful.key({modkey, "Control"}, "-", function()
         awful.tag.incncol(1, nil, true)
     end, {
         description = "increase the number of columns",
@@ -261,7 +261,7 @@ globalkeys = gears.table.join(
 
     -- sidebar screen
 
-    awful.key({modkey}, "z", function()
+    awful.key({modkey}, "q", function()
         sidebar_toggle()
         end, {
             description = "show or hide sidebar",
@@ -340,11 +340,22 @@ clientkeys = gears.table.join(
 
     -- kill aplication
 
-    awful.key({modkey, "Shift"}, "c", function(c)
+    awful.key({modkey, "Control"}, "c", function(c)
         c:kill()
     end, {
         description = "close",
         group = "client"
+    }), 
+
+    -- kill all process
+
+    awful.key({modkey, "Control"}, "c", function(c)
+        if c.pid then
+            awful.spawn.with_shell("kill -9 " .. c.pid)
+         end
+    end, {
+        description = "close",
+        group = "client procces"
     }), 
 
     -- application floating
