@@ -104,13 +104,14 @@ function helpers.prompt(action, textbox, prompt, callback)
             bg_cursor = beautiful.search_bar,
             textbox = textbox,
             font = beautiful.font,
-            history_path = awful.util.get_cache_dir() .. "/history_web",
             done_callback = callback,
             exe_callback = function(input)
-                if not input or #input == 0 then
+                if not input or #input == 0 then return end
+                if pcall(awful.spawn(input)) then
                     return
-                end
-                awful.spawn.with_shell("microsoft-edge-stable https://www.google.com/search?q=" .. "'" .. input .. "'")
+                else
+                    naughty.notify{ text = 'Error in : '..input }
+                end 
             end
         }
     end

@@ -1,6 +1,6 @@
 
-configuration{
-    modi: "run,drun,window";
+configuration {
+    modi: "drun,window,run";
     icon-theme: "Oranchelo";
     show-icons: true;
     terminal: "kitty";
@@ -8,10 +8,10 @@ configuration{
     location: 0;
     disable-history: false;
     hide-scrollbar: true;
-    display-drun: "  ";
-    display-run: "  ";
-    display-window: "  ";
-    display-Network: " 󰤨 ";
+    display-drun: "  ";
+    display-run: "  ";
+    display-window: "  ";
+    display-Network: " 󰀂 ";
     sidebar-mode: true;
 }
 
@@ -26,8 +26,6 @@ configuration{
     fg-col2: #f38ba8;
     grey: #6c7086;
     rad: 10px;
-    text-color: @fg;
-    font: "SF Pro Display Medium 16";
 }
 
 element-text, element-icon , mode-switcher {
@@ -37,29 +35,40 @@ element-text, element-icon , mode-switcher {
 
 window {
     location: center;
-    width: 20%;
+    width: 36%;
     border-radius: @rad; 
     background-color: #0000;
 }
 
 mainbox {
-    spacing: 2%;
+    spacing: 3%;
+    children: [ inputbar, view-container];
     background-color: #0000;
+}
+
+view-container{
+    children: [listview, mode-switcher];
+    orientation: horizontal;
+    border-radius: @rad;
+    border: 1px;
+    border-color: @border-col;
+    background-color: @bg-col;    
 }
 
 inputbar {
     children: [ entry ];
-    padding: 0.8em 0 0.8em 0;
+    orientation: horizontal;
+    padding: 0.2em;
     border-radius: @rad;
+    border: 1px;
+    border-color: @border-col;
     background-color: @bg-col;
-    text-color: @fg;
 }
 
 prompt {
     background-color: @blue;
-    padding: 6px;
-    text-color: @bg-col;
-    border-radius: 3px;
+    padding: 4px;
+    border-radius: 4px;
 }
 
 textbox-prompt-colon {
@@ -68,28 +77,46 @@ textbox-prompt-colon {
 }
 
 entry {
-    padding: 1.5% 3%;
-    placeholder: "Search App";
+    padding: 1.6%;
+    // placeholder: "  ";
     border-radius: @rad;
+    background-color: @bg-col;
+    text-color: @fg-col;
+    font: "SF Pro Display Medium 17";
 }
 
 listview {
     cycle: false;
+    dynamic: true;
     border-radius: @rad;
     layout: vertical;
-    lines: 3;
+    lines: 4;
+    padding: 0.2em;
+    background-color: @bg-col;
 }
 
 element {
-    padding: 2% 3%;
+    padding: 1.6%;
+    orientation: horizontal;
     border-radius: @rad;
+    background-color: @bg-col;
 }
 
 element-icon {
-    size: 22px;
+    size: 28px;
+    border: 0;
+}
+
+element-text{
+    expand: true;
+    horizontal-align: 0;
+    margin: 0 4px;
+    font: "SF Pro Display 16";
+    text-color: @fg;
 }
 
 element selected {
+    background-color: @bg-col;
     text-color: @fg-col2  ;
 }
 
@@ -101,14 +128,16 @@ listview, element, element-selected, element-text { cursor: pointer; }
 entry { cursor: text; }
 
 mode-switcher {
-    spacing: 16;
-  }
+    orientation: vertical;
+    background-color: @bg-col;
+    padding:  0 1em;
+}
 
 button {
-    padding: 1% 0 1% 0;
     background-color: @bg-col-light;
     text-color: @grey;
     border-radius: @rad;
+    font: "SF Pro Display 18";
 }
 
 button selected {
