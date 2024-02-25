@@ -2,7 +2,7 @@
 
 <img
  align="center"
- src="assets/Awesome/rofiAndOthers.png"
+ src="assets/Awesome/rice_dark_2024.png"
  alt="Rice Preview"
 />
 
@@ -25,49 +25,49 @@ Here are some details about my setup
 
 <!-- INFORMATION -->
 
-## <samp>🧰 __Information__ </samp>
+## <samp>🧰 **Information** </samp>
 
 Here are some details about my setup:
 
-- __OS:__ [Arco Linux](https://arcolinux.com/)
-- __WM:__ [awesome](https://github.com/awesomeWM/awesome) or [Qtile](http://www.qtile.org/)
-- __Terminal:__ [kitty](https://sw.kovidgoyal.net/kitty/)
-- __Shell:__ [zsh](https://www.zsh.org/)
-- __Application Launcher:__ [rofi](https://github.com/davatorium/rofi)
-- __Compositor:__ [picom](https://github.com/yshui/picom)
-- __Editor:__ [neovim](https://github.com/neovim/neovim) | [vscode](https://github.com/microsoft/vscode)
-- __System Font:__ [SF Pro Display](https://github.com/sahibjotsagguSan-Francisco-Pro-Fonts)
+- **OS:** [Arch Linux](https://archlinux.org/)
+- **WM:** [awesome](https://github.com/awesomeWM/awesome) or [Qtile](http://www.qtile.org/)
+- **Terminal:** [kitty](https://sw.kovidgoyal.net/kitty/)
+- **Shell:** [zsh](https://www.zsh.org/)
+- **Application Launcher:** [rofi](https://github.com/davatorium/rofi)
+- **Compositor:** [picom](https://github.com/yshui/picom)
+- **Editor:** [neovim](https://github.com/neovim/neovim) | [vscode](https://github.com/microsoft/vscode)
+- **System Font:** [SF Pro Display](https://github.com/sahibjotsagguSan-Francisco-Pro-Fonts)
 
 <!-- Install dependencies-->
 
-## <samp>🎢 __installation__ </samp>
+## <samp>🎢 **installation** </samp>
 
 <b><h3>Clone this repository</h3></b>
 
-   ```sh
-   git clone --recurse-submodules https://github.com/Savecoders/dotfiles.git
-   cd dotfiles && git submodule update --remote --merge 
-   ```
+```sh
+git clone --recurse-submodules https://github.com/Savecoders/dotfiles.git
+cd dotfiles && git submodule update --remote --merge
+```
 
 <b><h3>⁉ Error clone submodules?</h3></b>
 
-   ```sh
-   mkdir dev && cd dev && git clone https://github.com/Savecoders/dotfiles.git
-   git clone https://github.com/xinhaoyuan/layout-machi.git
-   git clone https://github.com/BlingCorp/bling.git
-   git clone https://github.com/Savecoders/simpleTheme-zsh-theme
-   cp -r layout-machi/* dotfiles/config/awesome/modules/layout-machi/
-   cp -r bling/* dotfiles/config/awesome/modules/bling/
-   cp -r simpleTheme-zsh-theme/* dotfiles/misc/zsh/simpleTheme-zsh-theme
-   ```
+```sh
+mkdir dev && cd dev && git clone https://github.com/Savecoders/dotfiles.git
+git clone https://github.com/xinhaoyuan/layout-machi.git
+git clone https://github.com/BlingCorp/bling.git
+git clone https://github.com/Savecoders/simpleTheme-zsh-theme
+cp -r layout-machi/* dotfiles/config/awesome/modules/layout-machi/
+cp -r bling/* dotfiles/config/awesome/modules/bling/
+cp -r simpleTheme-zsh-theme/* dotfiles/misc/zsh/simpleTheme-zsh-theme
+```
 
 <b><h3>use the script</h3></b>
 
-   ```sh
-   chmod +x resources/install.sh && ./resources/install.sh
-   ```
+```sh
+chmod +x resources/install.sh && ./resources/install.sh
+```
 
-<samp> __Do you want to install manually?__ </samp>
+<samp> **Do you want to install manually?** </samp>
 
 <details close>
     <summary>
@@ -76,48 +76,48 @@ Here are some details about my setup:
 
 <b><h3>Install Dependencies</h3></b>
 
-   ```sh
-   paru -Sy awesome-git picom-git kitty rofi  acpi acpid acpi_call upower \
-   jq inotify-tools xdotool xclip gpick ffmpeg blueman zsh-autosuggestions \
-   pamixer brightnessctl scrot redshift rainfall zsh-syntax-highlighting \
-   feh mpv mpd mpc mpdris2 ncmpcpp playerctl qtile tunar zsh --needed 
-   ```
+```sh
+paru -Sy awesome-git picom-git kitty rofi  acpi acpid acpi_call upower \
+jq inotify-tools xdotool xclip gpick ffmpeg blueman zsh-autosuggestions \
+pamixer brightnessctl scrot redshift rainfall zsh-syntax-highlighting \
+feh mpv mpd mpc mpdris2 ncmpcpp playerctl qtile tunar zsh --needed
+```
 
 <b><h3>Enable Services</h3></b>
 
-   ```sh
-   systemctl --user enable mpd.service
-   systemctl --user start mpd.service
-   ```
+```sh
+systemctl --user enable mpd.service
+systemctl --user start mpd.service
+```
 
 <b><h3>Clone this repository</h3></b>
 
-   ```sh
-   git clone https://github.com/Savecoders/dotfiles.git
-   cd dotfiles 
-   ```
+```sh
+git clone https://github.com/Savecoders/dotfiles.git
+cd dotfiles
+```
 
 <b><h3> Use config</h3></b>
 
-   ```sh
-   cp -r config/* ~/.config/
-   cp -r misc/fonts/* ~/.local/share/fonts/
-   cp -r misc/oh-my-zsh ~/.oh-my-zsh
-   cp -r misc/.zshrc ~
-   ```
+```sh
+cp -r config/* ~/.config/
+cp -r misc/fonts/* ~/.local/share/fonts/
+cp -r misc/oh-my-zsh ~/.oh-my-zsh
+cp -r misc/.zshrc ~
+```
 
 <b><h3> Use others rxfetch</h3></b>
 
-   ```sh
-   cd neofetch && chmod +x singfetch
-   sudo cp -r singfetch /usr/bin/ 
-   ```
+```sh
+cd neofetch && chmod +x singfetch
+sudo cp -r singfetch /usr/bin/
+```
 
 <b><h3> Install ohmyzsh</h3></b>
 
-   ```sh
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-   ```  
+```sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
 
 </details>
 
@@ -126,14 +126,21 @@ Here are some details about my setup:
 <!-- Dark theme -->
 <div align="center">
    <a href="#--------">
-      <img src="assets/Awesome/rice_dark.png" alt="Rice dark theme Preview">
+      <img src="assets/Awesome/rice_dark_home_2024.png" alt="Rice dark theme Preview">
    </a>
 </div>
 
 <!-- light theme -->
 <div align="center">
    <a href="#--------">
-      <img src="assets/Awesome/rice_light.png" alt="Rice dark theme Preview">
+      <img src="assets/Awesome/rice_light_home_2024.png" alt="Rice dark theme Preview">
+   </a>
+</div>
+
+<!-- gruvbox theme -->
+<div align="center">
+   <a href="#--------">
+      <img src="assets/Awesome/rice_gruvbox_home_2024.png" alt="Rice dark theme Preview">
    </a>
 </div>
 
@@ -147,7 +154,7 @@ Here are some details about my setup:
 
 <details open>
     <summary>
-        <samp><b>Galery</b></samp>
+        <samp><b>Galery(2023)</b></samp>
     </summary>
 
    <!-- Dark theme -->
@@ -202,29 +209,26 @@ and the other parts of code is the others devs :)
 
 <br>
 
-- __Fonts and icons__
+- **Fonts and icons**
   - as for fonts, the setup uses 4 fonts in total
-    - *[SF Pro Display](https://github.com/sahibjotsagguSan-Francisco-Pro-Fonts)* - my main ui font
-    - *[Font Awesome 6 Free](https://fontawesome.com/download)* - for icons the weather
-    - *[JetBrainsMono NF](https://www.jetbrains.com/es-es/lp/mono/)* - icons of signals
-    - *[Cascadia Code](https://github.com/microsoft/cascadia-code)* - Editor/terminal
+    - _[SF Pro Display](https://github.com/sahibjotsagguSan-Francisco-Pro-Fonts)_ - my main ui font
+    - _[Font Awesome 6 Free](https://fontawesome.com/download)_ - for icons the weather
+    - _[JetBrainsMono NF](https://www.jetbrains.com/es-es/lp/mono/)_ - icons of signals
+    - _[Cascadia Code](https://github.com/microsoft/cascadia-code)_ - Editor/terminal
   - in the tag config, using images for icons, the images They're in `awesome/icons/tag/`
 
 <br>
 
-- __custom theme?__
+- **custom theme?**
   - for dark, edit `theme/dark/dark.lua`
   - for light, edit `theme/light/light.lua`
   - agg display theme selection `theme/selection_theme.lua`
 
 <br>
 
-- __wallpapers and profile__
-  - by default wallpapers are found by theme
-    - example: `theme.wallpaper = gfs.get_configuration_dir() .. "wallpapers/hands.jpg"`
-    - in wallpapers folder add new wallpapers  `awesome/wallpapers`
-    - replace existing wallpapers with new ones in: `"wallpapers/new_walpapers.jpg"`
-<br>
+- **wallpapers and profile**
+  - by default wallpapers are found by theme - example: `theme.wallpaper = gfs.get_configuration_dir() .. "wallpapers/hands.jpg"` - in wallpapers folder add new wallpapers `awesome/wallpapers` - replace existing wallpapers with new ones in: `"wallpapers/new_walpapers.jpg"`
+    <br>
 
 </details>
 
@@ -238,6 +242,7 @@ and the other parts of code is the others devs :)
 - **[Bling](https://blingcorp.github.io/bling/)**
 
   - use in Playerctl widget, layout
+
 - **[Rubato](https://github.com/andOrlando/rubato)**
 
   - Create animation for aweosmeWM
