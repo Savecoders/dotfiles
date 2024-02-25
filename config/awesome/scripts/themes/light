@@ -4,8 +4,8 @@
 sed -i "32s/.*/theme = themes[2]/g" ~/.config/awesome/rc.lua
 
 # Gtk
-sed -i "2s/.*/gtk-icon-theme-name=Mkos-Big-Sur/g" ~/.config/gtk-3.0/settings.ini
-sed -i "4s/.*/gtk-theme-name=WhiteSur-light/g" ~/.config/gtk-3.0/settings.ini
+sed -i "3s/.*/gtk-icon-theme-name=WhiteSur-dark/g" ~/.config/gtk-3.0/settings.ini
+sed -i "2s/.*/gtk-theme-name=Colloid-Light/g" ~/.config/gtk-3.0/settings.ini
 
 # Picom
 sed -i "7s/.*/shadow-opacity = 0.05;/g" ~/.config/picom/picom.conf
