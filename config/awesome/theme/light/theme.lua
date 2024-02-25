@@ -22,7 +22,7 @@ theme.font_screen = "SF Pro Display Medium  "
 
 theme.dir = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
 
-theme.wallpaper = "~/Pictures/Wallpapers/light/trees_winter.jpg"
+theme.wallpaper = "~/Pictures/Wallpapers/light/rose_sky.jpg"
 
 theme.useless_gap = 6
 theme.useless_less = 8
