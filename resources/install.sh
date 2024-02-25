@@ -2,102 +2,70 @@
 
 set -e
 
-
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "${BASEDIR}"
 
-while true
-do
-      read -r -p "are you getting errors when installing git submodules? [Y/n] " input
+ask_user() {
+    local message=$1
+    local command=$2
 
-      case $input in
+    while true; do
+        read -r -p "${message} [Y/n] " input
+
+        case $input in
             [yY][eE][sS]|[yY])
-                  echo "Okay, I install them for you!"
-                  git clone https://github.com/xinhaoyuan/layout-machi.git
-                  git clone https://github.com/BlingCorp/bling.git
-                  git clone https://github.com/Savecoders/simpleTheme-zsh-theme
-                  
-                  cp -r layout-machi/* ../config/awesome/modules/layout-machi/
-                  cp -r bling/* ../config/awesome/modules/bling/
-                  cp -r simpleTheme-zsh-theme/* ../misc/zsh/simpleTheme-zsh-theme
-
-                  break
-                  ;;
+                echo "Okay, executing command!"
+                eval "${command}"
+                break
+                ;;
             [nN][oO]|[nN])
-                  echo "Okay!"
-                  break
-                  ;;
+                echo "Okay!"
+                break
+                ;;
             *)
-                  echo "Invalid input..."
-                  ;;
-      esac
+                echo "Invalid input..."
+                ;;
+        esac
+    done
+}
 
-done 
+clone_and_copy() {
+    local repo=$1
+    local source_dir=$2
+    local dest_dir=$3
 
-while true
-do
-      read -r -p "Do you want to install paru? [Y/n] " input
- 
-      case $input in
-            [yY][eE][sS]|[yY])
-                  echo Installing!
-                  sudo pacman -S --needed base-devel
-                  git clone https://aur.archlinux.org/paru.git
-                  cd paru
-                  makepkg -si
-                  cd ..
-                  rm -rf paru
-                  break
-                  ;;
-            [nN][oO]|[nN])
-                  echo "No Problem."
-                  break
-                  ;;
-            *)
-                  echo "Invalid input..."
-                  ;;
-      esac      
-done
+    git clone "${repo}"
+    cp -r "${source_dir}" "${dest_dir}"
+}
 
-while true
-do
-      read -r -p "Do you want to install all packages from needed.list? [Y/n] " input
+install_packages() {
+    local package_list=$1
 
-      case $input in
-            [yY][eE][sS]|[yY])
-                  echo Installing!
-                  paru -S --noconfirm - < ${BASEDIR}/needed.list --needed
-                  break
-                  ;;
-            [nN][oO]|[nN])
-                  echo "Okay!"
-                  break
-                  ;;
-            *)
-                  echo "Invalid input..."
-                  ;;
-      esac
-done
+    paru -S --noconfirm - < "${package_list}" --needed
+}
 
-while true
-do
-      read -r -p "Do you want to install zsh and ohmyzsh? [Y/n] " input
+ask_user "are you getting errors when installing git submodules?" "
+    clone_and_copy https://github.com/xinhaoyuan/layout-machi.git layout-machi/* ../config/awesome/modules/layout-machi/
+    clone_and_copy https://github.com/BlingCorp/bling.git bling/* ../config/awesome/modules/bling/
+    clone_and_copy https://github.com/Savecoders/simpleTheme-zsh-theme simpleTheme-zsh-theme/* ../misc/zsh/simpleTheme-zsh-theme
+"
 
-      case $input in
-            [yY][eE][sS]|[yY])
-                  echo Installing!
-                  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-                  break
-                  ;;
-            [nN][oO]|[nN])
-                  echo "Okay!"
-                  break
-                  ;;
-            *)
-                  echo "Invalid input..."
-                  ;;
-      esac
-done
+ask_user "Do you want to install paru?" "
+    sudo pacman -S --needed base-devel
+    clone_and_copy https://aur.archlinux.org/paru.git paru paru
+    cd paru
+    makepkg -si
+    cd ..
+    rm -rf paru
+"
+
+ask_user "Do you want to install all packages from needed.list?" "
+    install_packages ${BASEDIR}/needed.list
+"
+
+ask_user "Do you want to install zsh and ohmyzsh?" "
+    sh -c \"$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\" \"\" --unattended
+"
 
 # enable services
 systemctl enable mpd.service
@@ -122,3 +90,18 @@ cp -r ~/Dev/MyConfig/dotfiles/config/lightdm/* /usr/share/lightdm-webkit/themes/
 # Wallpapers
 echo "Copying Wallpapers..."
 mkdir -p ~/Pictures/Wallpapers && cp -r ../misc/wallpapers/* ~/Pictures/Wallpapers
+
+# icons
+echo "Untarring icons..."
+tar -xvf ../misc/icons/01-Tela.tar.xz
+tar -xvf ../misc/icons/01-WhiteSur.tar.xz
+echo "Copying icons..."
+mkdir -p ~/.icons && cp -r ../misc/icons/* ~/.icons
+
+# GTK themes
+echo "Untarring GTK themes..."
+tar -xvf ../misc/themes/Colloid.tar.xz
+tar -xvf ../misc/themes/Otis-forest-standard-buttons.tar.xz
+unzip ../misc/themes/Gruvbox-Dark-BL-LB.zip
+echo "Copying GTK themes..."
+mkdir -p ~/.themes && cp -r ../misc/themes/* ~/.themes
