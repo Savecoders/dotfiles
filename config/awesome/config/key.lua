@@ -18,7 +18,7 @@ terminal = "kitty"
 browser = "brave"
 music_player = "spotify"
 vscode = "code"
-discord = "discord"
+discord = "discord-canary"
 lockscreen = "betterlockscreen -l"
 modkey = "Mod4"
 
@@ -90,7 +90,7 @@ globalkeys = gears.table.join(
             group = "launcher"
     }), 
 
-    awful.key({modkey}, "e", function()
+    awful.key({modkey}, "g", function()
         awful.spawn(discord) end, {
             description = "discord social app",
             group = "launcher"
@@ -317,7 +317,7 @@ globalkeys = gears.table.join(
     
     -- emoji
 
-    awful.key({modkey}, "d", function()
+    awful.key({modkey}, "i", function()
         awful.spawn.easy_async_with_shell("emoji-picker")
     end, {
         description = "emoji menu",

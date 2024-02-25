@@ -107,11 +107,8 @@ function helpers.prompt(action, textbox, prompt, callback)
             done_callback = callback,
             exe_callback = function(input)
                 if not input or #input == 0 then return end
-                if pcall(awful.spawn(input)) then
-                    return
-                else
-                    naughty.notify{ text = 'Error in : '..input }
-                end 
+                -- awful.spawn.with_shell('brave https://www.google.com/search?q='..input ..' &')
+                --naughty.notify{ text = 'The input was: '..input }
             end
         }
     end
