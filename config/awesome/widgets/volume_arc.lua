@@ -14,15 +14,15 @@ local volume_arc = wibox.widget {
     rounded_edge = true,
     bg = beautiful.arc_bg,
     paddings = dpi(10),
-    colors = {active_color},
+    colors = { active_color },
     widget = wibox.container.arcchart
 }
 
 awesome.connect_signal("signals::volume", function(volume, muted)
     if muted then
-        volume_arc.colors = {mute_color}
+        volume_arc.colors = { mute_color }
     else
-        volume_arc.colors = {active_color}
+        volume_arc.colors = { active_color }
     end
 
     volume_arc.value = volume

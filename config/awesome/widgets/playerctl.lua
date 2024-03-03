@@ -8,7 +8,6 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
 local create_button = function(symbol, size_symbol, color, command, playpause)
-
     local icon = wibox.widget {
         markup = helpers.colorize_text(symbol, color),
         font = beautiful.icon_var .. size_symbol,
@@ -36,7 +35,7 @@ local create_button = function(symbol, size_symbol, color, command, playpause)
     end)
 
     button:buttons(gears.table.join(
-                       awful.button({}, 1, function() command() end)))
+        awful.button({}, 1, function() command() end)))
 
     button:connect_signal("mouse::enter", function()
         icon.markup = helpers.colorize_text(icon.text, beautiful.fg_sidebar)
@@ -66,10 +65,10 @@ local art = wibox.widget {
 }
 
 local music_pos = wibox.widget({
-	font = "Font Awesome 5 Free 11.2",
+    font = "Font Awesome 5 Free 11.2",
     align = 'left',
-	valign = "center",
-	widget = wibox.widget.textbox,
+    valign = "center",
+    widget = wibox.widget.textbox,
 })
 
 local title_widget = wibox.widget {
@@ -89,25 +88,27 @@ local artist_widget = wibox.widget {
     widget = wibox.widget.textbox
 }
 
--- Get Song Info 
+-- Get Song Info
 
 Playerctl:connect_signal("metadata",
-                       function(_, title, artist, album_path, album, ___, player_name)
-    -- Set art widget
-    art:set_image(gears.surface.load_uncached(album_path))
+    function(_, title, artist, album_path, album, ___, player_name)
+        -- Set art widget
+        art:set_image(gears.surface.load_uncached(album_path))
 
-    title_widget:set_markup_silently('<span foreground="' .. beautiful.fg_sidebar .. '">' .. ( #title > 23 and string.sub(title,0,23).. ".."  or title ) .. '</span>')
-    artist_widget:set_markup_silently('<span foreground="' .. beautiful.fg_sidebar.. "90" .. '">' .. artist .. '</span>')
-end)
+        title_widget:set_markup_silently('<span foreground="' ..
+        beautiful.fg_sidebar .. '">' .. (#title > 23 and string.sub(title, 0, 23) .. ".." or title) .. '</span>')
+        artist_widget:set_markup_silently('<span foreground="' ..
+        beautiful.fg_sidebar .. "90" .. '">' .. artist .. '</span>')
+    end)
 
-Playerctl:connect_signal("position", 
-                    function(_, interval_sec, length_sec, player_name)
-	local pos_now = tostring(os.date("!%M:%S", math.floor(interval_sec)))
-	local pos_length = tostring(os.date("!%M:%S", math.floor(length_sec)))
-	local pos_markup = helpers.colorize_text(pos_now .. " / " .. pos_length, beautiful.fg_sidebar .. "66")
+Playerctl:connect_signal("position",
+    function(_, interval_sec, length_sec, player_name)
+        local pos_now = tostring(os.date("!%M:%S", math.floor(interval_sec)))
+        local pos_length = tostring(os.date("!%M:%S", math.floor(length_sec)))
+        local pos_markup = helpers.colorize_text(pos_now .. " / " .. pos_length, beautiful.fg_sidebar .. "66")
 
-	music_pos:set_markup_silently(pos_markup)
-end)
+        music_pos:set_markup_silently(pos_markup)
+    end)
 
 
 local play_command = function() Playerctl:play_pause() end
@@ -115,7 +116,7 @@ local prev_command = function() Playerctl:previous() end
 local next_command = function() Playerctl:next() end
 
 local playerctl_play_symbol = create_button("", "14", beautiful.fg_sidebar, play_command, true)
-local playerctl_prev_symbol = create_button("", "12", beautiful.fg_sidebar, prev_command, false)-- 
+local playerctl_prev_symbol = create_button("", "12", beautiful.fg_sidebar, prev_command, false) -- 
 local playerctl_next_symbol = create_button("", "12", beautiful.fg_sidebar, next_command, false)
 
 
@@ -138,7 +139,7 @@ local info = wibox.widget {
     layout = wibox.layout.fixed.vertical
 }
 
-local box_music_pos = wibox.widget{
+local box_music_pos = wibox.widget {
     {
         {
             nil,
@@ -147,9 +148,9 @@ local box_music_pos = wibox.widget{
             expand = "none"
         },
         widget = box
-        
+
     },
-    layout = wibox.layout.fixed.vertical,   
+    layout = wibox.layout.fixed.vertical,
     widget = wibox.container.margin,
     expand = "none"
 }
@@ -182,21 +183,21 @@ local control = wibox.widget {
 
 local playerctl = {
     playercomand = wibox.widget {
-       {
-           art,
-           margins = dpi(26),
-           widget = wibox.container.margin
-       },
-       {
-           layout = wibox.layout.fixed.vertical,
-           expand = "none",
-           helpers.vertical_pad(dpi(18)),
-           info,
-       },
+        {
+            art,
+            margins = dpi(26),
+            widget = wibox.container.margin
+        },
+        {
+            layout = wibox.layout.fixed.vertical,
+            expand = "none",
+            helpers.vertical_pad(dpi(18)),
+            info,
+        },
 
-       layout = wibox.layout.align.horizontal
-   },
-   controlpanel = control
+        layout = wibox.layout.align.horizontal
+    },
+    controlpanel = control
 
 }
 

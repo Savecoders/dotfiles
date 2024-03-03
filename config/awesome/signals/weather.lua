@@ -16,9 +16,9 @@ local key = "f88874f94ed3d3fd6a271bd0ca65b616"
 local city_id = mycity
 local units = "metric"
 
---[[ 
-    the key is the openweathermap 
-        -> https://rapidapi.com/auth/sign-up?referral=/community/api/open-weather-map 
+--[[
+    the key is the openweathermap
+        -> https://rapidapi.com/auth/sign-up?referral=/community/api/open-weather-map
     create count for get apikey
     units is for metric the temperature
     ]]
@@ -42,7 +42,7 @@ local weather_icons = {
 	["01d"] = { icon = sun_icon, color = beautiful.red },
 	["01n"] = { icon = moon_icon, color = beautiful.icon_selected },
 	["02d"] = { icon = dcloud_icon, color = beautiful.red },
-	["02n"] = { icon = ncloud_icon, color = beautiful.red },--2
+	["02n"] = { icon = ncloud_icon, color = beautiful.red }, --2
 	["03d"] = { icon = cloud_icon, color = beautiful.bg },
 	["03n"] = { icon = cloud_icon, color = beautiful.bg },
 	["04d"] = { icon = cloud_icon, color = beautiful.bg },
@@ -53,8 +53,8 @@ local weather_icons = {
 	["10n"] = { icon = rain_icon, color = beautiful.icon_selected },
 	["11d"] = { icon = storm_icon, color = beautiful.bg },
 	["11n"] = { icon = storm_icon, color = beautiful.bg },
-	["13d"] = { icon = snow_icon, color = beautiful.red },--2
-	["13n"] = { icon = snow_icon, color = beautiful.red },--2
+	["13d"] = { icon = snow_icon, color = beautiful.red }, --2
+	["13n"] = { icon = snow_icon, color = beautiful.red }, --2
 	["40d"] = { icon = mist_icon, color = beautiful.accent },
 	["40n"] = { icon = mist_icon, color = beautiful.accent },
 	["50d"] = { icon = mist_icon, color = beautiful.accent },

@@ -38,7 +38,6 @@ end
 notifbox_layout:insert(1, empty_notifbox)
 
 naughty.connect_signal("request::display", function(n)
-
     if #notifbox_layout.children == 1 and remove_notifbox_empty then
         notifbox_layout:reset(notifbox_layout)
         remove_notifbox_empty = false

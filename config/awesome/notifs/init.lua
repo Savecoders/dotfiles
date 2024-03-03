@@ -23,7 +23,7 @@ naughty.config.defaults.position = "top_right"
 naughty.config.icon_dirs = {
     "/usr/share/icons/Mkos-Big-Sur/", "/usr/share/Mkos-Big-Sur/"
 }
-naughty.config.icon_formats = {"png", "svg", "jpg"}
+naughty.config.icon_formats = { "png", "svg", "jpg" }
 
 -- Timeouts
 naughty.config.presets.low.timeout = 5
@@ -33,7 +33,6 @@ naughty.config.presets.info = naughty.config.presets.normal
 naughty.config.presets.warn = naughty.config.presets.critical
 
 naughty.connect_signal("request::display", function(notify)
-
     local time = os.date "%I:%M"
 
     notify.timeout = 10
@@ -64,7 +63,7 @@ naughty.connect_signal("request::display", function(notify)
             layout = wibox.layout.flex.horizontal
         },
         widget_template = action_widget,
-        style = {underline_normal = false, underline_selected = true},
+        style = { underline_normal = false, underline_selected = true },
         widget = naughty.list.actions
     }
     helpers.add_hover_cursor(actions, "hand1")
@@ -74,10 +73,10 @@ naughty.connect_signal("request::display", function(notify)
         type = "notification",
         bg = "#00000000",
         fg = beautiful.fg_normal,
-    
-      --container for notification
 
-      widget_template = {
+        --container for notification
+
+        widget_template = {
             {
                 {
                     {
@@ -134,7 +133,7 @@ naughty.connect_signal("request::display", function(notify)
                                             .waiting_nonlinear_back_and_forth,
                                         speed = 50,
                                         {
-                                            markup = "<span weight='bold'>" ..notify.title .. "</span>",
+                                            markup = "<span weight='bold'>" .. notify.title .. "</span>",
                                             font = beautiful.font,
                                             align = "left",
                                             widget = wibox.widget.textbox
@@ -146,7 +145,7 @@ naughty.connect_signal("request::display", function(notify)
                                     --message  of textbox
                                     {
                                         {
-                                            markup = ( #notify.message > 26 and string.sub(notify.message,0,26).. ".."  or notify.message ),
+                                            markup = (#notify.message > 26 and string.sub(notify.message, 0, 26) .. ".." or notify.message),
                                             align = "left",
                                             font = beautiful.font,
                                             widget = wibox.widget.textbox
@@ -192,7 +191,7 @@ naughty.connect_signal("request::display", function(notify)
                         layout = wibox.layout.fixed.horizontal
                     },
                     {
-                        {actions, layout = wibox.layout.fixed.vertical},
+                        { actions, layout = wibox.layout.fixed.vertical },
                         margins = dpi(12),
                         visible = notify.actions and #notify.actions > 0,
                         widget = wibox.container.margin

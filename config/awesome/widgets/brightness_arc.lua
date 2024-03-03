@@ -13,7 +13,7 @@ local brightness_arc = wibox.widget {
     rounded_edge = true,
     bg = "#00000000",
     paddings = dpi(10),
-    colors = {active_color},
+    colors = { active_color },
     widget = wibox.container.arcchart
 }
 

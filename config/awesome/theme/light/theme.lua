@@ -1,76 +1,76 @@
-local gears = require("gears")
-local theme_assets = require("beautiful.theme_assets")
-local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
-local xrdb = xresources.get_current_theme()
-local gfs = require('gears.filesystem')
-local themes_path = gfs.get_themes_dir()
-local beautiful = require("beautiful")
-local helpers = require("helpers")
+local gears              = require("gears")
+local theme_assets       = require("beautiful.theme_assets")
+local xresources         = require("beautiful.xresources")
+local dpi                = xresources.apply_dpi
+local xrdb               = xresources.get_current_theme()
+local gfs                = require('gears.filesystem')
+local themes_path        = gfs.get_themes_dir()
+local beautiful          = require("beautiful")
+local helpers            = require("helpers")
 
-local theme = {}
+local theme              = {}
 
--- themes 
+-- themes
 
-theme.font = "SF Pro Display Medium 12"
+theme.font               = "SF Pro Display Medium 12"
 
-theme.icon_var = "Font Awesome 6 Free "
+theme.icon_var           = "Font Awesome 6 Free "
 
-theme.font_screen = "SF Pro Display Medium  "
+theme.font_screen        = "SF Pro Display Medium  "
 
 -- wallpaper scripts
 
-theme.dir = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
+theme.dir                = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
 
-theme.wallpaper = "~/Pictures/Wallpapers/light/rose_sky.jpg"
+theme.wallpaper          = "~/Pictures/Wallpapers/light/rose_sky.jpg"
 
-theme.useless_gap = 6
-theme.useless_less = 8
+theme.useless_gap        = 6
+theme.useless_less       = 8
 
 -- colors
 
-theme.bg = "#F9FEFE"
-theme.bg_sidebar = "#F9FEFE"
-theme.bg_selected = "#F2F8FC"
-theme.bg_widget = "#F2F8FB"
-theme.border_color = "#ECECEC"
-theme.accent = "#d6E7fc"
-theme.transparent = "#000000"
-theme.fg_normal = "#b0b2bf"
-theme.fg_focus      = "#6192FB"
-theme.fg_urgent     = "#b0b2bf"
-theme.fg_minimize   = "#b0b2bf"
-theme.fg_sidebar    = "#2A3256"
-theme.taglist_bg_focus = "#F9FEFE"
+theme.bg                 = "#F9FEFE"
+theme.bg_sidebar         = "#F9FEFE"
+theme.bg_selected        = "#F2F8FC"
+theme.bg_widget          = "#F2F8FB"
+theme.border_color       = "#ECECEC"
+theme.accent             = "#d6E7fc"
+theme.transparent        = "#000000"
+theme.fg_normal          = "#b0b2bf"
+theme.fg_focus           = "#6192FB"
+theme.fg_urgent          = "#b0b2bf"
+theme.fg_minimize        = "#b0b2bf"
+theme.fg_sidebar         = "#2A3256"
+theme.taglist_bg_focus   = "#F9FEFE"
 
-theme.active = "#6A6E78"
+theme.active             = "#6A6E78"
 
-theme.icon_bg = "#b0b2bf"
-theme.icon_normal = "#b0b2bf"
-theme.icon_selected = "#6192FB"
+theme.icon_bg            = "#b0b2bf"
+theme.icon_normal        = "#b0b2bf"
+theme.icon_selected      = "#6192FB"
 
-theme.red = "#db7272"
+theme.red                = "#db7272"
 
-theme.grey = "#383D44"
+theme.grey               = "#383D44"
 
 theme.titlebar_unfocused = "#EFEFEF"
 
-theme.fg_contrast = "#555B6E"
+theme.fg_contrast        = "#555B6E"
 
-theme.search_bar = "#F2F8FB"
+theme.search_bar         = "#F2F8FB"
 
-theme.dark_slider_bg = "#E6E9EB"
+theme.dark_slider_bg     = "#E6E9EB"
 
-theme.arc_bg = "#D8E4FA"
-theme.arc_color = "#6192FB"
+theme.arc_bg             = "#D8E4FA"
+theme.arc_color          = "#6192FB"
 
 -- radius
 
-theme.bar_radius = dpi(6)
-theme.border_radius = dpi(9)
-theme.client_radius = dpi(8)
-theme.sidebar_radius = dpi(10)
-theme.dock_radius = dpi(12)
+theme.bar_radius         = dpi(6)
+theme.border_radius      = dpi(9)
+theme.client_radius      = dpi(8)
+theme.sidebar_radius     = dpi(10)
+theme.dock_radius        = dpi(12)
 
 
 theme.snap_bg = theme.border_color
@@ -78,7 +78,7 @@ theme.snap_border_width = dpi(2)
 
 -- wibar
 
-theme.wibar_height = 1080 
+theme.wibar_height = 1080
 theme.popup_left = 150
 
 -- Listages
@@ -126,16 +126,16 @@ theme.search_icon = gfs.get_configuration_dir() .. "icons/bar/search.png"
 theme.search_bar_icon = colorize_icon(theme.search_icon, theme.icon_normal)
 
 theme.logo = gfs.get_configuration_dir() .. "icons/bar/align.png"
-theme.logo_normal = colorize_icon(theme.logo, theme.icon_normal) 
-theme.logo_selected = colorize_icon(theme.logo, theme.icon_selected) 
+theme.logo_normal = colorize_icon(theme.logo, theme.icon_normal)
+theme.logo_selected = colorize_icon(theme.logo, theme.icon_selected)
 
 theme.icon_change_theme = gfs.get_configuration_dir() .. "icons/ichange_theme.png"
 
 -- notif
 
-theme.notification_icon = colorize_icon(theme.notif_icon, theme.icon_normal) 
+theme.notification_icon = colorize_icon(theme.notif_icon, theme.icon_normal)
 theme.delete = colorize_icon(theme.delete_icon, theme.red)
-theme.delete_hover = colorize_icon(theme.delete_icon, theme.red .."80")
+theme.delete_hover = colorize_icon(theme.delete_icon, theme.red .. "80")
 theme.clear = colorize_icon(theme.clear_icon, theme.grey)
 theme.clear_hover = colorize_icon(theme.clear_filled, theme.grey)
 

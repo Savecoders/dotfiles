@@ -12,18 +12,18 @@ local gfs = require('gears.filesystem')
 
 
 local change_dark_theme = function()
-    awful.spawn.with_shell(gears.filesystem.get_configuration_dir() .. "scripts/themes/dark")
-    awesome.restart()
+	awful.spawn.with_shell(gears.filesystem.get_configuration_dir() .. "scripts/themes/dark")
+	awesome.restart()
 end
 
 local change_light_theme = function()
-    awful.spawn.with_shell(gears.filesystem.get_configuration_dir() .. "scripts/themes/light")
-    awesome.restart()
+	awful.spawn.with_shell(gears.filesystem.get_configuration_dir() .. "scripts/themes/light")
+	awesome.restart()
 end
 
 local change_gruvbox_theme = function()
-		awful.spawn.with_shell(gears.filesystem.get_configuration_dir() .. "scripts/themes/gruvbox")
-		awesome.restart()
+	awful.spawn.with_shell(gears.filesystem.get_configuration_dir() .. "scripts/themes/gruvbox")
+	awesome.restart()
 end
 
 
@@ -55,22 +55,22 @@ light.forced_width = dpi(280)
 gruvbox.forced_width = dpi(280)
 
 local theme_screen = wibox({
-    height  = dpi(200),
-    width   = dpi(960),
-		shape   = helpers.rrect(beautiful.border_radius),
-		bg      = beautiful.bg,
-		visible = false,
-		ontop 	= true,
+	height  = dpi(200),
+	width   = dpi(960),
+	shape   = helpers.rrect(beautiful.border_radius),
+	bg      = beautiful.bg,
+	visible = false,
+	ontop   = true,
 })
 
 awful.placement.centered(theme_screen, {
-    margins = {
-        center = beautiful.useless_gap
-    }
+	margins = {
+		center = beautiful.useless_gap
+	}
 })
 
 theme_screen:setup {
-	
+
 	{
 
 		{
@@ -78,13 +78,13 @@ theme_screen:setup {
 			spacing = dpi(20),
 			layout = wibox.layout.fixed.horizontal,
 		},
-		
+
 		{
 			gruvbox,
 			spacing = dpi(20),
 			layout = wibox.layout.fixed.horizontal,
 		},
-		
+
 		{
 			light,
 			spacing = dpi(20),
@@ -99,10 +99,10 @@ theme_screen:setup {
 	margins = dpi(28)
 }
 
-theme_toogle  = function()
-    if theme_screen.visible == false then
-        theme_screen.visible = not theme_screen.visible
-    else
-        theme_screen.visible = false
-    end
+theme_toogle = function()
+	if theme_screen.visible == false then
+		theme_screen.visible = not theme_screen.visible
+	else
+		theme_screen.visible = false
+	end
 end

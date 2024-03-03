@@ -1,80 +1,80 @@
-local awful = require("awful")
-local gears = require("gears")
-local theme_assets = require("beautiful.theme_assets")
-local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
-local gfs = require('gears.filesystem')
-local themes_path = gfs.get_themes_dir()
-local beautiful = require("beautiful")
-local helpers = require("helpers")
+local awful              = require("awful")
+local gears              = require("gears")
+local theme_assets       = require("beautiful.theme_assets")
+local xresources         = require("beautiful.xresources")
+local dpi                = xresources.apply_dpi
+local gfs                = require('gears.filesystem')
+local themes_path        = gfs.get_themes_dir()
+local beautiful          = require("beautiful")
+local helpers            = require("helpers")
 
-local theme = {}
+local theme              = {}
 
--- themes 
+-- themes
 
-theme.font = "SF Pro Display Medium 11"
+theme.font               = "SF Pro Display Medium 11"
 
-theme.icon_var = "Font Awesome 6 Free "
+theme.icon_var           = "Font Awesome 6 Free "
 
-theme.font_screen = "SF Pro Display Medium  "
+theme.font_screen        = "SF Pro Display Medium  "
 
 -- wallpaper scripts
 
-theme.dir = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
+theme.dir                = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
 
-theme.wallpaper = "~/Pictures/Wallpapers/gruvbox/waterfall2.jpg"
+theme.wallpaper          = "~/Pictures/Wallpapers/gruvbox/waterfall2.jpg"
 
-theme.useless_gap = 6
-theme.useless_less = 8
+theme.useless_gap        = 6
+theme.useless_less       = 8
 
 -- colors
 -- #131417
 
-theme.bg = "#1d2021"
-theme.bg_sidebar = "#1d2021"
-theme.bg_selected = "#1b2021" --
-theme.bg_widget = "#1b2021"
-theme.border_color = "#252628"
-theme.accent = "#7daea3"
-theme.transparent = "#000000"
-theme.fg_normal = "#a89984"
-theme.fg_focus      = "#d4be98"
-theme.fg_urgent     = "#a89984"
-theme.fg_minimize   = "#a89984"
-theme.fg_sidebar = "#d4be98"
+theme.bg                 = "#1d2021"
+theme.bg_sidebar         = "#1d2021"
+theme.bg_selected        = "#1b2021" --
+theme.bg_widget          = "#1b2021"
+theme.border_color       = "#252628"
+theme.accent             = "#7daea3"
+theme.transparent        = "#000000"
+theme.fg_normal          = "#a89984"
+theme.fg_focus           = "#d4be98"
+theme.fg_urgent          = "#a89984"
+theme.fg_minimize        = "#a89984"
+theme.fg_sidebar         = "#d4be98"
 
-theme.taglist_bg_focus = {
+theme.taglist_bg_focus   = {
   type = "linear",
   from = { 00, 00, 10 },
   to = { 100, 100, 30 },
   stops = { { 0, "#7daea3" }, { 1, "#7daea3" } }
-} 
+}
 
-theme.active = "#1d2021"
+theme.active             = "#1d2021"
 
-theme.icon_bg = "#d4be98"
-theme.icon_normal = "#a89984"
-theme.icon_selected = "#d4be98"
+theme.icon_bg            = "#d4be98"
+theme.icon_normal        = "#a89984"
+theme.icon_selected      = "#d4be98"
 
-theme.red = "#ea6962"
+theme.red                = "#ea6962"
 
-theme.grey = "#928374"
+theme.grey               = "#928374"
 
 theme.titlebar_unfocused = "#252628"
 
-theme.fg_contrast = "#d4be98"
+theme.fg_contrast        = "#d4be98"
 
-theme.search_bar = "#1b2021"
+theme.search_bar         = "#1b2021"
 
-theme.dark_slider_bg = "#7daea3"
+theme.dark_slider_bg     = "#7daea3"
 
-theme.arc_bg = "#1d2021"
-theme.arc_color = "#7daea3"
+theme.arc_bg             = "#1d2021"
+theme.arc_color          = "#7daea3"
 
 
 -- wibar
 
-theme.wibar_height = 1080 
+theme.wibar_height = 1080
 theme.popup_left = 150
 
 -- radius
@@ -132,14 +132,14 @@ theme.search_icon = gfs.get_configuration_dir() .. "icons/bar/search.png"
 theme.search_bar_icon = colorize_icon(theme.search_icon, theme.icon_normal)
 
 theme.logo = gfs.get_configuration_dir() .. "icons/bar/align.png"
-theme.logo_normal = colorize_icon(theme.logo, theme.icon_normal) 
-theme.logo_selected = colorize_icon(theme.logo, theme.icon_selected) 
+theme.logo_normal = colorize_icon(theme.logo, theme.icon_normal)
+theme.logo_selected = colorize_icon(theme.logo, theme.icon_selected)
 
 theme.icon_change_theme = gfs.get_configuration_dir() .. "icons/ichange_theme.png"
 
 -- notif
 
-theme.notification_icon = colorize_icon(theme.notif_icon, theme.icon_normal) 
+theme.notification_icon = colorize_icon(theme.notif_icon, theme.icon_normal)
 theme.delete = colorize_icon(theme.delete_icon, theme.red)
 theme.delete_hover = colorize_icon(theme.delete_icon, theme.red .. "80")
 theme.clear = colorize_icon(theme.clear_icon, theme.grey)

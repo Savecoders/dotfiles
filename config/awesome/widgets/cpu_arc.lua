@@ -13,13 +13,13 @@ local cpu_arc = wibox.widget {
     rounded_edge = true,
     bg = beautiful.arc_bg,
     paddings = dpi(10),
-    colors = {active_color},
+    colors = { active_color },
     widget = wibox.container.arcchart
 }
 
-awesome.connect_signal("signals::cpu", function(value) 
+awesome.connect_signal("signals::cpu", function(value)
     cpu_arc.value = value
     value.markup = value
- end)
+end)
 
 return cpu_arc

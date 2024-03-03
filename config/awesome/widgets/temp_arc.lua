@@ -14,7 +14,7 @@ local temp_arc = wibox.widget {
     rounded_edge = true,
     bg = beautiful.arc_bg,
     paddings = dpi(10),
-    colors = {active_color},
+    colors = { active_color },
     widget = wibox.container.arcchart
 }
 

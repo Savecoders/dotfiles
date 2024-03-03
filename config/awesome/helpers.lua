@@ -17,7 +17,7 @@ function helpers.volume_control(step)
         sign = step > 0 and "+" or ""
         cmd =
             "pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ " .. sign .. tostring(step) ..
-                "%"
+            "%"
     end
     awful.spawn.with_shell(cmd)
 end
@@ -27,7 +27,6 @@ function helpers.colorize_text(txt, fg)
 end
 
 function helpers.colorize_text2(txt, fg)
-
     if fg == "" then
         fg = "#ffffff"
     end
