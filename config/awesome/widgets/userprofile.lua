@@ -8,7 +8,7 @@ local dpi = beautiful.xresources.apply_dpi
 local imguser = wibox.widget {
     image = beautiful.profile,
     resize = true,
-    clip_shape = helpers.squircle(w, h, 9),
+    clip_shape = helpers.squircle(beautiful.border_radius - 3),
     halign = "center",
     widget = wibox.widget.imagebox
 }

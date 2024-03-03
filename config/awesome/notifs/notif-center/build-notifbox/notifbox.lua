@@ -8,7 +8,7 @@ local button = require("widgets.button")
 local notifbox = {}
 
 notifbox.create = function(icon, n, width)
-    local time = os.date("%H:%M")
+    local time = os.date("%H:%M %p")
     local box = {}
 
     local dismiss = button.create_image_onclick(beautiful.delete, beautiful.delete_hover, function()

@@ -11,33 +11,31 @@ local helpers = require("helpers")
 -- Default notification theme
 
 naughty.config.defaults.ontop = true
-naughty.config.defaults.icon_size = dpi(30)
+naughty.config.defaults.icon_size = dpi(22)
 naughty.config.defaults.screen = awful.screen.focused()
 naughty.config.defaults.timeout = 5
-naughty.config.defaults.title = "Notification"
+naughty.config.defaults.title = "ystem Notification"
 naughty.config.defaults.position = "top_right"
 
 
 -- icons for notifications
 
 naughty.config.icon_dirs = {
-    "/usr/share/icons/Mkos-Big-Sur/", "/usr/share/Mkos-Big-Sur/"
+    "$HOME/.icons/01-WhiteSur/WhiteSur-dark/",
 }
 naughty.config.icon_formats = { "png", "svg", "jpg" }
 
--- Timeouts
-naughty.config.presets.low.timeout = 5
 naughty.config.presets.critical.timeout = 0
 naughty.config.presets.ok = naughty.config.presets.normal
 naughty.config.presets.info = naughty.config.presets.normal
 naughty.config.presets.warn = naughty.config.presets.critical
 
 naughty.connect_signal("request::display", function(notify)
-    local time = os.date "%I:%M"
+    local time = os.date("%H:%M %p")
 
-    notify.timeout = 10
+    notify.timeout = 8
 
-    local appicon = notify.icon or notify.app_icon
+    local appicon = notify.app_icon or notify.icon
     if not appicon then appicon = beautiful.notification_icon end
 
     local action_widget = {
@@ -59,7 +57,7 @@ naughty.connect_signal("request::display", function(notify)
         notification = notify,
         base_layout = wibox.widget {
             --Space for notification
-            spacing = dpi(8),
+            spacing = dpi(12),
             layout = wibox.layout.flex.horizontal
         },
         widget_template = action_widget,
@@ -73,7 +71,13 @@ naughty.connect_signal("request::display", function(notify)
         type = "notification",
         bg = "#00000000",
         fg = beautiful.fg_normal,
-
+        ontop = true,
+        cursor = "hand2",
+        maximum_width = dpi(350),
+        maximum_height = dpi(180),
+        shape = gears.shape.rectangle,
+        margins = dpi(20),
+        padding = dpi(20),
         --container for notification
 
         widget_template = {
@@ -145,7 +149,7 @@ naughty.connect_signal("request::display", function(notify)
                                     --message  of textbox
                                     {
                                         {
-                                            markup = (#notify.message > 26 and string.sub(notify.message, 0, 26) .. ".." or notify.message),
+                                            markup = (#notify.message > 20 and string.sub(notify.message, 0, 20) .. ".." or notify.message),
                                             align = "left",
                                             font = beautiful.font,
                                             widget = wibox.widget.textbox
@@ -169,7 +173,7 @@ naughty.connect_signal("request::display", function(notify)
                                 {
                                     -- image of notification
                                     {
-                                        image = notify.icon,
+                                        image = appicon,
                                         resize = true,
                                         clip_shape = helpers.rrect(beautiful.border_radius - 5),
                                         widget = wibox.widget.imagebox
