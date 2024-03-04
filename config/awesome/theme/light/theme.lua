@@ -29,25 +29,32 @@ theme.useless_less       = 8
 
 -- colors
 
-theme.bg                 = "#F9FEFE"
-theme.bg_sidebar         = "#F9FEFE"
-theme.bg_selected        = "#F2F8FC"
-theme.bg_widget          = "#F2F8FB"
+theme.bg                 = "#FFFFFF"
+theme.bg_sidebar         = "#FFFFFF"
+theme.bg_selected        = "#F9FEFE"
+theme.bg_widget          = "#F9FEFE"
 theme.border_color       = "#ECECEC"
-theme.accent             = "#d6E7fc"
+theme.accent             = "#a8CBF6"
 theme.transparent        = "#000000"
 theme.fg_normal          = "#b0b2bf"
-theme.fg_focus           = "#6192FB"
+theme.fg_focus           = "#FFFFFF"
 theme.fg_urgent          = "#b0b2bf"
 theme.fg_minimize        = "#b0b2bf"
 theme.fg_sidebar         = "#2A3256"
-theme.taglist_bg_focus   = "#F9FEFE"
+theme.taglist_bg_focus   = "#FFFFFF"
+
+theme.taglist_bg_focus   = {
+    type = "linear",
+    from = { 00, 00, 10 },
+    to = { 100, 100, 30 },
+    stops = { { 0, "#62C2F0" }, { 1, "#a6CBF6" } }
+}
 
 theme.active             = "#6A6E78"
 
 theme.icon_bg            = "#b0b2bf"
 theme.icon_normal        = "#b0b2bf"
-theme.icon_selected      = "#6192FB"
+theme.icon_selected      = "#FFFFFF"
 
 theme.red                = "#db7272"
 
@@ -57,12 +64,12 @@ theme.titlebar_unfocused = "#EFEFEF"
 
 theme.fg_contrast        = "#555B6E"
 
-theme.search_bar         = "#F2F8FB"
+theme.search_bar         = "#F9FEFE"
 
 theme.dark_slider_bg     = "#E6E9EB"
 
-theme.arc_bg             = "#D8E4FA"
-theme.arc_color          = "#6192FB"
+theme.arc_bg             = "#93D5F7"
+theme.arc_color          = "#62C2F0"
 
 -- radius
 
