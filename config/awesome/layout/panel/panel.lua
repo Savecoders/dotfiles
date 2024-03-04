@@ -18,15 +18,15 @@ local cr_btn = require("widgets.button").create
 -- icons in the panel
 
 local icons = {
-    blocked         = "",
-    blue_light      = "",
-    bluetooth       = "",
-    microphone      = "",
-    recorded        = "",
-    themes          = "",
-    screenshot      = "",
-    color_pick      = "",
-    wifi            = "",
+    blocked    = "",
+    blue_light = "",
+    bluetooth  = "",
+    microphone = "",
+    recorded   = "",
+    themes     = "",
+    screenshot = "",
+    color_pick = "",
+    wifi       = "",
 }
 
 local size_icon = "14"
@@ -34,11 +34,12 @@ local size_icon = "14"
 -- blocked
 
 local blocked_cmd = function()
-    require("layout.others.exit-screen") 
-        awesome.emit_signal('module::exit_screen:show')
+    require("layout.others.exit-screen")
+    awesome.emit_signal('module::exit_screen:show')
 end
 
-local blocked = cr_btn(icons.blocked, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar,beautiful.icon_normal, beautiful.red, blocked_cmd)
+local blocked = cr_btn(icons.blocked, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar,
+    beautiful.icon_normal, beautiful.red, blocked_cmd)
 
 -- blue_light
 
@@ -46,40 +47,45 @@ local blue_light_cmd = function()
     awful.spawn.easy_async_with_shell(utils.blue_light, function() end)
 end
 
-local blue_light = cr_btn(icons.blue_light, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, blue_light_cmd)
+local blue_light = cr_btn(icons.blue_light, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar,
+    beautiful.icon_normal, beautiful.red, blue_light_cmd)
 
 -- bluetooth
 
-local bluetooth_cmd = function() 
+local bluetooth_cmd = function()
     awful.spawn.easy_async_with_shell(utils.area_screenshot, function() end)
 end
 
-local bluetooth = cr_btn(icons.bluetooth, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, bluetooth_cmd)
+local bluetooth = cr_btn(icons.bluetooth, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar,
+    beautiful.icon_normal, beautiful.red, bluetooth_cmd)
 
 -- microphone
 
-local microphone_cmd = function() 
+local microphone_cmd = function()
     awful.spawn.easy_async_with_shell(utils.unmute, function() end)
 end
 
-local microphone = cr_btn(icons.microphone, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, microphone_cmd)
+local microphone = cr_btn(icons.microphone, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar,
+    beautiful.icon_normal, beautiful.red, microphone_cmd)
 
 -- recorded
 
-local recorded_cmd = function() 
+local recorded_cmd = function()
     awful.spawn.easy_async_with_shell(utils.recorded, function() end)
 end
 
-local recorded = cr_btn(icons.recorded, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, recorded_cmd)
+local recorded = cr_btn(icons.recorded, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar,
+    beautiful.icon_normal, beautiful.red, recorded_cmd)
 
 -- themes
 
 local themes_cmd = function()
-    require("theme.selection_theme") 
-        theme_toogle()
+    require("theme.selection_theme")
+    theme_toogle()
 end
 
-local themes = cr_btn(icons.themes, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, themes_cmd)
+local themes = cr_btn(icons.themes, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar,
+    beautiful.icon_normal, beautiful.red, themes_cmd)
 
 -- screenshot
 
@@ -87,7 +93,8 @@ local screenshot_cmd = function()
     awful.spawn.easy_async_with_shell(utils.full_screenshot, function() end)
 end
 
-local screenshot = cr_btn(icons.screenshot, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, screenshot_cmd)
+local screenshot = cr_btn(icons.screenshot, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar,
+    beautiful.icon_normal, beautiful.red, screenshot_cmd)
 
 -- pick_color "color_pick"
 
@@ -95,7 +102,8 @@ local color_pick_cmd = function()
     awful.spawn.with_shell(utils.color_pick)
 end
 
-local color_pick = cr_btn(icons.color_pick, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, color_pick_cmd)
+local color_pick = cr_btn(icons.color_pick, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar,
+    beautiful.icon_normal, beautiful.red, color_pick_cmd)
 
 -- wifi
 
@@ -103,7 +111,8 @@ local wifi_cmd = function()
     awful.spawn.easy_async_with_shell(utils.area_screenshot, function() end)
 end
 
-local wifi = cr_btn(icons.wifi, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar, beautiful.icon_normal, beautiful.red, wifi_cmd)
+local wifi = cr_btn(icons.wifi, dpi(50), dpi(5), beautiful.icon_var .. size_icon, beautiful.bg_sidebar,
+    beautiful.icon_normal, beautiful.red, wifi_cmd)
 
 
 
@@ -133,20 +142,18 @@ local slider_timed = rubato.timed {
 slider_how = function()
     if slider_options.visible == false then
         slider_options.visible = not slider_options.visible
-        slider_timed.target = dpi(108)
+        slider_timed.target = dpi(70)
     else
-        slider_timed.target = -dpi(130)
+        slider_timed.target = -dpi(140)
         slider_options.visible = false
     end
 end
 
 awful.placement.bottom(slider_options, {
-    margins = {
-        bottom = 32,
-    }
+    margins = beautiful.useless_gap * 2,
 })
 
-slider_options:setup{
+slider_options:setup {
     {
         {
             {
@@ -169,7 +176,7 @@ slider_options:setup{
             {
                 wifi,
                 bluetooth,
-                blocked,                                 
+                blocked,
                 spacing = dpi(20),
                 layout = wibox.layout.fixed.horizontal,
             },

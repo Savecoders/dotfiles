@@ -138,7 +138,7 @@ local sidebar_timed = rubato.timed {
 sidebar_normal = function()
     if sidebar.visible == false then
         sidebar.visible = not sidebar.visible
-        sidebar_timed.target = dpi(85)
+        sidebar_timed.target = dpi(70)
     else
         sidebar_timed.target = -dpi(140)
         sidebar.visible = false
@@ -150,7 +150,7 @@ sidebar_wide = function()
         sidebar.visible = not sidebar.visible
         sidebar_timed.target = dpi(300) -- 370
     else
-        sidebar_timed.target = -dpi(400)
+        sidebar_timed.target = -dpi(300)
         sidebar.visible = false
     end
 end
