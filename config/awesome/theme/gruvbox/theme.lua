@@ -32,8 +32,8 @@ theme.useless_less       = 8
 
 theme.bg                 = "#1d2021"
 theme.bg_sidebar         = "#1d2021"
-theme.bg_selected        = "#1b2021" --
-theme.bg_widget          = "#1b2021"
+theme.bg_selected        = "#252828" --
+theme.bg_widget          = "#252828"
 theme.border_color       = "#252628"
 theme.accent             = "#7daea3"
 theme.transparent        = "#000000"
@@ -64,7 +64,7 @@ theme.titlebar_unfocused = "#252628"
 
 theme.fg_contrast        = "#d4be98"
 
-theme.search_bar         = "#1b2021"
+theme.search_bar         = "#252828"
 
 theme.dark_slider_bg     = "#7daea3"
 

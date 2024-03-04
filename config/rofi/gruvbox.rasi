@@ -17,9 +17,9 @@ configuration {
 }
 
 * {
-    bg-col:  #252628;
-    bg-col-light: #252628;
-    border-col: #252628;
+    bg-col:  #252828;
+    bg-col-light: #252828;
+    border-col: #252828;
     selected-col: #1d2021;
     fg: #a89984;
     blue: #7daea3;
