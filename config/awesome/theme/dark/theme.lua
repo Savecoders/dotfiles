@@ -91,8 +91,11 @@ theme.snap_border_width  = dpi(2)
 
 theme.profile            = gfs.get_configuration_dir() .. "icons/bar/elric.png"
 
-theme.home               = gfs.get_configuration_dir() .. "icons/tag/terminal-outline.svg"
-theme.home_selected      = gfs.get_configuration_dir() .. "icons/tag/terminal.svg"
+theme.home               = gfs.get_configuration_dir() .. "icons/tag/home.png"
+theme.home_selected      = gfs.get_configuration_dir() .. "icons/tag/home_selected.png"
+
+theme.terminal           = gfs.get_configuration_dir() .. "icons/tag/terminal-outline.svg"
+theme.terminal_selected  = gfs.get_configuration_dir() .. "icons/tag/terminal.svg"
 
 theme.dashboard          = gfs.get_configuration_dir() .. "icons/tag/dashboard.png"
 theme.dashboard_selected = gfs.get_configuration_dir() .. "icons/tag/dashboard_selected.png"

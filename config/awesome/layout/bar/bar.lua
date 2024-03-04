@@ -36,17 +36,17 @@ local function set_wallpaper(s)
     end
 end
 
-local clock = wibox.widget{
+local clock = wibox.widget {
     {
         widget = wibox.widget.textclock,
-        format = helpers.colorize_text("%H",beautiful.icon_normal),
+        format = helpers.colorize_text("%H", beautiful.icon_normal),
         font = beautiful.font_screen .. "14",
         valign = "center",
         align = "center"
     },
     {
         widget = wibox.widget.textclock,
-        format = helpers.colorize_text("%M",beautiful.icon_normal),
+        format = helpers.colorize_text("%M", beautiful.icon_normal),
         font = beautiful.font_screen .. "14",
         valign = "center",
         align = "center"
@@ -58,7 +58,6 @@ local clock = wibox.widget{
 
 
 awful.screen.connect_for_each_screen(function(s)
-
     -- Wallpaper
 
     set_wallpaper(s)
@@ -67,12 +66,11 @@ awful.screen.connect_for_each_screen(function(s)
 
     local taglist_buttons = gears.table.join(awful.button({}, 1, function(t)
         t:view_only()
-    end), awful.button({modkey}, 1, function(t)
-
+    end), awful.button({ modkey }, 1, function(t)
         if client.focus then
             client.focus:move_to_tag(t)
         end
-    end), awful.button({}, 3, awful.tag.viewtoggle), awful.button({modkey}, 3, function(t)
+    end), awful.button({}, 3, awful.tag.viewtoggle), awful.button({ modkey }, 3, function(t)
         if client.focus then
             client.focus:toggle_tag(t)
         end
@@ -93,28 +91,29 @@ awful.screen.connect_for_each_screen(function(s)
         })
     end
 
-    local tag_home = create_tag("Web",beautiful.home_selected, beautiful.icon_normal)
-    
-    local tag_dashboard = create_tag("Code",beautiful.dashboard, beautiful.icon_normal)
-    
-    local tag_folder = create_tag("Terminal",beautiful.folder, beautiful.icon_normal)
-    
-    local tag_report = create_tag("Music",beautiful.report, beautiful.icon_normal)
+    local tag_home = create_tag("Web", beautiful.home_selected, beautiful.icon_normal)
 
-    local tag_cal = create_tag("Calendar",beautiful.cal, beautiful.icon_normal)
-    
-    local tag_document = create_tag("Documents",beautiful.document, beautiful.icon_normal)
+    local tag_terminal = create_tag("Terminal", beautiful.terminal, beautiful.icon_normal)
 
-    local tag_setting = create_tag("Settings",beautiful.settings, beautiful.icon_normal)
+    local tag_dashboard = create_tag("Code", beautiful.dashboard, beautiful.icon_normal)
+
+    local tag_folder = create_tag("Terminal", beautiful.folder, beautiful.icon_normal)
+
+    local tag_report = create_tag("Music", beautiful.report, beautiful.icon_normal)
+
+    local tag_cal = create_tag("Calendar", beautiful.cal, beautiful.icon_normal)
+
+    local tag_document = create_tag("Documents", beautiful.document, beautiful.icon_normal)
+
+    local tag_setting = create_tag("Settings", beautiful.settings, beautiful.icon_normal)
 
     -- Update tags(suck)
 
 
     local update_tags = function(self, c3)
-        
         -- update tags(suck)
         local update_icon_tag = function(tag, icon, icon_select, self, c3)
-            return function(self,c3)
+            return function(self, c3)
                 if c3.selected then
                     tag.icon = colorize_icon(icon_select, beautiful.icon_selected)
                 elseif #c3:clients() == 0 then
@@ -127,7 +126,10 @@ awful.screen.connect_for_each_screen(function(s)
 
         local update_home = update_icon_tag(tag_home, beautiful.home, beautiful.home_selected, self, c3)
 
-        local update_dashboard = update_icon_tag(tag_dashboard, beautiful.dashboard, beautiful.dashboard_selected, self, c3)
+        local update_terminal = update_icon_tag(tag_terminal, beautiful.terminal, beautiful.terminal_selected, self, c3)
+
+        local update_dashboard = update_icon_tag(tag_dashboard, beautiful.dashboard, beautiful.dashboard_selected, self,
+            c3)
 
         local update_folder = update_icon_tag(tag_folder, beautiful.folder, beautiful.folder_selected, self, c3)
 
@@ -138,8 +140,9 @@ awful.screen.connect_for_each_screen(function(s)
         local update_document = update_icon_tag(tag_document, beautiful.document, beautiful.document_selected, self, c3)
 
         local update_setting = update_icon_tag(tag_setting, beautiful.settings, beautiful.settings_selected, self, c3)
-        
+
         update_home(self, c3)
+        update_terminal(self, c3)
         update_dashboard(self, c3)
         update_folder(self, c3)
         update_report(self, c3)
@@ -164,7 +167,7 @@ awful.screen.connect_for_each_screen(function(s)
             shape = helpers.rrect(beautiful.bar_radius),
         },
         layout = {
-            spacing = dpi(20),
+            spacing = dpi(24),
             layout = wibox.layout.fixed.vertical
         },
         widget_template = {
@@ -184,7 +187,7 @@ awful.screen.connect_for_each_screen(function(s)
                     spacing = dpi(20),
                     layout = wibox.layout.fixed.horizontal
                 },
-                margins = dpi(3),
+                margins = dpi(4),
                 widget = wibox.container.margin
             },
             id = 'background_role',
@@ -210,7 +213,7 @@ awful.screen.connect_for_each_screen(function(s)
             logo_icon,
             widget = wibox.container.margin
         },
-        forced_height = dpi(30),
+        forced_height = dpi(50),
         widget = wibox.container.background
     }
 
@@ -244,16 +247,16 @@ awful.screen.connect_for_each_screen(function(s)
             widget = wibox.container.constraint
         },
         margins = {
-            right = dpi(18),
-            left = dpi(18),
-            bottom = dpi(18),
+            right = dpi(12),
+            left = dpi(12),
+            bottom = dpi(12),
         },
-        
+
         widget = wibox.container.margin
     }
 
     sidebar_icon:buttons(gears.table.join(awful.button({}, 1, function()
-        require("layout.panel.panel") 
+        require("layout.panel.panel")
         slider_how()
     end)))
 
@@ -263,8 +266,7 @@ awful.screen.connect_for_each_screen(function(s)
     local wrap_widget = function(w)
         return {
             w,
-            left = dpi(17),
-            right = dpi(17),
+            margins = dpi(12),
             widget = wibox.container.margin
         }
     end
@@ -278,8 +280,8 @@ awful.screen.connect_for_each_screen(function(s)
         position = "left",
         screen = s,
         ontop = true,
-        height = s.geometry.height  - dpi(beautiful.useless_gap * 4),
-        width = dpi(60),
+        height = s.geometry.height - dpi(beautiful.useless_gap * 4),
+        width = dpi(50),
         visible = true
     })
 
@@ -300,7 +302,7 @@ awful.screen.connect_for_each_screen(function(s)
             wrap_widget(s.mytaglist),
             layout = wibox.layout.fixed.vertical
         },
-        { 
+        {
             {
                 clock,
                 bottom = dpi(25),
@@ -314,7 +316,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- setup for layout
 
-    s.mywibox:setup{
+    s.mywibox:setup {
         {
             layout = wibox.layout.align.horizontal,
             expand = "none",
@@ -348,14 +350,13 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- screen padding
     s.padding = {
-        left = dpi(beautiful.useless_gap * 2),
-        right = dpi(beautiful.useless_gap * 2),
+        left = dpi(beautiful.useless_gap * 1.5),
+        right = dpi(beautiful.useless_gap),
     }
 
     awful.placement.left(s.mywibox, {
-        margins = beautiful.useless_gap * 2,
+        margins = beautiful.useless_gap * 1.5,
     })
-
 end)
 
 -- Remove wibar on full screen

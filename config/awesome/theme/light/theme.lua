@@ -73,38 +73,41 @@ theme.sidebar_radius     = dpi(10)
 theme.dock_radius        = dpi(12)
 
 
-theme.snap_bg = theme.border_color
-theme.snap_border_width = dpi(2)
+theme.snap_bg            = theme.border_color
+theme.snap_border_width  = dpi(2)
 
 -- wibar
 
-theme.wibar_height = 1080
-theme.popup_left = 150
+theme.wibar_height       = 1080
+theme.popup_left         = 150
 
 -- Listages
 
-theme.profile = gfs.get_configuration_dir() .. "icons/bar/elric.png"
+theme.profile            = gfs.get_configuration_dir() .. "icons/bar/elric.png"
 
-theme.home = gfs.get_configuration_dir() .. "icons/tag/terminal-outline.svg"
-theme.home_selected = gfs.get_configuration_dir() .. "icons/tag/terminal.svg"
+theme.home               = gfs.get_configuration_dir() .. "icons/tag/home.png"
+theme.home_selected      = gfs.get_configuration_dir() .. "icons/tag/home_selected.png"
 
-theme.dashboard = gfs.get_configuration_dir() .. "icons/tag/dashboard.png"
+theme.terminal           = gfs.get_configuration_dir() .. "icons/tag/terminal-outline.svg"
+theme.terminal_selected  = gfs.get_configuration_dir() .. "icons/tag/terminal.svg"
+
+theme.dashboard          = gfs.get_configuration_dir() .. "icons/tag/dashboard.png"
 theme.dashboard_selected = gfs.get_configuration_dir() .. "icons/tag/dashboard_selected.png"
 
-theme.folder = gfs.get_configuration_dir() .. "icons/tag/folder.png"
-theme.folder_selected = gfs.get_configuration_dir() .. "icons/tag/folder_selected.png"
+theme.folder             = gfs.get_configuration_dir() .. "icons/tag/folder.png"
+theme.folder_selected    = gfs.get_configuration_dir() .. "icons/tag/folder_selected.png"
 
-theme.report = gfs.get_configuration_dir() .. "icons/tag/headset-outline.svg"
-theme.report_selected = gfs.get_configuration_dir() .. "icons/tag/headset.svg"
+theme.report             = gfs.get_configuration_dir() .. "icons/tag/headset-outline.svg"
+theme.report_selected    = gfs.get_configuration_dir() .. "icons/tag/headset.svg"
 
-theme.cal = gfs.get_configuration_dir() .. "icons/tag/cal.png"
-theme.cal_selected = gfs.get_configuration_dir() .. "icons/tag/cal_selected.png"
+theme.cal                = gfs.get_configuration_dir() .. "icons/tag/cal.png"
+theme.cal_selected       = gfs.get_configuration_dir() .. "icons/tag/cal_selected.png"
 
-theme.document = gfs.get_configuration_dir() .. "icons/tag/document.png"
-theme.document_selected = gfs.get_configuration_dir() .. "icons/tag/document_selected.png"
+theme.document           = gfs.get_configuration_dir() .. "icons/tag/document.png"
+theme.document_selected  = gfs.get_configuration_dir() .. "icons/tag/document_selected.png"
 
-theme.settings = gfs.get_configuration_dir() .. "icons/tag/settings.png"
-theme.settings_selected = gfs.get_configuration_dir() .. "icons/tag/settings_selected.png"
+theme.settings           = gfs.get_configuration_dir() .. "icons/tag/settings.png"
+theme.settings_selected  = gfs.get_configuration_dir() .. "icons/tag/settings_selected.png"
 
 
 -- icons
