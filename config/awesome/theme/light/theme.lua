@@ -22,7 +22,7 @@ theme.font_screen        = "SF Pro Display Medium  "
 
 theme.dir                = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
 
-theme.wallpaper          = "~/Pictures/Wallpapers/light/rose_sky.jpg"
+theme.wallpaper          = "~/Pictures/Wallpapers/light/girl_work.png"
 
 theme.useless_gap        = 6
 theme.useless_less       = 8
@@ -31,8 +31,8 @@ theme.useless_less       = 8
 
 theme.bg                 = "#FFFFFF"
 theme.bg_sidebar         = "#FFFFFF"
-theme.bg_selected        = "#F9FEFE"
-theme.bg_widget          = "#F9FEFE"
+theme.bg_selected        = "#F3F3F3"
+theme.bg_widget          = "#F3F3F3"
 theme.border_color       = "#ECECEC"
 theme.accent             = "#a8CBF6"
 theme.transparent        = "#000000"
@@ -64,7 +64,7 @@ theme.titlebar_unfocused = "#EFEFEF"
 
 theme.fg_contrast        = "#555B6E"
 
-theme.search_bar         = "#F9FEFE"
+theme.search_bar         = "#F3F3F3"
 
 theme.dark_slider_bg     = "#E6E9EB"
 
@@ -90,7 +90,7 @@ theme.popup_left         = 150
 
 -- Listages
 
-theme.profile            = gfs.get_configuration_dir() .. "icons/bar/elric.png"
+theme.profile            = gfs.get_configuration_dir() .. "icons/bar/profile3.png"
 
 theme.home               = gfs.get_configuration_dir() .. "icons/tag/home.png"
 theme.home_selected      = gfs.get_configuration_dir() .. "icons/tag/home_selected.png"

@@ -6,12 +6,15 @@ local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 
 local imguser = wibox.widget {
-    image = beautiful.profile,
-    resize = true,
-    clip_shape = helpers.squircle(dpi(14), dpi(14), dpi(14), dpi(14)),
-    halign = "center",
-    valign = "center",
-    widget = wibox.widget.imagebox
+    image                 = beautiful.profile,
+    resize                = true,
+    clip_shape            = helpers.squircle(dpi(14), dpi(14), dpi(14), dpi(14)),
+    halign                = "center",
+    valign                = "center",
+    widget                = wibox.widget.imagebox,
+    tiled                 = false,
+    horizontal_fit_policy = "fit",
+    vertical_fit_policy   = "fit",
 }
 
 local date_day = wibox.widget({
@@ -41,7 +44,7 @@ local info = wibox.widget({
             text,
             date_day,
             clock,
-            spacing = dpi(10),
+            spacing = dpi(8),
             widget = wibox.container.margin,
             layout = wibox.layout.fixed.vertical
         },

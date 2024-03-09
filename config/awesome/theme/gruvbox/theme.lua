@@ -22,7 +22,7 @@ theme.font_screen        = "SF Pro Display Medium  "
 
 theme.dir                = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
 
-theme.wallpaper          = "~/Pictures/Wallpapers/gruvbox/waterfall2.jpg"
+theme.wallpaper          = "~/Pictures/Wallpapers/gruvbox/bedroom.jpg"
 
 theme.useless_gap        = 6
 theme.useless_less       = 8
@@ -90,7 +90,7 @@ theme.snap_border_width  = dpi(2)
 
 -- icons
 
-theme.profile            = gfs.get_configuration_dir() .. "icons/bar/elric.png"
+theme.profile            = gfs.get_configuration_dir() .. "icons/bar/profile2.png"
 
 theme.home               = gfs.get_configuration_dir() .. "icons/tag/home.png"
 theme.home_selected      = gfs.get_configuration_dir() .. "icons/tag/home_selected.png"
