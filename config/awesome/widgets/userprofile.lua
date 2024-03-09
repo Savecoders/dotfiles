@@ -8,8 +8,9 @@ local dpi = beautiful.xresources.apply_dpi
 local imguser = wibox.widget {
     image = beautiful.profile,
     resize = true,
-    clip_shape = helpers.squircle(beautiful.border_radius - 3),
+    clip_shape = helpers.squircle(dpi(14), dpi(14), dpi(14), dpi(14)),
     halign = "center",
+    valign = "center",
     widget = wibox.widget.imagebox
 }
 
@@ -40,8 +41,7 @@ local info = wibox.widget({
             text,
             date_day,
             clock,
-            spacing = dpi(7),
-            expand = "none",
+            spacing = dpi(10),
             widget = wibox.container.margin,
             layout = wibox.layout.fixed.vertical
         },
@@ -53,14 +53,14 @@ local info = wibox.widget({
 local userprofile = wibox.widget {
     {
         imguser,
-        margins = dpi(13),
+        margins = dpi(10),
         widget = wibox.container.margin
     },
     {
         layout = wibox.layout.fixed.vertical,
+        helpers.vertical_pad(dpi(12)),
         expand = "none",
-        helpers.vertical_pad(dpi(15)),
-        info
+        info,
     },
 
     layout = wibox.layout.align.horizontal

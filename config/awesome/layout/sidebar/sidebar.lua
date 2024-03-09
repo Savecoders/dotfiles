@@ -11,7 +11,7 @@ local button = require("widgets.button")
 -- Info
 
 local userprofile = require("widgets.userprofile")
-local user_box = button.create_boxed_widget(userprofile, dpi(280), dpi(130), dpi(14), dpi(15), beautiful.bg_widget)
+local user_box = button.create_boxed_widget(userprofile, dpi(240), dpi(130), dpi(14), dpi(14), beautiful.bg_widget)
 
 
 -- Cpu
