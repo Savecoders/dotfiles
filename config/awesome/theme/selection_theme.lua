@@ -29,9 +29,9 @@ end
 
 -- search image for rice
 
-local dark_img = gfs.get_configuration_dir() .. "theme/dark/darkmode.jpg"
-local light_img = gfs.get_configuration_dir() .. "theme/light/lightmode.jpg"
-local gruvbox_img = gfs.get_configuration_dir() .. "theme/gruvbox/gruvbox.jpg"
+local dark_img = gfs.get_configuration_dir() .. "theme/dark/rice_dark.png"
+local light_img = gfs.get_configuration_dir() .. "theme/light/rice_light.png"
+local gruvbox_img = gfs.get_configuration_dir() .. "theme/gruvbox/rice_gruvbox.png"
 
 
 -- create img container
@@ -46,17 +46,17 @@ local gruvbox = create_img(gruvbox_img, gruvbox_img, change_gruvbox_theme)
 
 -- size
 
-dark.forced_height = dpi(180)
-light.forced_height = dpi(180)
-gruvbox.forced_height = dpi(180)
+dark.forced_height = dpi(160)
+light.forced_height = dpi(160)
+gruvbox.forced_height = dpi(160)
 
-dark.forced_width = dpi(280)
-light.forced_width = dpi(280)
-gruvbox.forced_width = dpi(280)
+dark.forced_width = dpi(220)
+light.forced_width = dpi(220)
+gruvbox.forced_width = dpi(220)
 
 local theme_screen = wibox({
-	height  = dpi(200),
-	width   = dpi(960),
+	height  = dpi(180),
+	width   = dpi(740),
 	shape   = helpers.rrect(beautiful.border_radius),
 	bg      = beautiful.bg,
 	visible = false,
@@ -91,8 +91,8 @@ theme_screen:setup {
 			layout = wibox.layout.fixed.horizontal,
 		},
 
+		spacing = dpi(20),
 		layout = wibox.layout.fixed.horizontal,
-		spacing = dpi(24)
 	},
 
 	widget = wibox.container.margin,
