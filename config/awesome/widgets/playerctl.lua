@@ -96,9 +96,9 @@ Playerctl:connect_signal("metadata",
         art:set_image(gears.surface.load_uncached(album_path))
 
         title_widget:set_markup_silently('<span foreground="' ..
-        beautiful.fg_sidebar .. '">' .. (#title > 23 and string.sub(title, 0, 23) .. ".." or title) .. '</span>')
+            beautiful.fg_sidebar .. '">' .. (#title > 23 and string.sub(title, 0, 23) .. ".." or title) .. '</span>')
         artist_widget:set_markup_silently('<span foreground="' ..
-        beautiful.fg_sidebar .. "90" .. '">' .. artist .. '</span>')
+            beautiful.fg_sidebar .. "90" .. '">' .. artist .. '</span>')
     end)
 
 Playerctl:connect_signal("position",

@@ -38,7 +38,7 @@ local temp_box = button.create_boxed_widget(temp_details, dpi(130), dpi(130), dp
 -- weather
 
 local weather_bar = require("widgets.weather")
-local weather_box = button.create_boxed_widget(weather_bar, dpi(130), dpi(130), dpi(14), dpi(14), beautiful.bg_selected)
+local weather_box = button.create_boxed_widget(weather_bar, dpi(170), dpi(130), dpi(14), dpi(14), beautiful.bg_selected)
 
 -- notif
 

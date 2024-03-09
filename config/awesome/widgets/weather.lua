@@ -29,7 +29,7 @@ local weather_temp = wibox.widget({
 local weather_icon = wibox.widget({
     font = "icomoon 34",
     markup = helpers.colorize_text("", beautiful.bg),
-    align = "right",
+    align = "bottom",
     valign = "bottom",
     widget = wibox.widget.textbox
 })
@@ -46,18 +46,19 @@ local weather = wibox.widget({
     {
         weather_text,
         city,
-        spacing = dpi(1),
-        expand = "none",
-        layout = wibox.layout.fixed.vertical
+        weather_temp,
+        spacing = dpi(6),
+        widget = wibox.container.margin,
+        layout = wibox.layout.fixed.vertical,
     },
     {
-        weather_temp,
+        left = dpi(10),
+        helpers.vertical_pad(dpi(60)),
         weather_icon,
-        spacing = dpi(20),
+        layout = wibox.layout.fixed.vertical,
         widget = wibox.container.margin,
-        layout = wibox.layout.fixed.horizontal
     },
-    layout = wibox.layout.align.vertical
+    layout = wibox.layout.align.horizontal
 })
 
 awesome.connect_signal("signals::weather", function(temperature, description, icon_widget)
