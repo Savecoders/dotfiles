@@ -14,7 +14,7 @@
     <img alt="" align="left" src="https://img.shields.io/github/stars/Savecoders/dotfiles?color=1D1F22&labelColor=FF9CAC&style=for-the-badge"/>
   </a>
   <a href="#">
-    <img alt="" align="right" src="https://badges.pufler.dev/visits/AlphaTechnolog/dotfiles?style=for-the-badge&color=7ddac5&logoColor=white&labelColor=7ddac5"/>
+    <img alt="" align="right" src="https://badges.pufler.dev/visits/Savecoders/dotfiles?style=for-the-badge&color=7ddac5&logoColor=white&labelColor=7ddac5"/>
   </a>
 </h1>
 
@@ -42,14 +42,28 @@ Here are some details about my setup:
 
 ## <samp>🎢 **installation** </samp>
 
-<b><h3>Clone this repository</h3></b>
+<b><h3>🌀 Clone this repository</h3></b>
 
 ```sh
 git clone --recurse-submodules https://github.com/Savecoders/dotfiles.git
 cd dotfiles && git submodule update --remote --merge
 ```
 
-<b><h3>⁉ Error clone submodules?</h3></b>
+<b><h3>📥 Use the script</h3></b>
+
+```sh
+chmod +x resources/install.sh && ./resources/install.sh
+```
+
+> [!WARNING]  
+> ⚠ Critical content demanding immediate user attention due to potential risks.
+
+<details close>
+    <summary>
+        <samp><b>⁉ Error clone submodules?</b></samp>
+    </summary>
+
+In this case you need clone the submodules with repositories and move folders
 
 ```sh
 mkdir dev && cd dev && git clone https://github.com/Savecoders/dotfiles.git
@@ -61,13 +75,10 @@ cp -r bling/* dotfiles/config/awesome/modules/bling/
 cp -r simpleTheme-zsh-theme/* dotfiles/misc/zsh/simpleTheme-zsh-theme
 ```
 
-<b><h3>use the script</h3></b>
+</details>
 
-```sh
-chmod +x resources/install.sh && ./resources/install.sh
-```
-
-<samp> **Do you want to install manually?** </samp>
+> [!IMPORTANT]  
+> Do you want to install manually? Please continue with the manual installation.
 
 <details close>
     <summary>
