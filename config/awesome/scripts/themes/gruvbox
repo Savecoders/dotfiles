@@ -12,3 +12,6 @@ sed -i "7s/.*/shadow-opacity = 0.3;/g" ~/.config/picom/picom.conf
 
 #terminal 
 kitty +kitten themes --reload-in=all GruvboxHard
+
+# lock screen
+betterlockscreen -u ~/Pictures/Wallpapers/gruvbox/gruv-simplistic-ngo.png --fx blur 0.5

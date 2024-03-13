@@ -12,3 +12,6 @@ sed -i "7s/.*/shadow-opacity = 0.4;/g" ~/.config/picom/picom.conf
 
 #terminal 
 kitty +kitten themes --reload-in=all Dark
+
+# lock screen
+betterlockscreen -u ~/Pictures/Wallpapers/dark/Wall-Linux.png --fx blur 0.5
