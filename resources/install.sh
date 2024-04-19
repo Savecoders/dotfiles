@@ -52,7 +52,7 @@ ask_user "are you getting errors when installing git submodules?" "
 
 ask_user "Do you want to install paru?" "
     sudo pacman -S --needed base-devel
-    clone_and_copy https://aur.archlinux.org/paru.git paru paru
+    clone_and_copy https://aur.archlinux.org/paru.git paru
     cd paru
     makepkg -si
     cd ..
@@ -64,7 +64,7 @@ ask_user "Do you want to install all packages from needed.list?" "
 "
 
 ask_user "Do you want to install zsh and ohmyzsh?" "
-    sh -c \"$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\" \"\" --unattended
+    sh -c \"$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\" \"\"
 "
 
 # enable services
@@ -77,15 +77,16 @@ cp -r ../config/* ~/.config/
 
 # copy misc resources
 echo "Copying misc resources..."
-cp -r ../misc/zsh/simpleTheme-zsh-theme/* ~/.oh-my-zsh/themes/
+cp -r ../misc/zsh/Savior-zsh-theme/* ~/.oh-my-zsh/themes/
 cp -r ../misc/zsh/.zshrc ~
 
 # Fonts
 echo "Copying fonts..."
+mkdir ~/.local/share/fonts/
 cp -r ../misc/fonts/* ~/.local/share/fonts/
 
 # lightdm
-cp -r ~/Dev/MyConfig/dotfiles/config/lightdm/* /usr/share/lightdm-webkit/themes/
+# cp -r ~/Dev/MyConfig/dotfiles/config/lightdm/* /usr/share/lightdm-webkit/themes/
 
 # Wallpapers
 echo "Copying Wallpapers..."
@@ -93,15 +94,15 @@ mkdir -p ~/Pictures/Wallpapers && cp -r ../misc/wallpapers/* ~/Pictures/Wallpape
 
 # icons
 echo "Untarring icons..."
-tar -xvf ../misc/icons/01-Tela.tar.xz
-tar -xvf ../misc/icons/01-WhiteSur.tar.xz
+tar -xvf ../misc/icons/01-Tela.tar.xz -C ../misc/icons/
+tar -xvf ../misc/icons/01-WhiteSur.tar.xz -C ../misc/icons/
 echo "Copying icons..."
 mkdir -p ~/.icons && cp -r ../misc/icons/* ~/.icons
 
 # GTK themes
 echo "Untarring GTK themes..."
-tar -xvf ../misc/themes/Colloid.tar.xz
-tar -xvf ../misc/themes/Otis-forest-standard-buttons.tar.xz
-unzip ../misc/themes/Gruvbox-Dark-BL-LB.zip
+tar -xvf ../misc/themes/Colloid.tar.xz -C ../misc/themes/
+tar -xvf ../misc/themes/Otis-forest-standard-buttons.tar.xz -C ../misc/themes/
+unzip ../misc/themes/Gruvbox-Dark-BL-LB.zip -d ../misc/themes/
 echo "Copying GTK themes..."
 mkdir -p ~/.themes && cp -r ../misc/themes/* ~/.themes
