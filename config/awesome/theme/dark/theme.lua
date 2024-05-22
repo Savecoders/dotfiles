@@ -50,11 +50,11 @@ theme.taglist_bg_focus   = {
   stops = { { 0, "#3F8CFF" }, { 1, "#5197FF" } }
 }
 
-theme.active             = "#6A6E78"
+theme.active             = "#FFFFFF"
 
 theme.icon_bg            = "#FFFFFF"
 theme.icon_normal        = "#8A8E97"
-theme.icon_selected      = "#FFFFFF"
+theme.icon_selected      = "#6A6E78"
 
 theme.red                = "#db7272"
 

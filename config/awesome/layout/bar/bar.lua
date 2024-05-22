@@ -115,7 +115,7 @@ awful.screen.connect_for_each_screen(function(s)
         local update_icon_tag = function(tag, icon, icon_select, self, c3)
             return function(self, c3)
                 if c3.selected then
-                    tag.icon = colorize_icon(icon_select, beautiful.icon_selected)
+                    tag.icon = colorize_icon(icon_select, beautiful.active)
                 elseif #c3:clients() == 0 then
                     tag.icon = colorize_icon(icon, beautiful.icon_normal)
                 else
@@ -236,23 +236,13 @@ awful.screen.connect_for_each_screen(function(s)
     end
 
     -- icon for profile
-    local sidebar_icon = wibox.widget {
-        {
-            {
-                image = beautiful.icon_change_theme,
-                widget = wibox.widget.imagebox,
-                resize = true
-            },
-            forced_height = dpi(50),
-            widget = wibox.container.constraint
-        },
-        margins = {
-            right = dpi(12),
-            left = dpi(12),
-            bottom = dpi(12),
-        },
-
-        widget = wibox.container.margin
+    local sidebar_icon = wibox.widget{
+        markup = "",
+        font = beautiful.icon_var .. "15",
+        valign = "center",
+        align = "center",
+        widget = wibox.widget.textbox,
+        margin = dpi(10),
     }
 
     sidebar_icon:buttons(gears.table.join(awful.button({}, 1, function()
@@ -303,13 +293,13 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.vertical
         },
         {
+            sidebar_icon,
             {
+                top = dpi(25),
                 clock,
                 bottom = dpi(25),
                 widget = wibox.container.margin
             },
-            sidebar_icon,
-            spacing = dpi(10),
             layout = wibox.layout.fixed.vertical
         }
     }
