@@ -137,7 +137,7 @@ theme.search_bar_icon = colorize_icon(theme.search_icon, theme.icon_normal)
 
 theme.logo = gfs.get_configuration_dir() .. "icons/bar/align.png"
 theme.logo_normal = colorize_icon(theme.logo, theme.icon_normal)
-theme.logo_selected = colorize_icon(theme.logo, theme.icon_selected)
+theme.logo_selected = colorize_icon(theme.logo, theme.active)
 
 theme.icon_change_theme = gfs.get_configuration_dir() .. "icons/ichange_theme.png"
 
