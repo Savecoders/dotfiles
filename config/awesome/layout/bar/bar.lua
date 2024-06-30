@@ -238,7 +238,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- icon for profile
     local sidebar_icon = wibox.widget{
         markup = "",
-        font = beautiful.icon_var .. "15",
+        font = beautiful.icon_var .. "14",
         valign = "center",
         align = "center",
         widget = wibox.widget.textbox,
