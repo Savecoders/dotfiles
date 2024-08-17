@@ -14,7 +14,7 @@ naughty.config.defaults.ontop = true
 naughty.config.defaults.icon_size = dpi(22)
 naughty.config.defaults.screen = awful.screen.focused()
 naughty.config.defaults.timeout = 5
-naughty.config.defaults.title = "ystem Notification"
+naughty.config.defaults.title = "System Notification"
 naughty.config.defaults.position = "top_right"
 
 
