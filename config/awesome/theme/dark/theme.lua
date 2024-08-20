@@ -28,26 +28,25 @@ theme.useless_gap        = 6
 theme.useless_less       = 8
 
 -- colors
--- #18181A - #theme.bg = "#131417" #18191D
 
-theme.bg                 = "#131417"
-theme.bg_sidebar         = "#131417"
-theme.bg_selected        = "#18191D" --
-theme.bg_widget          = "#18191D"
-theme.border_color       = "#252628"
+theme.bg                 = "#1C1C1E"
+theme.bg_sidebar         = "#1C1C1E"
+theme.bg_selected        = "#242426" --
+theme.bg_widget          = "#242426"
+theme.border_color       = "#2C2C2E"
 theme.accent             = "#d6E7fc"
 theme.transparent        = "#000000"
-theme.fg_normal          = "#8A8E97"
+theme.fg_normal          = "#E5E5EA"
 theme.fg_focus           = "#FFFFFF"
-theme.fg_urgent          = "#8A8E97"
-theme.fg_minimize        = "#8A8E97"
+theme.fg_urgent          = "#E5E5EA"
+theme.fg_minimize        = "#D8D8DC"
 theme.fg_sidebar         = "#FFFFFF"
 
 theme.taglist_bg_focus   = {
   type = "linear",
   from = { 00, 00, 10 },
   to = { 100, 100, 30 },
-  stops = { { 0, "#3F8CFF" }, { 1, "#5197FF" } }
+  stops = { { 0, "#0A84FF" }, { 1, "#419CFF" } }
 }
 
 theme.active             = "#FFFFFF"
@@ -56,7 +55,7 @@ theme.icon_bg            = "#FFFFFF"
 theme.icon_normal        = "#8A8E97"
 theme.icon_selected      = "#6A6E78"
 
-theme.red                = "#db7272"
+theme.red                = "#FF768E"
 
 theme.grey               = "#8B8B8B"
 
@@ -64,12 +63,12 @@ theme.titlebar_unfocused = "#252628"
 
 theme.fg_contrast        = "#FFFFFF"
 
-theme.search_bar         = "#18191D"
+theme.search_bar         = "#242426"
 
-theme.dark_slider_bg     = "#3F8CFF"
+theme.dark_slider_bg     = "#0A84FF"
 
-theme.arc_bg             = "#131417"
-theme.arc_color          = "#6192FB"
+theme.arc_bg             = "#3A3A3C"
+theme.arc_color          = "#007AFF"
 
 -- wibar
 
