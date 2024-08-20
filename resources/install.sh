@@ -96,13 +96,14 @@ mkdir -p ~/Pictures/Wallpapers && cp -r ../misc/wallpapers/* ~/Pictures/Wallpape
 echo "Untarring icons..."
 tar -xvf ../misc/icons/01-Tela.tar.xz -C ../misc/icons/
 tar -xvf ../misc/icons/01-WhiteSur.tar.xz -C ../misc/icons/
+tar -xvf ../misc/icons/Mkos-Big-Sur.tar.tar.xz -C ../misc/icons/
 echo "Copying icons..."
 mkdir -p ~/.icons && cp -r ../misc/icons/* ~/.icons
 
 # GTK themes
 echo "Untarring GTK themes..."
 tar -xvf ../misc/themes/Colloid.tar.xz -C ../misc/themes/
-tar -xvf ../misc/themes/Otis-forest-standard-buttons.tar.xz -C ../misc/themes/
+tar -xvf ../misc/themes/WhiteSur-Dark-solid.tar -C ../misc/themes/
 unzip ../misc/themes/Gruvbox-Dark-BL-LB.zip -d ../misc/themes/
 echo "Copying GTK themes..."
 mkdir -p ~/.themes && cp -r ../misc/themes/* ~/.themes
