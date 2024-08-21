@@ -22,7 +22,7 @@ theme.font_screen        = "SF Pro Display Medium  "
 
 theme.dir                = string.format('%s/.config/awesome/theme', os.getenv('HOME'))
 
-theme.wallpaper          = "~/Pictures/Wallpapers/light/girl_work.png"
+theme.wallpaper          = "~/Pictures/Wallpapers/light/photographer.jpg"
 
 theme.useless_gap        = 6
 theme.useless_less       = 8
@@ -31,14 +31,14 @@ theme.useless_less       = 8
 
 theme.bg                 = "#FFFFFF"
 theme.bg_sidebar         = "#FFFFFF"
-theme.bg_selected        = "#F3F3F3"
-theme.bg_widget          = "#F3F3F3"
-theme.border_color       = "#ECECEC"
-theme.accent             = "#a8CBF6"
+theme.bg_selected        = "#F2F2F2"
+theme.bg_widget          = "#F2F2F2"
+theme.border_color       = "#E5E5EA"
+theme.accent             = "#0A84FF"
 theme.transparent        = "#000000"
-theme.fg_normal          = "#b0b2bf"
-theme.fg_focus           = "#FFFFFF"
-theme.fg_urgent          = "#b0b2bf"
+theme.fg_normal          = "#AEAEB2"
+theme.fg_focus           = "#BCBCC0"
+theme.fg_urgent          = "#AEAEB2"
 theme.fg_minimize        = "#b0b2bf"
 theme.fg_sidebar         = "#2A3256"
 theme.taglist_bg_focus   = "#FFFFFF"
@@ -47,14 +47,14 @@ theme.taglist_bg_focus   = {
     type = "linear",
     from = { 00, 00, 10 },
     to = { 100, 100, 30 },
-    stops = { { 0, "#62C2F0" }, { 1, "#a6CBF6" } }
+    stops = { { 0, "#5AA8FF" }, { 1, "#a6CBF6" } }
 }
 
-theme.active             = "#b0b2bf"
+theme.active             = "#F2F2F7"
 
-theme.icon_bg            = "#b0b2bf"
-theme.icon_normal        = "#6A6E78"
-theme.icon_selected      = "#6A6E78"
+theme.icon_bg            = "#C7C7CC"
+theme.icon_normal        = "#AEAEB2"
+theme.icon_selected      = "#F5F5F7"
 
 theme.red                = "#db7272"
 
@@ -64,12 +64,12 @@ theme.titlebar_unfocused = "#EFEFEF"
 
 theme.fg_contrast        = "#555B6E"
 
-theme.search_bar         = "#F3F3F3"
+theme.search_bar         = "#F2F2F2"
 
-theme.dark_slider_bg     = "#E6E9EB"
+theme.dark_slider_bg     = "#5AA8FF"
 
-theme.arc_bg             = "#93D5F7"
-theme.arc_color          = "#62C2F0"
+theme.arc_bg             = "#D1D1D6"
+theme.arc_color          = "#5AA8FF"
 
 -- radius
 
