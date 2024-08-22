@@ -1,89 +1,86 @@
-// Dark mode
+// Gruvbox mode
 
 configuration {
     modi: "drun,window,run";
-    icon-theme: "Oranchelo";
+    icon-theme: "Tela-light";
     show-icons: true;
     terminal: "kitty";
-    drun-display-format: "{icon} {name}";
     location: 0;
     disable-history: false;
     hide-scrollbar: true;
-    display-drun: "  ";
-    display-run: "  ";
-    display-window: "  ";
-    display-Network: " 󰀂 ";
+    drun-display-format: "{icon} {name}";
+    display-drun: "";
     sidebar-mode: true;
 }
 
 * {
-    bg-col:  #18191D;
-    bg-col-light: #18191D;
-    border-col: #323335;
-    selected-col: #131417;
-    fg: #8A8E97;
-    blue: #3F8CFF;
-    fg-col: #FBFBFB;
-    fg-col2: #f38ba8;
-    grey: #6c7086;
-    rad: 6px;
+    bg: #1C1C1E;
+    bg-col:  #242426;
+    bg-col-light: #242426;
+    border-col: #242426;
+    selected-col: #1C1C1E;
+    fg: #E5E5EA;
+    blue: #0A84FF;
+    fg-col: #E5E5EA;
+    fg-col2: #FF768E;
+    grey: #E5E5EA;
+    rad: 4px;
 }
 
-element-text, element-icon , mode-switcher {
+element-text, element-icon{
     background-color: inherit;
     text-color:       inherit;
 }
 
 window {
     location: center;
-    width: 36%;
-    border-radius: @rad; 
-    background-color: #0000;
+    width: 32%;
+    padding: 12px;
+    border-radius: 16px; 
+    background-color: @bg;
 }
 
 mainbox {
-    spacing: 3%;
+    spacing: 12px;
     children: [ inputbar, view-container];
     background-color: #0000;
 }
 
 view-container{
-    children: [listview, mode-switcher];
+    children: [listview];
     orientation: horizontal;
     border-radius: @rad;
-    border: 1px;
     border-color: @border-col;
     background-color: @bg-col;    
 }
 
+prompt{
+    text-color: @fg-col;
+    border-color: @border-col;
+    background-color: @bg-col;
+    font: "SF Pro Display 24";
+    horizontal-align: 0;
+    padding: 10px 0 0 10px;
+}
+
 inputbar {
-    children: [ entry ];
+    children: [ prompt, entry ];
     orientation: horizontal;
     padding: 0.2em;
     border-radius: @rad;
-    border: 1px;
+    border: 2px;
     border-color: @border-col;
     background-color: @bg-col;
 }
 
-prompt {
-    background-color: @blue;
-    padding: 4px;
-    border-radius: 4px;
-}
-
-textbox-prompt-colon {
-    expand: false;
-    str: ":";
-}
 
 entry {
-    padding: 1.6%;
-    // placeholder: "  ";
-    border-radius: @rad;
     background-color: @bg-col;
+    border-radius: @rad;
     text-color: @fg-col;
-    font: "SF Pro Display Medium 17";
+    font: "SF Pro Display Medium 16";
+    padding: 1.4%;
+    placeholder: "Search";
 }
 
 listview {
@@ -91,21 +88,19 @@ listview {
     dynamic: true;
     border-radius: @rad;
     layout: vertical;
-    lines: 4;
-    padding: 0.2em;
+    lines: 3;
     background-color: @bg-col;
 }
 
 element {
-    padding: 1.6%;
+    padding: 1.4%;
     orientation: horizontal;
     border-radius: @rad;
     background-color: @bg-col;
 }
 
 element-icon {
-    size: 28px;
-    border: 0;
+    size: 32px;
 }
 
 element-text{
@@ -118,7 +113,9 @@ element-text{
 
 element selected {
     background-color: @bg-col;
-    text-color: @fg-col2  ;
+    padding: 0px;
+    margin: 0px;
+    text-color: @fg-col2;
 }
 
 element selected, element-text selected { 
@@ -128,20 +125,3 @@ element selected, element-text selected {
 listview, element, element-selected, element-text { cursor: pointer; }
 entry { cursor: text; }
 
-mode-switcher {
-    orientation: vertical;
-    background-color: @bg-col;
-    padding:  0 1em;
-}
-
-button {
-    background-color: @bg-col-light;
-    text-color: @grey;
-    border-radius: @rad;
-    font: "SF Pro Display 18";
-}
-
-button selected {
-  background-color: @bg-col;
-  text-color: @blue;
-}
