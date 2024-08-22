@@ -261,7 +261,9 @@ awful.screen.connect_for_each_screen(function(s)
         }
     end
 
-    -- themes
+    local mysystray = wibox.widget.systray()
+    mysystray:set_base_size(dpi(30))
+    mysystray:set_horizontal(false)
 
     -- Bar
     s.mywibox = awful.wibar({
@@ -293,6 +295,13 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.vertical
         },
         {
+            wrap_widget(
+                {
+                    mysystray,
+                    top = dpi(25),
+                    widget = wibox.container.margin
+                }
+            ),
             sidebar_icon,
             {
                 top = dpi(25),

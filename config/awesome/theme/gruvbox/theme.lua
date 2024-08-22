@@ -32,7 +32,8 @@ theme.useless_less       = 8
 
 theme.bg                 = "#1d2021"
 theme.bg_sidebar         = "#1d2021"
-theme.bg_selected        = "#252828" --
+theme.bg_selected        = "#252828"
+theme.bg_systray         = "#1d2021"
 theme.bg_widget          = "#252828"
 theme.border_color       = "#252628"
 theme.accent             = "#7daea3"
@@ -149,5 +150,6 @@ theme.clear              = colorize_icon(theme.clear_icon, theme.grey)
 theme.clear_hover        = colorize_icon(theme.clear_filled, theme.grey)
 
 theme.icon_theme         = nil
+theme.systray_icon_spacing = dpi(10)
 
 return theme
