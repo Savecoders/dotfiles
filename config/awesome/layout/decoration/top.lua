@@ -40,22 +40,28 @@ end
 client.connect_signal("request::titlebars", function(c)
     -- buttons for the titlebar
 
-    local buttons = gears.table.join(awful.button({}, 1, function()
+    local buttons = gears.table.join(
+    awful.button({}, 1, function()
         c:emit_signal("request::activate", "titlebar", {raise = true})
         if c.maximized == true then c.maximized = false end
         awful.mouse.client.move(c)
-    end), awful.button({}, 3, function()
+    end), 
+    awful.button({}, 3, function()
         c:emit_signal("request::activate", "titlebar", {raise = true})
         awful.mouse.client.resize(c)
-    end))
+    end)
+
+    )
     local borderbuttons = gears.table.join( awful.button({}, 3, function()
         c:emit_signal("request::activate", "titlebar", {raise = true})
         awful.mouse.client.resize(c)
     end), awful.button({}, 1, function()
         c:emit_signal("request::activate", "titlebar", {raise = true})
         awful.mouse.client.resize(c)
-    end))
-        
+    end)
+    )
+
+
     -- Shapes
 
         local ci = function(width, height)

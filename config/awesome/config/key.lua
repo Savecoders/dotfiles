@@ -285,7 +285,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "l", function()
         awful.spawn.easy_async_with_shell(apps.utils.blue_light, function() end)
     end, {
-        description = "take a area screenshot",
+        description = "take a blue light",
         group = "hotkeys"
     }),
 
@@ -370,6 +370,23 @@ clientkeys = gears.table.join(
         description = "toggle floating",
         group = "client"
     }),
+
+    -- Resize windows
+    awful.key({ modkey, "Control" }, "Left", function()
+        awful.client.moveresize(0, 0, -20, 0)
+    end, {description = "reduce window width", group = "client"}),
+
+    awful.key({ modkey, "Control" }, "Right", function()
+        awful.client.moveresize(0, 0, 20, 0)
+    end, {description = "increase window width", group = "client"}),
+
+    awful.key({ modkey, "Control" }, "Up", function()
+        awful.client.moveresize(0, 0, 0, -20)
+    end, {description = "reduce window height", group = "client"}),
+
+    awful.key({ modkey, "Control" }, "Down", function()
+        awful.client.moveresize(0, 0, 0, 20)
+    end, {description = "increase window height", group = "client"}),
 
     -- tilling windown manager
 

@@ -9,7 +9,7 @@ local dpi = xresources.apply_dpi
 
         awful.titlebar(c, {
             position = "left",
-            size = dpi(2),
+            size = dpi(4),
             bg = "#00000000"
         }):setup{
             {
@@ -17,7 +17,7 @@ local dpi = xresources.apply_dpi
                     bg = beautiful.border_color,
                     widget = wibox.container.background
                 },
-                left = dpi(2),
+                left = dpi(4),
                 widget = wibox.container.margin
             },
             bg = beautiful.bg,

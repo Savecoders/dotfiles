@@ -9,7 +9,7 @@ client.connect_signal("request::titlebars", function(c)
 
     awful.titlebar(c, {
         position = "right",
-        size = dpi(2),
+        size = dpi(4),
         bg = "#00000000"
     }):setup{
         {
@@ -17,7 +17,7 @@ client.connect_signal("request::titlebars", function(c)
                 bg = beautiful.border_color,
                 widget = wibox.container.background
             },
-            right = dpi(2),
+            right = dpi(4),
             widget = wibox.container.margin
         },
         bg = beautiful.bg,
