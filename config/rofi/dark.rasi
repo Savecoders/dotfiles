@@ -2,7 +2,7 @@
 
 configuration {
     modi: "drun,window,run";
-    icon-theme: "Tela-light";
+    icon-theme: "WhiteSur-dark";
     show-icons: true;
     terminal: "kitty";
     location: 0;

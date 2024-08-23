@@ -235,9 +235,9 @@ awful.screen.connect_for_each_screen(function(s)
         end
     end
 
-    -- icon for profile
+    -- icon to toggle panel tools
     local sidebar_icon = wibox.widget{
-        markup = "",
+        markup = helpers.colorize_text("", beautiful.icon_normal),
         font = beautiful.icon_var .. "14",
         valign = "center",
         align = "center",
@@ -302,10 +302,14 @@ awful.screen.connect_for_each_screen(function(s)
                     widget = wibox.container.margin
                 }
             ),
-            sidebar_icon,
+            {
+                clock,
+                top = dpi(10),
+                widget = wibox.container.margin
+            },
             {
                 top = dpi(25),
-                clock,
+                sidebar_icon,
                 bottom = dpi(25),
                 widget = wibox.container.margin
             },
