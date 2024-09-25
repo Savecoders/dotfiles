@@ -1,5 +1,8 @@
 {
-  "extras": [],
+  "extras": [
+    "lazyvim.plugins.extras.coding.mini-surround",
+    "lazyvim.plugins.extras.util.mini-hipatterns"
+  ],
   "news": {
     "NEWS.md": "6520",
     "doc/news.txt": "24450"
