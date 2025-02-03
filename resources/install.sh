@@ -6,42 +6,42 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "${BASEDIR}"
 
 ask_user() {
-    local message=$1
-    local command=$2
+  local message=$1
+  local command=$2
 
-    while true; do
-        read -r -p "${message} [Y/n] " input
+  while true; do
+    read -r -p "${message} [Y/n] " input
 
-        case $input in
-            [yY][eE][sS]|[yY])
-                echo "Okay, executing command!"
-                eval "${command}"
-                break
-                ;;
-            [nN][oO]|[nN])
-                echo "Okay!"
-                break
-                ;;
-            *)
-                echo "Invalid input..."
-                ;;
-        esac
-    done
+    case $input in
+    [yY][eE][sS] | [yY])
+      echo "Okay, executing command!"
+      eval "${command}"
+      break
+      ;;
+    [nN][oO] | [nN])
+      echo "Okay!"
+      break
+      ;;
+    *)
+      echo "Invalid input..."
+      ;;
+    esac
+  done
 }
 
 clone_and_copy() {
-    local repo=$1
-    local source_dir=$2
-    local dest_dir=$3
+  local repo=$1
+  local source_dir=$2
+  local dest_dir=$3
 
-    git clone "${repo}"
-    cp -r "${source_dir}" "${dest_dir}"
+  git clone "${repo}"
+  cp -r "${source_dir}" "${dest_dir}"
 }
 
 install_packages() {
-    local package_list=$1
+  local package_list=$1
 
-    paru -S --noconfirm - < "${package_list}" --needed
+  paru -S --noconfirm - --needed <"${package_list}"
 }
 
 ask_user "are you getting errors when installing git submodules?" "
