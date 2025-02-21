@@ -1,0 +1,142 @@
+{
+  "workbench.colorTheme": "Vesper",
+  "workbench.sideBar.location": "right",
+  "workbench.editor.showTabs": "multiple",
+  "workbench.startupEditor": "none",
+  "workbench.tips.enabled": false,
+  "workbench.tree.enableStickyScroll": false,
+  "workbench.tree.renderIndentGuides": "none",
+  "editor.experimental.asyncTokenizationLogging": true,
+  "editor.guides.indentation": true,
+  "editor.renderWhitespace": "none",
+  "editor.showFoldingControls": "never",
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.scrollbar.vertical": "auto",
+  "editor.overviewRulerBorder": false,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.lineHeight": 2.5,
+  "editor.fontFamily": "Dank Mono",
+  "editor.fontSize": 16,
+  "editor.minimap.enabled": false,
+  "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
+  "editor.experimental.asyncTokenization": true,
+  "editor.cursorBlinking": "phase",
+  "editor.occurrencesHighlight": "off",
+  "editor.cursorStyle": "line",
+  "editor.fontVariations": true,
+  "editor.wordWrap": "on",
+  "editor.selectionHighlight": false,
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.tabCompletion": "on",
+  "editor.snippetSuggestions": "top",
+  "emmet.triggerExpansionOnTab": true,
+  "editor.quickSuggestions": {
+    "other": "off"
+  },
+  "workbench.activityBar.location": "bottom",
+  "breadcrumbs.enabled": false,
+  "explorer.compactFolders": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmDelete": false,
+  "explorer.decorations.badges": false,
+  "git.decorations.enabled": false,
+  "scm.diffDecorations": "none",
+  "extensions.ignoreRecommendations": true,
+  "files.autoSave": "afterDelay",
+  "terminal.integrated.fontFamily": "Dank Mono, JetBrainsMono Nerd Font",
+  "terminal.integrated.tabs.enabled": false,
+  "terminal.integrated.lineHeight": 1.5,
+  "terminal.integrated.env.osx": {
+    "FIG_NEW_SESSION": "1"
+  },
+  "material-icon-theme.hidesExplorerArrows": false,
+  "symbols.hidesExplorerArrows": false,
+  //Material Icon Theme
+  "workbench.iconTheme": "symbols",
+  "material-icon-theme.activeIconPack": "nest",
+  "notebook.markup.fontSize": 16,
+  "errorLens.fontSize": "16",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "explorer.fileNesting.enabled": true,
+  // Colors customization
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "comment",
+        "settings": {
+          "fontStyle": "italic"
+        }
+      }
+    ]
+  },
+  "editor.stickyScroll.enabled": false,
+  "editor.colorDecorators": false,
+  "editor.codeLens": false,
+  "editor.links": false,
+  "editor.parameterHints.enabled": false,
+  "editor.lightbulb.enabled": "off",
+  "editor.hover.enabled": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.matchBrackets": "always",
+  "editor.renderControlCharacters": true,
+  "editor.renderLineHighlight": "all",
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "all",
+  "prettier.arrowParens": "avoid",
+  "prettier.jsxSingleQuote": true,
+  "prettier.printWidth": 100,
+  "git.autofetch": true,
+  "DockerRun.DisableAutoGenerateConfig": true,
+  "workbench.editor.editorActionsLocation": "default",
+  // "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font",
+  "security.workspace.trust.untrustedFiles": "open",
+  "window.zoomLevel": 1.5,
+  "editor.codeLensFontFamily": "'Dank Mono', 'CaskaydiaCove Nerd Font', Consolas, 'Courier New', monospace",
+  "editor.inlayHints.fontFamily": "'Dank Mono', 'CaskaydiaCove Nerd Font', Consolas, 'Courier New', monospace",
+  "terminal.integrated.fontWeightBold": "bold",
+  "notebook.stickyScroll.enabled": false,
+  "debug.console.fontSize": 16,
+  "[dockerfile]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    }
+  },
+  "git.confirmSync": false,
+  "workbench.productIconTheme": "fluent-icons",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "material-icon-theme.folders.theme": "specific",
+  "explorer.confirmPasteNative": false,
+  "window.menuBarVisibility": "hidden",
+  "git.ignoreRebaseWarning": true,
+  "terminal.integrated.fontSize": 16,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "prisma.showPrismaDataPlatformNotification": false,
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "liveServer.settings.donotVerifyTags": true,
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "supermaven.allowGitignore": true,
+  "chat.editing.alwaysSaveWithGeneratedChanges": true,
+  "window.customTitleBarVisibility": "never",
+  "window.titleBarStyle": "native",
+  "workbench.colorCustomizations": {}
+}
