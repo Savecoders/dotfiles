@@ -10,7 +10,7 @@ sed -i "2s/.*/gtk-theme-name=Gruvbox-Dark-BL-LB/g" ~/.config/gtk-3.0/settings.in
 # Picom
 sed -i "7s/.*/shadow-opacity = 0.3;/g" ~/.config/picom/picom.conf
 
-#terminal 
+#terminal
 kitty +kitten themes --reload-in=all GruvboxHard
 
 # lock screen
