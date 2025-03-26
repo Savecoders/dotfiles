@@ -72,17 +72,27 @@ theme.dark_slider_bg     = "#5AA8FF"
 theme.arc_bg             = "#D1D1D6"
 theme.arc_color          = "#5AA8FF"
 
+-- wibar
+
+theme.wibar_height       = 1080
+theme.popup_left         = 150
+
 -- radius
 
-theme.bar_radius         = dpi(6)
-theme.border_radius      = dpi(9)
+theme.bar_radius         = dpi(4)
+theme.border_radius      = dpi(8)
 theme.client_radius      = dpi(8)
-theme.sidebar_radius     = dpi(10)
+theme.sidebar_radius     = dpi(12)
 theme.dock_radius        = dpi(12)
 
-
 theme.snap_bg            = theme.border_color
-theme.snap_border_width  = dpi(2)
+theme.snap_border_width  = dpi(4)
+
+-- margin
+theme.margin             = dpi(4)
+
+-- spacing
+theme.spacing_bar            = dpi(24)
 
 -- wibar
 

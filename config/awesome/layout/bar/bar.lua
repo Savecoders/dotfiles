@@ -108,15 +108,13 @@ awful.screen.connect_for_each_screen(function(s)
     local tag_setting = create_tag("Settings", beautiful.settings, beautiful.icon_normal)
 
     -- Update tags(suck)
-
-
-    local update_tags = function(self, c3)
+    local update_tags = function(self, btn_work_space)
         -- update tags(suck)
-        local update_icon_tag = function(tag, icon, icon_select, self, c3)
-            return function(self, c3)
-                if c3.selected then
+        local update_icon_tag = function(tag, icon, icon_select, self, btn_work_space)
+            return function(self, btn_work_space)
+                if btn_work_space.selected then
                     tag.icon = colorize_icon(icon_select, beautiful.active)
-                elseif #c3:clients() == 0 then
+                elseif #btn_work_space:clients() == 0 then
                     tag.icon = colorize_icon(icon, beautiful.icon_normal)
                 else
                     tag.icon = colorize_icon(icon_select, beautiful.icon_normal)
@@ -124,31 +122,31 @@ awful.screen.connect_for_each_screen(function(s)
             end
         end
 
-        local update_home = update_icon_tag(tag_home, beautiful.home, beautiful.home_selected, self, c3)
+        local update_home = update_icon_tag(tag_home, beautiful.home, beautiful.home_selected, self, btn_work_space)
 
-        local update_terminal = update_icon_tag(tag_terminal, beautiful.terminal, beautiful.terminal_selected, self, c3)
+        local update_terminal = update_icon_tag(tag_terminal, beautiful.terminal, beautiful.terminal_selected, self, btn_work_space)
 
         local update_dashboard = update_icon_tag(tag_dashboard, beautiful.dashboard, beautiful.dashboard_selected, self,
-            c3)
+            btn_work_space)
 
-        local update_folder = update_icon_tag(tag_folder, beautiful.folder, beautiful.folder_selected, self, c3)
+        local update_folder = update_icon_tag(tag_folder, beautiful.folder, beautiful.folder_selected, self, btn_work_space)
 
-        local update_report = update_icon_tag(tag_report, beautiful.report, beautiful.report_selected, self, c3)
+        local update_report = update_icon_tag(tag_report, beautiful.report, beautiful.report_selected, self, btn_work_space)
 
-        local update_cal = update_icon_tag(tag_cal, beautiful.cal, beautiful.cal_selected, self, c3)
+        local update_cal = update_icon_tag(tag_cal, beautiful.cal, beautiful.cal_selected, self, btn_work_space)
 
-        local update_document = update_icon_tag(tag_document, beautiful.document, beautiful.document_selected, self, c3)
+        local update_document = update_icon_tag(tag_document, beautiful.document, beautiful.document_selected, self, btn_work_space)
 
-        local update_setting = update_icon_tag(tag_setting, beautiful.settings, beautiful.settings_selected, self, c3)
+        local update_setting = update_icon_tag(tag_setting, beautiful.settings, beautiful.settings_selected, self, btn_work_space)
 
-        update_home(self, c3)
-        update_terminal(self, c3)
-        update_dashboard(self, c3)
-        update_folder(self, c3)
-        update_report(self, c3)
-        update_cal(self, c3)
-        update_document(self, c3)
-        update_setting(self, c3)
+        update_home(self, btn_work_space)
+        update_terminal(self, btn_work_space)
+        update_dashboard(self, btn_work_space)
+        update_folder(self, btn_work_space)
+        update_report(self, btn_work_space)
+        update_cal(self, btn_work_space)
+        update_document(self, btn_work_space)
+        update_setting(self, btn_work_space)
     end
 
     -- Make Widget
@@ -167,7 +165,7 @@ awful.screen.connect_for_each_screen(function(s)
             shape = helpers.rrect(beautiful.bar_radius),
         },
         layout = {
-            spacing = dpi(24),
+            spacing = dpi(32),
             layout = wibox.layout.fixed.vertical
         },
         widget_template = {
@@ -181,19 +179,19 @@ awful.screen.connect_for_each_screen(function(s)
                             halign = "center",
                             widget = wibox.widget.imagebox
                         },
-                        width = dpi(50),
+                        width = dpi(48),
                         widget = wibox.container.constraint
                     },
-                    spacing = dpi(20),
+                    spacing = beautiful.spacing_bar,
                     layout = wibox.layout.fixed.horizontal
                 },
-                margins = dpi(4),
+                margins = beautiful.margin,
                 widget = wibox.container.margin
             },
             id = 'background_role',
             widget = wibox.container.background,
-            update_callback = function(self, c3, index, objects)
-                update_tags(self, c3)
+            update_callback = function(self, btn_work_space, index, objects)
+                update_tags(self, btn_work_space)
             end
         },
         buttons = taglist_buttons
@@ -242,7 +240,7 @@ awful.screen.connect_for_each_screen(function(s)
         valign = "center",
         align = "center",
         widget = wibox.widget.textbox,
-        margin = dpi(10),
+        margin = beautiful.margin,
     }
 
     sidebar_icon:buttons(gears.table.join(awful.button({}, 1, function()
