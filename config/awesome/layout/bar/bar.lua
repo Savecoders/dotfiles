@@ -211,7 +211,7 @@ awful.screen.connect_for_each_screen(function(s)
             logo_icon,
             widget = wibox.container.margin
         },
-        forced_height = dpi(50),
+        forced_height = dpi(48),
         widget = wibox.container.background
     }
 
@@ -260,7 +260,7 @@ awful.screen.connect_for_each_screen(function(s)
     end
 
     local mysystray = wibox.widget.systray()
-    mysystray:set_base_size(dpi(30))
+    mysystray:set_base_size(dpi(24))
     mysystray:set_horizontal(false)
 
     -- Bar
@@ -271,8 +271,8 @@ awful.screen.connect_for_each_screen(function(s)
         screen = s,
         ontop = true,
         height = s.geometry.height - dpi(beautiful.useless_gap * 4),
-        width = dpi(50),
-        visible = true
+        width = dpi(48),
+        visible = true,
     })
 
     -- Add widgets
@@ -282,8 +282,8 @@ awful.screen.connect_for_each_screen(function(s)
         { -- top
             wrap_widget({
                 logo,
-                top = dpi(25),
-                left = dpi(5),
+                top = dpi(24),
+                left = dpi(4),
                 widget = wibox.container.margin
             }),
             layout = wibox.layout.fixed.vertical
@@ -296,19 +296,19 @@ awful.screen.connect_for_each_screen(function(s)
             wrap_widget(
                 {
                     mysystray,
-                    top = dpi(25),
+                    top = dpi(24),
                     widget = wibox.container.margin
                 }
             ),
             {
                 clock,
-                top = dpi(10),
+                top = dpi(12),
                 widget = wibox.container.margin
             },
             {
-                top = dpi(25),
+                top = dpi(24),
                 sidebar_icon,
-                bottom = dpi(25),
+                bottom = dpi(24),
                 widget = wibox.container.margin
             },
             layout = wibox.layout.fixed.vertical
@@ -330,7 +330,8 @@ awful.screen.connect_for_each_screen(function(s)
         },
         bg = beautiful.bg,
         -- border radius for bar
-        shape = helpers.rrect(beautiful.border_radius),
+        opacity = 0.9,
+        shape = helpers.rrect(beautiful.border_radius + beautiful.bar_radius),
         widget = wibox.container.background
     }
 
@@ -339,7 +340,6 @@ awful.screen.connect_for_each_screen(function(s)
     end)
 
     -- rubato timed
-
     local widebox_timed = rubato.timed {
         intro = 0.1,
         duration = 0.3,
@@ -351,7 +351,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- screen padding
     s.padding = {
-        left = dpi(beautiful.useless_gap * 1.5),
+        left = dpi(beautiful.useless_gap),
         right = dpi(beautiful.useless_gap),
     }
 
