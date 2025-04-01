@@ -15,7 +15,7 @@ client.connect_signal("request::titlebars", function(c)
         bg = "#00000000"
     }):setup {
         bg = beautiful.bg,
-        shape = helpers.prrect(beautiful.border_radius, false, false, true, true),
+        shape = helpers.prrect(beautiful.border_radius + beautiful.bar_radius, false, false, true, true),
         widget = wibox.container.background
     }
 end)

@@ -4,12 +4,12 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
-    
+
     client.connect_signal("request::titlebars", function(c)
 
         awful.titlebar(c, {
             position = "left",
-            size = dpi(4),
+            size = dpi(8),
             bg = "#00000000"
         }):setup{
             {
@@ -17,7 +17,7 @@ local dpi = xresources.apply_dpi
                     bg = beautiful.border_color,
                     widget = wibox.container.background
                 },
-                left = dpi(4),
+                left = dpi(8),
                 widget = wibox.container.margin
             },
             bg = beautiful.bg,

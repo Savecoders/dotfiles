@@ -45,7 +45,7 @@ client.connect_signal("request::titlebars", function(c)
         c:emit_signal("request::activate", "titlebar", {raise = true})
         if c.maximized == true then c.maximized = false end
         awful.mouse.client.move(c)
-    end), 
+    end),
     awful.button({}, 3, function()
         c:emit_signal("request::activate", "titlebar", {raise = true})
         awful.mouse.client.resize(c)
@@ -91,7 +91,7 @@ client.connect_signal("request::titlebars", function(c)
         local max = create_title_button(c, "#27C840", beautiful.titlebar_unfocused, ci(dpi(11), dpi(11)))
         max:connect_signal("button::press", function() c.maximized = not c.maximized end)
 
-    -- 
+    --
 
     local wrap_widget = function(w)
         return {
@@ -100,7 +100,7 @@ client.connect_signal("request::titlebars", function(c)
             widget = wibox.container.margin
         }
     end
-    
+
     -- Titlebar
 
     awful.titlebar(c, {
@@ -127,7 +127,7 @@ client.connect_signal("request::titlebars", function(c)
                 layout  = wibox.layout.fixed.horizontal
             },
         bg = beautiful.bg,
-        shape = helpers.prrect(beautiful.border_radius, true, true, false, false),
+        shape = helpers.prrect(beautiful.border_radius + beautiful.bar_radius, true, true, false, false),
         widget = wibox.container.background
     }
 end)
