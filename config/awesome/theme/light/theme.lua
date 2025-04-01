@@ -92,12 +92,8 @@ theme.snap_border_width  = dpi(4)
 theme.margin             = dpi(4)
 
 -- spacing
-theme.spacing_bar            = dpi(24)
+theme.spacing_bar        = dpi(20)
 
--- wibar
-
-theme.wibar_height       = 1080
-theme.popup_left         = 150
 
 -- Listages
 

@@ -24,8 +24,7 @@ theme.dir                = string.format('%s/.config/awesome/theme', os.getenv('
 
 theme.wallpaper          = "~/Pictures/Wallpapers/dark/see_market.png"
 
-theme.useless_gap        = 6
-theme.useless_less       = 8
+theme.useless_gap        = 8
 
 -- colors
 
@@ -47,13 +46,18 @@ theme.taglist_bg_focus   = {
   type = "linear",
   from = { 00, 00, 10 },
   to = { 100, 100, 30 },
-  stops = { { 0, "#0A84FF" }, { 1, "#419CFF" } }
+  stops = {
+    { 0, "#0A84FF" },
+    { 1, "#419CFF" }
+  }
 }
 
 theme.active             = "#FFFFFF"
 
 theme.icon_bg            = "#FFFFFF"
+
 theme.icon_normal        = "#8A8E97"
+
 theme.icon_selected      = "#6A6E78"
 
 theme.red                = "#FF768E"
@@ -69,6 +73,7 @@ theme.search_bar         = "#242426"
 theme.dark_slider_bg     = "#0A84FF"
 
 theme.arc_bg             = "#3A3A3C"
+
 theme.arc_color          = "#007AFF"
 
 -- wibar
@@ -91,7 +96,7 @@ theme.snap_border_width  = dpi(4)
 theme.margin             = dpi(4)
 
 -- spacing
-theme.spacing_bar            = dpi(24)
+theme.spacing_bar        = dpi(20)
 
 -- icons
 

@@ -25,7 +25,6 @@ theme.dir                = string.format('%s/.config/awesome/theme', os.getenv('
 theme.wallpaper          = "~/Pictures/Wallpapers/gruvbox/japan.png"
 
 theme.useless_gap        = 6
-theme.useless_less       = 8
 
 -- colors
 -- #131417
@@ -78,11 +77,6 @@ theme.arc_color          = "#7daea3"
 theme.wibar_height       = 1080
 theme.popup_left         = 150
 
--- wibar
-
-theme.wibar_height       = 1080
-theme.popup_left         = 150
-
 -- radius
 
 theme.bar_radius         = dpi(4)
@@ -98,7 +92,7 @@ theme.snap_border_width  = dpi(4)
 theme.margin             = dpi(4)
 
 -- spacing
-theme.spacing_bar            = dpi(24)
+theme.spacing_bar        = dpi(20)
 
 -- icons
 
@@ -144,10 +138,13 @@ theme.music_icon         = gfs.get_configuration_dir() .. "icons/bar/music.png"
 theme.vol                = gfs.get_configuration_dir() .. "icons/bar/vol.png"
 
 theme.search_icon        = gfs.get_configuration_dir() .. "icons/bar/search.png"
+
 theme.search_bar_icon    = colorize_icon(theme.search_icon, theme.icon_normal)
 
 theme.logo               = gfs.get_configuration_dir() .. "icons/bar/align.png"
+
 theme.logo_normal        = colorize_icon(theme.logo, theme.icon_normal)
+
 theme.logo_selected      = colorize_icon(theme.logo, theme.icon_selected)
 
 theme.icon_change_theme  = gfs.get_configuration_dir() .. "icons/ichange_theme.png"
