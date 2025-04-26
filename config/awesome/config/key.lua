@@ -126,12 +126,29 @@ globalkeys = gears.table.join(
 		group = "awesome",
 	}),
 
-	awful.key({ modkey }, "Tab", function()
+	awful.key({ modkey }, "Tab",  function()
 		awful.client.focus.history.previous()
 		if client.focus then
 			client.focus:raise()
 		end
 	end, { description = "go back", group = "client" }),
+
+  awful.key({ modkey, "Shift" }, "Tab", function()
+    if theme == themes[1] then
+			awful.spawn.easy_async_with_shell(
+				"rofi -show window -theme " .. "~/.config/rofi/gruvbox.rasi" .. " -show-icons"
+			)
+		elseif theme == themes[2] then
+			awful.spawn.easy_async_with_shell(
+				"rofi -show window -theme " .. "~/.config/rofi/light.rasi" .. " -show-icons"
+			)
+		elseif theme == themes[3] then
+			awful.spawn.easy_async_with_shell("rofi -show window -theme " .. "~/.config/rofi/dark.rasi" .. " -show-icons")
+		end
+	end, {
+    description = "show window tags use rofi",
+    group = "client"
+  }),
 
 	-- Audio
 
