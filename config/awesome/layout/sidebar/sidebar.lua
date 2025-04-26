@@ -13,7 +13,6 @@ local button = require("widgets.button")
 local userprofile = require("widgets.userprofile")
 local user_box = button.create_boxed_widget(userprofile, dpi(240), dpi(130), dpi(14), dpi(14), beautiful.bg_widget)
 
-
 -- Cpu
 
 local cpu_bar = require("widgets.cpu_arc")
@@ -123,7 +122,7 @@ local sidebar = wibox({
     width = dpi(480),
     bg = "#00000000",
     fg = beautiful.fg_normal,
-    y = dpi(beautiful.useless_gap * 2),
+    y = dpi(beautiful.useless_gap * 2)
 })
 
 local sidebar_timed = rubato.timed {
@@ -155,7 +154,7 @@ sidebar_wide = function()
     end
 end
 
-sidebar:setup {
+sidebar:setup{
     {
         layout = wibox.layout.align.horizontal,
         expand = "none",

@@ -24,13 +24,18 @@ local function create_title_button(c, color_focus, color_unfocus, shp)
             tb.bg = color_unfocus
         end
     end
+
     update()
 
     c:connect_signal("focus", update)
     c:connect_signal("unfocus", update)
 
-    tb:connect_signal("mouse::enter", function() tb.bg = color_focus .. 55 end)
-    tb:connect_signal("mouse::leave", function() tb.bg = color_focus end)
+    tb:connect_signal("mouse::enter", function()
+        tb.bg = color_focus .. 55
+    end)
+    tb:connect_signal("mouse::leave", function()
+        tb.bg = color_focus
+    end)
 
     tb.visible = true
     return tb
@@ -40,56 +45,74 @@ end
 client.connect_signal("request::titlebars", function(c)
     -- buttons for the titlebar
 
-    local buttons = gears.table.join(
-    awful.button({}, 1, function()
-        c:emit_signal("request::activate", "titlebar", {raise = true})
-        if c.maximized == true then c.maximized = false end
+    local buttons = gears.table.join(awful.button({}, 1, function()
+        c:emit_signal("request::activate", "titlebar", {
+            raise = true
+        })
+        if c.maximized == true then
+            c.maximized = false
+        end
         awful.mouse.client.move(c)
-    end),
-    awful.button({}, 3, function()
-        c:emit_signal("request::activate", "titlebar", {raise = true})
+    end), awful.button({}, 3, function()
+        c:emit_signal("request::activate", "titlebar", {
+            raise = true
+        })
         awful.mouse.client.resize(c)
-    end)
-
-    )
-    local borderbuttons = gears.table.join( awful.button({}, 3, function()
-        c:emit_signal("request::activate", "titlebar", {raise = true})
+    end))
+    local borderbuttons = gears.table.join(awful.button({}, 3, function()
+        c:emit_signal("request::activate", "titlebar", {
+            raise = true
+        })
         awful.mouse.client.resize(c)
     end), awful.button({}, 1, function()
-        c:emit_signal("request::activate", "titlebar", {raise = true})
+        c:emit_signal("request::activate", "titlebar", {
+            raise = true
+        })
         awful.mouse.client.resize(c)
-    end)
-    )
-
+    end))
 
     -- Shapes
 
-        local ci = function(width, height)
-            return function(cr) gears.shape.circle(cr, width, height) end
+    local ci = function(width, height)
+        return function(cr)
+            gears.shape.circle(cr, width, height)
         end
+    end
 
-        local co = function(width, height)
-            return function(cr) gears.shape.cross(cr, width, height) end
+    local co = function(width, height)
+        return function(cr)
+            gears.shape.cross(cr, width, height)
         end
+    end
 
-        local bo = function(width, height, radius)
-            return function(cr) gears.shape.rounded_rect(cr, width, height, radius) end
+    local bo = function(width, height, radius)
+        return function(cr)
+            gears.shape.rounded_rect(cr, width, height, radius)
         end
+    end
 
-        local pl = function(width, height)
-            return function(cr) gears.shape.powerline(cr, width, height) end
+    local pl = function(width, height)
+        return function(cr)
+            gears.shape.powerline(cr, width, height)
         end
+    end
 
     -- Buttons
 
-        local close = create_title_button(c, "#FF6057", beautiful.titlebar_unfocused, ci(dpi(11), dpi(11)))
-        close:connect_signal("button::press", function() c:kill() end)
+    local close = create_title_button(c, "#FF6057", beautiful.titlebar_unfocused, ci(dpi(12), dpi(12)))
+    close:connect_signal("button::press", function()
+        c:kill()
+    end)
 
-        local float = create_title_button(c, "#FDBD2E", beautiful.titlebar_unfocused, ci(dpi(11), dpi(11)))
-        float:connect_signal("button::press", function() awful.client.floating.toggle(c) end)
+    local float = create_title_button(c, "#FDBD2E", beautiful.titlebar_unfocused, ci(dpi(12), dpi(12)))
+    float:connect_signal("button::press", function()
+        awful.client.floating.toggle(c)
+    end)
 
-        local max = create_title_button(c, "#27C840", beautiful.titlebar_unfocused, ci(dpi(11), dpi(11)))
-        max:connect_signal("button::press", function() c.maximized = not c.maximized end)
+    local max = create_title_button(c, "#27C840", beautiful.titlebar_unfocused, ci(dpi(12), dpi(12)))
+    max:connect_signal("button::press", function()
+        c.maximized = not c.maximized
+    end)
 
     --
 
@@ -106,26 +129,26 @@ client.connect_signal("request::titlebars", function(c)
     awful.titlebar(c, {
         position = "top",
         size = dpi(40),
-        bg = "#00000000",
+        bg = "#00000000"
     }):setup{
-            {   -- left
-                wrap_widget({
-                    close,
-                    left = dpi(25),
-                    widget = wibox.container.margin
-                }),
-                wrap_widget(float),
-                wrap_widget(max),
-                buttons = buttons,
-                layout = wibox.layout.fixed.horizontal,
-            },
-            {   -- middle
-                awful.titlebar.widget.titlewidget(c),
-                layout  = wibox.layout.fixed.horizontal
-            },
-            {   -- right
-                layout  = wibox.layout.fixed.horizontal
-            },
+        { -- left
+            wrap_widget({
+                close,
+                left = dpi(20),
+                widget = wibox.container.margin
+            }),
+            wrap_widget(float),
+            wrap_widget(max),
+            buttons = buttons,
+            layout = wibox.layout.fixed.horizontal
+        },
+        { -- middle
+            awful.titlebar.widget.titlewidget(c),
+            layout = wibox.layout.fixed.horizontal
+        },
+        { -- right
+            layout = wibox.layout.fixed.horizontal
+        },
         bg = beautiful.bg,
         shape = helpers.prrect(beautiful.border_radius + beautiful.bar_radius, true, true, false, false),
         widget = wibox.container.background

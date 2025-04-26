@@ -17,7 +17,7 @@ function helpers.volume_control(step)
         sign = step > 0 and "+" or ""
         cmd =
             "pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ " .. sign .. tostring(step) ..
-            "%"
+                "%"
     end
     awful.spawn.with_shell(cmd)
 end
@@ -105,9 +105,11 @@ function helpers.prompt(action, textbox, prompt, callback)
             font = beautiful.font,
             done_callback = callback,
             exe_callback = function(input)
-                if not input or #input == 0 then return end
+                if not input or #input == 0 then
+                    return
+                end
                 -- awful.spawn.with_shell('brave https://www.google.com/search?q='..input ..' &')
-                --naughty.notify{ text = 'The input was: '..input }
+                -- naughty.notify{ text = 'The input was: '..input }
             end
         }
     end
