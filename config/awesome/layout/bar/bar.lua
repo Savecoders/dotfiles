@@ -147,6 +147,8 @@ awful.screen.connect_for_each_screen(function(s)
         update_cal(self, btn_work_space)
         update_document(self, btn_work_space)
         update_setting(self, btn_work_space)
+
+        helpers.add_hover_cursor(self, "hand2")
     end
 
     -- Make Widget
@@ -190,15 +192,14 @@ awful.screen.connect_for_each_screen(function(s)
             },
             id = 'background_role',
             widget = wibox.container.background,
+            -- btn_work_space is c3 in documentation awesomewm.org
+            -- Called everytime the data is refreshed
             update_callback = function(self, btn_work_space, index, objects)
                 update_tags(self, btn_work_space)
-            end
+            end,
         },
         buttons = taglist_buttons
     }
-
-    helpers.add_hover_cursor(s.mytaglist, "hand1")
-
     -- logo
 
     local logo_icon = wibox.widget {
@@ -330,8 +331,8 @@ awful.screen.connect_for_each_screen(function(s)
         },
         bg = beautiful.bg,
         -- border radius for bar
-        opacity = 0.9,
-        shape = helpers.rrect(beautiful.border_radius + beautiful.bar_radius),
+        opacity = 0.85,
+        shape = helpers.rrect(beautiful.border_radius),
         widget = wibox.container.background
     }
 
