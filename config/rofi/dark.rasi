@@ -36,6 +36,8 @@ window {
     location: center;
     padding: 12px;
     width: 32%;
+    border: 2px;
+    border-color: @border-col;
 }
 
 mainbox {
