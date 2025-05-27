@@ -27,87 +27,91 @@ configuration {
     rad: 4px;
 }
 
+
 element-text, element-icon{
     background-color: inherit;
     text-color:       inherit;
 }
 
 window {
-    location: center;
-    width: 32%;
-    padding: 12px;
-    border-radius: 16px; 
     background-color: @bg;
+    border-radius: 12px;
+    location: center;
+    padding: 12px;
+    width: 32%;
+    border: 2px;
+    border-color: @border-col;
 }
 
 mainbox {
-    spacing: 12px;
+    spacing: 8px;
     children: [ inputbar, view-container];
     background-color: #0000;
 }
 
 view-container{
+    expand: true;
     children: [listview];
     orientation: horizontal;
     border-radius: @rad;
     border-color: @border-col;
-    background-color: @bg-col;    
+    background-color: @bg;
 }
 
+// Icon and text in the prompt
 prompt{
     text-color: @fg-col;
-    border-color: @border-col;
-    background-color: @bg-col;
+    background-color: @bg;
     font: "SF Pro Display 24";
     horizontal-align: 0;
-    padding: 10px 0 0 10px;
+    padding: 8px 0 0 8px;
 }
 
+// Input bar with prompt and entry
 inputbar {
     children: [ prompt, entry ];
     orientation: horizontal;
-    padding: 0.2em;
-    border-radius: @rad;
-    border: 2px;
+    padding: 4px 16px;
+    border: 0px 0px 2px 0px;
+    background-color: @bg;
     border-color: @border-col;
-    background-color: @bg-col;
 }
 
-
+// Search entry
 entry {
-    background-color: @bg-col;
-    border-radius: @rad;
+    background-color: @bg;
     text-color: @fg-col;
-    font: "SF Pro Display Medium 16";
-    padding: 1.4%;
-    placeholder: "Search";
+    font: "SF Pro Display 14";
+    padding: 12px;
+    placeholder: "Search with the app name or command";
 }
 
 listview {
+    margin: 4px 0 0 0;
     cycle: false;
     dynamic: true;
     border-radius: @rad;
     layout: vertical;
-    lines: 3;
-    background-color: @bg-col;
+    lines: 7;
+    background-color: @bg;
 }
 
 element {
-    padding: 1.4%;
+    padding: 1.2%;
     orientation: horizontal;
     border-radius: @rad;
-    background-color: @bg-col;
+    background-color: @bg;
 }
 
 element-icon {
-    size: 32px;
+    size: 20px;
 }
 
 element-text{
     expand: true;
     horizontal-align: 0;
-    margin: 0 4px;
-    font: "SF Pro Display 16";
+    margin: 0 8px;
+    font: "SF Pro Display 14";
     text-color: @fg;
 }
 
@@ -118,10 +122,9 @@ element selected {
     text-color: @fg-col2;
 }
 
-element selected, element-text selected { 
-    text-color: @blue; 
+element selected, element-text selected {
+    text-color: @blue;
 }
 
 listview, element, element-selected, element-text { cursor: pointer; }
 entry { cursor: text; }
-
