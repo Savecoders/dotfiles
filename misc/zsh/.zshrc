@@ -1,19 +1,20 @@
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes update_command_status true; $(git_prompt_info)
 # .oh-my-zsh/themes/
-ZSH_THEME="Arrow"
+ZSH_THEME="Savior"
 
 # User configuration
 source $ZSH/oh-my-zsh.sh
 
 
 # alias config
-
+# my config
 alias ls="exa --icons --group-directories-first"
 alias cat="bat"
 alias tree="exa --icons -T"
@@ -28,11 +29,16 @@ alias rmNM="find . -name "node_modules" -exec rm -rf '{}' +; find . -name "packa
 
 # Plugins
 
-plugins=(git)
+plugins=(git, git_prompt_info, nvm)
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $ZSH/plugins/sudo/sudo.plugin.zsh
+source $ZSH/plugins/docker-compose/docker-compose.plugin.zsh
+
+export NVM_DIR=~/.nvm
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
 
 # Functions
 function mkt(){
@@ -92,9 +98,31 @@ function rmk(){
 	shred -zun 10 -v $1
 }
 
-# Android config 
-# export ANDROID_HOME=$HOME/Android/Sdk
-# export PATH=$PATH:$ANDROID_HOME/emulator
-# export PATH=$PATH:$ANDROID_HOME/tools
-# export PATH=$PATH:$ANDROID_HOME/tools/bin
-# export PATH=$PATH:$ANDROID_HOME/platform-tools
+# Android config
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$ANDROID_HOME/emulator:$PATH
+export PATH=$ANDROID_HOME/tools:$PATH
+export PATH=$ANDROID_HOME/tools/bin:$PATH
+export PATH=$ANDROID_HOME/platform-tools:$PATH
+
+
+
+# pnpm
+export PNPM_HOME="/home/save/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+. "/home/save/.deno/env"
+
+# bun completions
+[ -s "/home/save/.bun/_bun" ] && source "/home/save/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
