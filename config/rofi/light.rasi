@@ -10,6 +10,9 @@ configuration {
     hide-scrollbar: true;
     drun-display-format: "{icon} {name}";
     sidebar-mode: true;
+    display-drun: "";
+    display-run: "";
+    display-window: "";
 }
 
 * {
