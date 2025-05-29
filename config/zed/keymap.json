@@ -1,0 +1,96 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+
+[
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-s": "workspace::Save"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-alt-a": "workspace::AddFolderToProject"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-g s": "git::StageAndNext",
+      "ctrl-g r": "git::Restore",
+      "ctrl-g u": "git::UnstageAndNext",
+      "ctrl-g a": "git::StageAll",
+      "ctrl-g u a": "git::UnstageAll",
+      "ctrl-g c": "git::Commit",
+      "ctrl-g p": "git::Push",
+      "ctrl-g m": "git::GenerateCommitMessage",
+      "ctrl-g l": "git::Pull",
+      "ctrl-g d d": "git::Diff",
+      "ctrl-g d a": "git::Amend",
+      "ctrl-g d b": "git::Blame"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal && vim_operator == none && !VimWaiting",
+    "bindings": {
+      "space e": "project_panel::ToggleFocus",
+      "space g": "git_panel::ToggleFocus",
+      "space o": "outline_panel::ToggleFocus",
+      "space space": "file_finder::Toggle",
+      "space a i": "assistant::InlineAssist",
+      "space a d": "agent::OpenAgentDiff",
+      "space a t": "agent::ToggleFocus",
+      "space t": "terminal_panel::ToggleFocus",
+      "space u n": "workspace::ClearAllNotifications",
+      "space b q": "pane::CloseInactiveItems",
+      "ctrl-w": "pane::CloseActiveItem",
+      "space g g": [
+        "task::Spawn",
+        { "task_name": "Lazygit", "reveal_target": "center" }
+      ],
+      "-": ["task::Spawn", { "task_name": "Yazi", "reveal_target": "center" }],
+      "space f f": [
+        "task::Spawn",
+        { "task_name": "File Finder", "reveal_target": "center" }
+      ],
+      "space s g": [
+        "task::Spawn",
+        { "task_name": "Find in Files", "reveal_target": "center" }
+      ]
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "g s a": ["vim::PushAddSurrounds", {}]
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting",
+    "bindings": {
+      "space a i": "assistant::InlineAssist"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl_k": "workspace::ToggleBottomDock",
+      "cmd-f": "workspace::ToggleZoom",
+      "cmd-n": "workspace::NewTerminal"
+    }
+  }
+]
