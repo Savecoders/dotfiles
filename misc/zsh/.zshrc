@@ -105,7 +105,12 @@ export PATH=$ANDROID_HOME/tools:$PATH
 export PATH=$ANDROID_HOME/tools/bin:$PATH
 export PATH=$ANDROID_HOME/platform-tools:$PATH
 
+# Flutter
+export FLUTTER_HOME=$HOME/Documents/flutter
+export PATH=$FLUTTER_HOME/bin:$PATH
 
+# Path google chrome
+export CHROME_EXECUTABLE=/usr/bin/brave
 
 # pnpm
 export PNPM_HOME="/home/save/.local/share/pnpm"
@@ -113,8 +118,6 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
-. "/home/save/.deno/env"
 
 # bun completions
 [ -s "/home/save/.bun/_bun" ] && source "/home/save/.bun/_bun"
