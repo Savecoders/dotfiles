@@ -5,7 +5,6 @@
 //
 // To see the default key bindings run `zed: open default keymap`
 // from the command palette.
-
 [
   {
     "context": "Editor",
@@ -20,7 +19,8 @@
       "ctrl-j": "workspace::ActivatePaneDown",
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-l": "workspace::ActivatePaneRight",
-      "ctrl-alt-a": "workspace::AddFolderToProject"
+      "ctrl-alt-a": "workspace::AddFolderToProject",
+      "ctrl-alt-k": "workspace::NewFileSplitVertical"
     }
   },
   {
@@ -55,28 +55,47 @@
       "space a d": "agent::OpenAgentDiff",
       "space a t": "agent::ToggleFocus",
       "space t": "terminal_panel::ToggleFocus",
+      "space f": "buffer_search::Deploy",
       "space u n": "workspace::ClearAllNotifications",
       "space b q": "pane::CloseInactiveItems",
       "ctrl-w": "pane::CloseActiveItem",
       "space g g": [
         "task::Spawn",
-        { "task_name": "Lazygit", "reveal_target": "center" }
+        {
+          "task_name": "Lazygit",
+          "reveal_target": "center"
+        }
       ],
-      "-": ["task::Spawn", { "task_name": "Yazi", "reveal_target": "center" }],
+      "-": [
+        "task::Spawn",
+        {
+          "task_name": "Yazi",
+          "reveal_target": "center"
+        }
+      ],
       "space f f": [
         "task::Spawn",
-        { "task_name": "File Finder", "reveal_target": "center" }
+        {
+          "task_name": "File Finder",
+          "reveal_target": "center"
+        }
       ],
       "space s g": [
         "task::Spawn",
-        { "task_name": "Find in Files", "reveal_target": "center" }
+        {
+          "task_name": "Find in Files",
+          "reveal_target": "center"
+        }
       ]
     }
   },
   {
     "context": "vim_mode == visual",
     "bindings": {
-      "g s a": ["vim::PushAddSurrounds", {}]
+      "g s a": [
+        "vim::PushAddSurrounds",
+        {}
+      ]
     }
   },
   {

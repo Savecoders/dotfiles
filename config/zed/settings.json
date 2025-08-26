@@ -7,8 +7,17 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
+  "icon_theme": "Colored Zed Icons Theme Dark",
   "edit_predictions": {
-    "disabled_globs": [],
+    "disabled_globs": [
+      "**/.env*",
+      "**/*.pem",
+      "**/*.key",
+      "**/*.cert",
+      "**/*.crt",
+      "**/.dev.vars",
+      "**/secrets.yml"
+    ],
     "mode": "eager",
     "copilot": {
       "proxy": null,
@@ -22,7 +31,9 @@
   },
   "terminal": {
     "shell": "system",
-    "line_height": { "custom": 1.25 }
+    "line_height": {
+      "custom": 1.25
+    }
   },
   "project_panel": {
     "dock": "right"
@@ -36,22 +47,34 @@
     "default_model": {
       "provider": "copilot_chat",
       "model": "gpt-4.1"
-    },
-    "version": "2"
+    }
   },
   "vim_mode": true,
   "vim": {
     "toggle_relative_line_numbers": true
   },
   "ui_font_size": 18,
-  "buffer_font_size": 18,
+  "buffer_font_size": 20,
   "agent_font_size": 18,
   "ui_font_family": "DankMono Nerd Font",
   "buffer_font_family": "DankMono Nerd Font",
+  "formatter": "language_server",
+  "preferred_line_length": 80,
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Vesper"
+    "dark": "Catppuccin Espresso (Blur) [Light]"
+  },
+  "tab_size": 2,
+  "active_pane_modifiers": {
+    "inactive_opacity": 1.0
+  },
+  "indent_guides": {
+    "enabled": true,
+    "line_width": 2,
+    "active_line_width": 2,
+    "coloring": "fixed",
+    "background_coloring": "disabled"
   },
   "diagnostics": {
     "inline": {
