@@ -181,12 +181,6 @@ cp -r "${BASEDIR}/../misc/fonts/"* "${HOME}/.local/share/fonts/" || { echo "Erro
 fc-cache -fv || echo "Warning: Failed to refresh font cache."
 echo "Fonts copied and cache refreshed."
 
-# lightdm (commented out as in original, but added sudo and error handling if uncommented)
-# echo "Copying LightDM Webkit theme..."
-# # This path typically requires root permissions
-# sudo cp -r "${BASEDIR}/../config/lightdm/"* "/usr/share/lightdm-webkit/themes/" || { echo "Error: Failed to copy LightDM theme. Exiting."; exit 1; }
-# echo "LightDM theme copied."
-
 # Wallpapers
 echo "Copying Wallpapers..."
 mkdir -p "${HOME}/Pictures/Wallpapers" || { echo "Error: Could not create ~/Pictures/Wallpapers. Exiting."; exit 1; }
@@ -285,8 +279,11 @@ extract_and_copy_themes() {
 
 # Call the function for each GTK theme archive
 extract_and_copy_themes "Colloid.tar.xz"
-extract_and_copy_themes "WhiteSur-Dark-solid.tar"
+extract_and_copy_themes "WhiteSur-Dark-solid.tar.xz"
+extract_and_copy_themes "Colloid-Everforest.tar.xz"
+extract_and_copy_themes "Colloid-Nord.tar.xz"
 extract_and_copy_themes "Gruvbox-Dark-BL-LB.zip"
+extract_and_copy_themes "Colloid-Gruvbox.tar.xz"
 
 echo "All GTK themes processed."
 echo "--- Script execution complete ---"
