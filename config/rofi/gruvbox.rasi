@@ -30,6 +30,7 @@ configuration {
 }
 
 
+
 element-text, element-icon{
     background-color: inherit;
     text-color:       inherit;
@@ -37,18 +38,22 @@ element-text, element-icon{
 
 window {
     background-color: @bg;
-    border-radius: 12px;
+    border-radius: 16px;
     location: center;
-    padding: 12px;
+    padding: 1px;
     width: 32%;
-    border: 2px;
-    border-color: @border-col;
+    border: 1px;
 }
 
 mainbox {
-    spacing: 8px;
-    children: [ inputbar, view-container];
+    spacing: 12px;
+    border-radius: 16px;
+    children: [ inputbar, view-container ];
     background-color: #0000;
+    border: 1px;
+    padding: 12px;
+    orientation: vertical;
+    border-color: @border-col;
 }
 
 view-container{
@@ -58,15 +63,6 @@ view-container{
     border-radius: @rad;
     border-color: @border-col;
     background-color: @bg;
-}
-
-// Icon and text in the prompt
-prompt{
-    text-color: @fg-col;
-    background-color: @bg;
-    font: "SF Pro Display 24";
-    horizontal-align: 0;
-    padding: 8px 0 0 8px;
 }
 
 // Input bar with prompt and entry
@@ -84,12 +80,21 @@ entry {
     background-color: @bg;
     text-color: @fg-col;
     font: "SF Pro Display 14";
-    padding: 12px;
-    placeholder: "Search with the app name or command";
+    padding: 12px 0;
+    placeholder: "Search...";
+}
+
+
+// Icon and text in the prompt
+prompt {
+    text-color: @fg-col;
+    background-color: @bg;
+    font: "DankMono Nerd Font 14";
+    padding: 12px 24px 12px 8px;
 }
 
 listview {
-    margin: 4px 0 0 0;
+    margin: 8px 0;
     cycle: false;
     dynamic: true;
     border-radius: @rad;
@@ -106,7 +111,7 @@ element {
 }
 
 element-icon {
-    size: 20px;
+    size: 24px;
     padding: 4px;
     border-radius: @rad;
 }
@@ -115,7 +120,7 @@ element-text{
     expand: true;
     horizontal-align: 0;
     margin: 0 8px;
-    font: "SF Pro Display 14";
+    font: "SF Pro Display 16";
     text-color: @fg;
 }
 
@@ -132,7 +137,7 @@ element selected {
     padding: 0px;
     margin: 0px;
     text-color: @fg-col2;
-    font: "SF Pro Display Semibold 14";
+    font: "SF Pro Display Semibold 16";
 }
 
 element selected, element-text selected {

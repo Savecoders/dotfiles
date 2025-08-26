@@ -29,6 +29,7 @@ configuration {
     rad: 4px;
 }
 
+
 element-text, element-icon{
     background-color: inherit;
     text-color:       inherit;
@@ -98,7 +99,7 @@ listview {
 }
 
 element {
-    padding: 1.2%;
+    padding: 1%;
     orientation: horizontal;
     border-radius: @rad;
     background-color: @bg;
@@ -106,6 +107,8 @@ element {
 
 element-icon {
     size: 20px;
+    padding: 4px;
+    border-radius: @rad;
 }
 
 element-text{
@@ -116,11 +119,20 @@ element-text{
     text-color: @fg;
 }
 
+
+// Selected is the element that is currently highlighted
+// is hovered over by the mouse cursor
+
+element-icon selected {
+    background-color: @blue;
+}
+
 element selected {
     background-color: @bg-col;
     padding: 0px;
     margin: 0px;
     text-color: @fg-col2;
+    font: "SF Pro Display Semibold 14";
 }
 
 element selected, element-text selected {

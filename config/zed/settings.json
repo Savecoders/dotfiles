@@ -43,9 +43,9 @@
   "vim": {
     "toggle_relative_line_numbers": true
   },
-  "ui_font_size": 16,
-  "buffer_font_size": 16,
-  "agent_font_size": 16,
+  "ui_font_size": 18,
+  "buffer_font_size": 18,
+  "agent_font_size": 18,
   "ui_font_family": "DankMono Nerd Font",
   "buffer_font_family": "DankMono Nerd Font",
   "theme": {
