@@ -1,11 +1,3 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette
 {
   "icon_theme": "Colored Zed Icons Theme Dark",
   "edit_predictions": {
@@ -62,7 +54,7 @@
   "preferred_line_length": 80,
   "theme": {
     "mode": "system",
-    "light": "One Light",
+    "light": "Catppuccin Espresso (Blur) [Light]",
     "dark": "Catppuccin Espresso (Blur) [Light]"
   },
   "tab_size": 2,

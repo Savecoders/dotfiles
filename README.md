@@ -30,12 +30,12 @@ Here are some details about my setup
 Here are some details about my setup:
 
 - **OS:** [Arch Linux](https://archlinux.org/)
-- **WM:** [awesome](https://github.com/awesomeWM/awesome) or [Qtile](http://www.qtile.org/)
+- **WM:** [awesome](https://github.com/awesomeWM/awesome) (Not Soported) and [Hyprland](https://wiki.hypr.land)
 - **Terminal:** [kitty](https://sw.kovidgoyal.net/kitty/)
 - **Shell:** [zsh](https://www.zsh.org/)
 - **Application Launcher:** [rofi](https://github.com/davatorium/rofi)
 - **Compositor:** [picom](https://github.com/yshui/picom)
-- **Editor:** [neovim](https://github.com/neovim/neovim) | [vscode](https://github.com/microsoft/vscode)
+- **Editor:** [neovim](https://github.com/neovim/neovim) | [vscode](https://github.com/microsoft/vscode) || [zed](https://zed.dev/)
 - **System Font:** [SF Pro Display](https://github.com/sahibjotsagguSan-Francisco-Pro-Fonts)
 
 <!-- Install dependencies-->
@@ -249,19 +249,15 @@ and the other parts of code is the others devs :)
     <summary>
         <samp><b>Modules in aplication</b></samp>
     </summary>
-
 <br>
 
 - **[Bling](https://blingcorp.github.io/bling/)**
-
   - use in Playerctl widget, layout
 
 - **[Rubato](https://github.com/andOrlando/rubato)**
-
   - Create animation for aweosmeWM
 
 - **[Better resize](https://github.com/JavaCafe01/dotfiles/blob/master/config/awesome/module/better-resize.lua)**
-
   - An improved method of resizing clients in the tiled layout, and maded by [javacafe01](https://github.com/JavaCafe01)
 
 </details>
