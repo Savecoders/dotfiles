@@ -1,5 +1,44 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+  "logo": {
+    "type": "small",
+    "source": "arch", // Built-in logo name or file path
+    "padding": {
+      "top": 0,
+      "left": 0,
+      "right": 2,
+    },
+    "color": {
+      // Override logo colors
+      "1": "blue",
+      "2": "green",
+      "3": "cyan",
+    },
+  },
+  "display": {
+    "separator": ": ",
+    "key": {
+      "type": "both",
+    },
+    "bar": {
+      "border": {
+        "left": "\uee00",
+        "leftElapsed": "\uee03",
+        "right": "\uee02",
+        "rightElapsed": "\uee05",
+      },
+      "char": {
+        "total": "\uee01",
+        "elapsed": "\uee04",
+      },
+      "color": {
+        "total": null,
+      },
+    },
+    "percent": {
+      "type": ["bar"],
+    },
+  },
   "modules": [
     "title",
     "separator",
@@ -26,6 +65,6 @@
     "battery",
     "poweradapter",
     "break",
-    "colors"
-  ]
+    "colors",
+  ],
 }
