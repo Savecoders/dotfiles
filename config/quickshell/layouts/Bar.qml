@@ -1,59 +1,26 @@
-// Bar.qml
 import Quickshell
-import Quickshell.Io
-import QtQuick
+import "../components/"
 
 Scope {
-    id: root
-    property string time
 
-    Variants {
-        model: Quickshell.screens
+  Variants {
+    model: Quickshell.screens
 
-        PanelWindow {
-            required property var modelData
-            color: "transparent"
-            screen: modelData
+    PanelWindow {
+      required property var modelData
+      screen: modelData
 
-            anchors {
-                top: true
-                left: true
-                right: false
-                bottom: true
-            }
+      anchors {
+        top: true
+        left: true
+        right: true
+      }
 
-            implicitHeight: 24
-            implicitWidth: 32
+      implicitHeight: 30
 
-            Rectangle {
-                anchors.fill: parent
-                color: "white"
-                radius: 8
-                // bottomLeftRadius: 12
-                // bottomRightRadius: 12
-                opacity: 0.8
-
-                Text {
-                    anchors.centerIn: parent
-                    text: root.time
-                }
-            }
-        }
+      ClockWidget {
+        anchors.centerIn: parent
+      }
     }
-
-    Process {
-        id: dateProc
-        command: ["date"]
-        running: true
-        stdout: StdioCollector {
-            onStreamFinished: root.time = this.text
-        }
-    }
-
-    Timer {
-        interval: 1000
-        running: true
-        repeat: true
-        onTriggered: dateProc.running = true
-    }
+  }
 }
