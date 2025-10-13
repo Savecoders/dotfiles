@@ -1,62 +1,57 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
   "logo": {
-    "type": "small",
-    "source": "arch", // Built-in logo name or file path
+    "type": "file",
+    "source": "~/.config/fastfetch/ascii/ascii-art.txt", // Built-in logo name or file path
     "padding": {
       "top": 0,
       "left": 0,
-      "right": 2,
+      "right": 4
     },
     "color": {
-      // Override logo colors
-      "1": "blue",
-      "2": "green",
-      "3": "cyan",
-    },
+      "1": "cyan",
+      "2": "blue",
+      "3": "green"
+    }
   },
   "display": {
-    "separator": ": ",
+    "separator": "    ",
     "key": {
-      "type": "both",
+      "type": "icon",
+      "paddingLeft": 2
     },
     "bar": {
       "border": {
         "left": "\uee00",
         "leftElapsed": "\uee03",
         "right": "\uee02",
-        "rightElapsed": "\uee05",
+        "rightElapsed": "\uee05"
       },
       "char": {
         "total": "\uee01",
-        "elapsed": "\uee04",
-      },
-      "color": {
-        "total": null,
-      },
+        "elapsed": "\uee04"
+      }
     },
     "percent": {
-      "type": ["bar"],
-    },
+      "type": [
+        "bar"
+      ]
+    }
   },
   "modules": [
-    "title",
-    "separator",
+    "break",
+    {
+      "type": "custom",
+      "format": "┌──────────────────────────────────────────┐",
+      "outputColor": "black"
+    },
     "os",
-    "host",
     "kernel",
     "uptime",
     "packages",
     "shell",
-    "display",
     "de",
     "wm",
-    "wmtheme",
-    "theme",
-    "icons",
-    "font",
-    "cursor",
-    "terminal",
     "cpu",
     "gpu",
     "memory",
@@ -64,7 +59,15 @@
     "disk",
     "battery",
     "poweradapter",
-    "break",
-    "colors",
-  ],
+    {
+      "type": "custom",
+      "format": "└──────────────────────────────────────────┘",
+      "outputColor": "black"
+    },
+    {
+      "type": "colors",
+      "symbol": "circle",
+      "paddingLeft": 14
+    }
+  ]
 }
