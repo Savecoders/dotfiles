@@ -47,7 +47,7 @@
   },
   "ui_font_size": 18,
   "buffer_font_size": 20,
-  "agent_font_size": 18,
+  "agent_ui_font_size": 18,
   "ui_font_family": "DankMono Nerd Font",
   "buffer_font_family": "DankMono Nerd Font",
   "formatter": "language_server",
@@ -71,6 +71,19 @@
   "diagnostics": {
     "inline": {
       "enabled": true
+    }
+  },
+  "languages": {
+    "Shell Script": {
+      "tab_size": 2,
+      "hard_tabs": false,
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "shfmt",
+          "arguments": ["--filename", "{buffer_path}", "--indent", "2"]
+        }
+      }
     }
   }
 }
