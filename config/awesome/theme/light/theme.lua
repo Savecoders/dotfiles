@@ -45,10 +45,10 @@ theme.fg_sidebar         = "#2A3256"
 theme.taglist_bg_focus   = "#FFFFFF"
 
 theme.taglist_bg_focus   = {
-    type = "linear",
-    from = { 00, 00, 10 },
-    to = { 100, 100, 30 },
-    stops = { { 0, "#5AA8FF" }, { 1, "#a6CBF6" } }
+  type = "linear",
+  from = { 00, 00, 10 },
+  to = { 100, 100, 30 },
+  stops = { { 0, "#5AA8FF" }, { 1, "#a6CBF6" } }
 }
 
 theme.active             = "#F2F2F7"
