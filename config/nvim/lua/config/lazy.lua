@@ -18,6 +18,7 @@ require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    { "typicode/bg.nvim", lazy = false },
     -- import/override with your plugins
     { import = "plugins" },
   },
