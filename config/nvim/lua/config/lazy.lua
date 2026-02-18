@@ -16,9 +16,20 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
-    { "LazyVim/LazyVim",  import = "lazyvim.plugins" },
+    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+
+    -- Language support plugins
+    { import = "lazyvim.plugins.extras.lang.json" },
+    { import = "lazyvim.plugins.extras.lang.markdown" },
+
+    -- Coding plugins
+    { import = "lazyvim.plugins.extras.coding.mini-surround" },
+    { import = "lazyvim.plugins.extras.editor.mini-diff" },
+    { import = "lazyvim.plugins.extras.coding.blink" },
+
+    -- Utility plugins
+    { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     { import = "plugins" },
-    { import = "plugins.lsp"}
   },
   defaults = {
     lazy = false,
@@ -29,7 +40,7 @@ require("lazy").setup({
     notify = false, -- notify on update
   },
   change_detections = {
-    notify = false
+    notify = false,
   },
   performance = {
     rtp = {
