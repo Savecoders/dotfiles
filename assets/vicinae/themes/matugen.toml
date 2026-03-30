@@ -1,0 +1,79 @@
+# extract to https://github.com/vicinaehq/vicinae/blob/main/extra/matugen.toml
+# Vicinae Matugen Theme Template
+# Used LLM for initial generation, then modified to a satisfactory level
+
+
+[meta]
+name = "Matugen"
+description = "Default Matugen Default dark palette"
+variant = "dark"
+inherits = "vicinae-dark"
+
+[colors.core]
+accent = "#ffb877"               # primary
+accent_foreground = "#4b2700"    # on_primary
+background = "#19120c"           # background
+foreground = "#efe0d5"           # on_background
+secondary_background = "#261e18" # surface_container
+border = "#51443a"               # outline_variant
+
+[colors.main_window]
+border = "#51443a"
+
+[colors.settings_window]
+border = "#51443a"
+
+[colors.accents]
+blue = "#b8c4ff"
+green = "#b1d18a"
+magenta = "#e6b6f1"
+orange = "#ffb782"
+red = "#ffb3b3"
+yellow = "#f4bd6f"
+cyan = "#c2cb98"
+purple = "#e6b6f1"
+
+[colors.text]
+default = "#efe0d5"                                            # on_background
+muted = "#d5c3b6"                                              # on_surface_variant
+danger = "#ffb4ab"                                             # error
+success = "#b1d18a"                                            # green
+placeholder = "#d5c3b6"                                        # on_surface_variant
+selection = { background = "#ffb877", foreground = "#4b2700" }
+
+[colors.text.links]
+default = "#b8c4ff" # blue
+visited = "#e6b6f1" # purple
+
+[colors.input]
+border = "#51443a"       # outline_variant
+border_focus = "#ffb877" # primary
+border_error = "#ffb4ab" # error
+
+[colors.button.primary]
+background = "#6b3b03"                     # primary_container
+foreground = "#ffdcc0"                     # on_primary_container
+hover = { background = "#bb312822" }
+focus = { outline = "colors.core.accent" }
+
+[colors.list.item.hover]
+background = "#312822" # surface_container_high
+foreground = "#efe0d5" # on_surface
+
+[colors.list.item.selection]
+background = "#6b3b03"           # primary_container
+foreground = "#ffdcc0"           # on_primary_container
+secondary_background = "#261e18" # surface_container
+secondary_foreground = "#efe0d5" # on_surface
+
+[colors.grid.item]
+background = "#261e18"              # surface_container
+hover = { outline = "#d5c3b6" }
+selection = { outline = "#ffb877" }
+
+[colors.scrollbars]
+background = "#51443a" # outline_variant
+
+[colors.loading]
+bar = "#ffb877"     # primary
+spinner = "#ffb877" # primary
