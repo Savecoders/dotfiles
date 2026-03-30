@@ -1,0 +1,13 @@
+[config]
+
+[config.custom_colors]
+red = { color = "#f38ba8", blend = true }
+green = { color = "#a6e3a1", blend = true }
+yellow = { color = "#f9e2af", blend = true }
+blue = { color = "#89b4fa", blend = true }
+orange = { color = "#fab387", blend = true }
+purple = { color = "#cba6f7", blend = true }
+
+[templates.vicinae]
+input_path = '~/.config/matugen/templates/vicinae.toml'
+output_ppath = '~/.local/share/vicinae/themes/matugen.toml '
