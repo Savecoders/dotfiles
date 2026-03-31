@@ -8,6 +8,16 @@ blue = { color = "#89b4fa", blend = true }
 orange = { color = "#fab387", blend = true }
 purple = { color = "#cba6f7", blend = true }
 
+[templates.kitty]
+input_path = '~/.config/matugen/templates/kitty-colors.conf'
+output_path = '~/.config/kitty/themes/matugen.conf'
+post_hook = 'kitten themes --reload-in=all matugen'
+
+[templates.hypr]
+input_path = '~/.config/matugen/templates/hypr-colors.conf'
+output_path = '~/.config/hypr/colors.conf'
+post_hook = 'hyprctl reload'
+
 [templates.vicinae]
 input_path = '~/.config/matugen/templates/vicinae.toml'
-output_ppath = '~/.local/share/vicinae/themes/matugen.toml '
+output_path = '~/.local/share/vicinae/themes/matugen.toml'
