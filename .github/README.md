@@ -1,11 +1,8 @@
-<!-- inspired by rxyhn's and AlphaTechnolog readme -->
-
 <img
  align="center"
  src=".github/assets/Awesome/grubox/bar_editor.png"
  alt="Rice Preview"
 />
-
 <br>
 
 <!-- BADGES -->
@@ -274,3 +271,13 @@ and the other parts of code is the others devs :)
   - copy the content and page in ~/.config/awesome/modules/layout-machi
 
 </details>
+
+## Star History
+
+<a href="https://www.star-history.com/?repos=Savecoders%2Fdotfiles&type=date&legend=bottom-right">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/image?repos=Savecoders/dotfiles&type=date&theme=dark&legend=bottom-right" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/image?repos=Savecoders/dotfiles&type=date&legend=bottom-right" />
+   <img alt="Star History Chart" src="https://api.star-history.com/image?repos=Savecoders/dotfiles&type=date&legend=bottom-right" />
+ </picture>
+</a>
