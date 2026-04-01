@@ -1,20 +1,89 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette
 {
-  "features": {
-    "inline_completion_provider": "none"
+  "icon_theme": "Catppuccin Mocha",
+  "edit_predictions": {
+    "disabled_globs": [
+      "**/.env*",
+      "**/*.pem",
+      "**/*.key",
+      "**/*.cert",
+      "**/*.crt",
+      "**/.dev.vars",
+      "**/secrets.yml"
+    ],
+    "mode": "eager",
+    "copilot": {
+      "proxy": null,
+      "proxy_no_verify": null
+    },
+    "enabled_in_text_threads": false
   },
-  "ui_font_size": 16,
-  "buffer_font_size": 16,
+  "show_edit_predictions": true,
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
+  "terminal": {
+    "shell": "system",
+    "line_height": {
+      "custom": 1.25
+    }
+  },
+  "project_panel": {
+    "dock": "right"
+  },
+  "agent": {
+    "inline_assistant_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4.1"
+    },
+    "model_parameters": [],
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4.1"
+    }
+  },
+  "vim_mode": true,
+  "vim": {
+    "toggle_relative_line_numbers": true
+  },
+  "ui_font_size": 18,
+  "buffer_font_size": 20,
+  "agent_ui_font_size": 18,
+  "ui_font_family": "DankMono Nerd Font",
+  "buffer_font_family": "DankMono Nerd Font",
+  "formatter": "language_server",
+  "preferred_line_length": 80,
   "theme": {
     "mode": "system",
-    "light": "Gruvbox Material",
-    "dark": "One Dark"
+    "light": "Catppuccin Espresso (Blur) [Light]",
+    "dark": "Catppuccin Espresso (Blur) [Light]"
+  },
+  "tab_size": 2,
+  "active_pane_modifiers": {
+    "inactive_opacity": 1.0
+  },
+  "indent_guides": {
+    "enabled": true,
+    "line_width": 2,
+    "active_line_width": 2,
+    "coloring": "fixed",
+    "background_coloring": "disabled"
+  },
+  "diagnostics": {
+    "inline": {
+      "enabled": true
+    }
+  },
+  "languages": {
+    "Shell Script": {
+      "tab_size": 2,
+      "hard_tabs": false,
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "shfmt",
+          "arguments": ["--filename", "{buffer_path}", "--indent", "2"]
+        }
+      }
+    }
   }
 }

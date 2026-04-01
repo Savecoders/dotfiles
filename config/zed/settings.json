@@ -1,6 +1,43 @@
 {
-  "icon_theme": "Colored Zed Icons Theme Dark",
+  "icon_theme": "Catppuccin Mocha",
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    "**/target",
+    "**/node_modules",
+    "**/__pycache__",
+    "**/vendor",
+    "**/.venv",
+    "**/.mypy_cache",
+    "**/.pytest_cache",
+    "**/*.egg-info",
+    "**/*.egg",
+    "**/dist",
+    "**/build",
+    "**/_build",
+    "**/site",
+    "**/bower_components",
+    "**/lib",
+    "**/lib64",
+    "**/share",
+    "**/Scripts",
+    "**/third_party",
+    "**/third-party",
+    "**/venv",
+    "**/venvs",
+    "**/virtualenv",
+    "**/virtualenvs",
+    "**/env",
+    "**/envs"
+  ],
   "edit_predictions": {
+    "provider": "copilot",
     "disabled_globs": [
       "**/.env*",
       "**/*.pem",
@@ -18,9 +55,6 @@
     "enabled_in_text_threads": false
   },
   "show_edit_predictions": true,
-  "features": {
-    "edit_prediction_provider": "copilot"
-  },
   "terminal": {
     "shell": "system",
     "line_height": {
@@ -29,6 +63,23 @@
   },
   "project_panel": {
     "dock": "right"
+  },
+  "lsp": {
+    "vtsls": {
+      "settings": {
+        "typescript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always"
+          }
+        },
+        "javascript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always"
+          }
+        }
+      },
+      "enable_lsp_tasks": true
+    }
   },
   "agent": {
     "inline_assistant_model": {
