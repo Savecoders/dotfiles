@@ -39,3 +39,7 @@ post_hook = 'pkill -USR1 cava'
 [templates.obsidian]
 input_path = '~/.config/matugen/templates/obsidian.css'
 output_path = '~/Dev/Learn/Notes/Dev/.obsidian/themes/MatugenWallpaper/theme.css'
+
+[templates.zed]
+input_path = '~/.config/matugen/templates/zed-colors.json'
+output_path = '~/.config/zed/themes/custom-theme.json'
