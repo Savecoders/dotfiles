@@ -34,3 +34,8 @@ output_path = '~/.config/gtk-4.0/gtk.css'
 [templates.cava]
 input_path = '~/.config/matugen/templates/cava'
 output_path = '~/.config/cava/config'
+post_hook = 'pkill -USR1 cava'
+
+[templates.obsidian]
+input_path = '~/.config/matugen/templates/obsidian.css'
+output_path = '~/Dev/Learn/Notes/Dev/.obsidian/themes/MatugenWallpaper/theme.css'
