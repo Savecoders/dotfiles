@@ -88,7 +88,7 @@ cp -r simpleTheme-zsh-theme/* dotfiles/misc/zsh/simpleTheme-zsh-theme
 paru -Sy awesome-git picom-git kitty rofi  acpi acpid acpi_call upower \
 jq inotify-tools xdotool xclip gpick ffmpeg blueman zsh-autosuggestions \
 pamixer brightnessctl scrot redshift rainfall zsh-syntax-highlighting \
-feh mpv mpd mpc mpdris2 ncmpcpp playerctl qtile tunar zsh --needed
+feh mpv mpd mpc mpdris2 ncmpcpp playerctl  tunar zsh --needed
 ```
 
 <b><h3>Enable Services</h3></b>
@@ -192,14 +192,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 <div align="center">
    <a href="#--------">
       <img src=".github/assets/Awesome/light/bar_editor.png" alt="Rice dark theme Preview">
-   </a>
-</div>
-
-### 🟢 QTile
-
-<div align="center">
-   <a href="#--------">
-      <img src=".github/assets/Qtile/rice_dark.png" alt="Rice dark theme Preview">
    </a>
 </div>
 
