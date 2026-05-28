@@ -95,26 +95,26 @@
         "terminal.ansi.white": "{{colors.on_surface.dark.hex}}",
         "terminal.ansi.red": "{{colors.error.dark.hex}}",
         "terminal.ansi.green": "{{colors.tertiary.dark.hex}}",
-        "terminal.ansi.yellow": "{{colors.tertiary_fixed_dim.dark.hex}}",
+        "terminal.ansi.yellow": "{{colors.yellow.dark.hex}}",
         "terminal.ansi.blue": "{{colors.primary.dark.hex}}",
         "terminal.ansi.magenta": "{{colors.secondary.dark.hex}}",
-        "terminal.ansi.cyan": "{{colors.primary_fixed_dim.dark.hex}}",
+        "terminal.ansi.cyan": "{{colors.blue.dark.hex}}",
         "terminal.ansi.bright_black": "{{colors.surface_container_high.dark.hex}}",
         "terminal.ansi.bright_white": "{{colors.on_surface_variant.dark.hex}}",
         "terminal.ansi.bright_red": "{{colors.error_container.dark.hex}}",
         "terminal.ansi.bright_green": "{{colors.tertiary_container.dark.hex}}",
-        "terminal.ansi.bright_yellow": "{{colors.tertiary_fixed.dark.hex}}",
+        "terminal.ansi.bright_yellow": "{{colors.yellow_container.dark.hex}}",
         "terminal.ansi.bright_blue": "{{colors.primary_container.dark.hex}}",
         "terminal.ansi.bright_magenta": "{{colors.secondary_container.dark.hex}}",
-        "terminal.ansi.bright_cyan": "{{colors.primary_fixed.dark.hex}}",
+        "terminal.ansi.bright_cyan": "{{colors.blue_container.dark.hex}}",
         "terminal.ansi.dim_black": "{{colors.surface.dark.hex}}",
         "terminal.ansi.dim_white": "{{colors.on_surface.dark.hex}}",
         "terminal.ansi.dim_red": "{{colors.on_error_container.dark.hex}}",
         "terminal.ansi.dim_green": "{{colors.on_tertiary_container.dark.hex}}",
-        "terminal.ansi.dim_yellow": "{{colors.on_tertiary_fixed.dark.hex}}",
+        "terminal.ansi.dim_yellow": "{{colors.on_yellow_container.dark.hex}}",
         "terminal.ansi.dim_blue": "{{colors.on_primary_container.dark.hex}}",
         "terminal.ansi.dim_magenta": "{{colors.on_secondary_container.dark.hex}}",
-        "terminal.ansi.dim_cyan": "{{colors.on_primary_fixed_variant.dark.hex}}",
+        "terminal.ansi.dim_cyan": "{{colors.on_blue_container.dark.hex}}",
         "link_text.hover": "{{colors.primary.dark.hex}}",
         "conflict": "{{colors.error.dark.hex}}",
         "conflict.background": "{{colors.error_container.dark.hex}}26",
@@ -178,6 +178,8 @@
         "version_control.added": "{{colors.tertiary.dark.hex}}",
         "version_control.deleted": "{{colors.error.dark.hex}}",
         "version_control.modified": "{{colors.secondary.dark.hex}}",
+        "version_control.word_added": "{{colors.tertiary.dark.hex}}33",
+        "version_control.word_deleted": "{{colors.error.dark.hex}}33",
         "version_control.renamed": "{{colors.primary.dark.hex}}",
         "version_control.conflict": "{{colors.error.dark.hex}}",
         "version_control.conflict_marker.ours": "{{colors.tertiary.dark.hex}}33",
@@ -185,15 +187,15 @@
         "version_control.ignored": "{{colors.outline_variant.dark.hex}}",
         "debugger.accent": "{{colors.error.dark.hex}}",
         "editor.debugger_active_line.background": "{{colors.error_container.dark.hex}}12",
-        "vim.mode.text": "{{colors.on_surface.dark.hex}}",
-        "vim.normal.foreground": "{{colors.on_surface.dark.hex}}",
-        "vim.helix_normal.foreground": "{{colors.on_surface.dark.hex}}",
-        "vim.visual.foreground": "{{colors.on_surface.dark.hex}}",
-        "vim.helix_select.foreground": "{{colors.on_surface.dark.hex}}",
-        "vim.insert.foreground": "{{colors.on_surface.dark.hex}}",
-        "vim.visual_line.foreground": "{{colors.on_surface.dark.hex}}",
-        "vim.visual_block.foreground": "{{colors.on_surface.dark.hex}}",
-        "vim.replace.foreground": "{{colors.on_surface.dark.hex}}",
+        "vim.mode.text": "{{colors.on_primary.dark.hex}}",
+        "vim.normal.foreground": "{{colors.on_primary.dark.hex}}",
+        "vim.helix_normal.foreground": "{{colors.on_primary.dark.hex}}",
+        "vim.visual.foreground": "{{colors.on_secondary.dark.hex}}",
+        "vim.helix_select.foreground": "{{colors.on_secondary.dark.hex}}",
+        "vim.insert.foreground": "{{colors.on_tertiary.dark.hex}}",
+        "vim.visual_line.foreground": "{{colors.on_secondary.dark.hex}}",
+        "vim.visual_block.foreground": "{{colors.on_primary_container.dark.hex}}",
+        "vim.replace.foreground": "{{colors.on_error.dark.hex}}",
         "vim.normal.background": "{{colors.primary.dark.hex}}",
         "vim.helix_normal.background": "{{colors.primary.dark.hex}}",
         "vim.visual.background": "{{colors.secondary.dark.hex}}",
@@ -203,6 +205,11 @@
         "vim.visual_block.background": "{{colors.primary_container.dark.hex}}",
         "vim.replace.background": "{{colors.error.dark.hex}}",
         "syntax": {
+          "attribute": {
+            "color": "{{colors.tertiary.dark.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
           "boolean": {
             "color": "{{colors.tertiary.dark.hex}}",
             "font_style": null,
@@ -715,6 +722,731 @@
           },
           "preproc": {
             "color": "{{colors.tertiary.dark.hex}}",
+            "font_style": null,
+            "font_weight": null
+          }
+        }
+      }
+    },
+    {
+      "name": "Matugen Light (Blur Heavy)",
+      "appearance": "light",
+      "style": {
+        "accents": [
+          "{{colors.primary.light.hex}}",
+          "{{colors.secondary.light.hex}}",
+          "{{colors.tertiary.light.hex}}"
+        ],
+        "background.appearance": "blurred",
+        "border": "{{colors.outline_variant.light.hex}}15",
+        "border.variant": "{{colors.outline.light.hex}}",
+        "border.focused": "{{colors.primary.light.hex}}",
+        "border.selected": "{{colors.secondary.light.hex}}",
+        "border.transparent": "{{colors.outline_variant.light.hex}}40",
+        "border.disabled": "{{colors.outline_variant.light.hex}}60",
+        "elevated_surface.background": "{{colors.surface_container_high.light.hex}}",
+        "surface.background": "{{colors.surface.light.hex}}db",
+        "background": "{{colors.background.light.hex}}e0",
+        "element.background": "{{colors.surface_container.light.hex}}",
+        "element.hover": "{{colors.surface_container_high.light.hex}}",
+        "element.active": "{{colors.surface_container_highest.light.hex}}",
+        "element.selected": "{{colors.secondary_container.light.hex}}4d",
+        "element.disabled": "{{colors.surface_variant.light.hex}}",
+        "drop_target.background": "{{colors.primary_container.light.hex}}d0",
+        "ghost_element.background": "{{colors.surface_container.light.hex}}60",
+        "ghost_element.hover": "{{colors.surface_container.light.hex}}90",
+        "ghost_element.active": "{{colors.surface_container_high.light.hex}}30",
+        "ghost_element.selected": "{{colors.secondary_container.light.hex}}50",
+        "ghost_element.disabled": "{{colors.surface_variant.light.hex}}60",
+        "text": "{{colors.on_surface.light.hex}}",
+        "text.muted": "{{colors.on_surface_variant.light.hex}}",
+        "text.placeholder": "{{colors.on_surface_variant.light.hex}}99",
+        "text.disabled": "{{colors.on_surface.light.hex}}60",
+        "text.accent": "{{colors.primary.light.hex}}",
+        "icon": "{{colors.on_surface.light.hex}}",
+        "icon.muted": "{{colors.on_surface_variant.light.hex}}",
+        "icon.disabled": "{{colors.on_surface.light.hex}}60",
+        "icon.placeholder": "{{colors.on_surface_variant.light.hex}}80",
+        "icon.accent": "{{colors.primary.light.hex}}",
+        "status_bar.background": "{{colors.surface.light.hex}}e0",
+        "title_bar.background": "{{colors.surface.light.hex}}e0",
+        "title_bar.inactive_background": "{{colors.surface_dim.light.hex}}",
+        "toolbar.background": "{{colors.surface_container_low.light.hex}}00",
+        "tab_bar.background": "{{colors.surface_container.light.hex}}00",
+        "tab.inactive_background": "{{colors.surface_container_low.light.hex}}00",
+        "tab.active_background": "{{colors.surface_container_high.light.hex}}d0",
+        "search.match_background": "{{colors.tertiary_container.light.hex}}4d",
+        "search.active_match_background": "{{colors.error.light.hex}}4d",
+        "panel.background": "{{colors.surface_container_low.light.hex}}00",
+        "panel.focused_border": "{{colors.primary.light.hex}}00",
+        "panel.indent_guide": "{{colors.outline_variant.light.hex}}99",
+        "panel.indent_guide_active": "{{colors.outline.light.hex}}",
+        "panel.indent_guide_hover": "{{colors.primary.light.hex}}",
+        "panel.overlay_background": "{{colors.surface_container_low.light.hex}}",
+        "pane.focused_border": "{{colors.primary.light.hex}}10",
+        "pane_group.border": "{{colors.outline_variant.light.hex}}15",
+        "scrollbar.thumb.background": "{{colors.on_surface_variant.light.hex}}c0",
+        "scrollbar.thumb.hover_background": "{{colors.on_surface_variant.light.hex}}",
+        "scrollbar.thumb.active_background": null,
+        "scrollbar.thumb.border": null,
+        "scrollbar.track.background": "{{colors.surface_container.light.hex}}00",
+        "scrollbar.track.border": "{{colors.outline_variant.light.hex}}00",
+        "minimap.thumb.background": "{{colors.primary.light.hex}}33",
+        "minimap.thumb.hover_background": "{{colors.primary.light.hex}}66",
+        "minimap.thumb.active_background": "{{colors.primary.light.hex}}99",
+        "minimap.thumb.border": null,
+        "editor.foreground": "{{colors.on_surface.light.hex}}",
+        "editor.background": "{{colors.surface_container_low.light.hex}}00",
+        "editor.gutter.background": "{{colors.surface_container_low.light.hex}}00",
+        "editor.subheader.background": "{{colors.surface_container.light.hex}}",
+        "editor.active_line.background": "{{colors.surface_container_high.light.hex}}00",
+        "editor.highlighted_line.background": "{{colors.surface_container_high.light.hex}}12",
+        "editor.line_number": "{{colors.on_surface_variant.light.hex}}20",
+        "editor.active_line_number": "{{colors.primary.light.hex}}90",
+        "editor.invisible": "{{colors.outline_variant.light.hex}}66",
+        "editor.wrap_guide": "{{colors.outline_variant.light.hex}}",
+        "editor.active_wrap_guide": "{{colors.outline.light.hex}}",
+        "editor.document_highlight.bracket_background": "{{colors.primary_container.light.hex}}17",
+        "editor.document_highlight.read_background": "{{colors.secondary_container.light.hex}}29",
+        "editor.document_highlight.write_background": "{{colors.secondary_container.light.hex}}29",
+        "editor.indent_guide": "{{colors.outline_variant.light.hex}}99",
+        "editor.indent_guide_active": "{{colors.outline.light.hex}}",
+        "terminal.background": "{{colors.surface_container_low.light.hex}}00",
+        "terminal.ansi.background": "{{colors.surface.light.hex}}",
+        "terminal.foreground": "{{colors.on_surface.light.hex}}",
+        "terminal.dim_foreground": "{{colors.on_surface_variant.light.hex}}",
+        "terminal.bright_foreground": "{{colors.on_surface.light.hex}}",
+        "terminal.ansi.black": "{{colors.surface_dim.light.hex}}",
+        "terminal.ansi.white": "{{colors.on_surface.light.hex}}",
+        "terminal.ansi.red": "{{colors.error.light.hex}}",
+        "terminal.ansi.green": "{{colors.tertiary.light.hex}}",
+        "terminal.ansi.yellow": "{{colors.yellow.light.hex}}",
+        "terminal.ansi.blue": "{{colors.primary.light.hex}}",
+        "terminal.ansi.magenta": "{{colors.secondary.light.hex}}",
+        "terminal.ansi.cyan": "{{colors.blue.light.hex}}",
+        "terminal.ansi.bright_black": "{{colors.surface_container_high.light.hex}}",
+        "terminal.ansi.bright_white": "{{colors.on_surface_variant.light.hex}}",
+        "terminal.ansi.bright_red": "{{colors.error_container.light.hex}}",
+        "terminal.ansi.bright_green": "{{colors.tertiary_container.light.hex}}",
+        "terminal.ansi.bright_yellow": "{{colors.yellow_container.light.hex}}",
+        "terminal.ansi.bright_blue": "{{colors.primary_container.light.hex}}",
+        "terminal.ansi.bright_magenta": "{{colors.secondary_container.light.hex}}",
+        "terminal.ansi.bright_cyan": "{{colors.blue_container.light.hex}}",
+        "terminal.ansi.dim_black": "{{colors.surface.light.hex}}",
+        "terminal.ansi.dim_white": "{{colors.on_surface.light.hex}}",
+        "terminal.ansi.dim_red": "{{colors.on_error_container.light.hex}}",
+        "terminal.ansi.dim_green": "{{colors.on_tertiary_container.light.hex}}",
+        "terminal.ansi.dim_yellow": "{{colors.on_yellow_container.light.hex}}",
+        "terminal.ansi.dim_blue": "{{colors.on_primary_container.light.hex}}",
+        "terminal.ansi.dim_magenta": "{{colors.on_secondary_container.light.hex}}",
+        "terminal.ansi.dim_cyan": "{{colors.on_blue_container.light.hex}}",
+        "link_text.hover": "{{colors.primary.light.hex}}",
+        "conflict": "{{colors.error.light.hex}}",
+        "conflict.background": "{{colors.error_container.light.hex}}26",
+        "conflict.border": "{{colors.on_error_container.light.hex}}",
+        "created": "{{colors.tertiary.light.hex}}",
+        "created.background": "{{colors.tertiary_container.light.hex}}26",
+        "created.border": "{{colors.on_tertiary_container.light.hex}}",
+        "deleted": "{{colors.error.light.hex}}",
+        "deleted.background": "{{colors.error_container.light.hex}}26",
+        "deleted.border": "{{colors.on_error_container.light.hex}}",
+        "error": "{{colors.error.light.hex}}",
+        "error.background": "{{colors.error_container.light.hex}}",
+        "error.border": "{{colors.on_error_container.light.hex}}",
+        "hidden": "{{colors.outline_variant.light.hex}}",
+        "hidden.border": "{{colors.outline_variant.light.hex}}",
+        "hidden.background": "{{colors.surface_container.light.hex}}",
+        "hint": "{{colors.primary.light.hex}}",
+        "hint.background": "{{colors.primary_container.light.hex}}c0",
+        "hint.border": "{{colors.on_primary_container.light.hex}}",
+        "ignored": "{{colors.on_surface_variant.light.hex}}",
+        "ignored.background": "{{colors.surface_variant.light.hex}}26",
+        "ignored.border": "{{colors.outline_variant.light.hex}}",
+        "info": "{{colors.primary.light.hex}}",
+        "info.background": "{{colors.primary_container.light.hex}}",
+        "info.border": "{{colors.on_primary_container.light.hex}}",
+        "modified": "{{colors.secondary.light.hex}}",
+        "modified.background": "{{colors.secondary_container.light.hex}}26",
+        "modified.border": "{{colors.on_secondary_container.light.hex}}",
+        "predictive": "{{colors.on_surface_variant.light.hex}}",
+        "predictive.border": "{{colors.outline.light.hex}}",
+        "predictive.background": "{{colors.surface_container_highest.light.hex}}",
+        "renamed": "{{colors.secondary.light.hex}}",
+        "renamed.border": "{{colors.on_secondary_container.light.hex}}",
+        "renamed.background": "{{colors.secondary_container.light.hex}}26",
+        "success": "{{colors.tertiary.light.hex}}",
+        "success.background": "{{colors.tertiary_container.light.hex}}",
+        "success.border": "{{colors.on_tertiary_container.light.hex}}",
+        "unreachable": "{{colors.on_surface_variant.light.hex}}",
+        "unreachable.background": "{{colors.surface_variant.light.hex}}1f",
+        "unreachable.border": "{{colors.outline_variant.light.hex}}",
+        "warning": "{{colors.yellow.light.hex}}",
+        "warning.background": "{{colors.yellow_container.light.hex}}",
+        "warning.border": "{{colors.yellow_source.light.hex}}",
+        "players": [
+          {
+            "cursor": "{{colors.primary.light.hex}}",
+            "background": "{{colors.primary.light.hex}}",
+            "selection": "{{colors.primary_container.light.hex}}40"
+          },
+          {
+            "cursor": "{{colors.secondary.light.hex}}",
+            "background": "{{colors.secondary.light.hex}}",
+            "selection": "{{colors.secondary_container.light.hex}}40"
+          },
+          {
+            "cursor": "{{colors.tertiary.light.hex}}",
+            "background": "{{colors.tertiary.light.hex}}",
+            "selection": "{{colors.tertiary_container.light.hex}}40"
+          }
+        ],
+        "version_control.added": "{{colors.tertiary.light.hex}}",
+        "version_control.deleted": "{{colors.error.light.hex}}",
+        "version_control.modified": "{{colors.secondary.light.hex}}",
+        "version_control.word_added": "{{colors.tertiary.light.hex}}33",
+        "version_control.word_deleted": "{{colors.error.light.hex}}33",
+        "version_control.renamed": "{{colors.primary.light.hex}}",
+        "version_control.conflict": "{{colors.error.light.hex}}",
+        "version_control.conflict_marker.ours": "{{colors.tertiary.light.hex}}33",
+        "version_control.conflict_marker.theirs": "{{colors.primary.light.hex}}33",
+        "version_control.ignored": "{{colors.outline_variant.light.hex}}",
+        "debugger.accent": "{{colors.error.light.hex}}",
+        "editor.debugger_active_line.background": "{{colors.error_container.light.hex}}12",
+        "vim.mode.text": "{{colors.on_primary.light.hex}}",
+        "vim.normal.foreground": "{{colors.on_primary.light.hex}}",
+        "vim.helix_normal.foreground": "{{colors.on_primary.light.hex}}",
+        "vim.visual.foreground": "{{colors.on_secondary.light.hex}}",
+        "vim.helix_select.foreground": "{{colors.on_secondary.light.hex}}",
+        "vim.insert.foreground": "{{colors.on_tertiary.light.hex}}",
+        "vim.visual_line.foreground": "{{colors.on_secondary.light.hex}}",
+        "vim.visual_block.foreground": "{{colors.on_primary_container.light.hex}}",
+        "vim.replace.foreground": "{{colors.on_error.light.hex}}",
+        "vim.normal.background": "{{colors.primary.light.hex}}",
+        "vim.helix_normal.background": "{{colors.primary.light.hex}}",
+        "vim.visual.background": "{{colors.secondary.light.hex}}",
+        "vim.helix_select.background": "{{colors.secondary.light.hex}}",
+        "vim.insert.background": "{{colors.tertiary.light.hex}}",
+        "vim.visual_line.background": "{{colors.secondary.light.hex}}",
+        "vim.visual_block.background": "{{colors.primary_container.light.hex}}",
+        "vim.replace.background": "{{colors.error.light.hex}}",
+        "syntax": {
+          "attribute": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "boolean": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "comment": {
+            "color": "{{colors.outline.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "comment.doc": {
+            "color": "{{colors.outline.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "comment.documentation": {
+            "color": "{{colors.outline.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "comment.info": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "comment.error": {
+            "color": "{{colors.error.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "comment.warning": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "comment.warn": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "comment.hint": {
+            "color": "{{colors.primary_container.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "comment.todo": {
+            "color": "{{colors.error_container.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "comment.note": {
+            "color": "{{colors.surface_variant.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "constant": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "constant.builtin": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "constant.macro": {
+            "color": "{{colors.primary_container.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "constructor": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "emphasis": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "emphasis.strong": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": 700
+          },
+          "function": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "function.builtin": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "function.call": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "function.macro": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "function.method": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "function.method.call": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "function.decorator": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.modifier": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.type": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.coroutine": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.function": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.operator": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.import": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.repeat": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.return": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.debug": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.exception": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.conditional": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.conditional.ternary": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.directive": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.directive.define": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "keyword.export": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "number": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "number.float": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "operator": {
+            "color": "{{colors.on_surface_variant.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "property": {
+            "color": "{{colors.on_surface.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "punctuation": {
+            "color": "{{colors.on_surface_variant.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "punctuation.bracket": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "punctuation.delimiter": {
+            "color": "{{colors.on_surface_variant.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "punctuation.list_marker": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "punctuation.markup": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "punctuation.special": {
+            "color": "{{colors.error.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "punctuation.special.symbol": {
+            "color": "{{colors.error.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "string": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "string.doc": {
+            "color": "{{colors.tertiary_container.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "string.documentation": {
+            "color": "{{colors.tertiary_container.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "string.escape": {
+            "color": "{{colors.error.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "string.regex": {
+            "color": "{{colors.error.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "string.special": {
+            "color": "{{colors.error.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "string.special.path": {
+            "color": "{{colors.error.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "string.special.symbol": {
+            "color": "{{colors.on_tertiary_container.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "string.special.url": {
+            "color": "{{colors.surface_variant.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "character": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "character.special": {
+            "color": "{{colors.error.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "tag": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "tag.attribute": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "tag.delimiter": {
+            "color": "{{colors.outline.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "tag.doctype": {
+            "color": "{{colors.secondary_container.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "text": {
+            "color": "{{colors.on_surface.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "text.literal": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "title": {
+            "color": "{{colors.on_surface.light.hex}}",
+            "font_style": null,
+            "font_weight": 800
+          },
+          "type": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "type.builtin": {
+            "color": "{{colors.primary_container.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "type.definition": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "type.interface": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "type.super": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "type.class.definition": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": 700
+          },
+          "variable": {
+            "color": "{{colors.on_surface.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "variable.special": {
+            "color": "{{colors.error.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "variable.builtin": {
+            "color": "{{colors.error.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "variable.parameter": {
+            "color": "{{colors.on_surface_variant.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "variable.member": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "module": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "label": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "diff.plus": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "diff.minus": {
+            "color": "{{colors.error.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "parameter": {
+            "color": "{{colors.on_surface_variant.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "field": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "namespace": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "float": {
+            "color": "{{colors.tertiary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "symbol": {
+            "color": "{{colors.secondary_container.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "embedded": {
+            "color": "{{colors.error.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "concept": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "enum": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": 700
+          },
+          "hint": {
+            "color": "{{colors.outline.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "link_text": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "link_uri": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "parent": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "predictive": {
+            "color": "{{colors.outline_variant.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "predoc": {
+            "color": "{{colors.outline_variant.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "primary": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "variant": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "selector": {
+            "color": "{{colors.secondary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "selector.pseudo": {
+            "color": "{{colors.primary.light.hex}}",
+            "font_style": null,
+            "font_weight": null
+          },
+          "preproc": {
+            "color": "{{colors.tertiary.light.hex}}",
             "font_style": null,
             "font_weight": null
           }
