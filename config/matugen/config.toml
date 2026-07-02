@@ -14,13 +14,14 @@ output_path = '~/.config/kitty/themes/matugen.conf'
 post_hook = 'kitten themes --reload-in=all matugen'
 
 [templates.hypr]
-input_path = '~/.config/matugen/templates/hypr-colors.conf'
-output_path = '~/.config/hypr/colors.conf'
+input_path = '~/.config/matugen/templates/hypr-colors.lua'
+output_path = '~/.config/hypr/config/colors.lua'
 post_hook = 'hyprctl reload'
 
 [templates.vicinae]
 input_path = '~/.config/matugen/templates/vicinae.toml'
 output_path = '~/.local/share/vicinae/themes/matugen.toml'
+post_hook = 'vicinae theme set matugen'
 
 [templates.gtk3]
 input_path = '~/.config/matugen/templates/gtk-colors.css'
@@ -32,10 +33,19 @@ input_path = '~/.config/matugen/templates/gtk-colors.css'
 output_path = '~/.config/gtk-4.0/colors.css'
 post_hook = '~/.config/matugen/scripts/gtk-themes-reload'
 
+[templates.qt5tc]
+input_path = '~/.config/matugen/templates/qtct-colors.conf'
+output_path = '~/.config/qt5ct/themes/matugen.conf'
+post_hook = 'sed -i "s|color_scheme_path=.*|color_scheme_path=$HOME/.config/qt5ct/themes/matugen.conf|" ~/.config/qt5ct/qt5ct.conf'
+
+[templates.qt6tc]
+input_path = '~/.config/matugen/templates/qtct-colors.conf'
+output_path = '~/.config/qt6ct/themes/matugen.conf'
+post_hook = 'sed -i "s|color_scheme_path=.*|color_scheme_path=$HOME/.config/qt6ct/themes/matugen.conf|" ~/.config/qt6ct/qt6ct.conf'
+
 [templates.cava]
 input_path = '~/.config/matugen/templates/cava'
 output_path = '~/.config/cava/config'
-post_hook = 'pkill -USR1 cava'
 
 [templates.obsidian]
 input_path = '~/.config/matugen/templates/obsidian.css'
