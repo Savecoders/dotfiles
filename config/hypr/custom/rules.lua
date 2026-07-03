@@ -1,0 +1,1 @@
+-- You can make window/layer rules overrides here
