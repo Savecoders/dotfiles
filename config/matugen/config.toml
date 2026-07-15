@@ -58,3 +58,8 @@ output_path = '~/.config/zed/themes/custom-theme.json'
 [templates.quickshell]
 input_path = '~/.config/matugen/templates/quickshell-colours.json'
 output_path = '~/.config/quickshell/settings/colours.json'
+
+[templates.wezterm]
+input_path = '~/.config/matugen/templates/wezterm_theme.toml'
+output_path = '~/.config/wezterm/colors/matugen_theme.toml'
+post_hook = 'touch ~/.config/wezterm/wezterm.lua'

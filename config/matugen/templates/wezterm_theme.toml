@@ -1,0 +1,32 @@
+[colors]
+background = "{{colors.background.default.hex}}"
+foreground = "{{colors.on_surface.default.hex}}"
+cursor_bg = "{{colors.on_surface.default.hex}}"
+cursor_border = "{{colors.on_surface.default.hex}}"
+cursor_fg = "{{colors.on_surface_variant.default.hex}}"
+selection_bg = "{{colors.secondary_fixed_dim.default.hex}}"
+selection_fg = "{{colors.on_secondary.default.hex}}"
+
+split = "{{colors.secondary_fixed_dim.default.hex}}"
+
+ansi = [
+  "{{colors.surface.default.hex}}",
+  "{{colors.red_source.default.hex}}",
+  "{{colors.green.default.hex}}",
+  "{{colors.yellow_source.default.hex}}",
+  "{{colors.primary_fixed_dim.default.hex}}",
+  "{{colors.purple_source.default.hex}}",
+  "{{colors.blue_source.default.hex}}",
+  "{{colors.primary_fixed.default.hex}}",
+]
+
+brights = [
+  "{{colors.surface_variant.default.hex}}",
+  "{{colors.red_value.default.hex}}",
+  "{{colors.on_green.default.hex}}",
+  "{{colors.yellow_value.default.hex}}",
+  "{{colors.blue_value.default.hex}}",
+  "{{colors.purple_value.default.hex}}",
+  "{{colors.blue_value.default.hex}}",
+  "{{colors.on_surface_variant.default.hex}}",
+]
