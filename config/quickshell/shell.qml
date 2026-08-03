@@ -13,11 +13,23 @@ ShellRoot {
     id: shellRoot
 
     Component.onCompleted: {
-        Notifications.dummyInit();
-        if (Config.settings.nightmodeOnStartup)
-            Nightmode.turnOn();
-        else
-            Nightmode.turnOff();
+        Qt.callLater(() => {
+            Notifications.dummyInit();
+        });
+        deferredInitTimer.start();
+    }
+
+    Timer {
+        id: deferredInitTimer
+
+        interval: 2000
+        repeat: false
+        onTriggered: {
+            if (Config.settings.nightmodeOnStartup)
+                Nightmode.turnOn();
+            else
+                Nightmode.turnOff();
+        }
     }
 
     LazyLoader {
@@ -31,12 +43,6 @@ ShellRoot {
     }
 
     Modules {
-    }
-
-    Ipc {
-    }
-
-    EyeProtection {
     }
 
 }
