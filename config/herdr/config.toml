@@ -37,7 +37,6 @@ prefix = "ctrl+q"
 # Prefix-mode actions
 # help = "prefix+?"
 settings = "prefix+;"
-# detach = "prefix+q"
 reload_config = "prefix+r"
 # open_notification_target = "prefix+o"
 # workspace_picker = "prefix+w"
