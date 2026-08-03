@@ -347,7 +347,9 @@ ClippingRectangle {
                         policy: ScrollBar.AlwaysOff
                     }
 
-                    ScrollBar.vertical: ScrollBar.AlwaysOff
+                    ScrollBar.vertical: ScrollBar {
+                        policy: ScrollBar.AlwaysOff
+                    }
                 }
             }
 

@@ -26,7 +26,7 @@ Rectangle {
     property bool isUnlocked: false
     property bool revealPassword: false
 
-    color: "black"
+    color: Colours.palette.background
     Component.onCompleted: {
         if (root.isUnlocked)
             passwordBox.forceActiveFocus();

@@ -127,7 +127,7 @@ Scope {
                 opacity: 1
                 onOpacityChanged: {
                     if (opacity === 0) {
-                        Config.settings.currentWallpaper = Config.settings.wallpaperToSet;
+                        Config.updateKey("currentWallpaper", Config.settings.wallpaperToSet);
                         realWallpaper.opacity = 1;
                     }
                 }
