@@ -13,9 +13,9 @@ return {
             sidebars = transparent and "transparent" or "dark",
             floats = transparent and "transparent" or "dark",
           },
-      })
+        })
         vim.cmd("colorscheme tokyonight")
-        end,
+      end,
     },
     {
       "Gentleman-Programming/gentleman-kanagawa-blur",

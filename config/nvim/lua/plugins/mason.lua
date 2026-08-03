@@ -15,6 +15,7 @@ return {
     "mason-org/mason-lspconfig.nvim",
     opts = {
       ensure_installed = {
+        -- TS Stack
         "ts_ls",
         "html",
         "cssls",
