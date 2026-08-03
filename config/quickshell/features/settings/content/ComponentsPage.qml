@@ -57,9 +57,9 @@ Rectangle {
                     message: "Bar"
                     option: Config.settings.componentControl.barIsEnabled
                     toRun: () => {
-                        Config.settings.componentControl.barIsEnabled = !Config.settings.componentControl.barIsEnabled;
-                        Config.updateKey("componentControl.barIsEnabled", Config.settings.componentControl.barIsEnabled);
-                        return Config.settings.componentControl.barIsEnabled;
+                        let val = !Config.settings.componentControl.barIsEnabled;
+                        Config.updateKey("componentControl.barIsEnabled", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "bottom_navigation"
@@ -69,9 +69,9 @@ Rectangle {
                     message: "Dashboard"
                     option: Config.settings.componentControl.dashboardIsEnabled
                     toRun: () => {
-                        Config.settings.componentControl.dashboardIsEnabled = !Config.settings.componentControl.dashboardIsEnabled;
-                        Config.updateKey("componentControl.dashboardIsEnabled", Config.settings.componentControl.dashboardIsEnabled);
-                        return Config.settings.componentControl.dashboardIsEnabled;
+                        let val = !Config.settings.componentControl.dashboardIsEnabled;
+                        Config.updateKey("componentControl.dashboardIsEnabled", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "devices_other"
@@ -81,9 +81,9 @@ Rectangle {
                     message: "Notification Server"
                     option: Config.settings.componentControl.notifsIsEnabled
                     toRun: () => {
-                        Config.settings.componentControl.notifsIsEnabled = !Config.settings.componentControl.notifsIsEnabled;
-                        Config.updateKey("componentControl.notifsIsEnabled", Config.settings.componentControl.notifsIsEnabled);
-                        return Config.settings.componentControl.notifsIsEnabled;
+                        let val = !Config.settings.componentControl.notifsIsEnabled;
+                        Config.updateKey("componentControl.notifsIsEnabled", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "notifications_active"
@@ -93,9 +93,9 @@ Rectangle {
                     message: "Launcher"
                     option: Config.settings.componentControl.launcherIsEnabled
                     toRun: () => {
-                        Config.settings.componentControl.launcherIsEnabled = !Config.settings.componentControl.launcherIsEnabled;
-                        Config.updateKey("componentControl.launcherIsEnabled", Config.settings.componentControl.launcherIsEnabled);
-                        return Config.settings.componentControl.launcherIsEnabled;
+                        let val = !Config.settings.componentControl.launcherIsEnabled;
+                        Config.updateKey("componentControl.launcherIsEnabled", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "rocket_launch"
@@ -105,9 +105,9 @@ Rectangle {
                     message: "Desktop"
                     option: Config.settings.componentControl.desktopIsEnabled
                     toRun: () => {
-                        Config.settings.componentControl.desktopIsEnabled = !Config.settings.componentControl.desktopIsEnabled;
-                        Config.updateKey("componentControl.desktopIsEnabled", Config.settings.componentControl.desktopIsEnabled);
-                        return Config.settings.componentControl.desktopIsEnabled;
+                        let val = !Config.settings.componentControl.desktopIsEnabled;
+                        Config.updateKey("componentControl.desktopIsEnabled", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "shelf_auto_hide"
@@ -117,9 +117,9 @@ Rectangle {
                     message: "Lockscreen"
                     option: Config.settings.componentControl.lockscreenIsEnabled
                     toRun: () => {
-                        Config.settings.componentControl.lockscreenIsEnabled = !Config.settings.componentControl.lockscreenIsEnabled;
-                        Config.updateKey("componentControl.lockscreenIsEnabled", Config.settings.componentControl.lockscreenIsEnabled);
-                        return Config.settings.componentControl.lockscreenIsEnabled;
+                        let val = !Config.settings.componentControl.lockscreenIsEnabled;
+                        Config.updateKey("componentControl.lockscreenIsEnabled", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "lock_person"

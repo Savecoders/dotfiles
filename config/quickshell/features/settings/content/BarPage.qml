@@ -59,7 +59,6 @@ Rectangle {
                     currentIndex: ["left", "right", "top", "bottom"].indexOf(Config.settings.bar.position)
                     toRun: (index) => {
                         let val = ["left", "right", "top", "bottom"][index];
-                        Config.settings.bar.position = val;
                         Config.updateKey("bar.position", val);
                     }
                     withIcon: true
@@ -70,9 +69,9 @@ Rectangle {
                     message: "Show smooth edges around bar"
                     option: Config.settings.bar.smoothEdgesShown
                     toRun: () => {
-                        Config.settings.bar.smoothEdgesShown = !Config.settings.bar.smoothEdgesShown;
-                        Config.updateKey("bar.smoothEdgesShown", Config.settings.bar.smoothEdgesShown);
-                        return Config.settings.bar.smoothEdgesShown;
+                        let newValue = !Config.settings.bar.smoothEdgesShown;
+                        Config.updateKey("bar.smoothEdgesShown", newValue);
+                        return newValue;
                     }
                     withIcon: true
                     iconCode: "line_curve"
@@ -82,9 +81,9 @@ Rectangle {
                     message: "Expand bar to full length"
                     option: Config.settings.bar.expand
                     toRun: () => {
-                        Config.settings.bar.expand = !Config.settings.bar.expand;
-                        Config.updateKey("bar.expand", Config.settings.bar.expand);
-                        return Config.settings.bar.expand;
+                        let newValue = !Config.settings.bar.expand;
+                        Config.updateKey("bar.expand", newValue);
+                        return newValue;
                     }
                     withIcon: true
                     iconCode: "aspect_ratio"
@@ -94,9 +93,9 @@ Rectangle {
                     message: "Center workspaces in bar"
                     option: Config.settings.bar.workspacesCenterAligned
                     toRun: () => {
-                        Config.settings.bar.workspacesCenterAligned = !Config.settings.bar.workspacesCenterAligned;
-                        Config.updateKey("bar.workspacesCenterAligned", Config.settings.bar.workspacesCenterAligned);
-                        return Config.settings.bar.workspacesCenterAligned;
+                        let newValue = !Config.settings.bar.workspacesCenterAligned;
+                        Config.updateKey("bar.workspacesCenterAligned", newValue);
+                        return newValue;
                     }
                     withIcon: true
                     iconCode: "align_vertical_center"
@@ -126,7 +125,6 @@ Rectangle {
                         let cur = Config.settings.bar.opacity !== undefined ? Config.settings.bar.opacity : 0.95;
                         if (cur < 1) {
                             let nextVal = Math.min(1, parseFloat((cur + 0.05).toFixed(2)));
-                            Config.settings.bar.opacity = nextVal;
                             Config.updateKey("bar.opacity", nextVal);
                         }
                     }
@@ -134,7 +132,6 @@ Rectangle {
                         let cur = Config.settings.bar.opacity !== undefined ? Config.settings.bar.opacity : 0.95;
                         if (cur > 0.1) {
                             let nextVal = Math.max(0.1, parseFloat((cur - 0.05).toFixed(2)));
-                            Config.settings.bar.opacity = nextVal;
                             Config.updateKey("bar.opacity", nextVal);
                         }
                     }
@@ -151,14 +148,12 @@ Rectangle {
                     amountIncrease: () => {
                         let cur = Config.settings.bar.margin !== undefined ? Config.settings.bar.margin : 10;
                         if (cur < 20) {
-                            Config.settings.bar.margin = cur + 1;
                             Config.updateKey("bar.margin", cur + 1);
                         }
                     }
                     amountDecrease: () => {
                         let cur = Config.settings.bar.margin !== undefined ? Config.settings.bar.margin : 10;
                         if (cur > 0) {
-                            Config.settings.bar.margin = cur - 1;
                             Config.updateKey("bar.margin", cur - 1);
                         }
                     }
@@ -186,9 +181,9 @@ Rectangle {
                     message: "Show profile picture instead of icon"
                     option: Config.settings.usePfpInsteadOfLogo
                     toRun: () => {
-                        Config.settings.usePfpInsteadOfLogo = !Config.settings.usePfpInsteadOfLogo;
-                        Config.updateKey("usePfpInsteadOfLogo", Config.settings.usePfpInsteadOfLogo);
-                        return Config.settings.usePfpInsteadOfLogo;
+                        let newValue = !Config.settings.usePfpInsteadOfLogo;
+                        Config.updateKey("usePfpInsteadOfLogo", newValue);
+                        return newValue;
                     }
                     withIcon: true
                     iconCode: "account_circle"
@@ -198,7 +193,6 @@ Rectangle {
                     message: "Profile Picture (PFP) path"
                     textValue: Config.settings.pfpLocation
                     toRun: (text) => {
-                        Config.settings.pfpLocation = text;
                         Config.updateKey("pfpLocation", text);
                         return text;
                     }
@@ -208,17 +202,17 @@ Rectangle {
 
                 GenericTitle {
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                    Layout.preferredHeight: 25
-                    Layout.topMargin: 25
+                    Layout.preferredHeight: 24
+                    Layout.topMargin: 24
                     text: "Custom Page"
                     iconCode: "dashboard"
                 }
 
                 GenericSeperator {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    Layout.topMargin: 5
+                    Layout.topMargin: 4
                     Layout.preferredWidth: pageWrapper.width
-                    Layout.preferredHeight: 3
+                    Layout.preferredHeight: 4
                 }
 
                 Rectangle {
@@ -226,7 +220,7 @@ Rectangle {
 
                     Layout.preferredWidth: pageWrapper.width - 20
                     Layout.preferredHeight: widgetReorderColumn.implicitHeight + 40
-                    Layout.topMargin: 10
+                    Layout.topMargin: 12
                     radius: Config.settings.borderRadius
                     color: Colours.palette.surface_container
                     border.width: 1
@@ -277,7 +271,6 @@ Rectangle {
                         function notifyChanged() {
                             const ids = [];
                             for (let i = 0; i < selectedModel.count; i++) ids.push(selectedModel.get(i).widgetId)
-                            Config.settings.bar.rightWidgets = ids;
                             Config.updateKey("bar.rightWidgets", ids);
                         }
 
@@ -544,7 +537,7 @@ Rectangle {
 
                         }
 
-                        // ── FLOATING DRAG PREVIEW ──
+                        // Floating drag preview chip
                         WidgetChip {
                             id: dragPreview
 
@@ -556,10 +549,10 @@ Rectangle {
                             x: widgetReorder.dragX
                             y: widgetReorder.dragY
                             z: 10000
-                            opacity: 0.95
+                            opacity: 0.90
                         }
 
-                        // ── INLINE COMPONENT: WIDGET CHIP ──
+                        // Individual chip component for palette and bar preview
                         component WidgetChip: Rectangle {
                             id: chip
 
