@@ -1,0 +1,12 @@
+[SddmGreeterTheme]
+Name=Savior SDDM
+Description=Material You dynamic theme for SDDM matching Quickshell
+Author=Savecoders
+License=GPL
+Type=sddm-theme
+Version=1.0.0
+MainScript=Main.qml
+ConfigFile=theme.conf
+Theme-Id=savior
+Theme-API=2.0
+QtVersion=6

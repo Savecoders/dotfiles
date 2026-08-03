@@ -63,3 +63,8 @@ output_path = '~/.config/quickshell/settings/colours.json'
 input_path = '~/.config/matugen/templates/wezterm_theme.toml'
 output_path = '~/.config/wezterm/colors/matugen_theme.toml'
 post_hook = 'touch ~/.config/wezterm/wezterm.lua'
+
+[templates.sddm]
+input_path = '~/.config/matugen/templates/sddm-theme.conf'
+output_path = '~/.config/sddm/themes/savior/theme.conf'
+post_hook = '~/.config/matugen/scripts/sddm-theme-reload'
