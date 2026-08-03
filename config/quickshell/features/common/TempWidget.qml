@@ -10,8 +10,8 @@ Rectangle {
     property bool isVertical: false
 
     color: "transparent"
-    implicitWidth: isVertical ? 24 : (contentRow.implicitWidth + 4)
-    implicitHeight: isVertical ? 24 : 24
+    implicitWidth: isVertical ? 32 : (contentRow.implicitWidth + 4)
+    implicitHeight: 32
     ToolTip.visible: mouseArea.containsMouse
     ToolTip.delay: 200
     ToolTip.text: "Package Temp: " + Thermal.temp + "°C"
