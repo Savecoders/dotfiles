@@ -24,23 +24,27 @@ hl.config({
 	},
 
 	decoration = {
-		rounding = 12,
-		rounding_power = 2,
+		rounding = 16,
+		rounding_power = 4.0,
 		active_opacity = 1.0,
-		inactive_opacity = 1.0,
+		inactive_opacity = 0.90,
 
 		shadow = {
 			enabled = true,
 			range = 4,
 			render_power = 3,
+			sharp = false,
 			color = "rgba(1a1a1aee)",
+			scale = 1.0,
 		},
 
 		blur = {
 			enabled = true,
 			size = 4,
-			passes = 2,
-			vibrancy = 0.1696,
+			passes = 4,
+			vibrancy = 0.16,
+			contrast = 0.8,
+			new_optimizations = true,
 		},
 	},
 
@@ -61,8 +65,8 @@ hl.config({
 	input = {
 		kb_layout = "us, es",
 		numlock_by_default = true,
-		repeat_delay = 250,
-		repeat_rate = 35,
+		repeat_delay = 240,
+		repeat_rate = 32,
 		follow_mouse = 1,
 
 		touchpad = {

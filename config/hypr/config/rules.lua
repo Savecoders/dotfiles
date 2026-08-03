@@ -22,22 +22,6 @@ hl.layer_rule({
 	no_anim = true,
 })
 
--- file manager
-hl.window_rule({
-	match = {
-		class = "^(thunar)$",
-	},
-	float = true,
-})
-
--- Zen browser picture in picture float
-hl.window_rule({
-	match = {
-		class = "^(zen-browser)$",
-		title = "^(Picture-In-Picture)$",
-	},
-	float = true,
-})
 --hl.window_rule({
 --	match = { class = "^(steam)$", title = "^(notificationtoasts)" },
 --	no_initial_focus = true,
