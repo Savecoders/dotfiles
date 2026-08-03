@@ -1,11 +1,12 @@
+pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
 import qs.features
 import qs.services
 
-Scope {
-    id: global
+Singleton {
+    id: root
 
     property bool themeNotificationShown: false
 
