@@ -1,6 +1,42 @@
-import Quickshell
-import "./layouts/"
+//@ pragma Env QS_NO_RELOAD_POPUP=1
+//@ pragma UseQApplication
+//@ pragma Env QT_SCALE_FACTOR=1
+//@ pragma IconTheme Papirus
 
-Scope {
-  Bar {}
+import QtQuick
+import Quickshell
+import qs.core
+import qs.features
+import qs.services
+
+ShellRoot {
+    id: shellRoot
+
+    Component.onCompleted: {
+        Notifications.dummyInit();
+        if (Config.settings.nightmodeOnStartup)
+            Nightmode.turnOn();
+        else
+            Nightmode.turnOff();
+    }
+
+    LazyLoader {
+        source: Contracts.powermenu.source
+        active: Contracts.powermenu.active && Globals.visibility.powermenu
+    }
+
+    LazyLoader {
+        source: Contracts.overlays.source
+        active: Contracts.overlays.active && Config.settings.overlays.enabled
+    }
+
+    Modules {
+    }
+
+    Ipc {
+    }
+
+    EyeProtection {
+    }
+
 }
