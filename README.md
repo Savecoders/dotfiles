@@ -32,7 +32,7 @@ Here are some details about my setup:
 - **Shell:** [zsh](https://www.zsh.org/)
 - **Application Launcher:** [rofi](https://github.com/davatorium/rofi)
 - **Compositor:** [picom](https://github.com/yshui/picom)
-- **Editor:** [neovim](https://github.com/neovim/neovim) | [vscode](https://github.com/microsoft/vscode) || [zed](https://zed.dev/)
+- **Editor:** [neovim](https://github.com/neovim/neovim) | [vscode](https://github.com/microsoft/vscode) | [zed](https://zed.dev/)
 - **System Font:** [SF Pro Display](https://github.com/sahibjotsagguSan-Francisco-Pro-Fonts)
 
 <!-- Install dependencies-->
