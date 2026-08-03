@@ -6,7 +6,7 @@
             "icon",
             "workspaces"
         ],
-        "margin": 2,
+        "margin": 8,
         "opacity": 0.8,
         "position": "top",
         "rightWidgets": [
@@ -21,7 +21,7 @@
         "smoothEdgesShown": true,
         "workspacesCenterAligned": true
     },
-    "borderRadius": 5,
+    "borderRadius": 4,
     "colours": {
         "enableScheme": true,
         "genType": "scheme-fidelity",

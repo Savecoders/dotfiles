@@ -28,12 +28,14 @@ Scope {
             readonly property bool isVertical: pos === "left" || pos === "right"
             readonly property bool isHorizontal: pos === "top" || pos === "bottom"
 
+            readonly property real marginVal: Config.settings.bar.margin !== undefined ? Config.settings.bar.margin : metrics.marginFallback
+
             screen: modelData
             color: "transparent"
-            implicitWidth: barWindow.isVertical ? metrics.barThickness : 0
-            implicitHeight: barWindow.isHorizontal ? metrics.barThickness : 0
+            implicitWidth: barWindow.isVertical ? (metrics.barThickness + (barWindow.marginVal * 2)) : 0
+            implicitHeight: barWindow.isHorizontal ? (metrics.barThickness + (barWindow.marginVal * 2)) : 0
             visible: true
-            exclusiveZone: metrics.barThickness
+            exclusiveZone: metrics.barThickness + barWindow.marginVal
             exclusionMode: ExclusionMode.Auto
 
             function resolvePfpPath(loc) {
@@ -70,22 +72,22 @@ Scope {
             Rectangle {
                 id: barBase
 
-                readonly property real marginVal: Config.settings.bar.margin !== undefined ? Config.settings.bar.margin : metrics.marginFallback
+                readonly property real marginVal: barWindow.marginVal
                 readonly property real dynamicWidth: Math.min(barWindow.width - (marginVal * 2), Math.max(metrics.minBarLength, 56 + (workspacesWidget ? workspacesWidget.width : 160) + (bottomLayout ? bottomLayout.implicitWidth : 180) + metrics.lengthPadding))
                 readonly property real dynamicHeight: Math.min(barWindow.height - (marginVal * 2), Math.max(metrics.minBarLength, 56 + (workspacesWidget ? workspacesWidget.height : 160) + (bottomLayout ? bottomLayout.implicitHeight : 180) + metrics.lengthPadding))
 
-
-
                 anchors.horizontalCenter: barWindow.isVertical ? undefined : parent.horizontalCenter
                 anchors.verticalCenter: barWindow.isVertical ? parent.verticalCenter : undefined
-                anchors.left: barWindow.isVertical ? parent.left : undefined
-                anchors.right: barWindow.isVertical ? parent.right : undefined
-                anchors.top: barWindow.isVertical ? undefined : parent.top
-                anchors.bottom: barWindow.isVertical ? undefined : parent.bottom
-                anchors.leftMargin: barWindow.isVertical ? marginVal : 0
-                anchors.rightMargin: barWindow.isVertical ? marginVal : 0
-                anchors.topMargin: barWindow.isVertical ? 0 : marginVal
-                anchors.bottomMargin: barWindow.isVertical ? 24 : marginVal
+                anchors.left: barWindow.isVertical ? (barWindow.pos === "left" ? parent.left : undefined) : undefined
+                anchors.right: barWindow.isVertical ? (barWindow.pos === "right" ? parent.right : undefined) : undefined
+                anchors.top: barWindow.isVertical ? undefined : (barWindow.pos === "top" ? parent.top : undefined)
+                anchors.bottom: barWindow.isVertical ? undefined : (barWindow.pos === "bottom" ? parent.bottom : undefined)
+
+                anchors.leftMargin: barWindow.isVertical ? marginVal : (Config.settings.bar.expand ? marginVal : 0)
+                anchors.rightMargin: barWindow.isVertical ? marginVal : (Config.settings.bar.expand ? marginVal : 0)
+                anchors.topMargin: barWindow.isVertical ? (Config.settings.bar.expand ? marginVal : 0) : marginVal
+                anchors.bottomMargin: barWindow.isVertical ? (Config.settings.bar.expand ? marginVal : 0) : marginVal
+
                 width: barWindow.isVertical ? metrics.barThickness : (Config.settings.bar.expand ? (barWindow.width - (marginVal * 2)) : dynamicWidth)
                 height: barWindow.isVertical ? (Config.settings.bar.expand ? (barWindow.height - (marginVal * 2)) : dynamicHeight) : metrics.barThickness
                 color: Qt.alpha(Colours.palette.surface, Config.settings.bar.opacity !== undefined ? Config.settings.bar.opacity : metrics.opacityFallback)
