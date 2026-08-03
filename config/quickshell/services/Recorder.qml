@@ -155,7 +155,6 @@ Singleton {
         onExited: (exitCode) => {
             if (exitCode === 0 && root._tempPickedPath.length > 0) {
                 let path = root._tempPickedPath;
-                Config.settings.recorder.output_loc = path;
                 Config.updateKey("recorder.output_loc", path);
             }
             root._tempPickedPath = "";

@@ -70,9 +70,6 @@ Singleton {
     function toggleDND() {
         let current = Config.settings.notifications ? Config.settings.notifications.doNotDisturb : false;
         let nextVal = !current;
-        if (Config.settings.notifications)
-            Config.settings.notifications.doNotDisturb = nextVal;
-
         Config.updateKey("notifications.doNotDisturb", nextVal);
         popupInhibited = nextVal;
     }

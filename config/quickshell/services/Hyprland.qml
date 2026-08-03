@@ -162,9 +162,14 @@ Singleton {
                     const keyboard = devices.keyboards.find((k) => {
                         return k.main;
                     }) || devices.keyboards[0];
-                    root.keyboardLayout = (keyboard && keyboard.active_keymap) ? keyboard.active_keymap.toUpperCase().slice(0, 2) : "?";
+                    let layout = (keyboard && keyboard.active_keymap) ? keyboard.active_keymap.toUpperCase().slice(0, 2) : "?";
+                    Qt.callLater(() => {
+                        root.keyboardLayout = layout;
+                    });
                 } catch (err) {
-                    root.keyboardLayout = "?";
+                    Qt.callLater(() => {
+                        root.keyboardLayout = "?";
+                    });
                 }
             }
         }
@@ -180,18 +185,19 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
-                    root.windowList = JSON.parse(this.text);
-                    let tempWinByAddress = {
-                    };
-                    for (let win of root.windowList) tempWinByAddress[win.address] = win
-                    root.windowByAddress = tempWinByAddress;
-                    root.addresses = root.windowList.map((w) => {
-                        return w.address;
+                    const parsed = JSON.parse(this.text);
+                    let tempWinByAddress = {};
+                    for (let win of parsed) tempWinByAddress[win.address] = win;
+                    let addrs = parsed.map((w) => w.address);
+                    Qt.callLater(() => {
+                        root.windowList = parsed;
+                        root.windowByAddress = tempWinByAddress;
+                        root.addresses = addrs;
                     });
                 } catch (e) {
                     console.error("Failed to parse clients:", e);
                 }
-                root.onProcFinished();
+                Qt.callLater(() => root.onProcFinished());
             }
         }
 
@@ -206,11 +212,14 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
-                    root.monitorsInfo = JSON.parse(this.text);
+                    const parsed = JSON.parse(this.text);
+                    Qt.callLater(() => {
+                        root.monitorsInfo = parsed;
+                    });
                 } catch (e) {
                     console.error("Failed to parse monitors:", e);
                 }
-                root.onProcFinished();
+                Qt.callLater(() => root.onProcFinished());
             }
         }
 
@@ -225,11 +234,14 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
-                    root.layers = JSON.parse(this.text);
+                    const parsed = JSON.parse(this.text);
+                    Qt.callLater(() => {
+                        root.layers = parsed;
+                    });
                 } catch (e) {
                     console.error("Failed to parse layers:", e);
                 }
-                root.onProcFinished();
+                Qt.callLater(() => root.onProcFinished());
             }
         }
 
@@ -244,18 +256,19 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
-                    root.workspacesInfo = JSON.parse(this.text);
-                    let map = {
-                    };
-                    for (let ws of root.workspacesInfo) map[ws.id] = ws
-                    root.workspaceById = map;
-                    root.workspaceIds = root.workspacesInfo.map((ws) => {
-                        return ws.id;
+                    const parsed = JSON.parse(this.text);
+                    let map = {};
+                    for (let ws of parsed) map[ws.id] = ws;
+                    let wsIds = parsed.map((ws) => ws.id);
+                    Qt.callLater(() => {
+                        root.workspacesInfo = parsed;
+                        root.workspaceById = map;
+                        root.workspaceIds = wsIds;
                     });
                 } catch (e) {
                     console.error("Failed to parse workspaces:", e);
                 }
-                root.onProcFinished();
+                Qt.callLater(() => root.onProcFinished());
             }
         }
 
@@ -270,11 +283,14 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
-                    root.activeWorkspaceInfo = JSON.parse(this.text);
+                    const parsed = JSON.parse(this.text);
+                    Qt.callLater(() => {
+                        root.activeWorkspaceInfo = parsed;
+                    });
                 } catch (e) {
                     console.error("Failed to parse active workspace:", e);
                 }
-                root.onProcFinished();
+                Qt.callLater(() => root.onProcFinished());
             }
         }
 

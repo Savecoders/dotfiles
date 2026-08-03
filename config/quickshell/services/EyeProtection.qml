@@ -3,7 +3,7 @@ import QtQuick
 import Quickshell
 import qs.core
 
-Scope {
+Singleton {
     id: root
 
     function runNotify() {

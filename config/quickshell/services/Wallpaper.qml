@@ -32,16 +32,18 @@ Singleton {
         let clean = cleanWallpaperPath(path);
         let secondPrev = `${Config.settings.previousWallpaper}`;
         let prev = `${Config.settings.currentWallpaper}`;
-        Config.settings.secondPreviousWallpaper = secondPrev;
-        Config.settings.previousWallpaper = prev;
-        Config.settings.currentWallpaper = clean;
-        Config.settings.wallpaperToSet = clean;
+
+        // Update Config settings
+        Config.pauseAutoSave = true;
         Config.updateKey("secondPreviousWallpaper", secondPrev);
         Config.updateKey("previousWallpaper", prev);
         Config.updateKey("currentWallpaper", clean);
         Config.updateKey("wallpaperToSet", clean);
+        Config.pauseAutoSave = false;
+
         // Update ~/.current.wall symlink
         Quickshell.execDetached(["sh", "-c", "ln -sf \"" + clean + "\" ~/.current.wall"]);
+
         // Run Matugen to regenerate themes
         Quickshell.execDetached(getMatugenArgs(clean));
         Quickshell.execDetached(["notify-send", "Wallpaper & Theme Updated", "New wallpaper and Matugen color palette applied."]);
@@ -75,12 +77,20 @@ Singleton {
     Process {
         id: scanProc
 
-        command: ["sh", "-c", "find -L '" + root.homeDir + "/Pictures/Wallpapers' -type f \\( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' -o -name '*.webp' -o -name '*.JPG' -o -name '*.PNG' \\) | sort"]
+        command: [
+          "sh",
+          "-c",
+          "find -L '" +
+          root.homeDir +
+          "/Pictures/Wallpapers' -type f \\( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' -o -name '*.webp' -o -name '*.JPG' -o -name '*.PNG' \\) | sort"
+        ]
+
         running: true
         onExited: {
-            if (root._tempBuffer.length > 0)
-                root.wallpapersList = root._tempBuffer.slice();
-
+            Qt.callLater(() => {
+                if (root._tempBuffer.length > 0)
+                    root.wallpapersList = root._tempBuffer.slice();
+            });
         }
 
         stdout: SplitParser {
@@ -88,7 +98,9 @@ Singleton {
                 let line = `${data}`.trim();
                 if (line.length > 0 && root._tempBuffer.indexOf(line) === -1) {
                     root._tempBuffer.push(line);
-                    root.wallpapersList = root._tempBuffer.slice();
+                    Qt.callLater(() => {
+                        root.wallpapersList = root._tempBuffer.slice();
+                    });
                 }
             }
         }
