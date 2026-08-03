@@ -57,9 +57,9 @@ Rectangle {
                     message: "Show a rounded border"
                     option: Config.settings.desktop.desktopRoundingShown
                     toRun: () => {
-                        Config.settings.desktop.desktopRoundingShown = !Config.settings.desktop.desktopRoundingShown;
-                        Config.updateKey("desktop.desktopRoundingShown", Config.settings.desktop.desktopRoundingShown);
-                        return Config.settings.desktop.desktopRoundingShown;
+                        let val = !Config.settings.desktop.desktopRoundingShown;
+                        Config.updateKey("desktop.desktopRoundingShown", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "capture"
@@ -69,9 +69,9 @@ Rectangle {
                     message: "Dim the wallpaper"
                     option: Config.settings.desktop.dimDesktopWallpaper
                     toRun: () => {
-                        Config.settings.desktop.dimDesktopWallpaper = !Config.settings.desktop.dimDesktopWallpaper;
-                        Config.updateKey("desktop.dimDesktopWallpaper", Config.settings.desktop.dimDesktopWallpaper);
-                        return Config.settings.desktop.dimDesktopWallpaper;
+                        let val = !Config.settings.desktop.dimDesktopWallpaper;
+                        Config.updateKey("desktop.dimDesktopWallpaper", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "brightness_6"

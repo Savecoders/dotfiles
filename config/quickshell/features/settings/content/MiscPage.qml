@@ -71,9 +71,9 @@ Rectangle {
                     message: "Nightmode on Startup"
                     option: Config.settings.nightmodeOnStartup
                     toRun: () => {
-                        Config.settings.nightmodeOnStartup = !Config.settings.nightmodeOnStartup;
-                        Config.updateKey("nightmodeOnStartup", Config.settings.nightmodeOnStartup);
-                        return Config.settings.nightmodeOnStartup;
+                        let newValue = !Config.settings.nightmodeOnStartup;
+                        Config.updateKey("nightmodeOnStartup", newValue);
+                        return newValue;
                     }
                     withIcon: true
                     iconCode: "brightness_3"
@@ -88,7 +88,6 @@ Rectangle {
                         let current = parseInt(Config.settings.nightmodeColourTemp) || 5500;
                         if (current < 10000) {
                             let nextVal = String(current + 500);
-                            Config.settings.nightmodeColourTemp = nextVal;
                             Config.updateKey("nightmodeColourTemp", nextVal);
                         }
                     }
@@ -96,7 +95,6 @@ Rectangle {
                         let current = parseInt(Config.settings.nightmodeColourTemp) || 5500;
                         if (current > 1000) {
                             let nextVal = String(current - 500);
-                            Config.settings.nightmodeColourTemp = nextVal;
                             Config.updateKey("nightmodeColourTemp", nextVal);
                         }
                     }
@@ -113,14 +111,12 @@ Rectangle {
                     amountIncrease: () => {
                         let cur = Config.settings.minutesBetweenHealthNotif !== undefined ? Config.settings.minutesBetweenHealthNotif : 30;
                         if (cur < 180) {
-                            Config.settings.minutesBetweenHealthNotif = cur + 5;
                             Config.updateKey("minutesBetweenHealthNotif", cur + 5);
                         }
                     }
                     amountDecrease: () => {
                         let cur = Config.settings.minutesBetweenHealthNotif !== undefined ? Config.settings.minutesBetweenHealthNotif : 30;
                         if (cur > 5) {
-                            Config.settings.minutesBetweenHealthNotif = cur - 5;
                             Config.updateKey("minutesBetweenHealthNotif", cur - 5);
                         }
                     }
@@ -133,7 +129,6 @@ Rectangle {
                     message: "Weather Location (City)"
                     textValue: Config.settings.weatherLocation
                     toRun: (text) => {
-                        Config.settings.weatherLocation = text;
                         Config.updateKey("weatherLocation", text);
                         return text;
                     }
@@ -145,7 +140,6 @@ Rectangle {
                     message: "GitHub Username"
                     textValue: Config.settings.misc.githubUsername || ""
                     toRun: (text) => {
-                        Config.settings.misc.githubUsername = text;
                         Config.updateKey("misc.githubUsername", text);
                         return text;
                     }
@@ -179,7 +173,7 @@ Rectangle {
                     }
                     toRun: (index) => {
                         let selected = root.availableScreens[index];
-                        Config.settings.recorder.screen = selected;
+                        Config.updateKey("recorder.screen", selected);
                     }
                     withIcon: true
                     iconCode: "monitor"
@@ -225,7 +219,6 @@ Rectangle {
                             font.family: Config.settings.font
                             font.pixelSize: 13
                             onTextEdited: {
-                                Config.settings.recorder.output_loc = text;
                                 Config.updateKey("recorder.output_loc", text);
                             }
 
@@ -335,7 +328,6 @@ Rectangle {
                     }
                     toRun: (index) => {
                         let selected = root.availableEncoders[index];
-                        Config.settings.recorder.encoder = selected;
                         Config.updateKey("recorder.encoder", selected);
                     }
                     withIcon: true

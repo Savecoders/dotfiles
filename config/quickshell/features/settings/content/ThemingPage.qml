@@ -501,10 +501,10 @@ Rectangle {
                     message: "Enable color schemes"
                     option: Config.settings.colours.enableScheme !== false
                     toRun: () => {
-                        Config.settings.colours.enableScheme = !Config.settings.colours.enableScheme;
-                        Config.updateKey("colours.enableScheme", Config.settings.colours.enableScheme);
+                        let val = !Config.settings.colours.enableScheme;
+                        Config.updateKey("colours.enableScheme", val);
                         Wallpaper.changeColourProp();
-                        return Config.settings.colours.enableScheme;
+                        return val;
                     }
                     withIcon: true
                     iconCode: "tune"
@@ -520,7 +520,6 @@ Rectangle {
                     }
                     toRun: (index) => {
                         let selected = options[index];
-                        Config.settings.colours.genType = selected;
                         Config.updateKey("colours.genType", selected);
                         Wallpaper.changeColourProp();
                     }
@@ -533,7 +532,6 @@ Rectangle {
                     option: Config.settings.colours.mode === "dark"
                     toRun: () => {
                         let nextMode = (Config.settings.colours.mode === "dark") ? "light" : "dark";
-                        Config.settings.colours.mode = nextMode;
                         Config.updateKey("colours.mode", nextMode);
                         Wallpaper.changeColourProp();
                         return nextMode === "dark";
@@ -546,9 +544,9 @@ Rectangle {
                     message: "Use custom colours (overrides generated colours for widgets)"
                     option: Config.settings.colours.useCustom
                     toRun: () => {
-                        Config.settings.colours.useCustom = !Config.settings.colours.useCustom;
-                        Config.updateKey("colours.useCustom", Config.settings.colours.useCustom);
-                        return Config.settings.colours.useCustom;
+                        let val = !Config.settings.colours.useCustom;
+                        Config.updateKey("colours.useCustom", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "category"

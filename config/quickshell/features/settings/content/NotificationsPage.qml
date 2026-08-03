@@ -57,9 +57,9 @@ Rectangle {
                     message: "Enable Notifications"
                     option: Config.settings.notifications.enabled
                     toRun: () => {
-                        Config.settings.notifications.enabled = !Config.settings.notifications.enabled;
-                        Config.updateKey("notifications.enabled", Config.settings.notifications.enabled);
-                        return Config.settings.notifications.enabled;
+                        let val = !Config.settings.notifications.enabled;
+                        Config.updateKey("notifications.enabled", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "notifications"
@@ -87,7 +87,6 @@ Rectangle {
                     toRun: (index) => {
                         let list = ["top-right", "top-left", "top-center", "bottom-right", "bottom-left", "bottom-center"];
                         let selected = list[index];
-                        Config.settings.notifications.position = selected;
                         Config.updateKey("notifications.position", selected);
                     }
                     withIcon: true
@@ -102,14 +101,12 @@ Rectangle {
                     amountIncrease: () => {
                         let cur = Config.settings.notifications.maxVisiblePopups || 5;
                         if (cur < 8) {
-                            Config.settings.notifications.maxVisiblePopups = cur + 1;
                             Config.updateKey("notifications.maxVisiblePopups", cur + 1);
                         }
                     }
                     amountDecrease: () => {
                         let cur = Config.settings.notifications.maxVisiblePopups || 5;
                         if (cur > 1) {
-                            Config.settings.notifications.maxVisiblePopups = cur - 1;
                             Config.updateKey("notifications.maxVisiblePopups", cur - 1);
                         }
                     }
@@ -126,14 +123,12 @@ Rectangle {
                     amountIncrease: () => {
                         let cur = Config.settings.notifications.timeout || 6000;
                         if (cur < 30000) {
-                            Config.settings.notifications.timeout = cur + 1000;
                             Config.updateKey("notifications.timeout", cur + 1000);
                         }
                     }
                     amountDecrease: () => {
                         let cur = Config.settings.notifications.timeout || 6000;
                         if (cur > 3000) {
-                            Config.settings.notifications.timeout = cur - 1000;
                             Config.updateKey("notifications.timeout", cur - 1000);
                         }
                     }
@@ -146,9 +141,9 @@ Rectangle {
                     message: "Compact Notification Cards"
                     option: Config.settings.notifications.compactMode
                     toRun: () => {
-                        Config.settings.notifications.compactMode = !Config.settings.notifications.compactMode;
-                        Config.updateKey("notifications.compactMode", Config.settings.notifications.compactMode);
-                        return Config.settings.notifications.compactMode;
+                        let val = !Config.settings.notifications.compactMode;
+                        Config.updateKey("notifications.compactMode", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "density_medium"
@@ -158,9 +153,9 @@ Rectangle {
                     message: "Show Timeout Progress Bar"
                     option: Config.settings.notifications.showTimeoutBar
                     toRun: () => {
-                        Config.settings.notifications.showTimeoutBar = !Config.settings.notifications.showTimeoutBar;
-                        Config.updateKey("notifications.showTimeoutBar", Config.settings.notifications.showTimeoutBar);
-                        return Config.settings.notifications.showTimeoutBar;
+                        let val = !Config.settings.notifications.showTimeoutBar;
+                        Config.updateKey("notifications.showTimeoutBar", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "hourglass_bottom"
@@ -170,9 +165,9 @@ Rectangle {
                     message: "Privacy Mode (Hide Content)"
                     option: Config.settings.notifications.privacyMode
                     toRun: () => {
-                        Config.settings.notifications.privacyMode = !Config.settings.notifications.privacyMode;
-                        Config.updateKey("notifications.privacyMode", Config.settings.notifications.privacyMode);
-                        return Config.settings.notifications.privacyMode;
+                        let val = !Config.settings.notifications.privacyMode;
+                        Config.updateKey("notifications.privacyMode", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "visibility_off"
@@ -182,9 +177,9 @@ Rectangle {
                     message: "Play Notification Sound"
                     option: Config.settings.notifications.soundEnabled
                     toRun: () => {
-                        Config.settings.notifications.soundEnabled = !Config.settings.notifications.soundEnabled;
-                        Config.updateKey("notifications.soundEnabled", Config.settings.notifications.soundEnabled);
-                        return Config.settings.notifications.soundEnabled;
+                        let val = !Config.settings.notifications.soundEnabled;
+                        Config.updateKey("notifications.soundEnabled", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "volume_up"

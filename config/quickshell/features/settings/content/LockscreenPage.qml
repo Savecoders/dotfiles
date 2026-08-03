@@ -57,9 +57,9 @@ Rectangle {
                     message: "Blur Desktop Background"
                     option: Config.settings.lockscreen.blurBackground
                     toRun: () => {
-                        Config.settings.lockscreen.blurBackground = !Config.settings.lockscreen.blurBackground;
-                        Config.updateKey("lockscreen.blurBackground", Config.settings.lockscreen.blurBackground);
-                        return Config.settings.lockscreen.blurBackground;
+                        let val = !Config.settings.lockscreen.blurBackground;
+                        Config.updateKey("lockscreen.blurBackground", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "blur_on"
@@ -69,9 +69,9 @@ Rectangle {
                     message: "Show Clock Header"
                     option: Config.settings.lockscreen.showClock
                     toRun: () => {
-                        Config.settings.lockscreen.showClock = !Config.settings.lockscreen.showClock;
-                        Config.updateKey("lockscreen.showClock", Config.settings.lockscreen.showClock);
-                        return Config.settings.lockscreen.showClock;
+                        let val = !Config.settings.lockscreen.showClock;
+                        Config.updateKey("lockscreen.showClock", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "schedule"
@@ -81,9 +81,9 @@ Rectangle {
                     message: "Show Date Subtitle"
                     option: Config.settings.lockscreen.showDate
                     toRun: () => {
-                        Config.settings.lockscreen.showDate = !Config.settings.lockscreen.showDate;
-                        Config.updateKey("lockscreen.showDate", Config.settings.lockscreen.showDate);
-                        return Config.settings.lockscreen.showDate;
+                        let val = !Config.settings.lockscreen.showDate;
+                        Config.updateKey("lockscreen.showDate", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "calendar_today"
@@ -93,9 +93,9 @@ Rectangle {
                     message: "Show Media Player Pill"
                     option: Config.settings.lockscreen.showMedia
                     toRun: () => {
-                        Config.settings.lockscreen.showMedia = !Config.settings.lockscreen.showMedia;
-                        Config.updateKey("lockscreen.showMedia", Config.settings.lockscreen.showMedia);
-                        return Config.settings.lockscreen.showMedia;
+                        let val = !Config.settings.lockscreen.showMedia;
+                        Config.updateKey("lockscreen.showMedia", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "graphic_eq"
@@ -105,9 +105,9 @@ Rectangle {
                     message: "Show System Status Pill"
                     option: Config.settings.lockscreen.showSystemPill
                     toRun: () => {
-                        Config.settings.lockscreen.showSystemPill = !Config.settings.lockscreen.showSystemPill;
-                        Config.updateKey("lockscreen.showSystemPill", Config.settings.lockscreen.showSystemPill);
-                        return Config.settings.lockscreen.showSystemPill;
+                        let val = !Config.settings.lockscreen.showSystemPill;
+                        Config.updateKey("lockscreen.showSystemPill", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "info"
@@ -117,9 +117,9 @@ Rectangle {
                     message: "Show Power Button"
                     option: Config.settings.lockscreen.showPowerBtn
                     toRun: () => {
-                        Config.settings.lockscreen.showPowerBtn = !Config.settings.lockscreen.showPowerBtn;
-                        Config.updateKey("lockscreen.showPowerBtn", Config.settings.lockscreen.showPowerBtn);
-                        return Config.settings.lockscreen.showPowerBtn;
+                        let val = !Config.settings.lockscreen.showPowerBtn;
+                        Config.updateKey("lockscreen.showPowerBtn", val);
+                        return val;
                     }
                     withIcon: true
                     iconCode: "power_settings_new"
