@@ -1,0 +1,92 @@
+{
+    "animationSpeed": 200,
+    "bar": {
+        "expand": false,
+        "leftWidgets": [
+            "icon",
+            "workspaces"
+        ],
+        "margin": 2,
+        "opacity": 0.8,
+        "position": "top",
+        "rightWidgets": [
+            "systray",
+            "cpu",
+            "ram",
+            "temp",
+            "notifications",
+            "quickactions",
+            "recording"
+        ],
+        "smoothEdgesShown": true,
+        "workspacesCenterAligned": true
+    },
+    "borderRadius": 5,
+    "colours": {
+        "enableScheme": true,
+        "genType": "scheme-fidelity",
+        "mode": "dark",
+        "useCustom": true
+    },
+    "componentControl": {
+        "barIsEnabled": true,
+        "dashboardIsEnabled": true,
+        "desktopIsEnabled": true,
+        "launcherIsEnabled": true,
+        "lockscreenIsEnabled": true,
+        "notifsIsEnabled": true
+    },
+    "currentWallpaper": "/home/save/Pictures/Wallpapers/gruvbox/coffee-cup.jpg",
+    "desktop": {
+        "desktopRoundingShown": true,
+        "dimDesktopWallpaper": false
+    },
+    "font": "SF Pro Display",
+    "iconFont": "Material Symbols Rounded",
+    "lockscreen": {
+        "blurBackground": true,
+        "showClock": true,
+        "showDate": true,
+        "showMedia": true,
+        "showPowerBtn": true,
+        "showSystemPill": true
+    },
+    "minutesBetweenHealthNotif": 20,
+    "misc": {
+        "githubUsername": "Savecoders"
+    },
+    "monitors": {
+    },
+    "nightmodeColourTemp": "5500",
+    "nightmodeOnStartup": false,
+    "notifications": {
+        "compactMode": false,
+        "doNotDisturb": false,
+        "enabled": true,
+        "maxVisiblePopups": 5,
+        "position": "top-right",
+        "privacyMode": false,
+        "showTimeoutBar": true,
+        "soundEnabled": true,
+        "timeout": 6000
+    },
+    "overlays": {
+        "enabled": true
+    },
+    "pfpLocation": "~/.face",
+    "plugins": {
+    },
+    "previousWallpaper": "/home/save/Pictures/Wallpapers/gruvbox/girl_update_pc.png",
+    "recorder": {
+        "encoder": "libx264",
+        "output_loc": "~/Videos",
+        "screen": "eDP-1"
+    },
+    "secondPreviousWallpaper": "/home/save/Pictures/Wallpapers/dark/RDT_20260129_2058456592035500134510953.jpg",
+    "shell": {
+        "version": "1.0.0"
+    },
+    "usePfpInsteadOfLogo": false,
+    "wallpaperToSet": "/home/save/Pictures/Wallpapers/gruvbox/coffee-cup.jpg",
+    "weatherLocation": "Guayaquil"
+}
