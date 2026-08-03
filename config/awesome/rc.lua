@@ -58,68 +58,77 @@ end)
 
 awesome.register_xproperty("WM_NAME", "string")
 
-awful.rules.rules = { {
-  rule = {},
-  properties = {
-    border_width = beautiful.border_width,
-    border_color = beautiful.border_normal,
-    focus = awful.client.focus.filter,
-    honor_workarea = true,
-    raise = true,
-    keys = clientkeys,
-    buttons = clientbuttons,
-    screen = awful.screen.preferred,
-    placement = awful.placement.no_overlap + awful.placement.no_offscreen,
-    size_hints_honor = false
-  }
-}, -- Floating clients.
+awful.rules.rules = {
+  {
+    rule = {},
+    properties = {
+      border_width = beautiful.border_width,
+      border_color = beautiful.border_normal,
+      focus = awful.client.focus.filter,
+      honor_workarea = true,
+      raise = true,
+      keys = clientkeys,
+      buttons = clientbuttons,
+      screen = awful.screen.preferred,
+      placement = awful.placement.no_overlap + awful.placement.no_offscreen,
+      size_hints_honor = false,
+    },
+  }, -- Floating clients.
   {
     rule_any = {
-      instance = { "copyq",  -- Includes session name in class.
-        "pinentry" },
-      class = { "Viewnior", "Sxiv", "feh" },
-      name = { "Event Tester"  -- xev.
+      instance = {
+        "copyq", -- Includes session name in class.
+        "pinentry",
       },
-      role = { "AlarmWindow",  -- Thunderbird's calendar.
-        "ConfigManager",       -- Thunderbird's about:config.
-        "zoom" }
+      class = { "Viewnior", "Sxiv", "feh" },
+      name = {
+        "Event Tester", -- xev.
+      },
+      role = {
+        "AlarmWindow", -- Thunderbird's calendar.
+        "ConfigManager", -- Thunderbird's about:config.
+        "zoom",
+      },
     },
     properties = {
-      floating = true
-    }
+      floating = true,
+    },
   }, -- Add titlebars to normal clients and dialogs
   {
     rule_any = {
-      type = { "normal", "dialog" }
+      type = { "normal", "dialog" },
     },
     properties = {
-      titlebars_enabled = true
-    }
-  }, {
-  rule_any = {
-    class = { "Thunar" },
-    instance = { "Thunar" }
+      titlebars_enabled = true,
+    },
   },
-  properties = {
-    floating = true,
-    placement = awful.placement.centered
-  }
-}, {
-  rule_any = {
-    class = { "warp", "warp-terminal" },
-    instance = { "warp", "warp-terminal" }
+  {
+    rule_any = {
+      class = { "Thunar" },
+      instance = { "Thunar" },
+    },
+    properties = {
+      floating = true,
+      placement = awful.placement.centered,
+    },
   },
-  properties = {
-    titlebars_enabled = false,
-    placement = awful.placement.centered
-  }
-} }
+  {
+    rule_any = {
+      class = { "warp", "warp-terminal" },
+      instance = { "warp", "warp-terminal" },
+    },
+    properties = {
+      titlebars_enabled = false,
+      placement = awful.placement.centered,
+    },
+  },
+}
 
 if awesome.startup_errors then
   naughty.notify({
     preset = naughty.config.presets.critical,
     title = "Error occured",
-    text = awesome.startup_errors
+    text = awesome.startup_errors,
   })
 end
 
@@ -137,7 +146,7 @@ end)
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
   c:emit_signal("request::activate", "mouse_enter", {
-    raise = false
+    raise = false,
   })
 end)
 
