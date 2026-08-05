@@ -31,7 +31,7 @@ Singleton {
     Process {
         id: isConnectedProc
 
-        command: [Quickshell.shellDir + "/lib/network.out", "--info"]
+        command: [Quickshell.shellDir + "/lib/network.out", "--watch"]
         running: true
 
         stdout: SplitParser {
@@ -40,17 +40,6 @@ Singleton {
             }
         }
 
-    }
-
-    Timer {
-        interval: 5000
-        running: true
-        repeat: true
-        onTriggered: {
-            if (!isConnectedProc.running)
-                isConnectedProc.running = true;
-
-        }
     }
 
 }

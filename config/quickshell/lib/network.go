@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"time"
 )
 
 func getConnectivity() string {
@@ -47,15 +48,32 @@ func toggleNetwork() {
 }
 
 func main() {
-	if len(os.Args) > 1 && os.Args[1] == "--info" {
-		conn := getConnectivity()
-		if conn == "off" {
-			fmt.Println("Network Off")
+	if len(os.Args) > 1 {
+		switch os.Args[1] {
+		case "--info":
+			conn := getConnectivity()
+			if conn == "off" {
+				fmt.Println("Network Off")
+				return
+			}
+			active := getActiveConnection()
+			fmt.Println(active)
 			return
+		case "--watch":
+
+			// Keep the process alive and emit one line per refresh so the
+			// Process/SplitParser stays resident instead of spawning a
+			// new process (and a couple of nmcli) every few seconds.
+			for {
+				conn := getConnectivity()
+				if conn == "off" {
+					fmt.Println("Network Off")
+				} else {
+					fmt.Println(getActiveConnection())
+				}
+				time.Sleep(5 * time.Second)
+			}
 		}
-		active := getActiveConnection()
-		fmt.Println(active)
-		return
 	}
 
 	toggleNetwork()
