@@ -28,24 +28,16 @@ Singleton {
             turnOn();
     }
 
-    Timer {
-        id: checkTimer
-
-        interval: 3000
-        running: true
-        repeat: true
-        triggeredOnStart: true
-        onTriggered: {
-            checkProc.running = true;
-        }
-    }
-
     Process {
         id: checkProc
 
-        command: ["bash", "-c", "pgrep hyprsunset || pgrep gammastep || hyprshade current | grep -q blue-light-filter"]
-        onExited: (exitCode) => {
-            root.isNightmodeOn = (exitCode === 0);
+        running: true
+        command: ["sh", "-c", "while true; do if pgrep hyprsunset >/dev/null 2>&1 || pgrep gammastep >/dev/null 2>&1 || hyprshade current 2>/dev/null | grep -q blue-light-filter; then echo on; else echo off; fi; sleep 3; done"]
+
+        stdout: SplitParser {
+            onRead: (data) => {
+                root.isNightmodeOn = (String(data).trim() === "on");
+            }
         }
     }
 

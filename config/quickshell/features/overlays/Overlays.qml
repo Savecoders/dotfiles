@@ -164,7 +164,7 @@ Scope {
                 id: brightnessOverlay
 
                 property int brightnessPercent: 50
-                property int lastBrightnessPercent: -1
+                property int lastBrightness: -1
 
                 function show() {
                     if (bfadeOut.running)
@@ -304,10 +304,10 @@ Scope {
             Connections {
                 function onBrightnessPercentChanged() {
                     brightnessOverlay.brightnessPercent = Brightness.brightnessPercent;
-                    if (brightnessOverlay.lastBrightnessPercent !== -1 && brightnessOverlay.lastBrightnessPercent !== brightnessOverlay.brightnessPercent)
+                    if (brightnessOverlay.lastBrightness !== -1 && brightnessOverlay.lastBrightness !== brightnessOverlay.brightnessPercent)
                         brightnessOverlay.show();
 
-                    brightnessOverlay.lastBrightnessPercent = brightnessOverlay.brightnessPercent;
+                    brightnessOverlay.lastBrightness = brightnessOverlay.brightnessPercent;
                 }
 
                 target: Brightness
