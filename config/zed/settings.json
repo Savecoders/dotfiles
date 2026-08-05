@@ -105,8 +105,8 @@
   "preferred_line_length": 80,
   "theme": {
     "mode": "system",
-    "light": "Catppuccin Espresso (Blur) [Light]",
-    "dark": "Catppuccin Espresso (Blur) [Light]"
+    "light": "Savior Matugen (Blur Heavy)",
+    "dark": "Savior Matugen (Blur Heavy)"
   },
   "tab_size": 2,
   "active_pane_modifiers": {
