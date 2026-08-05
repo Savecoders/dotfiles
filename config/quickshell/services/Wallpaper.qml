@@ -96,12 +96,9 @@ Singleton {
         stdout: SplitParser {
             onRead: (data) => {
                 let line = `${data}`.trim();
-                if (line.length > 0 && root._tempBuffer.indexOf(line) === -1) {
+                if (line.length > 0 && root._tempBuffer.indexOf(line) === -1)
                     root._tempBuffer.push(line);
-                    Qt.callLater(() => {
-                        root.wallpapersList = root._tempBuffer.slice();
-                    });
-                }
+
             }
         }
 

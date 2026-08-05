@@ -27,10 +27,21 @@ ClippingRectangle {
     property bool areActions: modelData ? (modelData.actions && modelData.actions.length > 0) : false
     property int currentTime: 4000
     property var actions: modelData ? modelData.actions : []
+    Component.onCompleted: {
+        if (singleNotif.popup)
+            singleNotif.startTimeout();
+    }
 
-    onCurrentTimeChanged: {
-        if (currentTime < 100 && modelData)
-            Notifications.timeoutNotification(modelData.notificationId);
+    function startTimeout() {
+        dismissTimer.stop();
+        dismissTimer.interval = singleNotif.currentTime;
+        if (timeoutBar.parent)
+            timeoutBar.width = timeoutBar.parent.width;
+
+        timeoutShrink.stop();
+        timeoutShrink.duration = singleNotif.currentTime;
+        timeoutShrink.restart();
+        dismissTimer.start();
     }
     radius: Math.max(4, Config.settings.borderRadius - 4)
     color: singleNotif.popup ? Colours.palette.surface : Qt.alpha(Colours.palette.surface_container_low, 0.6)
@@ -49,15 +60,14 @@ ClippingRectangle {
     width: ListView.view ? ListView.view.width : 400
     anchors.topMargin: 10
 
-    Loader {
-        active: singleNotif.popup
+    Timer {
+        id: dismissTimer
 
-        sourceComponent: Timer {
-            id: dismissTimer
-            interval: 1
-            running: (singleNotif.currentTime > 0)
-            repeat: false
-            onTriggered: singleNotif.currentTime -= 1
+        interval: 1
+        repeat: false
+        onTriggered: {
+            if (singleNotif.modelData)
+                Notifications.timeoutNotification(singleNotif.modelData.notificationId);
         }
     }
 
@@ -482,11 +492,23 @@ ClippingRectangle {
     }
 
     Rectangle {
+        id: timeoutBar
+
         height: 4
-        width: singleNotif.popup ? (singleNotif.currentTime / 4000) * parent.width : 0
+        width: singleNotif.popup ? parent.width : 0
         anchors.bottom: parent.bottom
         color: Colours.palette.surface_container_highest
         visible: Config.settings.notifications ? Config.settings.notifications.showTimeoutBar : true
+    }
+
+    NumberAnimation {
+        id: timeoutShrink
+
+        target: timeoutBar
+        property: "width"
+        to: 0
+        duration: singleNotif.currentTime
+        easing.type: Easing.Linear
     }
 
     Behavior on implicitHeight {

@@ -24,10 +24,6 @@ Item {
     onFgColorChanged: canvas.requestPaint()
     onBgColorChanged: canvas.requestPaint()
     onInnerCircleColorChanged: canvas.requestPaint()
-    onWidthChanged: canvas.requestPaint()
-    onHeightChanged: canvas.requestPaint()
-    onImplicitWidthChanged: canvas.requestPaint()
-    onImplicitHeightChanged: canvas.requestPaint()
 
     // Inner background disk (visible when innerCircleColor is set)
     Rectangle {

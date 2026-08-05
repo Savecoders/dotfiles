@@ -72,6 +72,7 @@ Scope {
 
                         source: backgroundUnderlay
                         anchors.fill: parent
+                        enabled: Config.settings.desktop.dimDesktopWallpaper
                         opacity: Config.settings.desktop.dimDesktopWallpaper ? 1 : 0
                         brightness: -0.1
 
@@ -146,6 +147,7 @@ Scope {
 
                         source: background
                         anchors.fill: background
+                        enabled: Config.settings.desktop.dimDesktopWallpaper
                         opacity: Config.settings.desktop.dimDesktopWallpaper ? 1 : 0
                         brightness: -0.1
 
