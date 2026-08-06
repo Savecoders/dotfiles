@@ -154,11 +154,14 @@ install_zsh_ohmyzsh() {
 
 install_sddm_theme() {
   echo "Installing Savior SDDM Theme..."
-  sudo mkdir -p /usr/share/sddm/themes/
-  sudo cp -r "${BASEDIR}/../config/sddm/themes/savior" /usr/share/sddm/themes/
-  sudo chmod -R 777 /usr/share/sddm/themes/savior
+  # Writable runtime theme dir (same location as the NixOS module uses).
+  # Matugen's sddm-theme-reload writes theme.conf + background.png here, so
+  # SDDM reflects the current wallpaper + palette on the greeter.
+  sudo mkdir -p /var/lib/savior-sddm/themes/savior
+  sudo cp -r "${BASEDIR}/../config/sddm/themes/savior/." /var/lib/savior-sddm/themes/savior/
+  sudo chmod -R 777 /var/lib/savior-sddm/themes/savior
   sudo mkdir -p /etc/sddm.conf.d/
-  echo -e "[Theme]\nCurrent=savior" | sudo tee /etc/sddm.conf.d/theme.conf >/dev/null
+  echo -e "[Theme]\nCurrent=/var/lib/savior-sddm/themes/savior" | sudo tee /etc/sddm.conf.d/theme.conf >/dev/null
   echo "Savior SDDM Theme installed and configured."
 }
 

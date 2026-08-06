@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-# Reload & Sync SDDM theme configuration and wallpaper from Quickshell
+# Reload & Sync the Savior SDDM theme from the current wallpaper + Matugen palette.
+# Writes into the writable runtime theme dir that SDDM is configured to use
+# (Current=<absolute path> in sddm.conf). NixOS store dirs are read-only, so the
+# theme lives in /var/lib/savior-sddm/themes/savior on both NixOS and Arch.
 USER_HOME="$HOME"
 SDDM_THEME_USER="$USER_HOME/.config/sddm/themes/savior"
-SDDM_THEME_SYS="/usr/share/sddm/themes/savior"
+RUNTIME_THEME="/var/lib/savior-sddm/themes/savior"
 ACTIVE_WALL="$USER_HOME/.current.wall"
 
 # Update user sddm theme background atomically from ~/.current.wall if present
@@ -11,12 +14,12 @@ if [[ -f "$ACTIVE_WALL" ]]; then
   cp "$ACTIVE_WALL" "$SDDM_THEME_USER/background.png.tmp" 2>/dev/null && mv -f "$SDDM_THEME_USER/background.png.tmp" "$SDDM_THEME_USER/background.png" 2>/dev/null || true
 fi
 
-# Sync to system SDDM directory atomically if installed & writable
-if [[ -d "$SDDM_THEME_SYS" ]]; then
-  if [[ -w "$SDDM_THEME_SYS/theme.conf" || -w "$SDDM_THEME_SYS" ]]; then
-    cp "$SDDM_THEME_USER/theme.conf" "$SDDM_THEME_SYS/theme.conf.tmp" 2>/dev/null && mv -f "$SDDM_THEME_SYS/theme.conf.tmp" "$SDDM_THEME_SYS/theme.conf" 2>/dev/null || true
+# Atomic, writable sync of theme.conf + background.png into the runtime theme dir
+if [[ -d "$RUNTIME_THEME" && -w "$RUNTIME_THEME" ]]; then
+  if [[ -f "$SDDM_THEME_USER/theme.conf" ]]; then
+    cp "$SDDM_THEME_USER/theme.conf" "$RUNTIME_THEME/theme.conf.tmp" 2>/dev/null && mv -f "$RUNTIME_THEME/theme.conf.tmp" "$RUNTIME_THEME/theme.conf" 2>/dev/null || true
   fi
-  if [[ -f "$SDDM_THEME_USER/background.png" && (-w "$SDDM_THEME_SYS/background.png" || -w "$SDDM_THEME_SYS") ]]; then
-    cp "$SDDM_THEME_USER/background.png" "$SDDM_THEME_SYS/background.png.tmp" 2>/dev/null && mv -f "$SDDM_THEME_SYS/background.png.tmp" "$SDDM_THEME_SYS/background.png" 2>/dev/null || true
+  if [[ -f "$SDDM_THEME_USER/background.png" ]]; then
+    cp "$SDDM_THEME_USER/background.png" "$RUNTIME_THEME/background.png.tmp" 2>/dev/null && mv -f "$RUNTIME_THEME/background.png.tmp" "$RUNTIME_THEME/background.png" 2>/dev/null || true
   fi
 fi
