@@ -27,10 +27,6 @@ ClippingRectangle {
     property bool areActions: modelData ? (modelData.actions && modelData.actions.length > 0) : false
     property int currentTime: 4000
     property var actions: modelData ? modelData.actions : []
-    Component.onCompleted: {
-        if (singleNotif.popup)
-            singleNotif.startTimeout();
-    }
 
     function startTimeout() {
         dismissTimer.stop();
@@ -42,6 +38,65 @@ ClippingRectangle {
         timeoutShrink.duration = singleNotif.currentTime;
         timeoutShrink.restart();
         dismissTimer.start();
+    }
+
+    function handleSmartClick() {
+        if (!modelData)
+            return ;
+
+        // 1. If notification has custom action buttons from sender, invoke default action
+        if (modelData.actions && modelData.actions.length > 0) {
+            let defAction = modelData.actions.find((a) => {
+                return a.identifier === "default";
+            }) || modelData.actions[0];
+            if (defAction) {
+                Notifications.attemptInvokeAction(modelData.notificationId, defAction.identifier);
+                return ;
+            }
+        }
+        // 2. Extract potential image or file path from image property, body text, or summary
+        let pathCandidate = "";
+        if (modelData.image && modelData.image.length > 0) {
+            pathCandidate = modelData.image;
+        } else if (modelData.body && modelData.body.length > 0) {
+            let match = modelData.body.match(/(\/(?:[^\s'"\(\)]+)|~\/(?:[^\s'"\(\)]+)|Pictures\/(?:[^\s'"\(\)]+)|Downloads\/(?:[^\s'"\(\)]+)|Videos\/(?:[^\s'"\(\)]+))/);
+            if (match && match[1]) {
+                pathCandidate = match[1];
+                if (pathCandidate.startsWith("Pictures/"))
+                    pathCandidate = `${Quickshell.env("HOME")}/${pathCandidate}`;
+
+                if (pathCandidate.startsWith("Downloads/"))
+                    pathCandidate = `${Quickshell.env("HOME")}/${pathCandidate}`;
+
+                if (pathCandidate.startsWith("Videos/"))
+                    pathCandidate = `${Quickshell.env("HOME")}/${pathCandidate}`;
+
+                if (pathCandidate.startsWith("~/"))
+                    pathCandidate = `${Quickshell.env("HOME")}/${pathCandidate.replace(/^~\//, "")}`;
+
+            }
+        }
+        if (pathCandidate.startsWith("file://"))
+            pathCandidate = pathCandidate.substring(7);
+
+        if (pathCandidate.length > 0) {
+            Quickshell.execDetached(["xdg-open", pathCandidate]);
+            if (singleNotif.popup)
+                Notifications.timeoutNotification(modelData.notificationId);
+
+            return ;
+        }
+        // 3. Fallback: toggle expand view or dismiss popup
+        if (singleNotif.popup)
+            Notifications.timeoutNotification(modelData.notificationId);
+        else
+            singleNotif.expanded = !singleNotif.expanded;
+    }
+
+    Component.onCompleted: {
+        if (singleNotif.popup)
+            singleNotif.startTimeout();
+
     }
     radius: Math.max(4, Config.settings.borderRadius - 4)
     color: singleNotif.popup ? Colours.palette.surface : Qt.alpha(Colours.palette.surface_container_low, 0.6)
@@ -68,64 +123,19 @@ ClippingRectangle {
         onTriggered: {
             if (singleNotif.modelData)
                 Notifications.timeoutNotification(singleNotif.modelData.notificationId);
+
         }
     }
 
     Timer {
         id: longPressTimer
+
         interval: 500
         repeat: false
         onTriggered: {
-            if (modelData) {
+            if (modelData)
                 Notifications.discardNotification(modelData.notificationId);
-            }
-        }
-    }
 
-    function handleSmartClick() {
-        if (!modelData) return;
-
-        // 1. If notification has custom action buttons from sender, invoke default action
-        if (modelData.actions && modelData.actions.length > 0) {
-            let defAction = modelData.actions.find(a => a.identifier === "default") || modelData.actions[0];
-            if (defAction) {
-                Notifications.attemptInvokeAction(modelData.notificationId, defAction.identifier);
-                return;
-            }
-        }
-
-        // 2. Extract potential image or file path from image property, body text, or summary
-        let pathCandidate = "";
-        if (modelData.image && modelData.image.length > 0) {
-            pathCandidate = modelData.image;
-        } else if (modelData.body && modelData.body.length > 0) {
-            let match = modelData.body.match(/(\/(?:[^\s'"\(\)]+)|~\/(?:[^\s'"\(\)]+)|Pictures\/(?:[^\s'"\(\)]+)|Downloads\/(?:[^\s'"\(\)]+)|Videos\/(?:[^\s'"\(\)]+))/);
-            if (match && match[1]) {
-                pathCandidate = match[1];
-                if (pathCandidate.startsWith("Pictures/")) pathCandidate = `${Quickshell.env("HOME")}/${pathCandidate}`;
-                if (pathCandidate.startsWith("Downloads/")) pathCandidate = `${Quickshell.env("HOME")}/${pathCandidate}`;
-                if (pathCandidate.startsWith("Videos/")) pathCandidate = `${Quickshell.env("HOME")}/${pathCandidate}`;
-                if (pathCandidate.startsWith("~/")) pathCandidate = `${Quickshell.env("HOME")}/${pathCandidate.replace(/^~\//, "")}`;
-            }
-        }
-
-        if (pathCandidate.startsWith("file://")) {
-            pathCandidate = pathCandidate.substring(7);
-        }
-
-        if (pathCandidate.length > 0) {
-            Quickshell.execDetached(["xdg-open", pathCandidate]);
-            if (singleNotif.popup) {
-                Notifications.timeoutNotification(modelData.notificationId);
-            }
-            return;
-        }
-
-        // 3. Fallback: toggle expand view or dismiss popup
-        if (singleNotif.popup) {
-            Notifications.timeoutNotification(modelData.notificationId);
-        } else {
-            singleNotif.expanded = !singleNotif.expanded;
         }
     }
 
@@ -139,7 +149,7 @@ ClippingRectangle {
         onPressed: (event) => {
             if (event.button === Qt.MiddleButton && modelData) {
                 Notifications.discardNotification(modelData.notificationId);
-                return;
+                return ;
             }
             startX = event.x;
             startY = event.y;
@@ -152,9 +162,9 @@ ClippingRectangle {
             }
         }
         onPositionChanged: (event) => {
-            if (Math.abs(event.x - startX) > 10 || Math.abs(event.y - startY) > 10) {
+            if (Math.abs(event.x - startX) > 10 || Math.abs(event.y - startY) > 10)
                 longPressTimer.stop();
-            }
+
         }
     }
 
@@ -215,8 +225,11 @@ ClippingRectangle {
                         layer.effect: MultiEffect {
                             saturation: -1
                         }
+
                     }
+
                 }
+
             }
 
             Text {
@@ -227,6 +240,7 @@ ClippingRectangle {
                 font.pixelSize: 22
                 color: Qt.alpha(Colours.palette.on_surface, 0.7)
             }
+
         }
 
         Rectangle {
@@ -297,7 +311,9 @@ ClippingRectangle {
                             font.weight: 600
                             font.pixelSize: 11
                         }
+
                     }
+
                 }
 
                 TextMetrics {
@@ -360,7 +376,9 @@ ClippingRectangle {
                     ScrollBar.vertical: ScrollBar {
                         policy: ScrollBar.AlwaysOff
                     }
+
                 }
+
             }
 
             Rectangle {
@@ -389,7 +407,9 @@ ClippingRectangle {
                             duration: Config.settings.animationSpeed
                             easing.type: Easing.InSine
                         }
+
                     }
+
                 }
 
                 MouseArea {
@@ -406,7 +426,9 @@ ClippingRectangle {
                         duration: Config.settings.animationSpeed
                         easing.type: Easing.InSine
                     }
+
                 }
+
             }
 
             Rectangle {
@@ -449,7 +471,9 @@ ClippingRectangle {
                                         duration: Config.settings.animationSpeed
                                         easing.type: Easing.InSine
                                     }
+
                                 }
+
                             }
 
                             MouseArea {
@@ -461,6 +485,7 @@ ClippingRectangle {
                                 onClicked: {
                                     if (singleNotif.modelData && modelData)
                                         Notifications.attemptInvokeAction(singleNotif.modelData.notificationId, modelData.identifier);
+
                                 }
                             }
 
@@ -469,6 +494,7 @@ ClippingRectangle {
                                     duration: Config.settings.animationSpeed
                                     easing.type: Easing.InSine
                                 }
+
                             }
 
                             Behavior on radius {
@@ -476,10 +502,15 @@ ClippingRectangle {
                                     duration: Config.settings.animationSpeed
                                     easing.type: Easing.InSine
                                 }
+
                             }
+
                         }
+
                     }
+
                 }
+
             }
 
             Behavior on Layout.preferredHeight {
@@ -487,8 +518,11 @@ ClippingRectangle {
                     duration: Config.settings.animationSpeed
                     easing.type: Easing.InSine
                 }
+
             }
+
         }
+
     }
 
     Rectangle {
@@ -516,5 +550,7 @@ ClippingRectangle {
             duration: Config.settings.animationSpeed
             easing.type: Easing.InSine
         }
+
     }
+
 }

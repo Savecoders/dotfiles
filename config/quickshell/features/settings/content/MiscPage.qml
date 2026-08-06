@@ -110,15 +110,15 @@ Rectangle {
                     minValue: 5
                     amountIncrease: () => {
                         let cur = Config.settings.minutesBetweenHealthNotif !== undefined ? Config.settings.minutesBetweenHealthNotif : 30;
-                        if (cur < 180) {
+                        if (cur < 180)
                             Config.updateKey("minutesBetweenHealthNotif", cur + 5);
-                        }
+
                     }
                     amountDecrease: () => {
                         let cur = Config.settings.minutesBetweenHealthNotif !== undefined ? Config.settings.minutesBetweenHealthNotif : 30;
-                        if (cur > 5) {
+                        if (cur > 5)
                             Config.updateKey("minutesBetweenHealthNotif", cur - 5);
-                        }
+
                     }
                     isFloat: false
                     withIcon: true

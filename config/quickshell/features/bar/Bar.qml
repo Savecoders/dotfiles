@@ -27,8 +27,13 @@ Scope {
             readonly property string pos: Config.settings.bar.position.toLowerCase()
             readonly property bool isVertical: pos === "left" || pos === "right"
             readonly property bool isHorizontal: pos === "top" || pos === "bottom"
-
             readonly property real marginVal: Config.settings.bar.margin !== undefined ? Config.settings.bar.margin : metrics.marginFallback
+
+            function resolvePfpPath(loc) {
+                const location = loc || "~/.face";
+                const path = location.startsWith("/") ? location : `${Quickshell.env("HOME")}/${location.replace(/^~\//, "")}`;
+                return `file://${path}`;
+            }
 
             screen: modelData
             color: "transparent"
@@ -37,12 +42,6 @@ Scope {
             visible: true
             exclusiveZone: metrics.barThickness + barWindow.marginVal
             exclusionMode: ExclusionMode.Auto
-
-            function resolvePfpPath(loc) {
-                const location = loc || "~/.face";
-                const path = location.startsWith("/") ? location : `${Quickshell.env("HOME")}/${location.replace(/^~\//, "")}`;
-                return `file://${path}`;
-            }
 
             QtObject {
                 id: metrics
@@ -82,17 +81,13 @@ Scope {
                 anchors.right: barWindow.isVertical ? (barWindow.pos === "right" ? parent.right : undefined) : undefined
                 anchors.top: barWindow.isVertical ? undefined : (barWindow.pos === "top" ? parent.top : undefined)
                 anchors.bottom: barWindow.isVertical ? undefined : (barWindow.pos === "bottom" ? parent.bottom : undefined)
-
                 anchors.leftMargin: barWindow.isVertical ? marginVal : (Config.settings.bar.expand ? marginVal : 0)
                 anchors.rightMargin: barWindow.isVertical ? marginVal : (Config.settings.bar.expand ? marginVal : 0)
                 anchors.topMargin: barWindow.isVertical ? (Config.settings.bar.expand ? marginVal : 0) : marginVal
                 anchors.bottomMargin: barWindow.isVertical ? (Config.settings.bar.expand ? marginVal : 0) : marginVal
-
                 width: barWindow.isVertical ? metrics.barThickness : (Config.settings.bar.expand ? (barWindow.width - (marginVal * 2)) : dynamicWidth)
                 height: barWindow.isVertical ? (Config.settings.bar.expand ? (barWindow.height - (marginVal * 2)) : dynamicHeight) : metrics.barThickness
                 color: Qt.alpha(Colours.palette.surface, Config.settings.bar.opacity !== undefined ? Config.settings.bar.opacity : metrics.opacityFallback)
-
-
                 // smoothEdgesShown is false; now the inner buttons follow the
                 // same flag through metrics.radiusOuter/Inner/InnerSmall below,
                 // instead of always using a fixed radius.

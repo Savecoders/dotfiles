@@ -147,15 +147,15 @@ Rectangle {
                     minValue: 0
                     amountIncrease: () => {
                         let cur = Config.settings.bar.margin !== undefined ? Config.settings.bar.margin : 10;
-                        if (cur < 20) {
+                        if (cur < 20)
                             Config.updateKey("bar.margin", cur + 1);
-                        }
+
                     }
                     amountDecrease: () => {
                         let cur = Config.settings.bar.margin !== undefined ? Config.settings.bar.margin : 10;
-                        if (cur > 0) {
+                        if (cur > 0)
                             Config.updateKey("bar.margin", cur - 1);
-                        }
+
                     }
                     isFloat: false
                     withIcon: true
@@ -549,7 +549,7 @@ Rectangle {
                             x: widgetReorder.dragX
                             y: widgetReorder.dragY
                             z: 10000
-                            opacity: 0.90
+                            opacity: 0.9
                         }
 
                         // Individual chip component for palette and bar preview

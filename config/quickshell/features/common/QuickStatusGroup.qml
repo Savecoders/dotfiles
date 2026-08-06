@@ -28,7 +28,7 @@ GridLayout {
         font.family: Config.settings.font
         font.pixelSize: 11
         font.weight: 500
-        lineHeight: 0.90
+        lineHeight: 0.9
         color: root.contentColor
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter

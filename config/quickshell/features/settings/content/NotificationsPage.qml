@@ -100,15 +100,15 @@ Rectangle {
                     minValue: 1
                     amountIncrease: () => {
                         let cur = Config.settings.notifications.maxVisiblePopups || 5;
-                        if (cur < 8) {
+                        if (cur < 8)
                             Config.updateKey("notifications.maxVisiblePopups", cur + 1);
-                        }
+
                     }
                     amountDecrease: () => {
                         let cur = Config.settings.notifications.maxVisiblePopups || 5;
-                        if (cur > 1) {
+                        if (cur > 1)
                             Config.updateKey("notifications.maxVisiblePopups", cur - 1);
-                        }
+
                     }
                     isFloat: false
                     withIcon: true
@@ -122,15 +122,15 @@ Rectangle {
                     minValue: 3
                     amountIncrease: () => {
                         let cur = Config.settings.notifications.timeout || 6000;
-                        if (cur < 30000) {
+                        if (cur < 30000)
                             Config.updateKey("notifications.timeout", cur + 1000);
-                        }
+
                     }
                     amountDecrease: () => {
                         let cur = Config.settings.notifications.timeout || 6000;
-                        if (cur > 3000) {
+                        if (cur > 3000)
                             Config.updateKey("notifications.timeout", cur - 1000);
-                        }
+
                     }
                     isFloat: false
                     withIcon: true

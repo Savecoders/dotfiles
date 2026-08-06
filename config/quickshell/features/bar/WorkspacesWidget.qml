@@ -12,7 +12,6 @@ Rectangle {
     property var bottomLayout: null
     property int workspaceCount: 12
     readonly property int count: Workspaces.hyprWorkspaces ? Workspaces.hyprWorkspaces.length : workspaceCount
-
     // Single formula, evaluated once and reused for both orientations
     // instead of being duplicated between width: and height:.
     readonly property real crossAxisLength: metrics.thickness * count + metrics.slotSpacing * (count - 1) + metrics.outerPadding

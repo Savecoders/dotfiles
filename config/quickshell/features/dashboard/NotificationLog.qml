@@ -68,7 +68,9 @@ Rectangle {
                                 duration: Config.settings.animationSpeed
                                 easing.type: Easing.InSine
                             }
+
                         }
+
                     }
 
                     Text {
@@ -83,8 +85,11 @@ Rectangle {
                                 duration: Config.settings.animationSpeed
                                 easing.type: Easing.InSine
                             }
+
                         }
+
                     }
+
                 }
 
                 MouseArea {
@@ -101,6 +106,7 @@ Rectangle {
                         duration: Config.settings.animationSpeed
                         easing.type: Easing.InSine
                     }
+
                 }
 
                 Behavior on radius {
@@ -108,8 +114,11 @@ Rectangle {
                         duration: Config.settings.animationSpeed
                         easing.type: Easing.InSine
                     }
+
                 }
+
             }
+
         }
 
         ScrollView {
@@ -142,6 +151,7 @@ Rectangle {
                         from: 200
                         property: "x"
                     }
+
                 }
 
                 addDisplaced: Transition {
@@ -150,10 +160,12 @@ Rectangle {
                         easing.bezierCurve: Anim.standard
                         properties: "x,y"
                     }
+
                 }
 
                 delegate: SingleNotification {
                     required property Notifications.Notif modelData
+
                     width: notifList.width
                 }
 
@@ -164,6 +176,7 @@ Rectangle {
                         property: "x"
                         to: 200
                     }
+
                 }
 
                 removeDisplaced: Transition {
@@ -172,9 +185,13 @@ Rectangle {
                         easing.bezierCurve: Anim.standard
                         properties: "x,y"
                     }
+
                 }
+
             }
+
         }
+
     }
 
     Rectangle {
@@ -192,5 +209,7 @@ Rectangle {
             font.weight: 500
             color: Qt.alpha(Colours.palette.on_surface, 0.5)
         }
+
     }
+
 }
