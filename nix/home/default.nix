@@ -7,8 +7,8 @@ let
   cfg = config.programs.saviorDotfiles;
   jsonFormat = pkgs.formats.json { };
 
-  saviorThemesAndIcons = pkgs.savior-themes-and-icons;
-  saviorShell = pkgs.savior-shell;
+  saviorThemesAndIcons = pkgs.savior-themes-and-icons or (pkgs.callPackage ../pkgs/themes-and-icons.nix { });
+  saviorShell = pkgs.savior-shell or (pkgs.callPackage ../pkgs/savior-shell.nix { });
 
   # Import modular package groups from nix/pkgs/deps/
   coreDeps = import ../pkgs/deps/core.nix { inherit pkgs; };
@@ -160,8 +160,9 @@ in {
       "Pictures/Wallpapers".source = ../../assets/wallpapers;
       ".oh-my-zsh/custom/themes/Savior-zsh-theme".source = ../../assets/zsh/Savior-zsh-theme;
       ".zshrc".source = ../../assets/zsh/.zshrc;
-    } // lib.optionalAttrs cfg.wm.awesome.enable {
+    } // lib.optionalAttrs (cfg.wm.awesome.enable && inputs ? bling) {
       ".config/awesome/modules/bling".source = inputs.bling;
+    } // lib.optionalAttrs (cfg.wm.awesome.enable && inputs ? layout-machi) {
       ".config/awesome/modules/layout-machi".source = inputs.layout-machi;
     };
 

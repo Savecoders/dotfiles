@@ -1,10 +1,8 @@
 # Unified buildEnv package: Quickshell + custom fonts + savior-shell launcher.
 # Everything else (matugen, rofi, grim, playerctl, ...) lives in home.packages.
-{ pkgs, inputs, savior-fonts ? pkgs.callPackage ./fonts.nix {} }:
+{ pkgs, quickshellPkg ? pkgs.quickshell, savior-fonts ? pkgs.callPackage ./fonts.nix { } }:
 
 let
-  quickshellPkg = inputs.quickshell.packages.${pkgs.system}.default;
-
   # Shell launcher wrapper
   launcher = pkgs.writeShellScriptBin "savior-shell" ''
     export PATH="${quickshellPkg}/bin:${savior-fonts}/bin:$PATH"

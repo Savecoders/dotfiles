@@ -2,9 +2,9 @@
 { config, lib, pkgs, inputs, ... }:
 
 let
-  # savior-* packages come from the flake overlay (nixpkgs.overlays)
-  saviorSddm = pkgs.savior-sddm;
-  saviorFonts = pkgs.savior-fonts;
+  # savior-* packages prefer the flake overlay (nixpkgs.overlays) and fall back to
+  saviorSddm = pkgs.savior-sddm or (pkgs.callPackage ../pkgs/savior-sddm.nix { });
+  saviorFonts = pkgs.savior-fonts or (pkgs.callPackage ../pkgs/fonts.nix { });
 in {
   # Import the official Vicinae NixOS module when the input is provided, so the
   # input-server setuid wrapper can be wired automatically below.
@@ -42,11 +42,10 @@ in {
     hardware.bluetooth.enable = lib.mkDefault true;
     services.blueman.enable = lib.mkDefault true;
 
-    # Fix Bug #9: Load acpi_call kernel module and extraModulePackages
+    # Kernel Modules for ACPI Call (for Hyprland and power management)
     boot.kernelModules = [ "acpi_call" ];
     boot.extraModulePackages = [ config.boot.kernelPackages.acpi_call ];
 
-    # Fix Bug #8: Configure XDG Portals properly for Hyprland/Wayland
     xdg.portal = {
       enable = true;
       extraPortals = [
@@ -60,11 +59,16 @@ in {
     # (uses the pinned flake input, not just nixpkgs) and provides the portal config.
     programs.hyprland = {
       enable = lib.mkDefault true;
-      package = lib.mkDefault inputs.hyprland.packages.${pkgs.system}.hyprland;
+      package = lib.mkDefault (
+        # Pinned flake input when present, otherwise the nixpkgs package
+        if inputs ? hyprland
+        then inputs.hyprland.packages.${pkgs.system}.hyprland
+        else pkgs.hyprland
+      );
       xwayland.enable = lib.mkDefault true;
     };
 
-    # PipeWire Audio Infrastructure (Fix Bug #10: Removed legacy pulseaudio conflict)
+    # PipeWire Audio service: ALSA, PulseAudio
     services.pipewire = lib.mkIf config.services.saviorDesktop.pipewire.enable {
       enable = true;
       alsa.enable = true;

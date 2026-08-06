@@ -4,7 +4,10 @@ inputs: final: prev: {
   savior-themes-and-icons = prev.callPackage ../pkgs/themes-and-icons.nix { };
   savior-sddm = prev.callPackage ../pkgs/savior-sddm.nix { };
   savior-shell = prev.callPackage ../pkgs/savior-shell.nix {
-    inherit inputs;
+    quickshellPkg =
+      if inputs ? quickshell
+      then inputs.quickshell.packages.${prev.system}.default
+      else prev.quickshell;
     savior-fonts = final.savior-fonts;
   };
 }

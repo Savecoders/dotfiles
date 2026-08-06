@@ -48,7 +48,6 @@
     # Custom package overlay (savior-*)
     overlays.default = overlay;
 
-    # Formatter output (Fix Bug #14)
     formatter.${system} = pkgs.nixpkgs-fmt;
 
     # Development shell with Nix tooling
@@ -60,11 +59,11 @@
       ];
     };
 
-    # Exported Home Manager and NixOS Modules
     homeManagerModules.default = ./nix/home/default.nix;
+    homeManagerModules.saviorDotfiles = self.homeManagerModules.default;
     nixosModules.default = ./nix/modules/default.nix;
+    nixosModules.saviorDesktop = self.nixosModules.default;
 
-    # Custom Packages & Derivations (resolved via the savior-* overlay)
     packages.${system} = rec {
       savior-fonts = pkgs.savior-fonts;
       savior-sddm = pkgs.savior-sddm;
@@ -91,13 +90,13 @@
       ];
     };
 
-    # Complete NixOS System Configuration (Fixes Bug #2 and Bug #3)
+    # Complete NixOS System Configuration
     nixosConfigurations."desktop" = nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = { inherit inputs; };
       modules = [
         {
-          nixpkgs.config.allowUnfree = true; # Fix #3: Allow unfree packages system-wide
+          nixpkgs.config.allowUnfree = true;
         }
         {
           nixpkgs.overlays = [ self.overlays.default ];
@@ -110,7 +109,7 @@
           home-manager.useUserPackages = true;
           home-manager.users.save = {
             imports = [ self.homeManagerModules.default ];
-            programs.saviorDotfiles.enable = true; # Fix #2: Explicitly enable HM module
+            programs.saviorDotfiles.enable = true;
           };
           home-manager.extraSpecialArgs = { inherit inputs; };
         }
