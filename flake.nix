@@ -1,0 +1,115 @@
+{
+  description = "Savior Dotfiles Flake for NixOS and Home Manager";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprland.url = "github:hyprwm/Hyprland";
+
+    # AwesomeWM Git Submodules
+    bling = {
+      url = "github:BlingCorp/bling";
+      flake = false;
+    };
+
+    layout-machi = {
+      url = "github:xinhaoyuan/layout-machi";
+      flake = false;
+    };
+  };
+
+  outputs = { self, nixpkgs, home-manager, quickshell, hyprland, ... }@inputs:
+  let
+    system = "x86_64-linux";
+
+    overlay = import ./nix/overlays/default.nix inputs;
+
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+      overlays = [ overlay ];
+    };
+  in {
+    # Custom package overlay (savior-*)
+    overlays.default = overlay;
+
+    # Formatter output (Fix Bug #14)
+    formatter.${system} = pkgs.nixpkgs-fmt;
+
+    # Development shell with Nix tooling
+    devShells.${system}.default = pkgs.mkShell {
+      packages = with pkgs; [
+        nixpkgs-fmt
+        nixd
+        statix
+      ];
+    };
+
+    # Exported Home Manager and NixOS Modules
+    homeManagerModules.default = ./nix/home/default.nix;
+    nixosModules.default = ./nix/modules/default.nix;
+
+    # Custom Packages & Derivations (resolved via the savior-* overlay)
+    packages.${system} = rec {
+      savior-fonts = pkgs.savior-fonts;
+      savior-sddm = pkgs.savior-sddm;
+      savior-themes-and-icons = pkgs.savior-themes-and-icons;
+      savior-shell = pkgs.savior-shell;
+      default = savior-shell;
+    };
+
+    # Standalone Home Manager Configuration
+    homeConfigurations."save" = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      extraSpecialArgs = { inherit inputs; };
+      modules = [
+        self.homeManagerModules.default
+        {
+          programs.saviorDotfiles = {
+            enable = true;
+            wm.hyprland.enable = true;
+            wm.awesome.enable = true;
+            quickshell.enable = true;
+            matugen.enable = true;
+          };
+        }
+      ];
+    };
+
+    # Complete NixOS System Configuration (Fixes Bug #2 and Bug #3)
+    nixosConfigurations."desktop" = nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = { inherit inputs; };
+      modules = [
+        {
+          nixpkgs.config.allowUnfree = true; # Fix #3: Allow unfree packages system-wide
+        }
+        {
+          nixpkgs.overlays = [ self.overlays.default ];
+        }
+        self.nixosModules.default
+        home-manager.nixosModules.home-manager
+        {
+          services.saviorDesktop.enable = true;
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.save = {
+            imports = [ self.homeManagerModules.default ];
+            programs.saviorDotfiles.enable = true; # Fix #2: Explicitly enable HM module
+          };
+          home-manager.extraSpecialArgs = { inherit inputs; };
+        }
+      ];
+    };
+  };
+}
