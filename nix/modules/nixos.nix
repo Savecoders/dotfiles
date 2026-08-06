@@ -1,0 +1,114 @@
+# NixOS System Module for Savior Dotfiles
+{ config, lib, pkgs, inputs, ... }:
+
+let
+  # savior-* packages come from the flake overlay (nixpkgs.overlays)
+  saviorSddm = pkgs.savior-sddm;
+  saviorFonts = pkgs.savior-fonts;
+in {
+  options.services.saviorDesktop = {
+    enable = lib.mkEnableOption "Enable Savior NixOS System Desktop integration";
+
+    sddm.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable SDDM display manager with Savior theme";
+    };
+
+    pipewire.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable PipeWire audio pipeline";
+    };
+  };
+
+  config = lib.mkIf config.services.saviorDesktop.enable {
+    # Fix Bug #11: Define system.stateVersion
+    system.stateVersion = lib.mkDefault "24.05";
+
+    # Hardware, Power & Security System Services
+    security.polkit.enable = lib.mkDefault true;
+    services.geoclue2.enable = lib.mkDefault true;
+    services.power-profiles-daemon.enable = lib.mkDefault true;
+    services.upower.enable = lib.mkDefault true;
+    services.acpid.enable = lib.mkDefault true;
+
+    # Network & Bluetooth
+    networking.networkmanager.enable = lib.mkDefault true;
+    hardware.bluetooth.enable = lib.mkDefault true;
+    services.blueman.enable = lib.mkDefault true;
+
+    # Fix Bug #9: Load acpi_call kernel module and extraModulePackages
+    boot.kernelModules = [ "acpi_call" ];
+    boot.extraModulePackages = [ config.boot.kernelPackages.acpi_call ];
+
+    # Fix Bug #8: Configure XDG Portals properly for Hyprland/Wayland
+    xdg.portal = {
+      enable = true;
+      extraPortals = [
+        pkgs.xdg-desktop-portal-hyprland
+        pkgs.xdg-desktop-portal-gtk
+      ];
+      config.common.default = "*";
+    };
+
+    # Hyprland system-wide: ensures the wayland session entry exists for SDDM
+    # (uses the pinned flake input, not just nixpkgs) and provides the portal config.
+    programs.hyprland = {
+      enable = lib.mkDefault true;
+      package = lib.mkDefault inputs.hyprland.packages.${pkgs.system}.hyprland;
+      xwayland.enable = lib.mkDefault true;
+    };
+
+    # PipeWire Audio Infrastructure (Fix Bug #10: Removed legacy pulseaudio conflict)
+    services.pipewire = lib.mkIf config.services.saviorDesktop.pipewire.enable {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
+      wireplumber.enable = true;
+    };
+
+    # Display Manager Integration (SDDM) (Fix Bug #12: Added defaultSession)
+    #
+    # The greeter reads the theme from a WRITABLE runtime dir
+    # (/var/lib/savior-sddm/themes/savior) instead of the read-only store.
+    # Matugen's sddm-theme-reload post-hook rewrites theme.conf + background.png
+    # there after every palette/wallpaper change, so the greeter live-matches
+    # the desktop theme on both NixOS and Arch.
+    services.displayManager = {
+      defaultSession = lib.mkDefault "hyprland";
+      sddm = lib.mkIf config.services.saviorDesktop.sddm.enable {
+        enable = true;
+        theme = "/var/lib/savior-sddm/themes/savior";
+        wayland.enable = true;
+      };
+    };
+
+    # Seed the writable runtime theme dir from the store on every boot.
+    # The `d` rule creates the parent; the `C` rule copies the savior theme
+    # (0777 so the user's matugen post-hook can overwrite theme.conf/background.png)
+    # only if it does not exist yet, preserving the last generated theme across reboots.
+    systemd.tmpfiles.rules = lib.mkIf config.services.saviorDesktop.sddm.enable [
+      "d /var/lib/savior-sddm/themes 0755 - - -"
+      "C /var/lib/savior-sddm/themes/savior 0777 - - - ${saviorSddm}/share/sddm/themes/savior"
+    ];
+
+    # Register custom bundled fonts plus the project's standard font set system-wide
+    fonts.packages = with pkgs; [
+      saviorFonts
+      noto-fonts-color-emoji
+      cascadia-code
+      nerd-fonts.fira-code
+    ];
+
+    # System-wide packages required for desktop environment
+    environment.systemPackages = [
+      saviorSddm
+      pkgs.qt5.qtgraphicaleffects
+      pkgs.qt6.qtdeclarative
+      pkgs.qt6.qtsvg
+    ];
+  };
+}
