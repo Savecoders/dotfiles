@@ -2,8 +2,6 @@
 
 # Reload & Sync the Savior SDDM theme from the current wallpaper + Matugen palette.
 # Writes into the writable runtime theme dir that SDDM is configured to use
-# (Current=<absolute path> in sddm.conf). NixOS store dirs are read-only, so the
-# theme lives in /var/lib/savior-sddm/themes/savior on both NixOS and Arch.
 USER_HOME="$HOME"
 SDDM_THEME_USER="$USER_HOME/.config/sddm/themes/savior"
 RUNTIME_THEME="/var/lib/savior-sddm/themes/savior"

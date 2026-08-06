@@ -160,8 +160,10 @@ install_sddm_theme() {
   sudo mkdir -p /var/lib/savior-sddm/themes/savior
   sudo cp -r "${BASEDIR}/../config/sddm/themes/savior/." /var/lib/savior-sddm/themes/savior/
   sudo chmod -R 777 /var/lib/savior-sddm/themes/savior
+  sudo mkdir -p /usr/share/sddm/themes
+  sudo ln -snf /var/lib/savior-sddm/themes/savior /usr/share/sddm/themes/savior
   sudo mkdir -p /etc/sddm.conf.d/
-  echo -e "[Theme]\nCurrent=/var/lib/savior-sddm/themes/savior" | sudo tee /etc/sddm.conf.d/theme.conf >/dev/null
+  echo -e "[Theme]\nCurrent=savior\nThemeDir=/var/lib/savior-sddm/themes" | sudo tee /etc/sddm.conf.d/theme.conf >/dev/null
   echo "Savior SDDM Theme installed and configured."
 }
 
