@@ -1,5 +1,4 @@
 pragma Singleton
-
 import QtQuick
 import Quickshell
 import Quickshell.Io
@@ -16,6 +15,7 @@ Singleton {
             const pct = Math.max(0, Math.min(100, Math.round((p / maxBrightness) * 100)));
             if (pct !== brightnessPercent)
                 brightnessPercent = pct;
+
         }
     }
 
@@ -31,6 +31,7 @@ Singleton {
             const raw = parseInt(brightnessFile.text().trim());
             if (!isNaN(raw))
                 getBrightnessPercent(raw);
+
         }
     }
 
@@ -43,7 +44,8 @@ Singleton {
         stdout: SplitParser {
             onRead: (data) => {
                 if (!data)
-                    return;
+                    return ;
+
                 const parts = data.trim().split(",");
                 if (parts.length >= 5) {
                     const devName = parts[0];
@@ -57,6 +59,7 @@ Singleton {
 
                     if (!isNaN(currRaw))
                         root.getBrightnessPercent(currRaw);
+
                 }
             }
         }

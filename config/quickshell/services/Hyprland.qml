@@ -186,9 +186,12 @@ Singleton {
             onStreamFinished: {
                 try {
                     const parsed = JSON.parse(this.text);
-                    let tempWinByAddress = {};
-                    for (let win of parsed) tempWinByAddress[win.address] = win;
-                    let addrs = parsed.map((w) => w.address);
+                    let tempWinByAddress = {
+                    };
+                    for (let win of parsed) tempWinByAddress[win.address] = win
+                    let addrs = parsed.map((w) => {
+                        return w.address;
+                    });
                     Qt.callLater(() => {
                         root.windowList = parsed;
                         root.windowByAddress = tempWinByAddress;
@@ -197,7 +200,9 @@ Singleton {
                 } catch (e) {
                     console.error("Failed to parse clients:", e);
                 }
-                Qt.callLater(() => root.onProcFinished());
+                Qt.callLater(() => {
+                    return root.onProcFinished();
+                });
             }
         }
 
@@ -219,7 +224,9 @@ Singleton {
                 } catch (e) {
                     console.error("Failed to parse monitors:", e);
                 }
-                Qt.callLater(() => root.onProcFinished());
+                Qt.callLater(() => {
+                    return root.onProcFinished();
+                });
             }
         }
 
@@ -241,7 +248,9 @@ Singleton {
                 } catch (e) {
                     console.error("Failed to parse layers:", e);
                 }
-                Qt.callLater(() => root.onProcFinished());
+                Qt.callLater(() => {
+                    return root.onProcFinished();
+                });
             }
         }
 
@@ -257,9 +266,12 @@ Singleton {
             onStreamFinished: {
                 try {
                     const parsed = JSON.parse(this.text);
-                    let map = {};
-                    for (let ws of parsed) map[ws.id] = ws;
-                    let wsIds = parsed.map((ws) => ws.id);
+                    let map = {
+                    };
+                    for (let ws of parsed) map[ws.id] = ws
+                    let wsIds = parsed.map((ws) => {
+                        return ws.id;
+                    });
                     Qt.callLater(() => {
                         root.workspacesInfo = parsed;
                         root.workspaceById = map;
@@ -268,7 +280,9 @@ Singleton {
                 } catch (e) {
                     console.error("Failed to parse workspaces:", e);
                 }
-                Qt.callLater(() => root.onProcFinished());
+                Qt.callLater(() => {
+                    return root.onProcFinished();
+                });
             }
         }
 
@@ -290,7 +304,9 @@ Singleton {
                 } catch (e) {
                     console.error("Failed to parse active workspace:", e);
                 }
-                Qt.callLater(() => root.onProcFinished());
+                Qt.callLater(() => {
+                    return root.onProcFinished();
+                });
             }
         }
 

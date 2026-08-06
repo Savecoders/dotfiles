@@ -91,11 +91,11 @@ Singleton {
         list.forEach((notif) => {
             if (!groups[notif.appName])
                 groups[notif.appName] = {
-                    "appName": notif.appName,
-                    "appIcon": notif.appIcon,
-                    "notifications": [],
-                    "time": 0
-                };
+                "appName": notif.appName,
+                "appIcon": notif.appIcon,
+                "notifications": [],
+                "time": 0
+            };
 
             groups[notif.appName].notifications.push(notif);
             // Always set to the latest time in the group
@@ -311,9 +311,9 @@ Singleton {
                 root.playNotificationSound();
                 if (notification.expireTimeout != 0)
                     newNotifObject.timer = notifTimerComponent.createObject(root, {
-                        "notificationId": newNotifObject.notificationId,
-                        "interval": notification.expireTimeout < 0 ? (Config.settings.notifications.timeout ?? 7000) : notification.expireTimeout
-                    });
+                    "notificationId": newNotifObject.notificationId,
+                    "interval": notification.expireTimeout < 0 ? (Config.settings.notifications.timeout ?? 7000) : notification.expireTimeout
+                });
 
             }
             root.notify(newNotifObject);
@@ -328,14 +328,14 @@ Singleton {
     }
 
     FileView {
+        // Notification actions are meaningless if they're not tracked by the server or the sender is dead
+
         id: notifFileView
 
         path: Qt.resolvedUrl(filePath)
         onLoaded: {
             const fileContents = notifFileView.text();
             root.list = JSON.parse(fileContents).map((notif) => {
-                // Notification actions are meaningless if they're not tracked by the server or the sender is dead
-
                 return notifComponent.createObject(root, {
                     "notificationId": notif.notificationId,
                     "actions": [],

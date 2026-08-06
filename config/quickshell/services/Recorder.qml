@@ -76,7 +76,6 @@ Singleton {
             recorderExitCode = 0;
         }
     }
-
     onOutputFileChanged: {
         let cleanName = root.outputFile.trim();
         fullOutputFile = `${root.getNormalizedDir()}/${cleanName}`;
@@ -112,6 +111,7 @@ Singleton {
 
     Process {
         id: recorderProc
+
         running: false
         onExited: (exitCode) => {
             recorderExitCode = exitCode;
@@ -121,6 +121,7 @@ Singleton {
 
     Process {
         id: isRecordingRunningProc
+
         running: true
         command: ["pgrep", "wf-recorder"]
         onExited: (exitCode) => {
@@ -130,6 +131,7 @@ Singleton {
 
     Process {
         id: dateProc
+
         running: false
         command: ["date", "+%Y-%m-%d-%H-%M-%S"]
 
@@ -138,20 +140,16 @@ Singleton {
                 let clean = `${data}`.trim();
                 if (clean.length > 0)
                     root.outputFile = `capture_${clean}.mp4`;
+
             }
         }
+
     }
 
     Process {
         id: zenityPicker
+
         running: false
-        stdout: SplitParser {
-            onRead: (data) => {
-                let p = `${data}`.trim();
-                if (p.length > 0)
-                    root._tempPickedPath = p;
-            }
-        }
         onExited: (exitCode) => {
             if (exitCode === 0 && root._tempPickedPath.length > 0) {
                 let path = root._tempPickedPath;
@@ -160,15 +158,28 @@ Singleton {
             root._tempPickedPath = "";
             reopenTimer.restart();
         }
+
+        stdout: SplitParser {
+            onRead: (data) => {
+                let p = `${data}`.trim();
+                if (p.length > 0)
+                    root._tempPickedPath = p;
+
+            }
+        }
+
     }
 
     Timer {
         id: reopenTimer
+
         interval: 150
         repeat: false
         onTriggered: {
             if (!IPCLoader.isSettingsOpen)
                 IPCLoader.toggleSettings();
+
         }
     }
+
 }

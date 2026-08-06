@@ -39,6 +39,7 @@ Singleton {
                 root.isNightmodeOn = (String(data).trim() === "on");
             }
         }
+
     }
 
 }
