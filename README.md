@@ -27,11 +27,10 @@ Here are some details about my setup
 Here are some details about my setup:
 
 - **OS:** [Arch Linux](https://archlinux.org/)
-- **WM:** [awesome](https://github.com/awesomeWM/awesome) (Not Soported) and [Hyprland](https://wiki.hypr.land)
+- **WM:** [awesome](https://github.com/awesomeWM/awesome) (With Picom) and [Hyprland](https://wiki.hypr.land)
 - **Terminal:** [kitty](https://sw.kovidgoyal.net/kitty/)
 - **Shell:** [zsh](https://www.zsh.org/)
 - **Application Launcher:** [rofi](https://github.com/davatorium/rofi)
-- **Compositor:** [picom](https://github.com/yshui/picom)
 - **Editor:** [neovim](https://github.com/neovim/neovim) | [vscode](https://github.com/microsoft/vscode) | [zed](https://zed.dev/)
 - **System Font:** [SF Pro Display](https://github.com/sahibjotsagguSan-Francisco-Pro-Fonts)
 
@@ -49,8 +48,27 @@ cd dotfiles && git submodule update --remote --merge
 <b><h3>📥 Use the script</h3></b>
 
 ```sh
-chmod +x resources/install.sh && ./resources/install.sh
+chmod +x scripts/install.sh && ./scripts/install.sh
 ```
+
+<b><h3>📦 **NixOS** </h3></b>
+
+The repository ships a flake that reproduces the desktop declaratively on NixOS:
+
+```sh
+home-manager switch --flake .#save
+
+# NixOS system (import nix/modules + home-manager; add hardware-configuration.nix
+# and bootloader options in a real host)
+nixos-rebuild switch --flake .#desktop
+
+# Dev shell with Nix tooling
+nix develop
+```
+
+> [!NOTE]
+> `nixosConfigurations."desktop"` is a composable base: combine it with a
+> `hardware-configuration.nix`, bootloader and filesystem config for a full system.
 
 > [!WARNING]  
 > ⚠ Critical content demanding immediate user attention due to potential risks.
@@ -69,7 +87,7 @@ git clone https://github.com/BlingCorp/bling.git
 git clone https://github.com/Savecoders/simpleTheme-zsh-theme
 cp -r layout-machi/* dotfiles/config/awesome/modules/layout-machi/
 cp -r bling/* dotfiles/config/awesome/modules/bling/
-cp -r simpleTheme-zsh-theme/* dotfiles/misc/zsh/simpleTheme-zsh-theme
+cp -r simpleTheme-zsh-theme/* dotfiles/assets/zsh/Savior-zsh-theme
 ```
 
 </details>
@@ -109,9 +127,8 @@ cd dotfiles
 
 ```sh
 cp -r config/* ~/.config/
-cp -r misc/fonts/* ~/.local/share/fonts/
-cp -r misc/oh-my-zsh ~/.oh-my-zsh
-cp -r misc/.zshrc ~
+cp -r assets/fonts/* ~/.local/share/fonts/
+cp -r assets/zsh/.zshrc ~
 ```
 
 <b><h3> Use others rxfetch</h3></b>
@@ -231,36 +248,6 @@ and the other parts of code is the others devs :)
 - **wallpapers and profile**
   - by default wallpapers are found by theme - example: `theme.wallpaper = gfs.get_configuration_dir() .. "wallpapers/hands.jpg"` - in wallpapers folder add new wallpapers `awesome/wallpapers` - replace existing wallpapers with new ones in: `"wallpapers/new_walpapers.jpg"`
     <br>
-
-</details>
-
-<details close>
-    <summary>
-        <samp><b>Modules in aplication</b></samp>
-    </summary>
-<br>
-
-- **[Bling](https://blingcorp.github.io/bling/)**
-  - use in Playerctl widget, layout
-
-- **[Rubato](https://github.com/andOrlando/rubato)**
-  - Create animation for aweosmeWM
-
-- **[Better resize](https://github.com/JavaCafe01/dotfiles/blob/master/config/awesome/module/better-resize.lua)**
-  - An improved method of resizing clients in the tiled layout, and maded by [javacafe01](https://github.com/JavaCafe01)
-
-</details>
-
-<details open>
-    <summary>
-        <samp><b>Installation bugs</b></samp>
-    </summary>
-
-<br>
-
-- Installing to submodules git layout-machi
-  - clone the repo [layout-achi](https://github.com/xinhaoyuan/layout-machi)
-  - copy the content and page in ~/.config/awesome/modules/layout-machi
 
 </details>
 
