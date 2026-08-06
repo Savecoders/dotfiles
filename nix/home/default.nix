@@ -44,7 +44,9 @@ in {
     (lib.mkRenamedOptionModule
       [ "programs" "saviorDotfiles" "enableUserApps" ]
       [ "programs" "saviorDotfiles" "userApps" "enable" ])
-  ];
+  ]
+  # Official Vicinae module; only imported when the input is provided
+  ++ lib.optionals (inputs ? vicinae) [ inputs.vicinae.homeManagerModules.default ];
 
   options.programs.saviorDotfiles = {
     enable = lib.mkEnableOption "Savior dotfiles (AwesomeWM/Hyprland/Quickshell)";
@@ -98,7 +100,8 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkMerge [
+    (lib.mkIf cfg.enable {
     home.packages = [ saviorShell ]
     ++ coreDeps
     ++ toolsDeps
@@ -147,7 +150,6 @@ in {
       "picom".source = ../../config/picom;
       "ranger".source = ../../config/ranger;
       "rofi".source = ../../config/rofi;
-      "vicinae".source = ../../config/vicinae;
       "vscode".source = ../../config/vscode;
     }
     // lib.optionalAttrs (!cfg.matugen.enable) (lib.genAttrs matugenDirs (name: {
@@ -232,5 +234,44 @@ in {
 
       Install.WantedBy = [ "graphical-session.target" ];
     };
-  };
+    })
+    (lib.optionalAttrs (inputs ? vicinae) {
+      # Vicinae launcher ref: https://docs.vicinae.com/nixos
+      programs.vicinae = lib.mkIf (cfg.enable && cfg.userApps.enable) {
+        enable = true;
+        package = pkgs.vicinae;
+        systemd = {
+          enable = true;
+          autoStart = true;
+          environment = {
+            USE_LAYER_SHELL = 1;
+          };
+        };
+        settings = {
+          consider_preedit = false;
+          font.normal = {
+            family = "SF Pro Display";
+            size = 10.5;
+          };
+          theme.dark = {
+            name = "vicinae-dark";
+            icon_theme = "Mkos-Big-Sur";
+          };
+          launcher_window.opacity = 0.9;
+          providers = {
+            "@thomaslombart/store.raycast.github".preferences = {
+              includeTeamReviewRequests = false;
+              isOpenInBrowser = true;
+              repositoryCloneProtocol = "ssh";
+            };
+            applications.preferences.paths = [
+              "~/.local/share/applications"
+              "/usr/share/applications"
+            ];
+            clipboard.preferences.monitoring = true;
+          };
+        };
+      };
+    })
+  ];
 }

@@ -6,6 +6,10 @@ let
   saviorSddm = pkgs.savior-sddm;
   saviorFonts = pkgs.savior-fonts;
 in {
+  # Import the official Vicinae NixOS module when the input is provided, so the
+  # input-server setuid wrapper can be wired automatically below.
+  imports = lib.optionals (inputs ? vicinae) [ inputs.vicinae.nixosModules.default ];
+
   options.services.saviorDesktop = {
     enable = lib.mkEnableOption "Enable Savior NixOS System Desktop integration";
 
@@ -22,8 +26,8 @@ in {
     };
   };
 
-  config = lib.mkIf config.services.saviorDesktop.enable {
-    # Fix Bug #11: Define system.stateVersion
+  config = lib.mkMerge [
+    (lib.mkIf config.services.saviorDesktop.enable {
     system.stateVersion = lib.mkDefault "24.05";
 
     # Hardware, Power & Security System Services
@@ -110,5 +114,10 @@ in {
       pkgs.qt6.qtdeclarative
       pkgs.qt6.qtsvg
     ];
-  };
+    })
+    (lib.optionalAttrs (inputs ? vicinae) {
+      # Vicinae input-server setuid wrapper (auto-wired when the vicinae input is present)
+      programs.vicinae.input-server.package = lib.mkDefault pkgs.vicinae;
+    })
+  ];
 }

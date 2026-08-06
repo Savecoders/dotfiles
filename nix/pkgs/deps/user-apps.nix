@@ -1,5 +1,3 @@
-# Recommended user applications (enabled via enableUserApps option)
-# vicinae and herdr are only added when available in nixpkgs (they are AUR/upstream on Arch).
 { pkgs, lib }:
 
 with pkgs; [
@@ -17,5 +15,4 @@ with pkgs; [
   eza
   bat
   fzf
-] ++ lib.optionals (pkgs ? vicinae) [ pkgs.vicinae ]
-  ++ lib.optionals (pkgs ? herdr) [ pkgs.herdr ]
+] ++ lib.optionals (pkgs ? herdr) [ pkgs.herdr ]

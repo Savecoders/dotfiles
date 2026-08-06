@@ -16,6 +16,11 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
 
+    vicinae = {
+      url = "github:vicinaehq/vicinae";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # AwesomeWM Git Submodules
     bling = {
       url = "github:BlingCorp/bling";
@@ -28,7 +33,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, quickshell, hyprland, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, quickshell, hyprland, vicinae, ... }@inputs:
   let
     system = "x86_64-linux";
 
