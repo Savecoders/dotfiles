@@ -73,20 +73,19 @@ in {
       jack.enable = true;
       wireplumber.enable = true;
     };
-
-    # Display Manager Integration (SDDM) (Fix Bug #12: Added defaultSession)
-    #
-    # The greeter reads the theme from a WRITABLE runtime dir
     # (/var/lib/savior-sddm/themes/savior) instead of the read-only store.
     # Matugen's sddm-theme-reload post-hook rewrites theme.conf + background.png
-    # there after every palette/wallpaper change, so the greeter live-matches
-    # the desktop theme on both NixOS and Arch.
     services.displayManager = {
       defaultSession = lib.mkDefault "hyprland";
       sddm = lib.mkIf config.services.saviorDesktop.sddm.enable {
         enable = true;
-        theme = "/var/lib/savior-sddm/themes/savior";
+        theme = "savior";
         wayland.enable = true;
+        settings = {
+          Theme = {
+            ThemeDir = "/var/lib/savior-sddm/themes";
+          };
+        };
       };
     };
 
@@ -97,6 +96,7 @@ in {
     systemd.tmpfiles.rules = lib.mkIf config.services.saviorDesktop.sddm.enable [
       "d /var/lib/savior-sddm/themes 0755 - - -"
       "C /var/lib/savior-sddm/themes/savior 0777 - - - ${saviorSddm}/share/sddm/themes/savior"
+      "L+ /run/current-system/sw/share/sddm/themes/savior - - - - /var/lib/savior-sddm/themes/savior"
     ];
 
     # Register custom bundled fonts plus the project's standard font set system-wide
