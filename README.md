@@ -56,6 +56,7 @@ chmod +x scripts/install.sh && ./scripts/install.sh
 The repository ships a flake that reproduces the desktop declaratively on NixOS:
 
 ```sh
+# Personal convenience outputs (owner)
 home-manager switch --flake .#save
 
 # NixOS system (import nix/modules + home-manager; add hardware-configuration.nix
@@ -69,6 +70,42 @@ nix develop
 > [!NOTE]
 > `nixosConfigurations."desktop"` is a composable base: combine it with a
 > `hardware-configuration.nix`, bootloader and filesystem config for a full system.
+
+The flake is also a **self-contained module library** (styled after
+[DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell) and
+[Ambxst](https://github.com/Axenide/Ambxst)): import the modules in your own flake and
+set your own user — no repository edits needed:
+
+```nix
+# your-flake.nix
+{
+  inputs.savior.url = "github:Savecoders/dotfiles";
+  inputs.home-manager.url = "github:nix-community/home-manager";
+
+  outputs = { self, nixpkgs, home-manager, savior, ... }@inputs: {
+    nixosConfigurations.myhost = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
+      modules = [
+        home-manager.nixosModules.home-manager
+        savior.nixosModules.default            # system-level (SDDM, PipeWire, Hyprland, ...)
+        {
+          services.saviorDesktop.enable = true;
+          home-manager.users.YOUR_USER = {     # ← your user
+            imports = [ savior.homeManagerModules.default ];
+            programs.saviorDotfiles.enable = true;
+          };
+        }
+      ];
+    };
+  };
+}
+```
+
+> [!TIP]
+> All flake inputs are **optional**: the modules fall back to nixpkgs when a pinned
+> input (`hyprland`, `vicinae`, `bling`, `layout-machi`, `quickshell`) is absent. With
+> the `vicinae` input present, the NixOS module wires the input-server automatically.
 
 > [!WARNING]  
 > ⚠ Critical content demanding immediate user attention due to potential risks.
