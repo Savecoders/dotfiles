@@ -112,14 +112,14 @@ export PATH=$FLUTTER_HOME/bin:$PATH
 export CHROME_EXECUTABLE=/usr/bin/brave
 
 # pnpm
-export PNPM_HOME="/home/save/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
 *":$PNPM_HOME:"*) ;;
 *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
 # bun completions
-[ -s "/home/save/.bun/_bun" ] && source "/home/save/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"

@@ -8,13 +8,16 @@ Singleton {
     id: root
 
     property var wallpapersList: []
-    property string homeDir: Quickshell.env("HOME") || "/home/save"
+    property string homeDir: Quickshell.env("HOME") || ""
     property var _tempBuffer: []
 
     function cleanWallpaperPath(path) {
         let str = `${path}`;
         if (str.startsWith("file://"))
             str = str.substring(7);
+
+        if (str.startsWith("~/"))
+            str = root.homeDir + str.substring(1);
 
         return str;
     }
@@ -32,7 +35,6 @@ Singleton {
         let clean = cleanWallpaperPath(path);
         let secondPrev = `${Config.settings.previousWallpaper}`;
         let prev = `${Config.settings.currentWallpaper}`;
-
         // Update Config settings
         Config.pauseAutoSave = true;
         Config.updateKey("secondPreviousWallpaper", secondPrev);
@@ -40,10 +42,8 @@ Singleton {
         Config.updateKey("currentWallpaper", clean);
         Config.updateKey("wallpaperToSet", clean);
         Config.pauseAutoSave = false;
-
         // Update ~/.current.wall symlink
         Quickshell.execDetached(["sh", "-c", "ln -sf \"" + clean + "\" ~/.current.wall"]);
-
         // Run Matugen to regenerate themes
         Quickshell.execDetached(getMatugenArgs(clean));
         Quickshell.execDetached(["notify-send", "Wallpaper & Theme Updated", "New wallpaper and Matugen color palette applied."]);
@@ -77,19 +77,13 @@ Singleton {
     Process {
         id: scanProc
 
-        command: [
-          "sh",
-          "-c",
-          "find -L '" +
-          root.homeDir +
-          "/Pictures/Wallpapers' -type f \\( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' -o -name '*.webp' -o -name '*.JPG' -o -name '*.PNG' \\) | sort"
-        ]
-
+        command: ["sh", "-c", "find -L '" + root.homeDir + "/Pictures/Wallpapers' -type f \\( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' -o -name '*.webp' -o -name '*.JPG' -o -name '*.PNG' \\) | sort"]
         running: true
         onExited: {
             Qt.callLater(() => {
                 if (root._tempBuffer.length > 0)
                     root.wallpapersList = root._tempBuffer.slice();
+
             });
         }
 

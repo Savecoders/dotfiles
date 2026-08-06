@@ -36,7 +36,7 @@
         "lockscreenIsEnabled": true,
         "notifsIsEnabled": true
     },
-    "currentWallpaper": "/home/save/Pictures/Wallpapers/gruvbox/coffee-cup.jpg",
+    "currentWallpaper": "~/Pictures/Wallpapers/gruvbox/coffee-cup.jpg",
     "desktop": {
         "desktopRoundingShown": true,
         "dimDesktopWallpaper": false
@@ -76,17 +76,17 @@
     "pfpLocation": "~/.face",
     "plugins": {
     },
-    "previousWallpaper": "/home/save/Pictures/Wallpapers/gruvbox/girl_update_pc.png",
+    "previousWallpaper": "~/Pictures/Wallpapers/gruvbox/girl_update_pc.png",
     "recorder": {
         "encoder": "libx264",
         "output_loc": "~/Videos",
         "screen": "eDP-1"
     },
-    "secondPreviousWallpaper": "/home/save/Pictures/Wallpapers/dark/RDT_20260129_2058456592035500134510953.jpg",
+    "secondPreviousWallpaper": "~/Pictures/Wallpapers/dark/RDT_20260129_2058456592035500134510953.jpg",
     "shell": {
         "version": "1.0.0"
     },
     "usePfpInsteadOfLogo": false,
-    "wallpaperToSet": "/home/save/Pictures/Wallpapers/gruvbox/coffee-cup.jpg",
+    "wallpaperToSet": "~/Pictures/Wallpapers/gruvbox/coffee-cup.jpg",
     "weatherLocation": "Guayaquil"
 }
