@@ -9,7 +9,6 @@ Rectangle {
     property bool useDefaultRadius: true
 
     radius: useDefaultRadius ? Config.settings.borderRadius : root.radius
-
     color: {
         switch (variant) {
         case "pane":
@@ -25,7 +24,6 @@ Rectangle {
             return Colours.palette.surface;
         }
     }
-
     border.color: {
         switch (variant) {
         case "focus":

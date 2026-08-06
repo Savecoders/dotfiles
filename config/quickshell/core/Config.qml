@@ -17,12 +17,6 @@ Singleton {
     property bool blockWrites: false
     property bool pauseAutoSave: false
 
-    onPauseAutoSaveChanged: {
-        root.blockWrites = root.pauseAutoSave;
-        if (!root.pauseAutoSave)
-            configFileView.adapterUpdated();
-    }
-
     function updateKey(nestedKey, value) {
         let keys = nestedKey.split(".");
         let obj = root.runtime;
@@ -53,6 +47,13 @@ Singleton {
         }
         obj[keys[keys.length - 1]] = convertedValue;
         configFileView.adapterUpdated();
+    }
+
+    onPauseAutoSaveChanged: {
+        root.blockWrites = root.pauseAutoSave;
+        if (!root.pauseAutoSave)
+            configFileView.adapterUpdated();
+
     }
 
     Timer {
