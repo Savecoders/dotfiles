@@ -1,3 +1,4 @@
+
 {
   description = "Savior Dotfiles Flake for NixOS and Home Manager";
 
@@ -37,6 +38,11 @@
   let
     system = "x86_64-linux";
 
+   detectedUser = builtins.getEnv "USER";
+    username = if detectedUser != "" then detectedUser else "save";
+
+    stateVersion = "26.05";
+
     overlay = import ./nix/overlays/default.nix inputs;
 
     pkgs = import nixpkgs {
@@ -73,33 +79,27 @@
     };
 
     # Standalone Home Manager Configuration
-    homeConfigurations =
-      let
-        username = let u = builtins.getEnv "USER"; in if u != "" then u else "save";
-        homeDir = let h = builtins.getEnv "HOME"; in if h != "" then h else "/home/${username}";
-        mkHomeConfig = user: dir: home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = { inherit inputs; };
-          modules = [
-            self.homeManagerModules.default
-            {
-              home.username = lib.mkDefault user;
-              home.homeDirectory = lib.mkDefault dir;
-              home.stateVersion = lib.mkDefault "24.05";
-              programs.saviorDotfiles = {
-                enable = true;
-                wm.hyprland.enable = true;
-                wm.awesome.enable = true;
-                quickshell.enable = true;
-                matugen.enable = true;
-              };
-            }
-          ];
-        };
-      in {
-        "${username}" = mkHomeConfig username homeDir;
-        "save" = mkHomeConfig "save" "/home/save";
-      };
+    # Output name matches $USER automatically -> `home-manager switch --flake .#$(whoami) --impure`
+    homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      extraSpecialArgs = { inherit inputs; };
+      modules = [
+        self.homeManagerModules.default
+        {
+          home.username = username;
+          home.homeDirectory = "/home/${username}";
+          home.stateVersion = stateVersion;
+
+          programs.saviorDotfiles = {
+            enable = true;
+            wm.hyprland.enable = true;
+            wm.awesome.enable = true;
+            quickshell.enable = true;
+            matugen.enable = true;
+          };
+        }
+      ];
+    };
 
     # Complete NixOS System Configuration
     nixosConfigurations."desktop" = nixpkgs.lib.nixosSystem {
@@ -116,10 +116,21 @@
         home-manager.nixosModules.home-manager
         {
           services.saviorDesktop.enable = true;
+
+          # Creates the actual Linux account for $USER; without this, home-manager
+          # would be managing a user that doesn't exist on the system.
+          users.users.${username} = {
+            isNormalUser = true;
+            description = username;
+            extraGroups = [ "networkmanager" "wheel" "audio" "video" ];
+            shell = pkgs.zsh;
+          };
+
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.save = {
+          home-manager.users.${username} = {
             imports = [ self.homeManagerModules.default ];
+            home.stateVersion = stateVersion;
             programs.saviorDotfiles.enable = true;
           };
           home-manager.extraSpecialArgs = { inherit inputs; };
