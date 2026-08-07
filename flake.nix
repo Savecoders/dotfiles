@@ -73,22 +73,33 @@
     };
 
     # Standalone Home Manager Configuration
-    homeConfigurations."save" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = { inherit inputs; };
-      modules = [
-        self.homeManagerModules.default
-        {
-          programs.saviorDotfiles = {
-            enable = true;
-            wm.hyprland.enable = true;
-            wm.awesome.enable = true;
-            quickshell.enable = true;
-            matugen.enable = true;
-          };
-        }
-      ];
-    };
+    homeConfigurations =
+      let
+        username = let u = builtins.getEnv "USER"; in if u != "" then u else "save";
+        homeDir = let h = builtins.getEnv "HOME"; in if h != "" then h else "/home/${username}";
+        mkHomeConfig = user: dir: home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit inputs; };
+          modules = [
+            self.homeManagerModules.default
+            {
+              home.username = lib.mkDefault user;
+              home.homeDirectory = lib.mkDefault dir;
+              home.stateVersion = lib.mkDefault "24.05";
+              programs.saviorDotfiles = {
+                enable = true;
+                wm.hyprland.enable = true;
+                wm.awesome.enable = true;
+                quickshell.enable = true;
+                matugen.enable = true;
+              };
+            }
+          ];
+        };
+      in {
+        "${username}" = mkHomeConfig username homeDir;
+        "save" = mkHomeConfig "save" "/home/save";
+      };
 
     # Complete NixOS System Configuration
     nixosConfigurations."desktop" = nixpkgs.lib.nixosSystem {

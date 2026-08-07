@@ -102,7 +102,17 @@ in {
 
   config = lib.mkMerge [
     (lib.mkIf cfg.enable {
-    home.packages = [ saviorShell ]
+      home.stateVersion = lib.mkDefault "24.05";
+      home.username = lib.mkDefault (
+        let envUser = builtins.getEnv "USER";
+        in if envUser != "" then envUser else "save"
+      );
+      home.homeDirectory = lib.mkDefault (
+        let envHome = builtins.getEnv "HOME";
+        in if envHome != "" then envHome else "/home/${config.home.username}"
+      );
+
+      home.packages = [ saviorShell ]
     ++ coreDeps
     ++ toolsDeps
     ++ shellDeps
