@@ -28,7 +28,7 @@ in {
 
   config = lib.mkMerge [
     (lib.mkIf config.services.saviorDesktop.enable {
-    system.stateVersion = lib.mkDefault "24.05";
+    system.stateVersion = lib.mkDefault "26.05";
 
     # Hardware, Power & Security System Services
     security.polkit.enable = lib.mkDefault true;
@@ -62,7 +62,7 @@ in {
       package = lib.mkDefault (
         # Pinned flake input when present, otherwise the nixpkgs package
         if inputs ? hyprland
-        then inputs.hyprland.packages.${pkgs.system}.hyprland
+        then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
         else pkgs.hyprland
       );
       xwayland.enable = lib.mkDefault true;

@@ -6,7 +6,7 @@
 
 with pkgs; [
   (if inputs ? hyprland
-   then inputs.hyprland.packages.${pkgs.system}.hyprland
+   then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
    else pkgs.hyprland)
   hyprpaper
   hyprlock

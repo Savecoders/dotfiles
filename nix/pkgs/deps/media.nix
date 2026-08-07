@@ -5,7 +5,7 @@ with pkgs; [
   pipewire
   wireplumber
   mpd
-  mpc-cli
+  mpc
   mpdris2
   ncmpcpp
   cava

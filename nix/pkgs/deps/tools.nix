@@ -23,7 +23,6 @@ with pkgs; [
   xclip
   jq
   unzip
-  tar
   curl
   gsettings-desktop-schemas
   glib.bin

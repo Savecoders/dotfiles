@@ -13,7 +13,6 @@ pkgs.stdenvNoCC.mkDerivation {
   sourceRoot = ".";
 
   nativeBuildInputs = with pkgs; [
-    tar
     unzip
     xz
   ];

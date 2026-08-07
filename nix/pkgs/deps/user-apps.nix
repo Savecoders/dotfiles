@@ -3,13 +3,13 @@
 with pkgs; [
   kitty
   wezterm
-  rofi-wayland
+  rofi
   neovim
   zed-editor
   vscode
   obsidian
   brave
-  xfce.thunar
+  thunar
   btop
   fastfetch
   eza

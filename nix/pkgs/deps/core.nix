@@ -11,6 +11,6 @@ with pkgs; [
   qt5.qtgraphicaleffects
   qt5.qtquickcontrols2
   libsForQt5.qt5ct
-  qt6ct
+  qt6Packages.qt6ct
   libsForQt5.qtstyleplugin-kvantum
 ]
