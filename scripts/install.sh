@@ -311,8 +311,8 @@ echo "All icons processed."
 
 # GTK themes
 echo "Untarring and copying GTK themes..."
-mkdir -p "${HOME}/.themes" || {
-  echo "Error: Could not create ~/.themes. Exiting."
+mkdir -p "${HOME}/.local/share/themes" || {
+  echo "Error: Could not create ~/.local/share/themes. Exiting."
   exit 1
 }
 
@@ -354,15 +354,15 @@ extract_and_copy_themes() {
   top_level_dir=$(find "${extract_dir}" -maxdepth 1 -mindepth 1 -type d -print -quit)
 
   if [[ -n "$top_level_dir" ]]; then
-    echo "Copying extracted content from ${top_level_dir} to ${HOME}/.themes/..."
-    cp -r "${top_level_dir}" "${HOME}/.themes/" || {
-      echo "Error: Failed to copy extracted theme to ~/.themes/."
+    echo "Copying extracted content from ${top_level_dir} to ${HOME}/.local/share/themes/..."
+    cp -r "${top_level_dir}" "${HOME}/.local/share/themes/" || {
+      echo "Error: Failed to copy extracted theme to ~/.local/share/themes/."
       return 1
     }
   else
     echo "Warning: Could not find a single top-level directory in ${extract_dir}. Copying all contents directly."
-    cp -r "${extract_dir}"/* "${HOME}/.themes/" || {
-      echo "Error: Failed to copy extracted theme to ~/.themes/."
+    cp -r "${extract_dir}"/* "${HOME}/.local/share/themes/" || {
+      echo "Error: Failed to copy extracted theme to ~/.local/share/themes/."
       return 1
     }
   fi
@@ -379,6 +379,35 @@ extract_and_copy_themes "Colloid-Everforest.tar.xz"
 extract_and_copy_themes "Colloid-Nord.tar.xz"
 extract_and_copy_themes "Gruvbox-Dark-BL-LB.zip"
 extract_and_copy_themes "Colloid-Gruvbox.tar.xz"
+extract_and_copy_themes "adw-gtk3.tar.xz"
+
+# Configure adw-gtk3 GTK4 integration for Matugen colors.css
+setup_adw_gtk3_matugen() {
+  local target_local="${HOME}/.local/share/themes"
+  mkdir -p "$target_local" "${HOME}/.config/gtk-4.0"
+
+  local adw_dir="${target_local}/adw-gtk3/gtk-4.0"
+
+  if [[ -d "$adw_dir" ]]; then
+    echo "Configuring Matugen colors.css integration for adw-gtk3 in $adw_dir..."
+    touch "$HOME/.config/gtk-4.0/colors.css"
+    ln -sf "$HOME/.config/gtk-4.0/colors.css" "$adw_dir/colors.css"
+
+    for css_file in "$adw_dir/gtk.css" "$adw_dir/gtk-dark.css"; do
+      if [[ -f "$css_file" ]] && ! grep -q 'colors.css' "$css_file"; then
+        echo '@import url("colors.css");' >> "$css_file"
+      fi
+    done
+
+    ln -sf "$adw_dir/gtk.css" "$HOME/.config/gtk-4.0/gtk.css"
+    ln -sf "$adw_dir/gtk-dark.css" "$HOME/.config/gtk-4.0/gtk-dark.css"
+    ln -sf "$adw_dir/assets" "$HOME/.config/gtk-4.0/assets"
+    ln -sf "$adw_dir/libadwaita.css" "$HOME/.config/gtk-4.0/libadwaita.css"
+    ln -sf "$adw_dir/libadwaita-tweaks.css" "$HOME/.config/gtk-4.0/libadwaita-tweaks.css"
+  fi
+}
+
+setup_adw_gtk3_matugen
 
 echo "All GTK themes processed."
 echo "--- Script execution complete ---"
