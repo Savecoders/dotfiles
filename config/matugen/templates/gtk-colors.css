@@ -1,3 +1,8 @@
+* {
+  font-weight: 500;
+  font-family: "SF Pro Display", sans-serif;
+}
+
 @define-color accent_color {{colors.primary_fixed_dim.default.hex}};
 @define-color accent_fg_color {{colors.on_primary_fixed.default.hex}};
 @define-color accent_bg_color {{colors.primary_fixed_dim.default.hex}};
@@ -15,3 +20,19 @@
 @define-color sidebar_fg_color @window_fg_color;
 @define-color sidebar_border_color @window_bg_color;
 @define-color sidebar_backdrop_color @window_bg_color;
+
+.navigation-sidebar {
+  background-color: @sidebar_bg_color;
+  color: @window_fg_color;
+}
+
+headerbar.default-decoration {
+margin-bottom: 50px;
+margin-top: -100px;
+}
+
+
+window.csd, /* gtk4? */
+window.csd decoration { /* gtk3 */
+  box-shadow: none;
+}
