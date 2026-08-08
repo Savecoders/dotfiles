@@ -214,7 +214,24 @@ in {
         seed_file ${../../config/gtk-3.0/colors.css} "$HOME/.config/gtk-3.0/colors.css" preserve
         seed_file ${../../config/gtk-3.0/gtk.css} "$HOME/.config/gtk-3.0/gtk.css" replace
         seed_file ${../../config/gtk-4.0/colors.css} "$HOME/.config/gtk-4.0/colors.css" preserve
-        seed_file ${../../config/gtk-4.0/gtk.css} "$HOME/.config/gtk-4.0/gtk.css" replace
+
+        # Configure adw-gtk3 GTK4 symlinks & Matugen integration
+        ADW_LOCAL="$HOME/.local/share/themes/adw-gtk3/gtk-4.0"
+        if [ -d "$ADW_LOCAL" ]; then
+          ln -sf "$HOME/.config/gtk-4.0/colors.css" "$ADW_LOCAL/colors.css"
+          for css in "$ADW_LOCAL/gtk.css" "$ADW_LOCAL/gtk-dark.css"; do
+            if [ -f "$css" ] && ! grep -q 'colors.css' "$css"; then
+              echo '@import url("colors.css");' >> "$css"
+            fi
+          done
+          ln -sf "$ADW_LOCAL/gtk.css" "$HOME/.config/gtk-4.0/gtk.css"
+          ln -sf "$ADW_LOCAL/gtk-dark.css" "$HOME/.config/gtk-4.0/gtk-dark.css"
+          ln -sf "$ADW_LOCAL/assets" "$HOME/.config/gtk-4.0/assets"
+          ln -sf "$ADW_LOCAL/libadwaita.css" "$HOME/.config/gtk-4.0/libadwaita.css"
+          ln -sf "$ADW_LOCAL/libadwaita-tweaks.css" "$HOME/.config/gtk-4.0/libadwaita-tweaks.css"
+        else
+          seed_file ${../../config/gtk-4.0/gtk.css} "$HOME/.config/gtk-4.0/gtk.css" replace
+        fi
         ''}
       ) || { echo "seedWritableConfigs failed" >&2; exit 1; }
     '';
