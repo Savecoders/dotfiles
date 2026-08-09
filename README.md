@@ -57,11 +57,11 @@ The repository ships a flake that reproduces the desktop declaratively on NixOS:
 
 ```sh
 # Personal convenience outputs (owner)
-home-manager switch --flake .#save
+home-manager switch --flake .#$(whoami) --impure
 
 # NixOS system (import nix/modules + home-manager; add hardware-configuration.nix
 # and bootloader options in a real host)
-nixos-rebuild switch --flake .#desktop
+sudo nixos-rebuild switch --flake .#desktop --impure
 
 # Dev shell with Nix tooling
 nix develop
@@ -71,13 +71,7 @@ nix develop
 > `nixosConfigurations."desktop"` is a composable base: combine it with a
 > `hardware-configuration.nix`, bootloader and filesystem config for a full system.
 
-The flake is also a **self-contained module library** (styled after
-[DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell) and
-[Ambxst](https://github.com/Axenide/Ambxst)): import the modules in your own flake and
-set your own user — no repository edits needed:
-
 ```nix
-# your-flake.nix
 {
   inputs.savior.url = "github:Savecoders/dotfiles";
   inputs.home-manager.url = "github:nix-community/home-manager";
@@ -88,10 +82,10 @@ set your own user — no repository edits needed:
       specialArgs = { inherit inputs; };
       modules = [
         home-manager.nixosModules.home-manager
-        savior.nixosModules.default            # system-level (SDDM, PipeWire, Hyprland, ...)
+        savior.nixosModules.default
         {
           services.saviorDesktop.enable = true;
-          home-manager.users.YOUR_USER = {     # ← your user
+          home-manager.users.YOUR_USER = {
             imports = [ savior.homeManagerModules.default ];
             programs.saviorDotfiles.enable = true;
           };
