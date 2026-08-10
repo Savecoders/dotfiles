@@ -72,9 +72,9 @@ switch_workspace = "prefix+shift+1..9"
 split_vertical = "prefix+|"
 # split_horizontal = "prefix+minus"
 # close_pane = "prefix+x"
-zoom = "prefix+="        # legacy alias: fullscreen
+zoom = "prefix+="           # legacy alias: fullscreen
 resize_mode = "prefix+R"
-# toggle_sidebar = "prefix+b"
+toggle_sidebar = "prefix+b"
 
 # Navigate-mode movement. These local shortcuts win while navigate mode is open.
 # They are independent from focus_pane_*. Do not include prefix+, esc, enter, tab, or 1..9 here.
@@ -170,7 +170,7 @@ delivery = "herdr"
 delay_seconds = 1
 
 [ui.toast.herdr]
-position = "bottom-right"
+position = "top-right"
 
 [ui.toast.clipboard]
 # enabled = true
@@ -209,7 +209,7 @@ manage_ssh_config = true
 # allow_nested = false
 # Experimental local Kitty graphics rendering for attached clients.
 # Requires a Kitty graphics-compatible outer terminal.
-# kitty_graphics = false
+kitty_graphics = true
 # Save recent pane screen history across full server restarts.
 pane_history = false
 # While prefix mode is active, temporarily switch the macOS host input
