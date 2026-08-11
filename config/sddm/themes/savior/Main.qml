@@ -11,6 +11,7 @@ Rectangle {
     property bool isUnlocked: false
     property int userIndex: (typeof userModel !== "undefined" && userModel && userModel.lastIndex !== undefined && userModel.lastIndex >= 0) ? userModel.lastIndex : 0
     property string errorMessage: ""
+
     // OS Username & Real Name Resolver
     readonly property string currentUsername: {
         if (typeof userModel !== "undefined" && userModel) {
@@ -51,10 +52,33 @@ Rectangle {
         return "";
     }
 
+    FontLoader {
+        id: iconFontLoader
+        source: Qt.resolvedUrl("fonts/MaterialSymbolsRounded.ttf")
+    }
+
+    readonly property Theme theme: Theme {
+        primary: config.primary ? config.primary : "#87d6bd"
+        on_primary: config.on_primary ? config.on_primary : "#00382c"
+        primaryContainer: config.primary_container ? config.primary_container : "#005141"
+        on_primary_container: config.on_primary_container ? config.on_primary_container : "#a2f2d8"
+        primaryFixedDim: config.primary_fixed_dim ? config.primary_fixed_dim : "#90d1de"
+        error: config.error ? config.error : "#ffb4ab"
+        on_error: config.on_error ? config.on_error : "#690005"
+        on_surface: config.on_surface ? config.on_surface : "#dee4e0"
+        on_surface_variant: config.on_surface_variant ? config.on_surface_variant : "#bfc9c4"
+        surfaceContainerHigh: config.surface_container_high ? config.surface_container_high : "#252b29"
+        fontFamily: config.font ? config.font : "SF Pro Display"
+        iconFontFamily: (iconFontLoader.status === FontLoader.Ready && iconFontLoader.name !== "") ? iconFontLoader.name : (config.iconFont ? config.iconFont : "Material Symbols Rounded")
+        cardRadius: config.borderRadius ? Number(config.borderRadius) : 32
+    }
+
     width: Screen.width
     height: Screen.height
     color: config.surface ? config.surface : "#0f1512"
-    Component.onCompleted: {
+
+    function activateLogin() {
+        root.isUnlocked = true;
         loginPanel.focusPassword();
     }
 
@@ -92,18 +116,85 @@ Rectangle {
 
     }
 
-    Header {
+    // Dark Overlay & Global Click/Key Listener (idle → active state)
+    MouseArea {
+        anchors.fill: parent
+        z: -1
+        onClicked: root.activateLogin()
+    }
+
+    Item {
+        focus: true
+        Keys.onPressed: (event) => {
+            root.activateLogin();
+        }
+    }
+
+    ClockHeader {
         id: centeredHeader
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -80
+        theme: root.theme
+    }
+
+    Item {
+        id: unlockPrompt
+
+        width: 360
+        height: 44
+        opacity: root.isUnlocked ? 0 : 1
+        visible: opacity > 0
+
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            top: centeredHeader.bottom
+            topMargin: 36
+        }
+
+        Text {
+            anchors.centerIn: parent
+            text: "Click or press Enter to unlock"
+            color: Qt.rgba(1, 1, 1, 0.85)
+            font.family: root.theme.fontFamily
+            font.pixelSize: 16
+            font.weight: Font.Medium
+
+            SequentialAnimation on opacity {
+                running: !root.isUnlocked
+                loops: Animation.Infinite
+
+                NumberAnimation {
+                    to: 0.3
+                    duration: 1000
+                }
+
+                NumberAnimation {
+                    to: 1
+                    duration: 1000
+                }
+
+            }
+
+        }
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 250
+            }
+
+        }
+
     }
 
     RowLayout {
         id: bottomHorizontalBar
 
         spacing: 16
+        opacity: root.isUnlocked ? 1 : 0
+        scale: root.isUnlocked ? 1 : 0.95
+        visible: opacity > 0
 
         anchors {
             bottom: parent.bottom
@@ -111,12 +202,14 @@ Rectangle {
             horizontalCenter: parent.horizontalCenter
         }
 
-        LoginPanel {
+        LoginPill {
             id: loginPanel
 
+            theme: root.theme
             userName: root.currentRealName
             userLogin: root.currentUsername
             avatarPath: root.currentAvatarPath
+            avatarFallback: Qt.resolvedUrl("icon.png")
             canSwitchUser: typeof userModel !== "undefined" && userModel && userModel.rowCount && userModel.rowCount() > 1
             errorMessage: root.errorMessage
             onUserSwitchRequested: {
@@ -130,12 +223,14 @@ Rectangle {
                     sddm.login(username, password, powerBar.sessionIndex);
                 else
                     console.log("SDDM Login simulation:", username, password, powerBar.sessionIndex);
+
             }
         }
 
-        PowerBar {
+        PowerPill {
             id: powerBar
 
+            theme: root.theme
             sessionItems: (typeof sessionModel !== "undefined" && sessionModel) ? sessionModel : null
             sessionIndex: (typeof sessionModel !== "undefined" && sessionModel && sessionModel.lastIndex >= 0) ? sessionModel.lastIndex : 0
             onPowerOffClicked: {
@@ -155,13 +250,29 @@ Rectangle {
             }
         }
 
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 300
+            }
+
+        }
+
+        Behavior on scale {
+            NumberAnimation {
+                duration: 300
+                easing.type: Easing.OutBack
+            }
+
+        }
+
     }
 
-    Item {
-        focus: true
-        Keys.onPressed: (event) => {
-            loginPanel.focusPassword();
+    Connections {
+        function onLoginFailed() {
+            root.errorMessage = "Incorrect password";
         }
+
+        target: typeof sddm !== "undefined" ? sddm : null
     }
 
 }
