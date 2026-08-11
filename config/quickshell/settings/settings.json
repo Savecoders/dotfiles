@@ -32,7 +32,6 @@
         "barIsEnabled": true,
         "dashboardIsEnabled": true,
         "desktopIsEnabled": true,
-        "launcherIsEnabled": true,
         "lockscreenIsEnabled": true,
         "notifsIsEnabled": true
     },
