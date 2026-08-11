@@ -6,6 +6,11 @@ green = { color = "#a6e3a1", blend = true }
 yellow = { color = "#f9e2af", blend = true }
 blue = { color = "#89b4fa", blend = true }
 orange = { color = "#fab387", blend = true }
+pink = { color = "#f5c2e7", blend = true }
+teal = { color = "#94e2d5", blend = true }
+magenta = { color = "#cba6f7", blend = true }
+violet = { color = "#eba0ac", blend = true }
+dark_cyan = { color = "#74c7ec", blend = true }
 purple = { color = "#cba6f7", blend = true }
 
 [templates.kitty]
@@ -23,15 +28,15 @@ input_path = '~/.config/matugen/templates/vicinae.toml'
 output_path = '~/.local/share/vicinae/themes/matugen.toml'
 post_hook = 'vicinae theme set matugen'
 
-[templates.gtk3]
-input_path = '~/.config/matugen/templates/gtk-colors.css'
-output_path = '~/.config/gtk-3.0/colors.css'
-post_hook = 'gsettings set org.gnome.desktop.interface gtk-theme ""; gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3-{{mode}}'
-
 [templates.gtk4]
 input_path = '~/.config/matugen/templates/gtk-colors.css'
 output_path = '~/.config/gtk-4.0/colors.css'
 post_hook = '~/.config/matugen/scripts/gtk-themes-reload'
+
+[templates.gtk3]
+input_path = '~/.config/matugen/templates/gtk-colors.css'
+output_path = '~/.config/gtk-3.0/colors.css'
+post_hook = 'gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3"; gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3-{{mode}}'
 
 [templates.qt5tc]
 input_path = '~/.config/matugen/templates/qtct-colors.conf'
