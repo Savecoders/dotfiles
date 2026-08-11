@@ -90,18 +90,6 @@ Rectangle {
                 }
 
                 GenericToggleOption {
-                    message: "Launcher"
-                    option: Config.settings.componentControl.launcherIsEnabled
-                    toRun: () => {
-                        let val = !Config.settings.componentControl.launcherIsEnabled;
-                        Config.updateKey("componentControl.launcherIsEnabled", val);
-                        return val;
-                    }
-                    withIcon: true
-                    iconCode: "rocket_launch"
-                }
-
-                GenericToggleOption {
                     message: "Desktop"
                     option: Config.settings.componentControl.desktopIsEnabled
                     toRun: () => {

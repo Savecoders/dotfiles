@@ -6,7 +6,6 @@ import qs.features
 import qs.features.bar
 import qs.features.dashboard
 import qs.features.desktop
-import qs.features.launcher
 import qs.features.lockscreen
 import qs.features.notificationslist
 import qs.features.settings
@@ -57,15 +56,6 @@ Scope {
 
         sourceComponent: Dashboard {
             isDashboardOpen: IPCLoader.isDashboardOpen
-        }
-
-    }
-
-    Loader {
-        active: Config.settings.componentControl.launcherIsEnabled
-
-        sourceComponent: Launcher {
-            isLauncherOpen: IPCLoader.isLauncherOpen
         }
 
     }

@@ -10,7 +10,6 @@ Singleton {
 
     visibility: QtObject {
         property bool powermenu: false
-        property bool launcher: false
         property bool dashboard: false
         property bool sidebarRight: false
         property bool sidebarLeft: false

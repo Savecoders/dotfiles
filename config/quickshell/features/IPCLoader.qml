@@ -12,7 +12,6 @@ Singleton {
     property bool isBarOpen: true
     property bool isSettingsOpen: false
     property bool isDashboardOpen: false
-    property bool isLauncherOpen: false
     property bool isLockscreenOpen: false
     property bool isNotificationsOpen: false
 
@@ -36,13 +35,6 @@ Singleton {
             return ;
 
         root.isDashboardOpen = !root.isDashboardOpen;
-    }
-
-    function toggleLauncher() {
-        if (!Config.settings.componentControl.launcherIsEnabled && !root.isLauncherOpen)
-            return ;
-
-        root.isLauncherOpen = !root.isLauncherOpen;
     }
 
     function toggleLockscreen() {
@@ -70,12 +62,6 @@ Singleton {
         function onDashboardIsEnabledChanged() {
             if (!Config.settings.componentControl.dashboardIsEnabled)
                 root.isDashboardOpen = false;
-
-        }
-
-        function onLauncherIsEnabledChanged() {
-            if (!Config.settings.componentControl.launcherIsEnabled)
-                root.isLauncherOpen = false;
 
         }
 
@@ -109,10 +95,6 @@ Singleton {
 
         function toggleDashboard() {
             root.toggleDashboard();
-        }
-
-        function toggleLauncher() {
-            root.toggleLauncher();
         }
 
         function toggleLockscreen() {

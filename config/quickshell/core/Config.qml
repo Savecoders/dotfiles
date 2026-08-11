@@ -169,7 +169,6 @@ Singleton {
                 property bool dashboardIsEnabled: true
                 property bool lockscreenIsEnabled: true
                 property bool desktopIsEnabled: true
-                property bool launcherIsEnabled: true
             }
 
             recorder: JsonObject {

@@ -12,14 +12,6 @@ Singleton {
 
     IpcHandler {
         function toggle() {
-            IPCLoader.toggleLauncher();
-        }
-
-        target: "launcher"
-    }
-
-    IpcHandler {
-        function toggle() {
             IPCLoader.toggleDashboard();
         }
 
