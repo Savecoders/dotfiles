@@ -54,8 +54,10 @@ Rectangle {
     width: Screen.width
     height: Screen.height
     color: config.surface ? config.surface : "#0f1512"
+    Component.onCompleted: {
+        loginPanel.focusPassword();
+    }
 
-    // 1. Background Wallpaper Image (Synced with Quickshell ~/.current.wall via Matugen reload)
     Item {
         id: wallpaperContainer
 
@@ -90,248 +92,76 @@ Rectangle {
 
     }
 
-    // 2. Centered Idle Lock State (Clock & Date dead center at startup)
     Header {
         id: centeredHeader
 
-        anchors.centerIn: parent
-        opacity: root.isUnlocked ? 0 : 1
-        visible: opacity > 0
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 300
-            }
-
-        }
-
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: -80
     }
 
-    // Unlock Prompt (Visible at startup below centered clock)
-    Item {
-        id: unlockPrompt
+    RowLayout {
+        id: bottomHorizontalBar
 
-        width: 340
-        height: 44
-        opacity: root.isUnlocked ? 0 : 1
-        visible: opacity > 0
+        spacing: 16
 
         anchors {
+            bottom: parent.bottom
+            bottomMargin: 36
             horizontalCenter: parent.horizontalCenter
-            top: centeredHeader.bottom
-            topMargin: 36
         }
 
-        Text {
-            anchors.centerIn: parent
-            text: "Click or press Enter to unlock"
-            color: Qt.rgba(1, 1, 1, 0.85)
-            font.family: config.font ? config.font : "SF Pro Display"
-            font.pixelSize: 16
-            font.weight: Font.Medium
+        LoginPanel {
+            id: loginPanel
 
-            SequentialAnimation on opacity {
-                running: !root.isUnlocked
-                loops: Animation.Infinite
-
-                NumberAnimation {
-                    to: 0.3
-                    duration: 1000
-                }
-
-                NumberAnimation {
-                    to: 1
-                    duration: 1000
-                }
+            userName: root.currentRealName
+            userLogin: root.currentUsername
+            avatarPath: root.currentAvatarPath
+            canSwitchUser: typeof userModel !== "undefined" && userModel && userModel.rowCount && userModel.rowCount() > 1
+            errorMessage: root.errorMessage
+            onUserSwitchRequested: {
+                if (typeof userModel !== "undefined" && userModel && userModel.rowCount && userModel.rowCount() > 1)
+                    root.userIndex = (root.userIndex + 1) % userModel.rowCount();
 
             }
-
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                root.isUnlocked = true;
-                loginPanel.focusPassword();
+            onLoginRequested: (username, password) => {
+                root.errorMessage = "";
+                if (typeof sddm !== "undefined")
+                    sddm.login(username, password, powerBar.sessionIndex);
+                else
+                    console.log("SDDM Login simulation:", username, password, powerBar.sessionIndex);
             }
         }
 
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 250
-            }
+        PowerBar {
+            id: powerBar
 
+            sessionItems: (typeof sessionModel !== "undefined" && sessionModel) ? sessionModel : null
+            sessionIndex: (typeof sessionModel !== "undefined" && sessionModel && sessionModel.lastIndex >= 0) ? sessionModel.lastIndex : 0
+            onPowerOffClicked: {
+                if (typeof sddm !== "undefined")
+                    sddm.powerOff();
+
+            }
+            onRebootClicked: {
+                if (typeof sddm !== "undefined")
+                    sddm.reboot();
+
+            }
+            onSuspendClicked: {
+                if (typeof sddm !== "undefined")
+                    sddm.suspend();
+
+            }
         }
 
     }
 
-    // 3. Side-by-Side Main Layout (Revealed on Click / Key press / Enter)
-    // Left: Clock & Date | Right: Form (Login Panel + Power Bar)
-    RowLayout {
-        id: mainSideBySideRow
-
-        anchors.centerIn: parent
-        spacing: 72
-        opacity: root.isUnlocked ? 1 : 0
-        scale: root.isUnlocked ? 1 : 0.95
-        visible: opacity > 0
-
-        // LEFT: Clock & Date
-        Header {
-            id: sideHeader
-
-            Layout.alignment: Qt.AlignVCenter
-        }
-
-        // RIGHT: Form Container (Login Panel + Power Bar)
-        ColumnLayout {
-            id: formContainer
-
-            spacing: 18
-            Layout.alignment: Qt.AlignVCenter
-
-            // Login Panel
-            LoginPanel {
-                id: loginPanel
-
-                userName: root.currentRealName
-                userLogin: root.currentUsername
-                avatarPath: root.currentAvatarPath
-                canSwitchUser: typeof userModel !== "undefined" && userModel && userModel.rowCount && userModel.rowCount() > 1
-                errorMessage: root.errorMessage
-                onUserSwitchRequested: {
-                    if (typeof userModel !== "undefined" && userModel && userModel.rowCount && userModel.rowCount() > 1)
-                        root.userIndex = (root.userIndex + 1) % userModel.rowCount();
-
-                }
-                onLoginRequested: (username, password) => {
-                    root.errorMessage = "";
-                    if (typeof sddm !== "undefined")
-                        sddm.login(username, password, powerBar.sessionIndex);
-                    else
-                        console.log("SDDM Login simulation:", username, password, powerBar.sessionIndex);
-                }
-            }
-
-            // Quick Actions & Power Bar
-            PowerBar {
-                id: powerBar
-
-                sessionItems: (typeof sessionModel !== "undefined" && sessionModel) ? sessionModel : null
-                sessionIndex: (typeof sessionModel !== "undefined" && sessionModel && sessionModel.lastIndex >= 0) ? sessionModel.lastIndex : 0
-                onPowerOffClicked: {
-                    if (typeof sddm !== "undefined")
-                        sddm.powerOff();
-
-                }
-                onRebootClicked: {
-                    if (typeof sddm !== "undefined")
-                        sddm.reboot();
-
-                }
-                onSuspendClicked: {
-                    if (typeof sddm !== "undefined")
-                        sddm.suspend();
-
-                }
-            }
-
-        }
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 400
-            }
-
-        }
-
-        Behavior on scale {
-            NumberAnimation {
-                duration: 400
-                easing.type: Easing.OutBack
-            }
-
-        }
-
-    }
-
-    // Global Key Listener (Reveals form on any key / Enter)
     Item {
         focus: true
         Keys.onPressed: (event) => {
-            if (!root.isUnlocked) {
-                root.isUnlocked = true;
-                loginPanel.focusPassword();
-            }
+            loginPanel.focusPassword();
         }
-    }
-
-    // Global Mouse Area (Reveals form when clicking screen)
-    MouseArea {
-        anchors.fill: parent
-        z: -1
-        onClicked: {
-            if (!root.isUnlocked) {
-                root.isUnlocked = true;
-                loginPanel.focusPassword();
-            }
-        }
-    }
-
-    // SDDM Event Handlers
-    Connections {
-        function onLoginFailed() {
-            root.errorMessage = "Incorrect Password";
-            loginPanel.password = "";
-            shakeAnimation.start();
-        }
-
-        function onLoginSucceeded() {
-            root.errorMessage = "";
-        }
-
-        target: typeof sddm !== "undefined" ? sddm : null
-    }
-
-    // Shake Animation on wrong password
-    SequentialAnimation {
-        id: shakeAnimation
-
-        NumberAnimation {
-            target: formContainer
-            property: "anchors.horizontalCenterOffset"
-            to: -12
-            duration: 50
-        }
-
-        NumberAnimation {
-            target: formContainer
-            property: "anchors.horizontalCenterOffset"
-            to: 12
-            duration: 50
-        }
-
-        NumberAnimation {
-            target: formContainer
-            property: "anchors.horizontalCenterOffset"
-            to: -8
-            duration: 50
-        }
-
-        NumberAnimation {
-            target: formContainer
-            property: "anchors.horizontalCenterOffset"
-            to: 8
-            duration: 50
-        }
-
-        NumberAnimation {
-            target: formContainer
-            property: "anchors.horizontalCenterOffset"
-            to: 0
-            duration: 50
-        }
-
     }
 
 }
