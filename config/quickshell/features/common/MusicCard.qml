@@ -8,26 +8,25 @@ import Quickshell.Widgets
 import Quickshell.Services.Mpris
 import qs.services
 import qs.core
-import qs.features.common
-import qs.features
 
 ClippingWrapperRectangle {
     id: root
 
-    property int fHeight: 88
+    property int cardHeight: 64
+    property real cardRadius: (Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 4
+    property color cardColor: Qt.rgba(0, 0, 0, 0.5)
+    property color borderColor: Qt.rgba(1, 1, 1, 0.15)
 
-    Layout.fillWidth: true
-    Layout.leftMargin: 20
-    Layout.rightMargin: 20
-    Layout.preferredHeight: fHeight
-    radius: Math.max(4, Config.settings.borderRadius - 8)
-    color: Qt.alpha(Colours.palette.surface, 0.85)
-    border.color: Qt.alpha(Colours.palette.outline, 0.25)
+    implicitHeight: cardHeight
+    radius: cardRadius
+    color: cardColor
+    border.color: borderColor
     border.width: 1
 
     Item {
         anchors.fill: parent
 
+        // Blurred Album Art Background
         Image {
             id: bgArt
 
@@ -54,26 +53,28 @@ ClippingWrapperRectangle {
         // Dark Overlay
         Rectangle {
             anchors.fill: parent
-            color: Qt.alpha(Colours.palette.surface_container, 0.55)
+            color: Qt.rgba(0, 0, 0, 0.35)
             radius: root.radius
         }
 
-        // 2. Main Media Card Row Layout
+        // Main Media Card Row Layout
         RowLayout {
             anchors.fill: parent
-            anchors.leftMargin: 14
-            anchors.rightMargin: 14
-            spacing: 12
+            anchors.leftMargin: 12
+            anchors.rightMargin: 12
+            spacing: 10
 
             // Circular Album Art
             ClippingWrapperRectangle {
                 id: art
 
+                readonly property real artSize: Math.max(36, root.cardHeight - 22)
+
                 radius: 1000
-                Layout.preferredWidth: 50
-                Layout.preferredHeight: 50
+                Layout.preferredWidth: artSize
+                Layout.preferredHeight: artSize
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                color: Colours.palette.surface_container
+                color: Qt.rgba(0, 0, 0, 0.4)
 
                 Item {
                     anchors.fill: parent
@@ -94,7 +95,7 @@ ClippingWrapperRectangle {
                         color: Colours.palette.outline
                         text: "music_note"
                         font.family: Config.settings.iconFont
-                        font.pixelSize: 22
+                        font.pixelSize: Math.round(art.artSize * 0.45)
                     }
 
                 }
@@ -109,19 +110,19 @@ ClippingWrapperRectangle {
 
                 Text {
                     visible: Media.activePlayer == null
-                    font.pixelSize: 14
+                    font.pixelSize: root.cardHeight > 70 ? 14 : 13
                     font.family: Config.settings.font
-                    font.weight: 600
-                    color: Qt.alpha(Colours.palette.on_surface, 0.7)
+                    font.weight: Font.DemiBold
+                    color: Qt.rgba(1, 1, 1, 0.7)
                     text: "No media playing"
                 }
 
                 Text {
                     visible: Media.activePlayer != null
-                    font.pixelSize: 14
+                    font.pixelSize: root.cardHeight > 70 ? 14 : 13
                     font.family: Config.settings.font
-                    font.weight: 700
-                    color: Colours.palette.on_surface
+                    font.weight: Font.Bold
+                    color: Qt.rgba(1, 1, 1, 0.95)
                     text: Media.stableTitle || "Untitled"
                     elide: Text.ElideRight
                     Layout.fillWidth: true
@@ -129,9 +130,9 @@ ClippingWrapperRectangle {
 
                 Text {
                     visible: Media.activePlayer != null
-                    font.pixelSize: 12
+                    font.pixelSize: root.cardHeight > 70 ? 12 : 11
                     font.family: Config.settings.font
-                    color: Qt.alpha(Colours.palette.on_surface, 0.7)
+                    color: Qt.rgba(1, 1, 1, 0.7)
                     text: Media.stableArtist || "Unknown Artist"
                     elide: Text.ElideRight
                     Layout.fillWidth: true
@@ -139,7 +140,7 @@ ClippingWrapperRectangle {
 
             }
 
-            // Controls
+            // Media Controls
             RowLayout {
                 visible: Media.activePlayer != null
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -152,12 +153,13 @@ ClippingWrapperRectangle {
                             Media.activePlayer.previous();
 
                     }
-                    width: 32
-                    height: 32
-                    bgColour: Qt.alpha(Colours.palette.surface, 0.4)
-                    colour: Colours.palette.on_surface
-                    bgColourHovered: Colours.palette.surface_container_highest
-                    colourHovered: Colours.palette.on_surface
+                    width: root.cardHeight > 70 ? 32 : 30
+                    height: root.cardHeight > 70 ? 32 : 30
+                    radius: Math.max(2, root.cardRadius - 2)
+                    bgColour: Qt.rgba(0, 0, 0, 0.35)
+                    colour: Qt.rgba(1, 1, 1, 0.9)
+                    bgColourHovered: Qt.rgba(1, 1, 1, 0.2)
+                    colourHovered: "#ffffff"
                 }
 
                 PlayerControl {
@@ -167,8 +169,9 @@ ClippingWrapperRectangle {
                             Media.activePlayer.togglePlaying();
 
                     }
-                    width: 36
-                    height: 36
+                    width: root.cardHeight > 70 ? 36 : 30
+                    height: root.cardHeight > 70 ? 36 : 30
+                    radius: Math.max(2, root.cardRadius - 2)
                     bgColour: Colours.palette.primary
                     colour: Colours.palette.on_primary
                     bgColourHovered: Qt.alpha(Colours.palette.primary, 0.85)
@@ -182,12 +185,13 @@ ClippingWrapperRectangle {
                             Media.activePlayer.next();
 
                     }
-                    width: 32
-                    height: 32
-                    bgColour: Qt.alpha(Colours.palette.surface, 0.4)
-                    colour: Colours.palette.on_surface
-                    bgColourHovered: Colours.palette.surface_container_highest
-                    colourHovered: Colours.palette.on_surface
+                    width: root.cardHeight > 70 ? 32 : 30
+                    height: root.cardHeight > 70 ? 32 : 30
+                    radius: Math.max(2, root.cardRadius - 2)
+                    bgColour: Qt.rgba(0, 0, 0, 0.35)
+                    colour: Qt.rgba(1, 1, 1, 0.9)
+                    bgColourHovered: Qt.rgba(1, 1, 1, 0.2)
+                    colourHovered: "#ffffff"
                 }
 
             }
