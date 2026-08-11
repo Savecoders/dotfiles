@@ -42,7 +42,6 @@ Rectangle {
             }
 
             Item {
-                visible: !root.collapsed
                 Layout.fillWidth: true
             }
 
@@ -81,6 +80,11 @@ Rectangle {
 
                 }
 
+            }
+
+            Item {
+                visible: root.collapsed
+                Layout.fillWidth: true
             }
 
         }

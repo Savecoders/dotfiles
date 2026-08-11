@@ -160,7 +160,11 @@ Loader {
                                 Toggles {
                                 }
 
-                                Music {
+                                MusicCard {
+                                    cardHeight: 88
+                                    Layout.fillWidth: true
+                                    Layout.leftMargin: 20
+                                    Layout.rightMargin: 20
                                 }
 
                                 Sliders {
