@@ -5,7 +5,7 @@ pkgs.stdenvNoCC.mkDerivation {
   pname = "savior-sddm-theme";
   version = "1.0.0";
 
-  src = ../../config/sddm/themes/savior;
+  src = ../../.;
 
   dontBuild = true;
 
@@ -13,7 +13,8 @@ pkgs.stdenvNoCC.mkDerivation {
     runHook preInstall
 
     mkdir -p $out/share/sddm/themes/savior
-    cp -r * $out/share/sddm/themes/savior/
+    cp -r config/sddm/themes/savior/. $out/share/sddm/themes/savior/
+    cp -r config/quickshell/features/common/lock/. $out/share/sddm/themes/savior/components/
 
     runHook postInstall
   '';

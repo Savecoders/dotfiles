@@ -159,6 +159,9 @@ install_sddm_theme() {
   # SDDM reflects the current wallpaper + palette on the greeter.
   sudo mkdir -p /var/lib/savior-sddm/themes/savior
   sudo cp -r "${BASEDIR}/../config/sddm/themes/savior/." /var/lib/savior-sddm/themes/savior/
+  # Assemble shared lock UI kit (single source of truth under config/quickshell)
+  sudo mkdir -p /var/lib/savior-sddm/themes/savior/components
+  sudo cp -r "${BASEDIR}/../config/quickshell/features/common/lock/." /var/lib/savior-sddm/themes/savior/components/
   sudo chmod -R 777 /var/lib/savior-sddm/themes/savior
   sudo mkdir -p /usr/share/sddm/themes
   sudo ln -snf /var/lib/savior-sddm/themes/savior /usr/share/sddm/themes/savior
@@ -200,6 +203,12 @@ mkdir -p "${HOME}/.config/" || {
 }
 cp -r "${BASEDIR}/../config/"* "${HOME}/.config/" || {
   echo "Error: Failed to copy config files. Exiting."
+  exit 1
+}
+# Assemble shared lock UI kit into the user SDDM theme (Matugen palette target)
+mkdir -p "${HOME}/.config/sddm/themes/savior/components"
+cp -r "${BASEDIR}/../config/quickshell/features/common/lock/." "${HOME}/.config/sddm/themes/savior/components/" || {
+  echo "Error: Failed to assemble sddm theme components. Exiting."
   exit 1
 }
 echo "Config files copied."
