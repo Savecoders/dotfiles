@@ -141,7 +141,7 @@ Rectangle {
                 spacing: 12
 
                 model: ScriptModel {
-                    values: [...Notifications.list].reverse()
+                    values: (Notifications.list || []).slice().reverse()
                 }
 
                 add: Transition {

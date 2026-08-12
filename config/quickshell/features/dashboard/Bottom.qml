@@ -48,7 +48,7 @@ Rectangle {
         height: 30
         width: hovered ? 47 : 45
         anchors.left: parent.left
-        anchors.leftMargin: 20
+        anchors.leftMargin: 0
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 15
         color: getColour()
@@ -169,7 +169,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 15
         anchors.right: parent.right
-        anchors.rightMargin: 20
+        anchors.rightMargin: 0
         height: 30
         width: 30
         color: hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container

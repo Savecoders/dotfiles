@@ -18,7 +18,7 @@ Rectangle {
     property int fHeight: 184
     property int spacing: 10
     property int rowHeight: 87
-    readonly property int availWidth: Math.max(380, (parent ? parent.width : 515) - 40)
+    readonly property int availWidth: root.width > 0 ? root.width : 475
     readonly property int row1WideWidth: Math.floor((availWidth - 2 * spacing) * 0.5)
     readonly property int row1CubeWidth: Math.floor((availWidth - 2 * spacing) * 0.25)
     readonly property int row1CubeWidthLast: (availWidth - 2 * spacing) - row1WideWidth - row1CubeWidth

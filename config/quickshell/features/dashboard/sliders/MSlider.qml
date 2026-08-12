@@ -35,7 +35,7 @@ Slider {
             anchors.leftMargin: -parent.height / 2
             anchors.right: parent.right
             radius: 3
-            color: slider.isHovered ? Colours.palette.surface_container_high : Qt.alpha(Colours.palette.surface_container, 0.8)
+            color: slider.isHovered ? Colours.palette.surface_container_highest : Qt.alpha(Colours.palette.surface_container_high, 0.9)
 
             Behavior on color {
                 ColorAnimation {
@@ -53,7 +53,7 @@ Slider {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: parent.left
-            width: Math.max(parent.height, Math.min(parent.width, slider.position * parent.width))
+            width: Math.max(parent.height, Math.min(parent.width, ((slider.value - slider.from) / Math.max(1, slider.to - slider.from)) * parent.width))
             radius: slider.isHovered ? Math.max(4, Config.settings.borderRadius - 6) : Math.max(4, Config.settings.borderRadius - 10)
             color: {
                 if (!slider.isEnabled)
