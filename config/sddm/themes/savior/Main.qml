@@ -11,7 +11,6 @@ Rectangle {
     property bool isUnlocked: false
     property int userIndex: (typeof userModel !== "undefined" && userModel && userModel.lastIndex !== undefined && userModel.lastIndex >= 0) ? userModel.lastIndex : 0
     property string errorMessage: ""
-
     // OS Username & Real Name Resolver
     readonly property string currentUsername: {
         if (typeof userModel !== "undefined" && userModel) {
@@ -51,13 +50,8 @@ Rectangle {
         }
         return "";
     }
-
-    FontLoader {
-        id: iconFontLoader
-        source: Qt.resolvedUrl("fonts/MaterialSymbolsRounded.ttf")
-    }
-
-    readonly property Theme theme: Theme {
+    readonly property Theme
+    theme: Theme {
         primary: config.primary ? config.primary : "#87d6bd"
         on_primary: config.on_primary ? config.on_primary : "#00382c"
         primaryContainer: config.primary_container ? config.primary_container : "#005141"
@@ -73,13 +67,19 @@ Rectangle {
         cardRadius: config.borderRadius ? Number(config.borderRadius) : 32
     }
 
+    function activateLogin() {
+        root.isUnlocked = true;
+        loginPanel.focusPassword();
+    }
+
     width: Screen.width
     height: Screen.height
     color: config.surface ? config.surface : "#0f1512"
 
-    function activateLogin() {
-        root.isUnlocked = true;
-        loginPanel.focusPassword();
+    FontLoader {
+        id: iconFontLoader
+
+        source: Qt.resolvedUrl("fonts/MaterialSymbolsRounded.ttf")
     }
 
     Item {
@@ -223,7 +223,6 @@ Rectangle {
                     sddm.login(username, password, powerBar.sessionIndex);
                 else
                     console.log("SDDM Login simulation:", username, password, powerBar.sessionIndex);
-
             }
         }
 
