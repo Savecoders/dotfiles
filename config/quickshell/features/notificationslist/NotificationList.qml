@@ -58,7 +58,7 @@ Scope {
                 spacing: 12
 
                 model: ScriptModel {
-                    values: [...Notifications.popupList].reverse().slice(0, root.maxPopups)
+                    values: (Notifications.popupList || []).slice().reverse().slice(0, root.maxPopups)
                 }
 
                 Behavior on implicitWidth {

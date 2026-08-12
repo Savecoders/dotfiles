@@ -9,16 +9,16 @@ Rectangle {
 
     signal clicked()
 
-    Theme {
-        id: themeDefault
-    }
-
     width: 40
     height: 40
     radius: Math.max(2, root.theme.innerRadius)
     color: mouse.containsMouse ? (root.danger ? Qt.alpha(root.theme.error, 0.4) : root.theme.hoverOverlay) : root.theme.pillColor
     border.color: root.danger ? (mouse.containsMouse ? root.theme.error : root.theme.pillBorderColor) : root.theme.pillBorderColor
     border.width: 1
+
+    Theme {
+        id: themeDefault
+    }
 
     Text {
         text: root.iconName

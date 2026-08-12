@@ -16,7 +16,6 @@ Rectangle {
     id: root
 
     required property LockContext context
-
     // Reactive Lockscreen Settings & Border Radius bindings from Config.settings
     readonly property bool showClock: Config.settings && Config.settings.lockscreen ? (Config.settings.lockscreen.showClock !== false) : true
     readonly property bool showDate: Config.settings && Config.settings.lockscreen ? (Config.settings.lockscreen.showDate !== false) : true
@@ -26,13 +25,8 @@ Rectangle {
     readonly property bool showPowerBtn: Config.settings && Config.settings.lockscreen ? (Config.settings.lockscreen.showPowerBtn !== false) : true
     readonly property real configBorderRadius: (Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 4
     readonly property real cardRadius: root.configBorderRadius
-
-    FontLoader {
-        id: iconFontLoader
-        source: Qt.resolvedUrl(Quickshell.shellDir + "/assets/fonts/MaterialSymbolsRounded.ttf")
-    }
-
-    readonly property Theme theme: Theme {
+    readonly property Theme
+    theme: Theme {
         primary: Colours.palette.primary ? Colours.palette.primary : "#87d6bd"
         on_primary: Colours.palette.on_primary ? Colours.palette.on_primary : "#00382c"
         primaryContainer: Colours.palette.primary_container ? Colours.palette.primary_container : "#005141"
@@ -66,11 +60,17 @@ Rectangle {
         return "";
     }
 
-    color: Colours.palette.background
-
     function activateLogin() {
         root.isUnlocked = true;
         loginPill.focusPassword();
+    }
+
+    color: Colours.palette.background
+
+    FontLoader {
+        id: iconFontLoader
+
+        source: Qt.resolvedUrl(Quickshell.shellDir + "/assets/fonts/MaterialSymbolsRounded.ttf")
     }
 
     Image {
@@ -129,7 +129,6 @@ Rectangle {
         clockFormat: "HH:mm"
         dateFormat: "dddd, MMMM d"
     }
-
 
     Item {
         id: unlockPrompt
@@ -195,6 +194,7 @@ Rectangle {
             horizontalCenter: parent.horizontalCenter
         }
         // Music card left
+
         Item {
             visible: root.showMedia
             implicitWidth: 340

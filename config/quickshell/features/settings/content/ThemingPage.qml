@@ -446,16 +446,16 @@ Rectangle {
                     maxValue: 30
                     minValue: 5
                     amountIncrease: () => {
-                        if (Config.settings.borderRadius < 30) {
-                            Config.settings.borderRadius += 1;
-                            Config.updateKey("borderRadius", Config.settings.borderRadius);
-                        }
+                        let cur = Config.settings.borderRadius ?? 8;
+                        if (cur < 30)
+                            Config.updateKey("borderRadius", cur + 1);
+
                     }
                     amountDecrease: () => {
-                        if (Config.settings.borderRadius > 5) {
-                            Config.settings.borderRadius -= 1;
-                            Config.updateKey("borderRadius", Config.settings.borderRadius);
-                        }
+                        let cur = Config.settings.borderRadius ?? 8;
+                        if (cur > 5)
+                            Config.updateKey("borderRadius", cur - 1);
+
                     }
                     withIcon: true
                     iconCode: "rounded_corner"
@@ -467,16 +467,16 @@ Rectangle {
                     maxValue: 1000
                     minValue: 50
                     amountIncrease: () => {
-                        if (Config.settings.animationSpeed < 1000) {
-                            Config.settings.animationSpeed += 25;
-                            Config.updateKey("animationSpeed", Config.settings.animationSpeed);
-                        }
+                        let cur = Config.settings.animationSpeed ?? 200;
+                        if (cur < 1000)
+                            Config.updateKey("animationSpeed", cur + 25);
+
                     }
                     amountDecrease: () => {
-                        if (Config.settings.animationSpeed > 50) {
-                            Config.settings.animationSpeed -= 25;
-                            Config.updateKey("animationSpeed", Config.settings.animationSpeed);
-                        }
+                        let cur = Config.settings.animationSpeed ?? 200;
+                        if (cur > 50)
+                            Config.updateKey("animationSpeed", cur - 25);
+
                     }
                     withIcon: true
                     iconCode: "speed"

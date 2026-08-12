@@ -11,7 +11,9 @@ Scope {
         onUnlocked: {
             // Unlock the screen before exiting, or the compositor will display a
             // fallback lock you can't interact with.
-            loader.item.locked = false;
+            if (loader.item)
+                loader.item.locked = false;
+
         }
     }
 
@@ -46,7 +48,9 @@ Scope {
         }
 
         function unlock() {
-            loader.item.locked = false;
+            if (loader.item)
+                loader.item.locked = false;
+
         }
 
         function isLocked() {

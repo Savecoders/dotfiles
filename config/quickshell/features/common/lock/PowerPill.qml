@@ -11,16 +11,11 @@ Rectangle {
     property Component statusComponent
     property bool showStatus: true
     property bool showPowerBtn: true
+    readonly property bool hasSessions: root.sessionItems != null && root.sessionItems !== undefined && (root.sessionItems.count === undefined || root.sessionItems.count > 0)
 
     signal powerOffClicked()
-
-    Theme {
-        id: themeDefault
-    }
     signal rebootClicked()
     signal suspendClicked()
-
-    readonly property bool hasSessions: root.sessionItems != null && root.sessionItems !== undefined && (root.sessionItems.count === undefined || root.sessionItems.count > 0)
 
     implicitWidth: 380
     implicitHeight: 64
@@ -28,6 +23,10 @@ Rectangle {
     color: root.theme.cardColor
     border.color: root.theme.cardBorderColor
     border.width: 1
+
+    Theme {
+        id: themeDefault
+    }
 
     RowLayout {
         spacing: 8

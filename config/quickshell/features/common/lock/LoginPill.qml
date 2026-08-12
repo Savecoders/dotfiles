@@ -15,11 +15,11 @@ Rectangle {
     property string errorMessage: ""
 
     signal loginRequested(string username, string password)
-
-    Theme {
-        id: themeDefault
-    }
     signal userSwitchRequested()
+
+    function focusPassword() {
+        textInput.forceActiveFocus();
+    }
 
     implicitWidth: 380
     implicitHeight: 64
@@ -27,15 +27,14 @@ Rectangle {
     color: root.theme.cardColor
     border.color: root.errorMessage !== "" ? root.theme.error : root.theme.cardBorderColor
     border.width: 1
-
     onPasswordChanged: {
         if (textInput.text !== root.password)
             textInput.text = root.password;
 
     }
 
-    function focusPassword() {
-        textInput.forceActiveFocus();
+    Theme {
+        id: themeDefault
     }
 
     // Floating Error Message Pill above LoginPill
@@ -226,12 +225,6 @@ Rectangle {
 
     }
 
-    transform: Translate {
-        id: shakeTranslate
-
-        x: 0
-    }
-
     Connections {
         function onErrorMessageChanged() {
             if (root.errorMessage !== "")
@@ -280,6 +273,12 @@ Rectangle {
             duration: 50
         }
 
+    }
+
+    transform: Translate {
+        id: shakeTranslate
+
+        x: 0
     }
 
 }

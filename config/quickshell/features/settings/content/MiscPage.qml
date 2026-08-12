@@ -357,7 +357,9 @@ Rectangle {
 
                 }
                 if (list.length > 0)
+                    Qt.callLater(() => {
                     root.availableEncoders = list;
+                });
 
             }
         }

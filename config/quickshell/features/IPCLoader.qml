@@ -20,7 +20,7 @@ Singleton {
     }
 
     function toggleBar() {
-        if (!Config.settings.componentControl.barIsEnabled && !root.isBarOpen)
+        if ((!Config.settings || !Config.settings.componentControl || !Config.settings.componentControl.barIsEnabled) && !root.isBarOpen)
             return ;
 
         root.isBarOpen = !root.isBarOpen;
@@ -31,21 +31,21 @@ Singleton {
     }
 
     function toggleDashboard() {
-        if (!Config.settings.componentControl.dashboardIsEnabled && !root.isDashboardOpen)
+        if ((!Config.settings || !Config.settings.componentControl || !Config.settings.componentControl.dashboardIsEnabled) && !root.isDashboardOpen)
             return ;
 
         root.isDashboardOpen = !root.isDashboardOpen;
     }
 
     function toggleLockscreen() {
-        if (!Config.settings.componentControl.lockscreenIsEnabled && !root.isLockscreenOpen)
+        if ((!Config.settings || !Config.settings.componentControl || !Config.settings.componentControl.lockscreenIsEnabled) && !root.isLockscreenOpen)
             return ;
 
         root.isLockscreenOpen = !root.isLockscreenOpen;
     }
 
     function toggleNotifications() {
-        if (!Config.settings.componentControl.notifsIsEnabled && !root.isNotificationsOpen)
+        if ((!Config.settings || !Config.settings.componentControl || !Config.settings.componentControl.notifsIsEnabled) && !root.isNotificationsOpen)
             return ;
 
         root.isNotificationsOpen = !root.isNotificationsOpen;
@@ -77,7 +77,7 @@ Singleton {
 
         }
 
-        target: Config.settings.componentControl
+        target: (Config.settings && Config.settings.componentControl) ? Config.settings.componentControl : null
     }
 
     IpcHandler {

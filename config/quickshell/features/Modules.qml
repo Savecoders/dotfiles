@@ -12,7 +12,7 @@ import qs.features.settings
 
 Scope {
     Loader {
-        active: Config.settings.componentControl.notifsIsEnabled
+        active: (Config.settings && Config.settings.componentControl && Config.settings.componentControl.notifsIsEnabled !== undefined) ? Config.settings.componentControl.notifsIsEnabled : true
 
         sourceComponent: NotificationList {
         }
@@ -22,9 +22,9 @@ Scope {
     Loader {
         id: barHost
 
-        property string lastPos: Config.settings.bar.position
+        property string lastPos: (Config.settings && Config.settings.bar && Config.settings.bar.position) ? Config.settings.bar.position : "top"
 
-        active: Config.settings.componentControl.barIsEnabled
+        active: (Config.settings && Config.settings.componentControl && Config.settings.componentControl.barIsEnabled !== undefined) ? Config.settings.componentControl.barIsEnabled : true
         onLastPosChanged: {
             if (active) {
                 active = false;
@@ -52,7 +52,7 @@ Scope {
     }
 
     Loader {
-        active: Config.settings.componentControl.dashboardIsEnabled
+        active: (Config.settings && Config.settings.componentControl && Config.settings.componentControl.dashboardIsEnabled !== undefined) ? Config.settings.componentControl.dashboardIsEnabled : true
 
         sourceComponent: Dashboard {
             isDashboardOpen: IPCLoader.isDashboardOpen
@@ -61,7 +61,7 @@ Scope {
     }
 
     Loader {
-        active: Config.settings.componentControl.lockscreenIsEnabled
+        active: (Config.settings && Config.settings.componentControl && Config.settings.componentControl.lockscreenIsEnabled !== undefined) ? Config.settings.componentControl.lockscreenIsEnabled : true
 
         sourceComponent: Lockscreen {
         }
@@ -69,7 +69,7 @@ Scope {
     }
 
     Loader {
-        active: Config.settings.componentControl.desktopIsEnabled
+        active: (Config.settings && Config.settings.componentControl && Config.settings.componentControl.desktopIsEnabled !== undefined) ? Config.settings.componentControl.desktopIsEnabled : true
 
         sourceComponent: Desktop {
         }
@@ -81,7 +81,7 @@ Scope {
     }
 
     Loader {
-        active: Config.settings.componentControl.notifsIsEnabled
+        active: (Config.settings && Config.settings.componentControl && Config.settings.componentControl.notifsIsEnabled !== undefined) ? Config.settings.componentControl.notifsIsEnabled : true
 
         sourceComponent: NotificationCenterWindow {
             isNotificationsOpen: IPCLoader.isNotificationsOpen
