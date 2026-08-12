@@ -86,11 +86,23 @@ ClippingRectangle {
 
             return ;
         }
+
         // 3. Fallback: toggle expand view or dismiss popup
         if (singleNotif.popup)
             Notifications.timeoutNotification(modelData.notificationId);
         else
             singleNotif.expanded = !singleNotif.expanded;
+    }
+
+    function isMaterialIcon(name) {
+        if (!name)
+            return false;
+
+        if (name.indexOf("ms:") === 0 || name.indexOf("material:") === 0)
+            return true;
+
+        const known = ["visibility", "eye", "remove_red_eye", "health_and_safety", "notifications"];
+        return known.indexOf(name) !== -1;
     }
 
     Component.onCompleted: {
@@ -183,7 +195,8 @@ ClippingRectangle {
             color: Colours.palette.surface_container_low
 
             ClippingWrapperRectangle {
-                visible: !!(modelData && (modelData.appIcon || modelData.image))
+                visible: iconLoader.active && iconLoader.item
+                  && iconLoader.item.status === Image.Ready
                 radius: 1000
                 height: iconImage.size
                 width: iconImage.size
@@ -194,6 +207,8 @@ ClippingRectangle {
                 color: "transparent"
 
                 Loader {
+                    id: iconLoader
+
                     anchors.fill: parent
                     active: {
                         if (!singleNotif.modelData)
@@ -202,9 +217,15 @@ ClippingRectangle {
                         if (singleNotif.modelData.image)
                             return true;
 
-                        if (singleNotif.modelData.appIcon && Quickshell.iconPath(singleNotif.modelData.appIcon) !== "")
-                            return true;
+                        let appIcon = singleNotif.modelData.appIcon;
+                        if (appIcon && !singleNotif.isMaterialIcon(appIcon)) {
+                            if (appIcon.indexOf("/") === 0 || appIcon.indexOf("file://") === 0)
+                                return true;
 
+                            if (Quickshell.iconPath(appIcon) !== "")
+                                return true;
+
+                        }
                         return false;
                     }
 
@@ -218,9 +239,13 @@ ClippingRectangle {
                             if (singleNotif.modelData.image)
                                 return Qt.resolvedUrl(singleNotif.modelData.image);
 
-                            return Quickshell.iconPath(singleNotif.modelData.appIcon);
+                            let appIcon = singleNotif.modelData.appIcon;
+                            if (appIcon.indexOf("/") === 0 || appIcon.indexOf("file://") === 0)
+                                return Qt.resolvedUrl(appIcon);
+
+                            return Quickshell.iconPath(appIcon);
                         }
-                        layer.enabled: Config.settings.colours.genType == "scheme-monochrome"
+                        layer.enabled: (Config.settings && Config.settings.colours && Config.settings.colours.genType == "scheme-monochrome")
 
                         layer.effect: MultiEffect {
                             saturation: -1
@@ -233,10 +258,19 @@ ClippingRectangle {
             }
 
             Text {
-                visible: !(modelData && (modelData.appIcon || modelData.image))
+                visible: !iconLoader.active || !iconLoader.item || iconLoader.item.status !== Image.Ready
                 anchors.centerIn: parent
-                text: "notifications"
-                font.family: Config.settings.iconFont
+                text: {
+                    if (singleNotif.modelData && singleNotif.modelData.appIcon && singleNotif.modelData.appIcon.length > 0) {
+                        let cleanIcon = singleNotif.modelData.appIcon.replace(/^(ms:|material:)/, "");
+                        if (cleanIcon === "eye")
+                            return "visibility";
+
+                        return cleanIcon;
+                    }
+                    return "notifications";
+                }
+                font.family: (Config.settings && Config.settings.iconFont) ? Config.settings.iconFont : "Material Symbols Rounded"
                 font.pixelSize: 22
                 color: Qt.alpha(Colours.palette.on_surface, 0.7)
             }

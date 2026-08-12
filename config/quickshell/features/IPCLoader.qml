@@ -113,6 +113,10 @@ Singleton {
             Notifications.discardAllNotifications();
         }
 
+        function runEyeProtection() {
+            EyeProtection.runNotify();
+        }
+
         target: "root"
     }
 

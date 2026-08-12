@@ -15,6 +15,7 @@ ShellRoot {
     Component.onCompleted: {
         Qt.callLater(() => {
             Notifications.dummyInit();
+            EyeProtection;
         });
         deferredInitTimer.start();
     }
