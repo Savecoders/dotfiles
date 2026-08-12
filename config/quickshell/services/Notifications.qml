@@ -299,7 +299,7 @@ Singleton {
                 "notification": notification,
                 "time": Date.now()
             });
-            root.list = [...root.list, newNotifObject];
+            root.list = root.list.concat([newNotifObject]);
             // Enforce max notifications limit
             while (root.list.length > root.maxNotifications) {
                 const oldNotif = root.list.shift();
@@ -335,27 +335,39 @@ Singleton {
         path: Qt.resolvedUrl(filePath)
         onLoaded: {
             const fileContents = notifFileView.text();
-            root.list = JSON.parse(fileContents).map((notif) => {
-                return notifComponent.createObject(root, {
-                    "notificationId": notif.notificationId,
-                    "actions": [],
-                    "appIcon": notif.appIcon,
-                    "appName": notif.appName,
-                    "body": notif.body,
-                    "image": notif.image,
-                    "summary": notif.summary,
-                    "time": notif.time,
-                    "urgency": notif.urgency
-                });
-            });
-            // Find largest notificationId
-            let maxId = 0;
-            root.list.forEach((notif) => {
-                maxId = Math.max(maxId, notif.notificationId);
-            });
-            console.log("[Notifications] File loaded");
-            root.idOffset = maxId;
-            root.initDone();
+            if (!fileContents || fileContents.trim() === "")
+                return ;
+
+            try {
+                const parsed = JSON.parse(fileContents);
+                if (Array.isArray(parsed)) {
+                    const newList = parsed.map((notif) => {
+                        return notifComponent.createObject(root, {
+                            "notificationId": notif.notificationId,
+                            "actions": [],
+                            "appIcon": notif.appIcon,
+                            "appName": notif.appName,
+                            "body": notif.body,
+                            "image": notif.image,
+                            "summary": notif.summary,
+                            "time": notif.time,
+                            "urgency": notif.urgency
+                        });
+                    });
+                    Qt.callLater(() => {
+                        root.list = newList;
+                        let maxId = 0;
+                        root.list.forEach((notif) => {
+                            maxId = Math.max(maxId, notif.notificationId);
+                        });
+                        console.log("[Notifications] File loaded");
+                        root.idOffset = maxId;
+                        root.initDone();
+                    });
+                }
+            } catch (err) {
+                console.warn("[Notifications] Error interpreting notification file:", err);
+            }
         }
         onLoadFailed: (error) => {
             if (error == FileViewError.FileNotFound) {

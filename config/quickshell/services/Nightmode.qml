@@ -28,15 +28,30 @@ Singleton {
             turnOn();
     }
 
+    Timer {
+        interval: 3000
+        running: true
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: {
+            if (!checkProc.running)
+                checkProc.running = true;
+
+        }
+    }
+
     Process {
         id: checkProc
 
-        running: true
-        command: ["sh", "-c", "while true; do if pgrep hyprsunset >/dev/null 2>&1 || pgrep gammastep >/dev/null 2>&1 || hyprshade current 2>/dev/null | grep -q blue-light-filter; then echo on; else echo off; fi; sleep 3; done"]
+        running: false
+        command: ["sh", "-c", "if pgrep hyprsunset >/dev/null 2>&1 || pgrep gammastep >/dev/null 2>&1 || hyprshade current 2>/dev/null | grep -q blue-light-filter; then echo on; else echo off; fi"]
 
         stdout: SplitParser {
             onRead: (data) => {
-                root.isNightmodeOn = (String(data).trim() === "on");
+                let res = String(data).trim() === "on";
+                Qt.callLater(() => {
+                    root.isNightmodeOn = res;
+                });
             }
         }
 

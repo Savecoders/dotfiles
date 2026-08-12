@@ -204,6 +204,7 @@ Singleton {
 
             misc: JsonObject {
                 property string githubUsername: ""
+                property int audioIncrement: 5
             }
 
             shell: JsonObject {

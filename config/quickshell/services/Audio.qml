@@ -38,11 +38,13 @@ Singleton {
     }
 
     function incrementVolume(amount) {
-        setVolume(volume + (amount || Config.services.audioIncrement));
+        let step = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        setVolume(volume + step);
     }
 
     function decrementVolume(amount) {
-        setVolume(volume - (amount || Config.services.audioIncrement));
+        let step = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        setVolume(volume - step);
     }
 
     function setSourceVolume(newVolume) {
@@ -53,11 +55,13 @@ Singleton {
     }
 
     function incrementSourceVolume(amount) {
-        setSourceVolume(sourceVolume + (amount || Config.services.audioIncrement));
+        let step = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        setSourceVolume(sourceVolume + step);
     }
 
     function decrementSourceVolume(amount) {
-        setSourceVolume(sourceVolume - (amount || Config.services.audioIncrement));
+        let step = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        setSourceVolume(sourceVolume - step);
     }
 
     function setAudioSink(newSink) {
