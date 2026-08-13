@@ -52,10 +52,19 @@ Singleton {
         refreshTimer.restart();
     }
 
+    Connections {
+        function onStateChanged() {
+            root.iconName = root.getIcon();
+            root.stateChanged();
+        }
+
+        target: Quickshell.Bluetooth.defaultAdapter
+    }
+
     Timer {
         id: refreshTimer
 
-        interval: 2000
+        interval: 15000
         running: true
         repeat: true
         triggeredOnStart: true

@@ -1,8 +1,8 @@
+pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
 import qs.core
-pragma Singleton
 
 Singleton {
     id: root
@@ -12,7 +12,6 @@ Singleton {
     function turnOn() {
         isNightmodeOn = true;
         let temp = parseInt(Config.settings.nightmodeColourTemp) || 4500;
-        // Hyprland official night light tool: hyprsunset -t <temperature>
         Quickshell.execDetached(["bash", "-c", "hyprsunset -t " + temp + " || gammastep -O " + temp + " || hyprshade on blue-light-filter"]);
     }
 
@@ -28,16 +27,10 @@ Singleton {
             turnOn();
     }
 
-    Timer {
-        interval: 3000
-        running: true
-        repeat: true
-        triggeredOnStart: true
-        onTriggered: {
-            if (!checkProc.running)
-                checkProc.running = true;
+    function checkState() {
+        if (!checkProc.running)
+            checkProc.running = true;
 
-        }
     }
 
     Process {
