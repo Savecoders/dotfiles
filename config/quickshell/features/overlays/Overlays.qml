@@ -43,9 +43,7 @@ Scope {
                 percent: Math.round((Audio.volume ?? 0) * 100)
                 iconName: Audio.muted ? "volume_off" : (percent > 50 ? "volume_up" : (percent > 0 ? "volume_down" : "volume_mute"))
                 labelText: Audio.muted ? "Muted" : percent + "%"
-                anchors.top: parent.top
-                anchors.topMargin: 20
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.centerIn: parent
             }
 
             // Brightness overlay
@@ -57,9 +55,7 @@ Scope {
                 percent: Brightness.brightnessPercent ?? 50
                 iconName: "brightness_medium"
                 labelText: percent + "%"
-                anchors.top: volumeOverlay.bottom
-                anchors.topMargin: 8
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.centerIn: parent
             }
 
             Connections {

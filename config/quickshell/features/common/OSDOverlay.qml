@@ -18,17 +18,19 @@ StyledRect {
     }
 
     variant: "popup"
-    width: 250
-    height: 50
+    width: 140
+    height: 140
     color: Colours.palette.surface_container
-    radius: Math.max(4, ((Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 8) - 4)
+    radius: Math.max(12, ((Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius * 3 : 16))
+    border.color: Qt.alpha(Colours.palette.outline, 0.15)
+    border.width: 1
     opacity: 0
     visible: false
 
     Timer {
         id: hideTimer
 
-        interval: 2000
+        interval: 1800
         onTriggered: fadeOut.start()
     }
 
@@ -45,7 +47,7 @@ StyledRect {
             target: root
             property: "opacity"
             to: 1
-            duration: 100
+            duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? (Config.settings.animationSpeed / 2) : 100
         }
 
     }
@@ -57,7 +59,7 @@ StyledRect {
             target: root
             property: "opacity"
             to: 0
-            duration: 300
+            duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
         }
 
         PropertyAction {
@@ -68,51 +70,19 @@ StyledRect {
 
     }
 
-    RowLayout {
-        anchors.fill: parent
-        anchors.margins: 8
-        spacing: 8
-
-        Text {
-            text: root.iconName
-            color: Colours.palette.on_surface
-            font.family: (Config.settings && Config.settings.iconFont) ? Config.settings.iconFont : "Material Symbols Rounded"
-            font.pixelSize: 20
-        }
-
-        StyledRect {
-            variant: "internalbg"
-            Layout.fillWidth: true
-            height: 6
-            color: Colours.palette.surface_container_high
-            radius: 3
-
-            StyledRect {
-                variant: "common"
-                width: parent.width * (Math.max(0, Math.min(100, root.percent)) / 100)
-                height: parent.height
-                color: Colours.palette.primary
-                radius: 3
-
-                Behavior on width {
-                    PropertyAnimation {
-                        duration: 80
-                        easing.type: Easing.InSine
-                    }
-
-                }
-
-            }
-
-        }
-
-        Text {
-            text: root.labelText
-            color: Colours.palette.on_surface
-            font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
-            font.pixelSize: 12
-        }
-
+    CircularProgressIcon {
+        anchors.centerIn: parent
+        implicitWidth: 90
+        implicitHeight: 90
+        value: Math.max(0, Math.min(100, root.percent)) / 100
+        icon: root.iconName
+        iconPixelSize: 28
+        subText: root.labelText
+        subTextPixelSize: 13
+        strokeWidth: 5
+        fgColor: Colours.palette.primary
+        bgColor: Qt.alpha(Colours.palette.outline, 0.25)
+        subTextColor: Colours.palette.on_surface
     }
 
     Behavior on opacity {
