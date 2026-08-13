@@ -157,6 +157,10 @@ Loader {
 
                 }
 
+                mask: Region {
+                    item: maskId
+                }
+
             }
 
         }
