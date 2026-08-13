@@ -83,6 +83,7 @@ ClippingWrapperRectangle {
                         id: albumCover
 
                         anchors.fill: parent
+                        sourceSize: Qt.size(art.artSize, art.artSize)
                         visible: Media.activePlayer != null && Media.stableArtUrl !== "" && (status === Image.Ready || status === Image.Loading)
                         source: Media.stableArtUrl
                         fillMode: Image.PreserveAspectCrop

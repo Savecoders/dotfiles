@@ -23,6 +23,7 @@ Rectangle {
 
         anchors.fill: parent
         anchors.margins: 2
+        sourceSize: Qt.size(width > 0 ? width : 40, height > 0 ? height : 40)
         fillMode: Image.PreserveAspectCrop
         source: root.avatarPath !== "" ? root.avatarPath : root.fallbackSource
         onStatusChanged: {

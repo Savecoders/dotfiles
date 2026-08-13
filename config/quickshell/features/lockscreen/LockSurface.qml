@@ -78,6 +78,7 @@ Rectangle {
 
         anchors.fill: parent
         source: Config.settings.currentWallpaper
+        sourceSize: Qt.size(width > 0 ? width : Screen.width, height > 0 ? height : Screen.height)
         fillMode: Image.PreserveAspectCrop
         asynchronous: false
         cache: false

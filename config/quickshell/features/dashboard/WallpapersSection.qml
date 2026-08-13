@@ -155,6 +155,7 @@ Item {
                     anchors.fill: parent
                     anchors.margins: 2
                     source: "file://" + modelData
+                    sourceSize: Qt.size(280, 180)
                     fillMode: Image.PreserveAspectCrop
                     asynchronous: true
                     cache: true
