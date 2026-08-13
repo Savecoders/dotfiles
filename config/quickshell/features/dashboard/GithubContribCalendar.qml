@@ -130,6 +130,16 @@ Item {
                 }
             }
 
+            Text {
+                anchors.centerIn: parent
+                visible: (!Github || !Github.loaded || !contributionCalendar.contribs || contributionCalendar.contribs.length === 0 || Github.contributionNumber === 0)
+                text: "No se encontraron contribuciones"
+                font.family: Config.settings.font
+                font.pixelSize: 11
+                font.weight: 500
+                color: Qt.alpha(Colours.palette.on_surface, 0.7)
+            }
+
             Connections {
                 function onContribsChanged() {
                     gridCanvas.requestPaint();
