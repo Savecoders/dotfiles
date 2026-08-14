@@ -38,7 +38,8 @@
     "currentWallpaper": "~/Pictures/Wallpapers/gruvbox/coffee-cup.jpg",
     "desktop": {
         "desktopRoundingShown": true,
-        "dimDesktopWallpaper": false
+        "dimDesktopWallpaper": false,
+        "targetScreen": "all"
     },
     "font": "SF Pro Display",
     "iconFont": "Material Symbols Rounded",

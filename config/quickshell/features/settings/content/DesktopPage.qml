@@ -53,6 +53,39 @@ Rectangle {
                     Layout.preferredHeight: 3
                 }
 
+                GenericSelectOption {
+                    id: targetScreenSelect
+
+                    message: "Display components on"
+                    withIcon: true
+                    iconCode: "monitor"
+                    options: {
+                        let opts = ["All Displays"];
+                        if (Quickshell.screens) {
+                            for (let i = 0; i < Quickshell.screens.length; i++) {
+                                if (Quickshell.screens[i] && Quickshell.screens[i].name)
+                                    opts.push(Quickshell.screens[i].name);
+
+                            }
+                        }
+                        return opts;
+                    }
+                    currentIndex: {
+                        let cur = (Config.settings && Config.settings.desktop && Config.settings.desktop.targetScreen) ? Config.settings.desktop.targetScreen : "all";
+                        if (cur === "all" || cur === "")
+                            return 0;
+
+                        let idx = options.indexOf(cur);
+                        return idx !== -1 ? idx : 0;
+                    }
+                    toRun: (index) => {
+                        if (index === 0)
+                            Config.updateKey("desktop.targetScreen", "all");
+                        else if (index < options.length)
+                            Config.updateKey("desktop.targetScreen", options[index]);
+                    }
+                }
+
                 GenericToggleOption {
                     message: "Show a rounded border"
                     option: Config.settings.desktop.desktopRoundingShown
