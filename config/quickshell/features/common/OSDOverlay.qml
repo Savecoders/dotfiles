@@ -5,7 +5,7 @@ import qs.core
 StyledRect {
     id: root
 
-    property int percent: 50
+    property int percent: 10
     property string iconName: "volume_up"
     property string labelText: percent + "%"
 
@@ -18,10 +18,10 @@ StyledRect {
     }
 
     variant: "popup"
-    width: 140
-    height: 140
+    width: 144
+    height: 144
     color: Colours.palette.surface_container
-    radius: Math.max(12, ((Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius * 3 : 16))
+    radius: Config.settings && Config.settings.borderRadius !== undefined ? Config.settings.borderRadius : 16
     border.color: Qt.alpha(Colours.palette.outline, 0.15)
     border.width: 1
     opacity: 0
