@@ -41,12 +41,14 @@ post_hook = 'gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3"; gse
 [templates.qt5tc]
 input_path = '~/.config/matugen/templates/qtct-colors.conf'
 output_path = '~/.config/qt5ct/themes/matugen.conf'
-post_hook = 'sed -i "s|color_scheme_path=.*|color_scheme_path=$HOME/.config/qt5ct/themes/matugen.conf|" ~/.config/qt5ct/qt5ct.conf'
 
 [templates.qt6tc]
 input_path = '~/.config/matugen/templates/qtct-colors.conf'
 output_path = '~/.config/qt6ct/themes/matugen.conf'
-post_hook = 'sed -i "s|color_scheme_path=.*|color_scheme_path=$HOME/.config/qt6ct/themes/matugen.conf|" ~/.config/qt6ct/qt6ct.conf'
+
+[templates.color-scheme]
+input_path = '~/.config/matugen/templates/Matugen.colors'
+output_path = '~/.local/share/color-schemes/Matugen.colors'
 
 [templates.cava]
 input_path = '~/.config/matugen/templates/cava'
