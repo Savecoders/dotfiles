@@ -1,10 +1,22 @@
 pragma Singleton
 import QtQuick
 import Quickshell
+import qs.core
 
 Singleton {
     id: root
 
+    readonly property var targetScreens: {
+        const screens = Quickshell.screens || [];
+        const target = (Config.settings && Config.settings.desktop && Config.settings.desktop.targetScreen) ? Config.settings.desktop.targetScreen : "all";
+        if (target === "all" || target === "")
+            return screens;
+
+        const found = screens.find((s) => {
+            return s && s.name === target;
+        });
+        return found ? [found] : screens;
+    }
     property QtObject visibility
     property QtObject states
 

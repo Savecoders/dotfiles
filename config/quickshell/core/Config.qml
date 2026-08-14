@@ -139,6 +139,7 @@ Singleton {
             desktop: JsonObject {
                 property bool desktopRoundingShown: true
                 property bool dimDesktopWallpaper: false
+                property string targetScreen: "all"
             }
 
             colours: JsonObject {

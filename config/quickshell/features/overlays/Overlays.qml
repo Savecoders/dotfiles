@@ -12,7 +12,7 @@ Scope {
     id: root
 
     Variants {
-        model: Quickshell.screens
+        model: Globals.targetScreens
 
         PanelWindow {
             id: overlaysWindow

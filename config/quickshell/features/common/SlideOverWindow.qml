@@ -35,7 +35,7 @@ Loader {
         signal finished()
 
         Variants {
-            model: Quickshell.screens
+            model: Globals.targetScreens
 
             PanelWindow {
                 id: slideWindow
