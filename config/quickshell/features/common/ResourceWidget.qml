@@ -33,13 +33,13 @@ StyledRect {
         id: contentRow
 
         anchors.centerIn: parent
-        spacing: 6
+        spacing: Styling.spacing.md
 
         CircularProgressIcon {
             width: 22
             height: 22
             strokeWidth: 2
-            iconPixelSize: 11
+            iconPixelSize: Styling.fontSize.sm
             value: root.progressValue
             icon: root.iconName
             fgColor: root.fgColor
@@ -49,7 +49,7 @@ StyledRect {
             visible: !root.isVertical
             text: root.labelText
             font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
-            font.pixelSize: 13
+            font.pixelSize: Styling.fontSize.body
             font.weight: 600
             color: Colours.palette.on_surface
         }

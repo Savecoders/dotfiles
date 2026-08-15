@@ -76,9 +76,9 @@ StyledRect {
         implicitHeight: 90
         value: Math.max(0, Math.min(100, root.percent)) / 100
         icon: root.iconName
-        iconPixelSize: 28
+        iconPixelSize: Styling.fontSize.display
         subText: root.labelText
-        subTextPixelSize: 13
+        subTextPixelSize: Styling.fontSize.body
         strokeWidth: 5
         fgColor: Colours.palette.primary
         bgColor: Qt.alpha(Colours.palette.outline, 0.25)

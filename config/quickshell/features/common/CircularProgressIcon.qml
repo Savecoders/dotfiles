@@ -11,10 +11,10 @@ Item {
     property color bgColor: Qt.alpha(Colours.palette.outline, 0.25)
     property color innerCircleColor: "transparent"
     property real strokeWidth: 2
-    property int iconPixelSize: 12
+    property int iconPixelSize: Styling.fontSize.label
     property string subText: ""
     property color subTextColor: Colours.palette.on_surface
-    property int subTextPixelSize: 11
+    property int subTextPixelSize: Styling.fontSize.sm
 
     implicitWidth: 24
     implicitHeight: 24
@@ -26,10 +26,13 @@ Item {
     onInnerCircleColorChanged: canvas.requestPaint()
 
     // Inner background disk (visible when innerCircleColor is set)
-    Rectangle {
+    StyledRect {
+        variant: "internalbg"
+        useDefaultRadius: false
+        border.width: 0
         anchors.fill: parent
         anchors.margins: root.strokeWidth / 2
-        radius: 1000
+        radius: Styling.radius.full
         color: root.innerCircleColor
         visible: root.innerCircleColor !== "transparent" && root.innerCircleColor.a > 0
     }
@@ -67,7 +70,7 @@ Item {
 
     ColumnLayout {
         anchors.centerIn: parent
-        spacing: 2
+        spacing: Styling.spacing.xs
 
         Text {
             Layout.alignment: Qt.AlignHCenter

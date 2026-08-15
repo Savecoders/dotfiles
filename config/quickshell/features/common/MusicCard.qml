@@ -1,13 +1,13 @@
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Effects
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
-import QtQuick
-import QtQuick.Layouts
-import QtQuick.Effects
-import QtQuick.Controls
-import Quickshell.Widgets
 import Quickshell.Services.Mpris
-import qs.services
+import Quickshell.Widgets
 import qs.core
+import qs.services
 
 ClippingWrapperRectangle {
     id: root
@@ -51,10 +51,12 @@ ClippingWrapperRectangle {
         }
 
         // Dark Overlay
-        Rectangle {
+        StyledRect {
             anchors.fill: parent
             color: Qt.rgba(0, 0, 0, 0.35)
             radius: root.radius
+            useDefaultRadius: false
+            border.width: 0
         }
 
         // Main Media Card Row Layout
@@ -62,7 +64,7 @@ ClippingWrapperRectangle {
             anchors.fill: parent
             anchors.leftMargin: 12
             anchors.rightMargin: 12
-            spacing: 10
+            spacing: Styling.spacing.xl
 
             // Circular Album Art
             ClippingWrapperRectangle {
@@ -70,7 +72,7 @@ ClippingWrapperRectangle {
 
                 readonly property real artSize: Math.max(36, root.cardHeight - 22)
 
-                radius: 1000
+                radius: Styling.radius.full
                 Layout.preferredWidth: artSize
                 Layout.preferredHeight: artSize
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
@@ -107,11 +109,11 @@ ClippingWrapperRectangle {
             ColumnLayout {
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                 Layout.fillWidth: true
-                spacing: 2
+                spacing: Styling.spacing.xs
 
                 Text {
                     visible: Media.activePlayer == null
-                    font.pixelSize: root.cardHeight > 70 ? 14 : 13
+                    font.pixelSize: root.cardHeight > 70 ? Styling.fontSize.bodyLarge : Styling.fontSize.body
                     font.family: Config.settings.font
                     font.weight: Font.DemiBold
                     color: Qt.rgba(1, 1, 1, 0.7)
@@ -120,7 +122,7 @@ ClippingWrapperRectangle {
 
                 Text {
                     visible: Media.activePlayer != null
-                    font.pixelSize: root.cardHeight > 70 ? 14 : 13
+                    font.pixelSize: root.cardHeight > 70 ? Styling.fontSize.bodyLarge : Styling.fontSize.body
                     font.family: Config.settings.font
                     font.weight: Font.Bold
                     color: Qt.rgba(1, 1, 1, 0.95)
@@ -131,7 +133,7 @@ ClippingWrapperRectangle {
 
                 Text {
                     visible: Media.activePlayer != null
-                    font.pixelSize: root.cardHeight > 70 ? 12 : 11
+                    font.pixelSize: root.cardHeight > 70 ? Styling.fontSize.label : Styling.fontSize.sm
                     font.family: Config.settings.font
                     color: Qt.rgba(1, 1, 1, 0.7)
                     text: Media.stableArtist || "Unknown Artist"
@@ -145,7 +147,7 @@ ClippingWrapperRectangle {
             RowLayout {
                 visible: Media.activePlayer != null
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                spacing: 4
+                spacing: Styling.spacing.sm
 
                 PlayerControl {
                     iconName: "skip_previous"

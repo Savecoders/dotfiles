@@ -1,11 +1,3 @@
-/*
-Summary:     modelData.summary
-Body:        modelData.body
-Icon Path:   Qt.resolvedUrl(modelData.appIcon)
-Time:        NotificationUtils.getFriendlyNotifTimeString(modelData.time)
-App Name:    modelData.appName
-*/
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
@@ -40,11 +32,103 @@ ClippingRectangle {
         dismissTimer.start();
     }
 
+    function extractPathOrUrl(raw) {
+        if (!raw || typeof raw !== "string")
+            return "";
+
+        let str = raw.trim();
+        if (str.startsWith("http://") || str.startsWith("https://"))
+            return str;
+
+        if (str.startsWith("image://icon/"))
+            str = str.replace(/^image:\/\/icon\/\/?/, "/");
+
+        if (str.startsWith("file://"))
+            str = str.substring(7);
+
+        if (str.startsWith("~/"))
+            str = (Quickshell.env("HOME") || "") + str.substring(1);
+
+        if (str.startsWith("Pictures/") || str.startsWith("Downloads/") || str.startsWith("Videos/"))
+            str = (Quickshell.env("HOME") || "") + "/" + str;
+
+        if (str.startsWith("/"))
+            return str;
+
+        return "";
+    }
+
+    function getValidNotificationPath() {
+        if (!modelData)
+            return "";
+
+        // 1. Check modelData.image
+        let p = extractPathOrUrl(modelData.image);
+        if (p && p.length > 0 && (p.includes("/") || p.includes(".")))
+            return p;
+
+        // 2. Check modelData.appIcon
+        p = extractPathOrUrl(modelData.appIcon);
+        if (p && p.length > 0 && (p.includes("/") || p.includes(".")))
+            return p;
+
+        // 3. Check URLs or file paths in modelData.body
+        if (modelData.body && modelData.body.length > 0) {
+            let urlMatch = modelData.body.match(/https?:\/\/[^\s'"\(\)]+/);
+            if (urlMatch && urlMatch[0])
+                return urlMatch[0];
+
+            let fileMatch = modelData.body.match(/(\/(?:[^\s'"\(\)]+)|~\/(?:[^\s'"\(\)]+)|Pictures\/(?:[^\s'"\(\)]+)|Downloads\/(?:[^\s'"\(\)]+)|Videos\/(?:[^\s'"\(\)]+))/);
+            if (fileMatch && fileMatch[1]) {
+                p = extractPathOrUrl(fileMatch[1]);
+                if (p && p.length > 0)
+                    return p;
+
+            }
+        }
+        // 4. Check URLs in modelData.summary
+        if (modelData.summary && modelData.summary.length > 0) {
+            let urlMatch = modelData.summary.match(/https?:\/\/[^\s'"\(\)]+/);
+            if (urlMatch && urlMatch[0])
+                return urlMatch[0];
+
+        }
+        return "";
+    }
+
+    function resolveImageSource(img, icon) {
+        if (img && img.length > 0) {
+            if (img.startsWith("image://") || img.startsWith("http://") || img.startsWith("https://") || img.startsWith("file://"))
+                return img;
+
+            if (img.startsWith("~/"))
+                return "file://" + (Quickshell.env("HOME") || "") + img.substring(1);
+
+            if (img.startsWith("/"))
+                return "file://" + img;
+
+            return img;
+        }
+        if (icon && icon.length > 0) {
+            if (icon.startsWith("image://") || icon.startsWith("file://"))
+                return icon;
+
+            if (icon.startsWith("~/"))
+                return "file://" + (Quickshell.env("HOME") || "") + icon.substring(1);
+
+            if (icon.startsWith("/"))
+                return "file://" + icon;
+
+            return Quickshell.iconPath(icon);
+        }
+        return "";
+    }
+
     function handleSmartClick() {
         if (!modelData)
             return ;
 
-        // 1. If notification has custom action buttons from sender, invoke default action
+        // 1. Freedesktop Spec: Invoke default action if provided by client app
         if (modelData.actions && modelData.actions.length > 0) {
             let defAction = modelData.actions.find((a) => {
                 return a.identifier === "default";
@@ -54,39 +138,15 @@ ClippingRectangle {
                 return ;
             }
         }
-        // 2. Extract potential image or file path from image property, body text, or summary
-        let pathCandidate = "";
-        if (modelData.image && modelData.image.length > 0) {
-            pathCandidate = modelData.image;
-        } else if (modelData.body && modelData.body.length > 0) {
-            let match = modelData.body.match(/(\/(?:[^\s'"\(\)]+)|~\/(?:[^\s'"\(\)]+)|Pictures\/(?:[^\s'"\(\)]+)|Downloads\/(?:[^\s'"\(\)]+)|Videos\/(?:[^\s'"\(\)]+))/);
-            if (match && match[1]) {
-                pathCandidate = match[1];
-                if (pathCandidate.startsWith("Pictures/"))
-                    pathCandidate = `${Quickshell.env("HOME")}/${pathCandidate}`;
-
-                if (pathCandidate.startsWith("Downloads/"))
-                    pathCandidate = `${Quickshell.env("HOME")}/${pathCandidate}`;
-
-                if (pathCandidate.startsWith("Videos/"))
-                    pathCandidate = `${Quickshell.env("HOME")}/${pathCandidate}`;
-
-                if (pathCandidate.startsWith("~/"))
-                    pathCandidate = `${Quickshell.env("HOME")}/${pathCandidate.replace(/^~\//, "")}`;
-
-            }
-        }
-        if (pathCandidate.startsWith("file://"))
-            pathCandidate = pathCandidate.substring(7);
-
-        if (pathCandidate.length > 0) {
+        // 2. Open file/image/URL target via default system application handler
+        let pathCandidate = getValidNotificationPath();
+        if (pathCandidate && pathCandidate.length > 0) {
             Quickshell.execDetached(["xdg-open", pathCandidate]);
             if (singleNotif.popup)
                 Notifications.timeoutNotification(modelData.notificationId);
 
             return ;
         }
-
         // 3. Fallback: toggle expand view or dismiss popup
         if (singleNotif.popup)
             Notifications.timeoutNotification(modelData.notificationId);
@@ -110,8 +170,12 @@ ClippingRectangle {
             singleNotif.startTimeout();
 
     }
-    radius: Math.max(4, Config.settings.borderRadius - 4)
-    color: singleNotif.popup ? Colours.palette.surface : Qt.alpha(Colours.palette.surface_container_low, 0.6)
+    radius: Math.max(6, (Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 8)
+    color: singleNotif.popup ? Colours.palette.surface_container : Qt.alpha(Colours.palette.surface_container_low, 0.7)
+    border.color: Qt.alpha(Colours.palette.outline, 0.15)
+    border.width: 1
+    implicitWidth: ListView.view ? ListView.view.width : 400
+    width: ListView.view ? ListView.view.width : 400
     implicitHeight: {
         let compact = Config.settings.notifications && Config.settings.notifications.compactMode;
         if (expanded) {
@@ -120,12 +184,9 @@ ClippingRectangle {
             else
                 return compact ? 95 : 110;
         } else {
-            return compact ? 54 : 80;
+            return compact ? 56 : 74;
         }
     }
-    implicitWidth: ListView.view ? ListView.view.width : 400
-    width: ListView.view ? ListView.view.width : 400
-    anchors.topMargin: 10
 
     Timer {
         id: dismissTimer
@@ -182,29 +243,27 @@ ClippingRectangle {
 
     RowLayout {
         anchors.fill: parent
-        spacing: Config.settings.borderRadius - 5
+        spacing: Styling.spacing.none
 
-        Rectangle {
-            id: iconImage
+        StyledRect {
+            id: iconPanel
 
-            property int size: 38
+            property int iconSize: 38
 
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.preferredHeight: singleNotif.implicitHeight
-            Layout.preferredWidth: size + 20
+            variant: "internalbg"
+            useDefaultRadius: false
+            border.width: 0
+            Layout.fillHeight: true
+            Layout.preferredWidth: iconSize + 22
             color: Colours.palette.surface_container_low
 
             ClippingWrapperRectangle {
-                visible: iconLoader.active && iconLoader.item
-                  && iconLoader.item.status === Image.Ready
-                radius: 1000
-                height: iconImage.size
-                width: iconImage.size
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.topMargin: (parent.Layout.preferredHeight / 2) - (height / 2)
-                anchors.leftMargin: (parent.Layout.preferredWidth / 2) - (width / 2)
+                anchors.centerIn: parent
+                radius: Styling.radius.full
+                width: iconPanel.iconSize
+                height: iconPanel.iconSize
                 color: "transparent"
+                visible: iconLoader.active && iconLoader.item && iconLoader.item.status === Image.Ready
 
                 Loader {
                     id: iconLoader
@@ -214,12 +273,12 @@ ClippingRectangle {
                         if (!singleNotif.modelData)
                             return false;
 
-                        if (singleNotif.modelData.image)
+                        if (singleNotif.modelData.image && singleNotif.modelData.image.length > 0)
                             return true;
 
                         let appIcon = singleNotif.modelData.appIcon;
                         if (appIcon && !singleNotif.isMaterialIcon(appIcon)) {
-                            if (appIcon.indexOf("/") === 0 || appIcon.indexOf("file://") === 0)
+                            if (appIcon.indexOf("/") === 0 || appIcon.indexOf("file://") === 0 || appIcon.indexOf("image://") === 0)
                                 return true;
 
                             if (Quickshell.iconPath(appIcon) !== "")
@@ -228,24 +287,40 @@ ClippingRectangle {
                         }
                         return false;
                     }
+                    sourceComponent: {
+                        let src = singleNotif.modelData ? singleNotif.resolveImageSource(singleNotif.modelData.image, singleNotif.modelData.appIcon) : "";
+                        if (src.indexOf("file://") === 0 || src.indexOf("/") === 0 || src.indexOf("http://") === 0 || src.indexOf("https://") === 0)
+                            return fileImageComponent;
 
-                    sourceComponent: IconImage {
-                        id: iconRaw
+                        return themeIconComponent;
+                    }
+                }
 
-                        source: {
-                            if (!singleNotif.modelData)
-                                return "";
+                Component {
+                    id: fileImageComponent
 
-                            if (singleNotif.modelData.image)
-                                return Qt.resolvedUrl(singleNotif.modelData.image);
+                    Image {
+                        source: singleNotif.modelData ? singleNotif.resolveImageSource(singleNotif.modelData.image, singleNotif.modelData.appIcon) : ""
+                        sourceSize: Qt.size(iconPanel.iconSize, iconPanel.iconSize)
+                        fillMode: Image.PreserveAspectCrop
+                        asynchronous: true
+                        cache: true
+                        layer.enabled: (Config.settings && Config.settings.colours && Config.settings.colours.genType === "scheme-monochrome")
 
-                            let appIcon = singleNotif.modelData.appIcon;
-                            if (appIcon.indexOf("/") === 0 || appIcon.indexOf("file://") === 0)
-                                return Qt.resolvedUrl(appIcon);
-
-                            return Quickshell.iconPath(appIcon);
+                        layer.effect: MultiEffect {
+                            saturation: -1
                         }
-                        layer.enabled: (Config.settings && Config.settings.colours && Config.settings.colours.genType == "scheme-monochrome")
+
+                    }
+
+                }
+
+                Component {
+                    id: themeIconComponent
+
+                    IconImage {
+                        source: singleNotif.modelData ? singleNotif.resolveImageSource(singleNotif.modelData.image, singleNotif.modelData.appIcon) : ""
+                        layer.enabled: (Config.settings && Config.settings.colours && Config.settings.colours.genType === "scheme-monochrome")
 
                         layer.effect: MultiEffect {
                             saturation: -1
@@ -271,90 +346,104 @@ ClippingRectangle {
                     return "notifications";
                 }
                 font.family: (Config.settings && Config.settings.iconFont) ? Config.settings.iconFont : "Material Symbols Rounded"
-                font.pixelSize: 22
-                color: Qt.alpha(Colours.palette.on_surface, 0.7)
+                font.pixelSize: Styling.fontSize.xl
+                color: Qt.alpha(Colours.palette.on_surface, 0.8)
             }
 
         }
 
-        Rectangle {
+        // Right Content Area
+        Item {
             id: textContent
 
-            property int cWidth: Math.max(150, singleNotif.width - iconImage.size - (Config.settings.borderRadius * 2) - 10)
-            property int padding: 10
-
-            Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
-            Layout.preferredHeight: {
-                if (singleNotif.expanded) {
-                    if (singleNotif.areActions)
-                        return 110;
-                    else
-                        return 70;
-                } else {
-                    return 40;
-                }
-            }
-            Layout.preferredWidth: cWidth
-            color: "transparent"
+            Layout.fillWidth: true
+            Layout.fillHeight: true
 
             ColumnLayout {
-                spacing: 3
                 anchors.fill: parent
+                anchors.margins: Styling.spacing.xxl
+                spacing: Styling.spacing.sm
 
-                Rectangle {
-                    Layout.preferredHeight: (!singleNotif.modelData || singleNotif.modelData.body == "") ? 20 : 15
-                    Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
-                    Layout.preferredWidth: textContent.cWidth - textContent.padding * 3
-                    color: "transparent"
+                // Header Row: Summary on Left + Timestamp pinned to Far Right
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: Styling.spacing.lg
 
-                    RowLayout {
-                        spacing: 5
+                    Text {
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
+                        text: modelData ? modelData.summary : ""
+                        font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
+                        font.weight: Font.DemiBold
+                        font.pixelSize: Styling.fontSize.body
+                        color: Colours.palette.on_surface
+                        elide: Text.ElideRight
+                    }
 
-                        TextMetrics {
-                            id: summaryElided
+                    Text {
+                        Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                        text: modelData ? NotificationUtils.getFriendlyNotifTimeString(modelData.time) : ""
+                        font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
+                        font.weight: Font.Medium
+                        font.pixelSize: Styling.fontSize.sm
+                        color: Colours.palette.outline
+                    }
 
-                            text: modelData ? modelData.summary : ""
-                            font.family: Config.settings.font
-                            elideWidth: Math.max(80, textContent.cWidth - 130)
-                            elide: Text.ElideRight
-                        }
+                    // Expand/Collapse toggle button
+                    StyledRect {
+                        id: expandBtn
+
+                        property bool hovered: false
+
+                        variant: "internalbg"
+                        useDefaultRadius: false
+                        border.width: 0
+                        Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                        Layout.preferredWidth: 20
+                        Layout.preferredHeight: 20
+                        radius: Styling.spacing.xl
+                        color: hovered ? Colours.palette.surface_container_highest : "transparent"
+                        visible: !!(modelData && modelData.body && modelData.body.length > 40)
 
                         Text {
-                            Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
-                            text: summaryElided.elidedText
-                            font.family: Config.settings.font
-                            font.weight: 500
-                            font.pixelSize: 14
+                            anchors.centerIn: parent
+                            text: "keyboard_arrow_up"
                             color: Colours.palette.on_surface
+                            font.family: (Config.settings && Config.settings.iconFont) ? Config.settings.iconFont : "Material Symbols Rounded"
+                            font.pixelSize: Styling.fontSize.bodyLarge
+                            rotation: singleNotif.expanded ? 180 : 0
+
+                            Behavior on rotation {
+                                PropertyAnimation {
+                                    duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                                    easing.type: Easing.InSine
+                                }
+
+                            }
+
                         }
 
-                        Text {
-                            Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
-                            text: "·"
-                            color: Colours.palette.on_surface
-                            font.family: Config.settings.font
-                            font.weight: 600
-                            font.pixelSize: 11
-                        }
-
-                        Text {
-                            Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
-                            color: Colours.palette.outline
-                            text: modelData ? NotificationUtils.getFriendlyNotifTimeString(modelData.time) : ""
-                            font.family: Config.settings.font
-                            font.weight: 600
-                            font.pixelSize: 11
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onEntered: parent.hovered = true
+                            onExited: parent.hovered = false
+                            onClicked: singleNotif.expanded = !singleNotif.expanded
                         }
 
                     }
 
                 }
 
-                TextMetrics {
-                    id: bodyElided
+                // Body Text
+                Text {
+                    id: bodyText
 
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignTop | Qt.AlignLeft
                     text: {
-                        if (!modelData)
+                        if (!modelData || !modelData.body)
                             return "";
 
                         if (Config.settings.notifications && Config.settings.notifications.privacyMode && !singleNotif.expanded)
@@ -362,152 +451,46 @@ ClippingRectangle {
 
                         return modelData.body;
                     }
-                    font.family: Config.settings.font
-                    elideWidth: Math.max(80, textContent.cWidth - textContent.padding)
-                    elide: Text.ElideRight
-                }
-
-                Text {
-                    Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-                    text: bodyElided.elidedText
-                    font.family: Config.settings.font
-                    font.weight: 500
-                    font.pixelSize: 11
-                    visible: {
-                        if (singleNotif.expanded)
-                            return false;
-
-                        if (!singleNotif.modelData || singleNotif.modelData.body == "")
-                            return false;
-
-                        return true;
-                    }
+                    font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
+                    font.weight: Font.Normal
+                    font.pixelSize: Styling.fontSize.label
                     color: Qt.alpha(Colours.palette.on_surface, 0.7)
+                    wrapMode: singleNotif.expanded ? Text.Wrap : Text.NoWrap
+                    elide: singleNotif.expanded ? Text.ElideNone : Text.ElideRight
+                    visible: !!(modelData && modelData.body && modelData.body.length > 0)
+                    maximumLineCount: singleNotif.expanded ? 10 : 2
                 }
 
-                ScrollView {
-                    visible: singleNotif.expanded
-                    Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-                    implicitWidth: textContent.cWidth - 25
-                    implicitHeight: singleNotif.expanded ? 40 : 10
-
-                    Text {
-                        width: textContent.cWidth - 30
-                        height: 50
-                        text: modelData ? modelData.body : ""
-                        visible: singleNotif.expanded
-                        wrapMode: Text.Wrap
-                        font.family: Config.settings.font
-                        font.weight: 500
-                        font.pixelSize: 11
-                        color: Qt.alpha(Colours.palette.on_surface, 0.7)
-                    }
-
-                    ScrollBar.horizontal: ScrollBar {
-                        policy: ScrollBar.AlwaysOff
-                    }
-
-                    ScrollBar.vertical: ScrollBar {
-                        policy: ScrollBar.AlwaysOff
-                    }
-
-                }
-
-            }
-
-            Rectangle {
-                property bool hovered: false
-
-                anchors.top: parent.top
-                anchors.right: parent.right
-                height: 25
-                width: 25
-                radius: 1000
-                color: hovered ? Colours.palette.surface_container_highest : "transparent"
-                visible: (modelData && bodyElided.elidedText == modelData.body) ? false : true
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "keyboard_arrow_up"
-                    color: Colours.palette.on_surface
-                    font.family: Config.settings.iconFont
-                    font.weight: 600
-                    font.pixelSize: 13
-                    rotation: singleNotif.expanded ? 180 : 0
-                    visible: parent.visible
-
-                    Behavior on rotation {
-                        PropertyAnimation {
-                            duration: Config.settings.animationSpeed
-                            easing.type: Easing.InSine
-                        }
-
-                    }
-
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onEntered: parent.hovered = true
-                    onExited: parent.hovered = false
-                    onClicked: singleNotif.expanded = !singleNotif.expanded
-                }
-
-                Behavior on color {
-                    PropertyAnimation {
-                        duration: Config.settings.animationSpeed
-                        easing.type: Easing.InSine
-                    }
-
-                }
-
-            }
-
-            Rectangle {
-                id: actionsButtons
-
-                anchors.bottom: parent.bottom
-                width: textContent.cWidth - textContent.padding * 3
-                height: 25
-                visible: singleNotif.areActions && singleNotif.expanded
-                color: "transparent"
-
+                // Action Buttons Row
                 RowLayout {
-                    spacing: 5
+                    id: actionsRow
+
+                    Layout.fillWidth: true
+                    Layout.topMargin: Styling.spacing.sm
+                    visible: singleNotif.areActions && singleNotif.expanded
+                    spacing: Styling.spacing.lg
 
                     Repeater {
                         model: singleNotif.actions
 
-                        delegate: Rectangle {
+                        delegate: StyledRect {
                             property bool hovered: false
 
-                            Layout.preferredWidth: (actionsButtons.width / (singleNotif.actions ? Math.max(1, singleNotif.actions.length) : 1)) - 15
-                            Layout.preferredHeight: 32
-                            radius: hovered ? Config.settings.borderRadius : Config.settings.borderRadius - 5
-                            color: {
-                                if (hovered)
-                                    return Qt.alpha(Colours.palette.surface_container_high, 0.7);
-                                else
-                                    return Colours.palette.surface_container_low;
-                            }
+                            variant: "internalbg"
+                            useDefaultRadius: false
+                            border.width: 0
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 28
+                            radius: Math.max(4, ((Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius - 4 : 4))
+                            color: hovered ? Colours.palette.primary : Colours.palette.surface_container_high
 
                             Text {
                                 anchors.centerIn: parent
                                 text: modelData ? modelData.text : ""
-                                color: parent.hovered ? Colours.palette.on_surface : Qt.alpha(Colours.palette.on_surface, 0.9)
-                                font.family: Config.settings.font
-                                font.pixelSize: 12
-
-                                Behavior on color {
-                                    PropertyAnimation {
-                                        duration: Config.settings.animationSpeed
-                                        easing.type: Easing.InSine
-                                    }
-
-                                }
-
+                                color: parent.hovered ? Colours.palette.on_primary : Colours.palette.on_surface
+                                font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
+                                font.pixelSize: Styling.fontSize.sm
+                                font.weight: Font.Medium
                             }
 
                             MouseArea {
@@ -523,22 +506,6 @@ ClippingRectangle {
                                 }
                             }
 
-                            Behavior on color {
-                                PropertyAnimation {
-                                    duration: Config.settings.animationSpeed
-                                    easing.type: Easing.InSine
-                                }
-
-                            }
-
-                            Behavior on radius {
-                                PropertyAnimation {
-                                    duration: Config.settings.animationSpeed
-                                    easing.type: Easing.InSine
-                                }
-
-                            }
-
                         }
 
                     }
@@ -547,26 +514,23 @@ ClippingRectangle {
 
             }
 
-            Behavior on Layout.preferredHeight {
-                PropertyAnimation {
-                    duration: Config.settings.animationSpeed
-                    easing.type: Easing.InSine
-                }
-
-            }
-
         }
 
     }
 
-    Rectangle {
+    // Timeout progress bar at bottom of card
+    StyledRect {
         id: timeoutBar
 
-        height: 4
+        variant: "focus"
+        useDefaultRadius: false
+        border.width: 0
+        height: Styling.radius.xs
         width: singleNotif.popup ? parent.width : 0
         anchors.bottom: parent.bottom
-        color: Colours.palette.surface_container_highest
-        visible: Config.settings.notifications ? Config.settings.notifications.showTimeoutBar : true
+        color: Colours.palette.primary
+        opacity: 0.8
+        visible: singleNotif.popup && (Config.settings.notifications ? Config.settings.notifications.showTimeoutBar : true)
     }
 
     NumberAnimation {
@@ -581,7 +545,7 @@ ClippingRectangle {
 
     Behavior on implicitHeight {
         PropertyAnimation {
-            duration: Config.settings.animationSpeed
+            duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
             easing.type: Easing.InSine
         }
 

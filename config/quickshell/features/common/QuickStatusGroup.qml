@@ -14,19 +14,19 @@ GridLayout {
     property bool showBluetooth: true
     property bool showBattery: true
     property bool showBatteryPercentage: true
-    property int iconPixelSize: isVertical ? 16 : 14
+    property int iconPixelSize: isVertical ? Styling.fontSize.lg : Styling.fontSize.bodyLarge
 
     columns: isVertical ? 1 : 6
     rows: isVertical ? 5 : 1
-    columnSpacing: isVertical ? 0 : 8
-    rowSpacing: isVertical ? 8 : 0
+    columnSpacing: isVertical ? Styling.spacing.none : Styling.spacing.lg
+    rowSpacing: isVertical ? Styling.spacing.lg : Styling.spacing.none
 
     // date
     Text {
         visible: root.showClock
         text: isVertical ? (Time.hour + "\n" + Time.minute) : Time.time
         font.family: Config.settings.font
-        font.pixelSize: 11
+        font.pixelSize: Styling.fontSize.sm
         font.weight: 500
         lineHeight: 0.9
         color: root.contentColor
@@ -110,25 +110,28 @@ GridLayout {
         }
 
         // Pill Capsule background (used in Horizontal mode when showBatteryPercentage is true)
-        Rectangle {
+        StyledRect {
             id: batteryCapsule
 
+            variant: "internalbg"
+            useDefaultRadius: false
             visible: root.showBatteryPercentage && !root.isVertical
             width: batteryCapsuleRow.implicitWidth + 14
             height: 24
-            radius: Config.settings.borderRadius ? Math.min(12, Config.settings.borderRadius) : 12
+            radius: Config.settings.borderRadius ? Math.min(Styling.radius.lg, Config.settings.borderRadius) : Styling.radius.lg
             color: Qt.alpha(root.contentColor, 0.15)
+            border.width: 0
             anchors.centerIn: parent
 
             Row {
                 id: batteryCapsuleRow
 
                 anchors.centerIn: parent
-                spacing: 4
+                spacing: Styling.spacing.sm
 
                 BatteryWidget {
                     font.family: Config.settings.iconFont
-                    font.pixelSize: 13
+                    font.pixelSize: Styling.fontSize.body
                     color: root.contentColor
                     anchors.verticalCenter: parent.verticalCenter
                 }
@@ -136,7 +139,7 @@ GridLayout {
                 Text {
                     text: (Battery.percent !== undefined ? Battery.percent : (Battery.batteryPercentage !== undefined ? Battery.batteryPercentage : 100)) + "%"
                     font.family: Config.settings.font
-                    font.pixelSize: 11
+                    font.pixelSize: Styling.fontSize.sm
                     font.weight: 700
                     color: root.contentColor
                     anchors.verticalCenter: parent.verticalCenter

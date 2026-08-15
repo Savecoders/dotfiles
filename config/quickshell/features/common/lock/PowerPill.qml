@@ -1,8 +1,10 @@
 import QtQuick
-import QtQuick.Layouts
 import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Templates as T
+import qs.core
 
-Rectangle {
+StyledRect {
     id: root
 
     property Theme theme: themeDefault
@@ -17,6 +19,7 @@ Rectangle {
     signal rebootClicked()
     signal suspendClicked()
 
+    useDefaultRadius: false
     implicitWidth: 380
     implicitHeight: 64
     radius: root.theme.cardRadius
@@ -29,7 +32,7 @@ Rectangle {
     }
 
     RowLayout {
-        spacing: 8
+        spacing: Styling.spacing.lg
 
         anchors {
             fill: parent
@@ -47,7 +50,7 @@ Rectangle {
         }
 
         // Session Selector Dropdown
-        ComboBox {
+        T.ComboBox {
             id: sessionBox
 
             visible: root.hasSessions
@@ -56,10 +59,11 @@ Rectangle {
             implicitHeight: 40
             textRole: "name"
             font.family: root.theme.fontFamily
-            font.pixelSize: 12
+            font.pixelSize: Styling.fontSize.label
             font.weight: Font.DemiBold
 
-            background: Rectangle {
+            background: StyledRect {
+                useDefaultRadius: false
                 radius: Math.max(2, root.theme.innerRadius)
                 color: sessionBox.hovered ? root.theme.hoverOverlay : root.theme.pillColor
                 border.color: sessionBox.visualFocus ? root.theme.primary : root.theme.pillBorderColor
@@ -75,7 +79,7 @@ Rectangle {
                 Text {
                     text: "arrow_drop_down"
                     font.family: root.theme.iconFontFamily
-                    font.pixelSize: 16
+                    font.pixelSize: Styling.fontSize.lg
                     color: root.theme.on_surface
                     anchors.centerIn: parent
                 }
@@ -83,7 +87,7 @@ Rectangle {
             }
 
             contentItem: RowLayout {
-                spacing: 8
+                spacing: Styling.spacing.lg
 
                 anchors {
                     fill: parent
@@ -94,7 +98,7 @@ Rectangle {
                 Text {
                     text: "desktop_windows"
                     font.family: root.theme.iconFontFamily
-                    font.pixelSize: 16
+                    font.pixelSize: Styling.fontSize.lg
                     color: root.theme.on_surface
                 }
 
@@ -122,13 +126,15 @@ Rectangle {
                     text: (typeof name !== "undefined" && name !== null) ? name : (typeof modelData !== "undefined" && modelData ? (modelData.name || modelData) : "")
                     color: itemDelegate.hovered ? root.theme.on_primary : root.theme.on_surface
                     font.family: root.theme.fontFamily
-                    font.pixelSize: 12
+                    font.pixelSize: Styling.fontSize.label
                     font.weight: itemDelegate.hovered ? Font.Bold : Font.Normal
                     elide: Text.ElideRight
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                background: Rectangle {
+                background: StyledRect {
+                    useDefaultRadius: false
+                    border.width: 0
                     radius: Math.max(2, Math.round(root.theme.innerRadius / 4))
                     color: itemDelegate.hovered ? root.theme.primary : "transparent"
                 }
@@ -143,13 +149,14 @@ Rectangle {
 
                 contentItem: ListView {
                     clip: true
-                    spacing: 4
+                    spacing: Styling.spacing.sm
                     implicitHeight: contentHeight
                     model: sessionBox.popup.visible ? sessionBox.delegateModel : null
                     currentIndex: sessionBox.highlightedIndex
                 }
 
-                background: Rectangle {
+                background: StyledRect {
+                    useDefaultRadius: false
                     border.color: root.theme.cardBorderColor
                     border.width: 1
                     radius: Math.max(4, Math.round(root.theme.innerRadius / 2))

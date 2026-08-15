@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell
-import Quickshell.Bluetooth
+import Quickshell.Bluetooth as QsBluetooth
 import Quickshell.Io
 pragma Singleton
 
@@ -10,38 +10,47 @@ Singleton {
     property string textLabel: "Bluetooth Off"
     property string iconName: "bluetooth_disabled"
 
-    signal stateChanged()
+    function updateStatus() {
+        const adapter = QsBluetooth.Bluetooth.defaultAdapter;
+        if (!adapter || adapter.state <= QsBluetooth.BluetoothAdapterState.Disabled) {
+            root.textLabel = "Bluetooth Off";
+            root.iconName = "bluetooth_disabled";
+            return ;
+        }
+        const devices = (adapter.devices && adapter.devices.values) ? adapter.devices.values : [];
+        const connectedDevices = devices.filter((d) => {
+            return d && d.connected;
+        });
+        if (adapter.state === QsBluetooth.BluetoothAdapterState.Enabled && connectedDevices.length === 0) {
+            root.textLabel = "Not Connected";
+            root.iconName = "bluetooth_searching";
+            return ;
+        }
+        if (connectedDevices.length === 1)
+            root.textLabel = connectedDevices[0].name || "Connected";
+        else
+            root.textLabel = `${connectedDevices.length} Connections`;
+        root.iconName = "bluetooth";
+    }
 
     function getBool() {
-        if (!Bluetooth.defaultAdapter || Bluetooth.defaultAdapter.state <= BluetoothAdapterState.Disabled)
+        const adapter = QsBluetooth.Bluetooth.defaultAdapter;
+        if (!adapter || adapter.state <= QsBluetooth.BluetoothAdapterState.Disabled)
             return false;
 
-        return Bluetooth.defaultAdapter.state === BluetoothAdapterState.Enabled;
+        return adapter.state === QsBluetooth.BluetoothAdapterState.Enabled;
     }
 
     function getIcon() {
-        if (!Bluetooth.defaultAdapter || Bluetooth.defaultAdapter.state <= BluetoothAdapterState.Disabled) {
-            textLabel = "Bluetooth Off";
-            return "bluetooth_disabled";
-        }
-        const connectedDevices = Bluetooth.defaultAdapter.devices.values.filter((d) => {
-            return d.connected;
-        });
-        if (Bluetooth.defaultAdapter.state === BluetoothAdapterState.Enabled && connectedDevices.length === 0) {
-            textLabel = "Not Connected";
-            return "bluetooth_searching";
-        }
-        if (connectedDevices.length === 1)
-            textLabel = connectedDevices[0].name || "Connected";
-        else
-            textLabel = `${connectedDevices.length} Connections`;
-        return "bluetooth";
+        root.updateStatus();
+        return root.iconName;
     }
 
     function toggle() {
-        if (Bluetooth.defaultAdapter) {
-            const willEnable = !(Bluetooth.defaultAdapter.state === BluetoothAdapterState.Enabled);
-            Bluetooth.defaultAdapter.enabled = willEnable;
+        const adapter = QsBluetooth.Bluetooth.defaultAdapter;
+        if (adapter) {
+            const willEnable = !(adapter.state === QsBluetooth.BluetoothAdapterState.Enabled);
+            adapter.enabled = willEnable;
             if (willEnable)
                 Quickshell.execDetached(["bluetoothctl", "power", "on"]);
             else
@@ -54,11 +63,10 @@ Singleton {
 
     Connections {
         function onStateChanged() {
-            root.iconName = root.getIcon();
-            root.stateChanged();
+            root.updateStatus();
         }
 
-        target: Quickshell.Bluetooth.defaultAdapter
+        target: QsBluetooth.Bluetooth.defaultAdapter
     }
 
     Timer {
@@ -69,11 +77,7 @@ Singleton {
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            const newIcon = root.getIcon();
-            if (newIcon !== root.iconName) {
-                root.iconName = newIcon;
-                root.stateChanged();
-            }
+            root.updateStatus();
         }
     }
 

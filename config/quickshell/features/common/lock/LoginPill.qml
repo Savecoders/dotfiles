@@ -1,8 +1,9 @@
 import QtQuick
-import QtQuick.Layouts
 import QtQuick.Controls
+import QtQuick.Layouts
+import qs.core
 
-Rectangle {
+StyledRect {
     id: root
 
     property Theme theme: themeDefault
@@ -21,6 +22,7 @@ Rectangle {
         textInput.forceActiveFocus();
     }
 
+    useDefaultRadius: false
     implicitWidth: 380
     implicitHeight: 64
     radius: root.theme.cardRadius
@@ -38,7 +40,9 @@ Rectangle {
     }
 
     // Floating Error Message Pill above LoginPill
-    Rectangle {
+    StyledRect {
+        useDefaultRadius: false
+        border.width: 0
         visible: root.errorMessage !== ""
         opacity: root.errorMessage !== "" ? 1 : 0
         implicitWidth: errorRow.implicitWidth + 24
@@ -53,12 +57,12 @@ Rectangle {
             id: errorRow
 
             anchors.centerIn: parent
-            spacing: 8
+            spacing: Styling.spacing.lg
 
             Text {
                 text: "warning"
                 font.family: root.theme.iconFontFamily
-                font.pixelSize: 16
+                font.pixelSize: Styling.fontSize.lg
                 color: root.theme.on_error
             }
 
@@ -66,7 +70,7 @@ Rectangle {
                 text: root.errorMessage
                 color: root.theme.on_error
                 font.family: root.theme.fontFamily
-                font.pixelSize: 12
+                font.pixelSize: Styling.fontSize.label
                 font.weight: Font.Bold
             }
 
@@ -85,7 +89,7 @@ Rectangle {
         anchors.fill: parent
         anchors.leftMargin: 12
         anchors.rightMargin: 12
-        spacing: 8
+        spacing: Styling.spacing.lg
 
         // User Avatar (Circular with fallback)
         AvatarPill {
@@ -96,7 +100,8 @@ Rectangle {
         }
 
         // Password Input Container
-        Rectangle {
+        StyledRect {
+            useDefaultRadius: false
             Layout.fillWidth: true
             Layout.preferredHeight: 44
             radius: Math.max(2, root.theme.innerRadius)
@@ -108,12 +113,12 @@ Rectangle {
                 anchors.fill: parent
                 anchors.leftMargin: 16
                 anchors.rightMargin: 12
-                spacing: 8
+                spacing: Styling.spacing.lg
 
                 Text {
                     text: "lock"
                     font.family: root.theme.iconFontFamily
-                    font.pixelSize: 20
+                    font.pixelSize: Styling.fontSize.headline
                     color: textInput.activeFocus ? root.theme.primary : root.theme.on_surface_variant
                     Layout.alignment: Qt.AlignVCenter
                 }
@@ -124,7 +129,7 @@ Rectangle {
                     Layout.fillWidth: true
                     color: root.theme.on_surface
                     font.family: root.theme.fontFamily
-                    font.pixelSize: 16
+                    font.pixelSize: Styling.fontSize.lg
                     echoMode: TextInput.Password
                     passwordCharacter: "•"
                     clip: true
@@ -148,7 +153,9 @@ Rectangle {
                 }
 
                 // Eye Reveal Toggle Button
-                Rectangle {
+                StyledRect {
+                    useDefaultRadius: false
+                    border.width: 0
                     width: 32
                     height: 32
                     radius: Math.max(2, root.theme.innerRadius)
@@ -157,7 +164,7 @@ Rectangle {
                     Text {
                         text: textInput.echoMode === TextInput.Password ? "visibility" : "visibility_off"
                         font.family: root.theme.iconFontFamily
-                        font.pixelSize: 20
+                        font.pixelSize: Styling.fontSize.headline
                         color: root.theme.on_surface_variant
                         anchors.centerIn: parent
                     }
@@ -187,9 +194,10 @@ Rectangle {
         }
 
         // Unlock Action Button (Circular Arrow)
-        Rectangle {
+        StyledRect {
             id: unlockBtn
 
+            useDefaultRadius: false
             Layout.preferredWidth: 40
             Layout.preferredHeight: 40
             radius: Math.max(2, root.theme.innerRadius)
@@ -200,7 +208,7 @@ Rectangle {
             Text {
                 text: "arrow_forward"
                 font.family: root.theme.iconFontFamily
-                font.pixelSize: 20
+                font.pixelSize: Styling.fontSize.headline
                 color: root.theme.on_primary
                 anchors.centerIn: parent
             }

@@ -1,6 +1,7 @@
 import QtQuick
+import qs.core
 
-Rectangle {
+StyledRect {
     id: root
 
     property Theme theme: themeDefault
@@ -9,6 +10,7 @@ Rectangle {
 
     signal clicked()
 
+    useDefaultRadius: false
     width: 40
     height: 40
     radius: Math.max(2, root.theme.innerRadius)
@@ -23,7 +25,7 @@ Rectangle {
     Text {
         text: root.iconName
         font.family: root.theme.iconFontFamily
-        font.pixelSize: 20
+        font.pixelSize: Styling.fontSize.headline
         color: root.danger && mouse.containsMouse ? root.theme.error : root.theme.on_surface
         anchors.centerIn: parent
     }

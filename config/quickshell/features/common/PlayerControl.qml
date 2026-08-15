@@ -7,7 +7,7 @@ import Quickshell.Io
 import Quickshell.Widgets
 import qs.core
 
-Rectangle {
+StyledRect {
     id: root
 
     property bool isHovered: false
@@ -18,6 +18,7 @@ Rectangle {
     property string bgColourHovered: Colours.palette.surface_container_high
     property string colourHovered: Colours.palette.on_surface
 
+    variant: "internalbg"
     width: 35
     height: 35
     color: isHovered ? root.bgColourHovered : root.bgColour
@@ -27,7 +28,7 @@ Rectangle {
         id: icon
 
         anchors.centerIn: parent
-        font.pixelSize: 20
+        font.pixelSize: Styling.fontSize.headline
         color: root.isHovered ? root.colourHovered : root.colour
         text: root.iconName
         font.family: Config.settings.iconFont

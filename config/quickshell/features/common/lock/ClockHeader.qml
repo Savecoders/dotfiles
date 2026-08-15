@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import qs.core
 
 ColumnLayout {
     id: root
@@ -12,7 +13,7 @@ ColumnLayout {
     property bool showDate: true
     property string dateFormat: "dddd, MMMM d"
 
-    spacing: 8
+    spacing: Styling.spacing.lg
 
     Theme {
         id: themeDefault
@@ -35,7 +36,7 @@ ColumnLayout {
         text: root.timeString
         color: root.theme.on_surface
         font.family: root.theme.fontFamily
-        font.pixelSize: 104
+        font.pixelSize: Styling.fontSize.hero
         font.weight: Font.ExtraBold
         Layout.alignment: Qt.AlignHCenter
         style: Text.Outline
@@ -48,7 +49,7 @@ ColumnLayout {
         color: root.theme.on_surface
         opacity: 0.9
         font.family: root.theme.fontFamily
-        font.pixelSize: 28
+        font.pixelSize: Styling.fontSize.display
         font.weight: Font.DemiBold
         Layout.alignment: Qt.AlignHCenter
         style: Text.Outline
