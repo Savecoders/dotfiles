@@ -8,13 +8,12 @@ import qs.core
 import qs.features
 import qs.features.common
 
-Rectangle {
+Item {
     id: root
 
     property var bar
 
     visible: SystemTray.items.values.length > 0
-    color: "transparent"
     implicitWidth: (bar && bar.isVertical) ? 32 : Math.max(32, SystemTray.items.values.length * 24 + Math.max(0, SystemTray.items.values.length - 1) * 8)
     implicitHeight: (bar && bar.isVertical) ? Math.max(32, SystemTray.items.values.length * 24 + Math.max(0, SystemTray.items.values.length - 1) * 8) : 32
     width: implicitWidth
@@ -32,7 +31,7 @@ Rectangle {
         Repeater {
             model: SystemTray.items
 
-            delegate: Rectangle {
+            delegate: Item {
                 id: sysItem
 
                 required property var modelData
@@ -40,7 +39,6 @@ Rectangle {
                 Layout.alignment: Qt.AlignCenter
                 height: 24
                 width: 24
-                color: "transparent"
 
                 Loader {
                     anchors.centerIn: parent

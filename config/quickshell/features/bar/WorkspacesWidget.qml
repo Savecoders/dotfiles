@@ -5,7 +5,7 @@ import qs.core
 import qs.features.common
 import qs.services
 
-Rectangle {
+Item {
     id: root
 
     property bool isVertical: true
@@ -18,7 +18,6 @@ Rectangle {
 
     width: isVertical ? metrics.thickness : crossAxisLength
     height: isVertical ? crossAxisLength : metrics.thickness
-    color: "transparent"
     anchors.top: parent.top
     anchors.topMargin: {
         if (isVertical) {
@@ -52,10 +51,10 @@ Rectangle {
         id: metrics
 
         readonly property int thickness: 40 // bar thickness / collapsed slot size
-        readonly property int slotSpacing: 4
-        readonly property int outerPadding: 8 // padding subtracted from preferredWidth/Height
+        readonly property int slotSpacing: Styling.spacing.sm
+        readonly property int outerPadding: Styling.spacing.lg // padding subtracted from preferredWidth/Height
         readonly property int edgeMargin: 48 // non-centered anchor margin
-        readonly property int centeringOffset: 16 // extra gap subtracted when centering
+        readonly property int centeringOffset: Styling.spacing.xxxl // extra gap subtracted when centering
         readonly property int fallbackOppositeLength: 180
         readonly property int hoverSlotSize: 48
         readonly property int activeSlotSize: 40
@@ -73,7 +72,7 @@ Rectangle {
         Repeater {
             model: Workspaces.hyprWorkspaces
 
-            Rectangle {
+            StyledRect {
                 id: wsItem
 
                 property bool hovered: false
@@ -91,6 +90,7 @@ Rectangle {
                     return Config.settings.borderRadius / 2;
                 }
 
+                variant: isActive ? "focus" : "internalbg"
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.preferredWidth: isVertical ? root.width - 16 : (hovered ? metrics.hoverSlotSize : (isActive ? metrics.hoverSlotSize : metrics.activeSlotSize))
                 Layout.preferredHeight: isVertical ? (hovered ? metrics.activeSlotSize : (isActive ? metrics.activeSlotSize : metrics.restSlotSize)) : root.height - 16
@@ -122,7 +122,7 @@ Rectangle {
                             return Colours.palette.outline;
                     }
                     font.family: Config.settings.font
-                    font.pixelSize: hasWindows && !isActive ? 12 : 16
+                    font.pixelSize: hasWindows && !isActive ? Styling.fontSize.label : Styling.fontSize.lg
 
                     Behavior on color {
                         PropertyAnimation {

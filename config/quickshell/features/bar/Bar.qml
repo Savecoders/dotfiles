@@ -1,14 +1,14 @@
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Effects
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
-import QtQuick.Controls
-import Quickshell.Widgets
 import Quickshell.Services.SystemTray
-import QtQuick
-import QtQuick.Layouts
-import QtQuick.Effects
+import Quickshell.Widgets
+import qs.core
 import qs.features
 import qs.features.bar
-import qs.core
 import qs.features.common
 import qs.services
 
@@ -68,13 +68,15 @@ Scope {
                 right: barWindow.pos === 'right' || barWindow.isHorizontal
             }
 
-            Rectangle {
+            StyledRect {
                 id: barBase
 
                 readonly property real marginVal: barWindow.marginVal
                 readonly property real dynamicWidth: Math.min(barWindow.width - (marginVal * 2), Math.max(metrics.minBarLength, 56 + (workspacesWidget ? workspacesWidget.width : 160) + (bottomLayout ? bottomLayout.implicitWidth : 180) + metrics.lengthPadding))
                 readonly property real dynamicHeight: Math.min(barWindow.height - (marginVal * 2), Math.max(metrics.minBarLength, 56 + (workspacesWidget ? workspacesWidget.height : 160) + (bottomLayout ? bottomLayout.implicitHeight : 180) + metrics.lengthPadding))
 
+                variant: "pane"
+                useDefaultRadius: false
                 anchors.horizontalCenter: barWindow.isVertical ? undefined : parent.horizontalCenter
                 anchors.verticalCenter: barWindow.isVertical ? parent.verticalCenter : undefined
                 anchors.left: barWindow.isVertical ? (barWindow.pos === "left" ? parent.left : undefined) : undefined
@@ -126,7 +128,7 @@ Scope {
                     anchors.leftMargin: barWindow.isVertical ? (parent.width / 2) - (width / 2) - 1 : metrics.outerPadding
                     anchors.topMargin: barWindow.isVertical ? metrics.outerPadding : (parent.height / 2) - (height / 2) - 1
                     color: "transparent"
-                    radius: 100
+                    radius: Styling.radius.round
 
                     Loader {
                         anchors.fill: parent
@@ -174,7 +176,7 @@ Scope {
                 Component {
                     id: barIconButtonComp
 
-                    Rectangle {
+                    StyledRect {
                         id: iconButton
 
                         property bool active: false
@@ -190,6 +192,8 @@ Scope {
 
                         signal activated()
 
+                        variant: "internalbg"
+                        useDefaultRadius: false
                         implicitWidth: barWindow.isVertical ? (barBase.width - 8) : (expanded ? (hovered ? 48 : 40) : 0)
                         implicitHeight: barWindow.isVertical ? (expanded ? (hovered ? 48 : 40) : 0) : (barBase.height - 8)
                         width: implicitWidth
@@ -211,7 +215,7 @@ Scope {
                                 text: iconButton.iconGlyph
                                 font.family: Config.settings.iconFont
                                 font.weight: 400
-                                font.pixelSize: 16
+                                font.pixelSize: Styling.fontSize.lg
                                 Layout.preferredHeight: 16
                                 Layout.leftMargin: 0
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -356,12 +360,14 @@ Scope {
                 Component {
                     id: quickActionsComp
 
-                    Rectangle {
+                    StyledRect {
                         id: quickActionsButton
 
                         property bool hovered: false
                         readonly property bool isColoured: hovered || IPCLoader.isDashboardOpen
 
+                        variant: "internalbg"
+                        useDefaultRadius: false
                         implicitWidth: barWindow.isVertical ? 36 : Math.max(140, statusGroup.implicitWidth + 24)
                         implicitHeight: barWindow.isVertical ? Math.max(104, statusGroup.implicitHeight + 20) : 32
                         width: implicitWidth
