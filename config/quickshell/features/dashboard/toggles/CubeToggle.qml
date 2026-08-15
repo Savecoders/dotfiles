@@ -6,7 +6,7 @@ BaseToggle {
     id: root
 
     property string bigText: "Placeholder"
-    property int bigTextSize: 14
+    property int bigTextSize: Styling.fontSize.bodyLarge
     property string iconCode: "settings"
     property real iconSize: 25
 
@@ -17,14 +17,13 @@ BaseToggle {
         anchors.centerIn: parent
         width: root.rWidth - 10
         height: root.rHeight - 10
-        spacing: 0
+        spacing: Styling.spacing.none
 
-        Rectangle {
+        Item {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.topMargin: 15
             Layout.preferredWidth: root.rWidth / 10
             Layout.preferredHeight: root.rHeight / 10
-            color: "transparent"
 
             Text {
                 anchors.centerIn: parent
@@ -46,12 +45,11 @@ BaseToggle {
 
         }
 
-        Rectangle {
+        Item {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             Layout.topMargin: 10
             Layout.preferredWidth: root.rWidth * 0.6
             Layout.preferredHeight: root.rHeight / 4
-            color: "transparent"
 
             Text {
                 anchors.centerIn: parent

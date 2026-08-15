@@ -11,7 +11,7 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.leftMargin: 20
     Layout.rightMargin: 20
-    spacing: 10
+    spacing: Styling.spacing.xl
 
     MSlider {
         Layout.fillWidth: true

@@ -22,7 +22,7 @@ Item {
 
     RowLayout {
         anchors.fill: parent
-        spacing: 10
+        spacing: Styling.spacing.xl
 
         // 1. CPU Card
         StyledRect {
@@ -52,8 +52,8 @@ Item {
                 implicitWidth: 84
                 implicitHeight: 84
                 strokeWidth: 5
-                iconPixelSize: 20
-                subTextPixelSize: 11
+                iconPixelSize: Styling.fontSize.headline
+                subTextPixelSize: Styling.fontSize.sm
                 value: (Cpu.usage || 0) / 100
                 icon: "developer_board"
                 subText: (Cpu.usage || 0) + "%"
@@ -93,8 +93,8 @@ Item {
                 implicitWidth: 84
                 implicitHeight: 84
                 strokeWidth: 5
-                iconPixelSize: 20
-                subTextPixelSize: 11
+                iconPixelSize: Styling.fontSize.headline
+                subTextPixelSize: Styling.fontSize.sm
                 value: (Ram.usage || 0) / 100
                 icon: "memory_alt"
                 subText: (Ram.usage || 0) + "%"
@@ -134,8 +134,8 @@ Item {
                 implicitWidth: 84
                 implicitHeight: 84
                 strokeWidth: 5
-                iconPixelSize: 20
-                subTextPixelSize: 11
+                iconPixelSize: Styling.fontSize.headline
+                subTextPixelSize: Styling.fontSize.sm
                 value: Math.max(0, Math.min(1, (((Thermal.temp || 25) - 25) / (90 - 25))))
                 icon: "device_thermostat"
                 subText: (Thermal.temp || 0) + "°C"

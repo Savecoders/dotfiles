@@ -46,7 +46,7 @@ SlideOverWindow {
                     id: contentColumn
 
                     width: scrollView.width
-                    spacing: 16
+                    spacing: Styling.spacing.xxxl
 
                     GithubContribCalendar {
                         Layout.fillWidth: true
@@ -58,7 +58,13 @@ SlideOverWindow {
                     Toggles {
                     }
 
-                    Music {
+                    MusicCard {
+                        cardHeight: 88
+                        cardColor: Qt.alpha(Colours.palette.surface, 0.85)
+                        borderColor: Qt.alpha(Colours.palette.outline, 0.25)
+                        Layout.fillWidth: true
+                        Layout.leftMargin: 20
+                        Layout.rightMargin: 20
                     }
 
                     Sliders {

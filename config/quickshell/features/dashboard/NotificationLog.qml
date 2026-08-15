@@ -1,19 +1,20 @@
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Effects
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
-import QtQuick
-import QtQuick.Layouts
-import QtQuick.Effects
-import QtQuick.Controls
 import Quickshell.Widgets
 import qs.core
 import qs.features.common
 import qs.services
 
-Rectangle {
+StyledRect {
     id: root
 
     property int notificationCount: Notifications.list.length
 
+    variant: "common"
     anchors.fill: parent
     radius: Config.settings.borderRadius
     color: Colours.palette.surface
@@ -21,7 +22,7 @@ Rectangle {
 
     ColumnLayout {
         anchors.fill: parent
-        spacing: 10
+        spacing: Styling.spacing.xl
 
         RowLayout {
             Layout.fillWidth: true
@@ -33,7 +34,7 @@ Rectangle {
                 color: Colours.palette.on_surface
                 text: "Notifications"
                 font.family: Config.settings.font
-                font.pixelSize: 18
+                font.pixelSize: Styling.fontSize.title
                 font.weight: 700
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
             }
@@ -42,11 +43,12 @@ Rectangle {
                 Layout.fillWidth: true
             }
 
-            Rectangle {
+            StyledRect {
                 id: clearBtn
 
                 property bool isHovered: false
 
+                variant: "internalbg"
                 Layout.preferredWidth: 90
                 Layout.preferredHeight: 34
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -55,13 +57,13 @@ Rectangle {
 
                 RowLayout {
                     anchors.centerIn: parent
-                    spacing: 6
+                    spacing: Styling.spacing.md
 
                     Text {
                         color: clearBtn.isHovered ? Colours.palette.on_primary : Colours.palette.on_surface
                         text: "clear_all"
                         font.family: Config.settings.iconFont
-                        font.pixelSize: 18
+                        font.pixelSize: Styling.fontSize.title
 
                         Behavior on color {
                             PropertyAnimation {
@@ -77,7 +79,7 @@ Rectangle {
                         color: clearBtn.isHovered ? Colours.palette.on_primary : Colours.palette.on_surface
                         text: "Clear"
                         font.family: Config.settings.font
-                        font.pixelSize: 13
+                        font.pixelSize: Styling.fontSize.body
                         font.weight: 600
 
                         Behavior on color {
@@ -138,7 +140,7 @@ Rectangle {
                 width: parent.width
                 implicitWidth: parent.width
                 clip: true
-                spacing: 12
+                spacing: Styling.spacing.xxl
 
                 model: ScriptModel {
                     values: (Notifications.list || []).slice().reverse()
@@ -194,17 +196,16 @@ Rectangle {
 
     }
 
-    Rectangle {
+    Item {
         anchors.centerIn: parent
         height: 100
         width: 200
-        color: "transparent"
         visible: root.notificationCount === 0
 
         Text {
             anchors.centerIn: parent
             text: "No notifications"
-            font.pixelSize: 16
+            font.pixelSize: Styling.fontSize.lg
             font.family: Config.settings.font
             font.weight: 500
             color: Qt.alpha(Colours.palette.on_surface, 0.5)

@@ -1,7 +1,7 @@
 import QtQuick
-import QtQuick.Layouts
 import QtQuick.Controls
 import QtQuick.Effects
+import QtQuick.Layouts
 import qs.core
 import qs.services
 
@@ -18,32 +18,34 @@ Item {
         id: contentColumn
 
         anchors.fill: parent
-        spacing: 10
+        spacing: Styling.spacing.xl
 
         // Header Row
         RowLayout {
             Layout.fillWidth: true
-            spacing: 6
+            spacing: Styling.spacing.md
 
             Text {
                 text: "wallpaper"
                 font.family: Config.settings.iconFont
-                font.pixelSize: 16
+                font.pixelSize: Styling.fontSize.lg
                 color: Colours.palette.primary
             }
 
             Text {
                 text: "Wallpapers"
                 font.family: Config.settings.font
-                font.pixelSize: 13
+                font.pixelSize: Styling.fontSize.body
                 font.weight: 600
                 color: Colours.palette.on_surface
             }
 
-            Rectangle {
+            StyledRect {
+                variant: "internalbg"
+                useDefaultRadius: false
                 implicitWidth: badgeText.implicitWidth + 12
                 implicitHeight: 18
-                radius: 9
+                radius: Styling.radius.md
                 color: Colours.palette.surface_container_highest
 
                 Text {
@@ -52,7 +54,7 @@ Item {
                     anchors.centerIn: parent
                     text: Wallpaper.wallpapersList.length + " items"
                     font.family: Config.settings.font
-                    font.pixelSize: 10
+                    font.pixelSize: Styling.fontSize.xs
                     font.weight: 500
                     color: Colours.palette.on_surface_variant
                 }
@@ -64,14 +66,16 @@ Item {
             }
 
             // Random Wallpaper Button
-            Rectangle {
+            StyledRect {
                 id: randomBtn
 
                 property bool hovered: false
 
+                variant: "internalbg"
+                useDefaultRadius: false
                 implicitWidth: randomRow.implicitWidth + 16
                 implicitHeight: 26
-                radius: 13
+                radius: Styling.radius.xl
                 color: randomBtn.hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container
 
                 MouseArea {
@@ -87,19 +91,19 @@ Item {
                     id: randomRow
 
                     anchors.centerIn: parent
-                    spacing: 4
+                    spacing: Styling.spacing.sm
 
                     Text {
                         text: "casino"
                         font.family: Config.settings.iconFont
-                        font.pixelSize: 14
+                        font.pixelSize: Styling.fontSize.bodyLarge
                         color: Colours.palette.primary
                     }
 
                     Text {
                         text: "Random"
                         font.family: Config.settings.font
-                        font.pixelSize: 11
+                        font.pixelSize: Styling.fontSize.sm
                         font.weight: 600
                         color: Colours.palette.on_surface
                     }
@@ -125,7 +129,7 @@ Item {
             Layout.fillWidth: true
             Layout.preferredHeight: 90
             orientation: ListView.Horizontal
-            spacing: 10
+            spacing: Styling.spacing.xl
             clip: true
             model: Wallpaper.wallpapersList
 
@@ -134,16 +138,18 @@ Item {
                 visible: Wallpaper.wallpapersList.length === 0
                 text: "No wallpapers found in ~/Pictures/Wallpapers"
                 font.family: Config.settings.font
-                font.pixelSize: 12
+                font.pixelSize: Styling.fontSize.label
                 color: Colours.palette.on_surface_variant
             }
 
-            delegate: Rectangle {
+            delegate: StyledRect {
                 id: card
 
                 property bool isSelected: (Config.settings.currentWallpaper === modelData || Config.settings.wallpaperToSet === modelData)
                 property bool isHovered: false
 
+                variant: "common"
+                useDefaultRadius: false
                 width: 140
                 height: 90
                 radius: Math.max(6, Config.settings.borderRadius - 8)
@@ -153,14 +159,17 @@ Item {
 
                 Image {
                     anchors.fill: parent
-                    anchors.margins: 2
+                    anchors.margins: Styling.spacing.xs
                     source: "file://" + modelData
                     sourceSize: Qt.size(280, 180)
                     fillMode: Image.PreserveAspectCrop
                     asynchronous: true
                     cache: true
 
-                    Rectangle {
+                    StyledRect {
+                        variant: "internalbg"
+                        useDefaultRadius: false
+                        border.width: 0
                         anchors.fill: parent
                         radius: card.radius - 2
                         color: card.isHovered ? Qt.alpha(Colours.palette.on_surface, 0.1) : "transparent"

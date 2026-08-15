@@ -1,6 +1,6 @@
 import QtQuick
-import QtQuick.Layouts
 import QtQuick.Controls
+import QtQuick.Layouts
 import qs.core
 import qs.services
 
@@ -8,7 +8,7 @@ Item {
     id: contributionCalendar
 
     property var contribs: (Github && Github.contributions) ? Github.contributions : []
-    readonly property int textSpacing: 4
+    readonly property int textSpacing: Styling.spacing.sm
 
     function contributionColor(level) {
         if (level === 0)
@@ -37,17 +37,20 @@ Item {
         id: contentThing
 
         anchors.fill: parent
-        spacing: 8
+        spacing: Styling.spacing.lg
 
         RowLayout {
             Layout.fillWidth: true
-            spacing: 4
+            spacing: Styling.spacing.sm
 
-            Rectangle {
+            StyledRect {
                 width: 24
                 height: 24
+                variant: "internalbg"
+                useDefaultRadius: false
+                border.width: 0
                 color: "transparent"
-                radius: 12
+                radius: Styling.radius.lg
                 clip: true
 
                 Image {
@@ -67,32 +70,32 @@ Item {
             }
 
             Item {
-                width: 4
+                width: Styling.spacing.sm
             }
 
             Text {
                 text: "@" + Config.settings.misc.githubUsername
                 font.family: Config.settings.font
-                font.pixelSize: 12
+                font.pixelSize: Styling.fontSize.label
                 color: Colours.palette.on_surface
             }
 
             Text {
                 text: "•"
-                font.pixelSize: 10
+                font.pixelSize: Styling.fontSize.xs
                 color: Colours.palette.outline
             }
 
             Text {
                 text: (Github && Github.contributionNumber !== undefined) ? Github.contributionNumber : "0"
-                font.pixelSize: 10
+                font.pixelSize: Styling.fontSize.xs
                 font.family: Config.settings.font
                 color: Colours.palette.primary
             }
 
             Text {
                 text: "contributions in the last year"
-                font.pixelSize: 10
+                font.pixelSize: Styling.fontSize.xs
                 font.family: Config.settings.font
                 color: Colours.palette.on_surface_variant
             }
@@ -135,7 +138,7 @@ Item {
                 visible: (!Github || !Github.loaded || !contributionCalendar.contribs || contributionCalendar.contribs.length === 0 || Github.contributionNumber === 0)
                 text: "No se encontraron contribuciones"
                 font.family: Config.settings.font
-                font.pixelSize: 11
+                font.pixelSize: Styling.fontSize.sm
                 font.weight: 500
                 color: Qt.alpha(Colours.palette.on_surface, 0.7)
             }

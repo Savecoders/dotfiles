@@ -12,11 +12,11 @@ import qs.features.dashboard
 import qs.features.dashboard.toggles
 import qs.services
 
-Rectangle {
+Item {
     id: root
 
     property int fHeight: 184
-    property int spacing: 10
+    property int spacing: Styling.spacing.xl
     property int rowHeight: 87
     readonly property int availWidth: root.width > 0 ? root.width : 475
     readonly property int row1WideWidth: Math.floor((availWidth - 2 * spacing) * 0.5)
@@ -30,7 +30,6 @@ Rectangle {
     Layout.rightMargin: 20
     Layout.preferredHeight: contentColumn.implicitHeight
     implicitHeight: contentColumn.implicitHeight
-    color: "transparent"
 
     ColumnLayout {
         id: contentColumn

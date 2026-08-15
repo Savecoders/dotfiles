@@ -12,7 +12,7 @@ import qs.features.dashboard
 import qs.features.dashboard.bottom
 import qs.services
 
-Rectangle {
+Item {
     id: root
 
     property bool isPowerMenuOpen: false
@@ -20,9 +20,8 @@ Rectangle {
     Layout.fillWidth: true
     Layout.preferredHeight: 45
     implicitHeight: 45
-    color: "transparent"
 
-    Rectangle {
+    StyledRect {
         id: powerBtn
 
         property bool hovered: false
@@ -45,6 +44,7 @@ Rectangle {
                 return Qt.alpha(Colours.palette.on_surface, 0.8);
         }
 
+        variant: "internalbg"
         height: 30
         width: hovered ? 47 : 45
         anchors.left: parent.left
@@ -61,7 +61,7 @@ Rectangle {
             anchors.topMargin: 5
             text: "mode_off_on"
             font.family: Config.settings.iconFont
-            font.pixelSize: 16
+            font.pixelSize: Styling.fontSize.lg
             font.weight: 600
             color: powerBtn.getTextColour()
 
@@ -82,7 +82,7 @@ Rectangle {
             anchors.topMargin: 5
             text: "keyboard_arrow_up"
             font.family: Config.settings.iconFont
-            font.pixelSize: 16
+            font.pixelSize: Styling.fontSize.lg
             font.weight: 600
             color: powerBtn.getTextColour()
             rotation: root.isPowerMenuOpen ? 0 : 180
@@ -142,7 +142,7 @@ Rectangle {
 
     Text {
         anchors.right: settingsBtn.left
-        anchors.rightMargin: 10
+        anchors.rightMargin: Styling.spacing.xl
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 23
         font.family: Config.settings.font
@@ -156,16 +156,17 @@ Rectangle {
                 return `${Battery.percent}% (Discharging)`;
             }
         }
-        font.pixelSize: 13
+        font.pixelSize: Styling.fontSize.body
         color: Qt.alpha(Colours.palette.on_surface, 0.8)
         Layout.topMargin: 7
     }
 
-    Rectangle {
+    StyledRect {
         id: settingsBtn
 
         property bool hovered: false
 
+        variant: "internalbg"
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 15
         anchors.right: parent.right
@@ -179,7 +180,7 @@ Rectangle {
             anchors.centerIn: parent
             text: "settings"
             font.family: Config.settings.iconFont
-            font.pixelSize: 16
+            font.pixelSize: Styling.fontSize.lg
             color: settingsBtn.hovered ? Colours.palette.on_surface : Qt.alpha(Colours.palette.on_surface, 0.8)
 
             Behavior on color {
@@ -224,7 +225,8 @@ Rectangle {
 
     }
 
-    Rectangle {
+    StyledRect {
+        variant: "popup"
         anchors.bottom: parent.bottom
         anchors.bottomMargin: root.isPowerMenuOpen ? 55 : 15
         width: root.isPowerMenuOpen ? 130 : 45

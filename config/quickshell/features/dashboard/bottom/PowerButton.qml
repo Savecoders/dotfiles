@@ -7,7 +7,7 @@ import Quickshell.Io
 import Quickshell.Widgets
 import qs.core
 
-Rectangle {
+StyledRect {
     id: root
 
     property string iconCode: "settings"
@@ -15,6 +15,9 @@ Rectangle {
     property var toRun
     property bool hovered: false
 
+    variant: "internalbg"
+    useDefaultRadius: false
+    border.width: 0
     Layout.preferredWidth: hovered ? 110 : 70
     Layout.preferredHeight: 30
     color: hovered ? Colours.palette.primary_container : "transparent"
@@ -24,12 +27,12 @@ Rectangle {
         id: icon
 
         anchors.left: parent.left
-        anchors.leftMargin: 8
+        anchors.leftMargin: Styling.spacing.lg
         anchors.top: parent.top
         anchors.topMargin: 5
         text: root.iconCode
         font.family: Config.settings.iconFont
-        font.pixelSize: 16
+        font.pixelSize: Styling.fontSize.lg
         color: root.hovered ? Colours.palette.on_primary_container : Qt.alpha(Colours.palette.on_surface, 0.8)
 
         Behavior on color {
@@ -49,7 +52,7 @@ Rectangle {
         anchors.topMargin: 6
         text: root.text
         font.family: Config.settings.font
-        font.pixelSize: 14
+        font.pixelSize: Styling.fontSize.bodyLarge
         color: root.hovered ? Colours.palette.on_primary_container : Qt.alpha(Colours.palette.on_surface, 0.8)
 
         Behavior on color {

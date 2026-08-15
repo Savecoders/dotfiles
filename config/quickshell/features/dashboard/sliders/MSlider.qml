@@ -26,15 +26,18 @@ Slider {
         implicitHeight: slider.height
 
         // Thin dark horizontal track line for remaining unfilled distance
-        Rectangle {
+        StyledRect {
             id: bgTrackLine
 
-            height: 6
+            variant: "internalbg"
+            useDefaultRadius: false
+            border.width: 0
+            height: Styling.spacing.md
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: progressPill.right
             anchors.leftMargin: -parent.height / 2
             anchors.right: parent.right
-            radius: 3
+            radius: Styling.radius.xs
             color: slider.isHovered ? Colours.palette.surface_container_highest : Qt.alpha(Colours.palette.surface_container_high, 0.9)
 
             Behavior on color {
@@ -47,9 +50,12 @@ Slider {
         }
 
         // Sliding progress pill container
-        Rectangle {
+        StyledRect {
             id: progressPill
 
+            variant: "focus"
+            useDefaultRadius: false
+            border.width: 0
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: parent.left
@@ -73,7 +79,7 @@ Slider {
                     anchors.centerIn: parent
                     text: slider.iconCode
                     font.family: Config.settings.iconFont
-                    font.pixelSize: 18
+                    font.pixelSize: Styling.fontSize.title
                     color: slider.isEnabled ? Colours.palette.on_primary : Qt.alpha(Colours.palette.on_surface, 0.5)
 
                     Behavior on color {
