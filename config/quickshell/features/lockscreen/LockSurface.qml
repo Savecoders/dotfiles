@@ -12,7 +12,7 @@ import qs.features.common.lock
 import qs.features.lockscreen
 import qs.services
 
-Rectangle {
+StyledRect {
     id: root
 
     required property LockContext context
@@ -65,6 +65,8 @@ Rectangle {
         loginPill.focusPassword();
     }
 
+    variant: "common"
+    useDefaultRadius: false
     color: Colours.palette.background
 
     FontLoader {
@@ -103,7 +105,10 @@ Rectangle {
         z: -1
         onClicked: root.activateLogin()
 
-        Rectangle {
+        StyledRect {
+            variant: "internalbg"
+            useDefaultRadius: false
+            border.width: 0
             anchors.fill: parent
             color: Qt.rgba(0, 0, 0, 0.4)
         }
@@ -150,7 +155,7 @@ Rectangle {
             text: "Click or press Enter to unlock"
             color: Qt.rgba(1, 1, 1, 0.85)
             font.family: Config.settings.font
-            font.pixelSize: 16
+            font.pixelSize: Styling.fontSize.lg
             font.weight: Font.Medium
 
             SequentialAnimation on opacity {
@@ -184,7 +189,7 @@ Rectangle {
     RowLayout {
         id: bottomHorizontalBar
 
-        spacing: 16
+        spacing: Styling.spacing.xxxl
         opacity: root.isUnlocked ? 1 : 0
         scale: root.isUnlocked ? 1 : 0.95
         visible: opacity > 0
@@ -257,7 +262,9 @@ Rectangle {
     Component {
         id: systemStatus
 
-        Rectangle {
+        StyledRect {
+            variant: "internalbg"
+            useDefaultRadius: false
             implicitHeight: 40
             radius: Math.max(2, root.theme.cardRadius - 2)
             color: root.theme.pillColor
@@ -266,12 +273,12 @@ Rectangle {
 
             RowLayout {
                 anchors.centerIn: parent
-                spacing: 8
+                spacing: Styling.spacing.lg
 
                 Text {
                     text: Config.settings.notifications && Config.settings.notifications.doNotDisturb ? "notifications_off" : "notifications"
                     font.family: Config.settings.iconFont
-                    font.pixelSize: 20
+                    font.pixelSize: Styling.fontSize.headline
                     color: Qt.rgba(1, 1, 1, 0.8)
                 }
 
@@ -282,7 +289,7 @@ Rectangle {
                     showBattery: true
                     showBatteryPercentage: true
                     contentColor: Qt.rgba(1, 1, 1, 0.9)
-                    iconPixelSize: 20
+                    iconPixelSize: Styling.fontSize.headline
                 }
 
             }

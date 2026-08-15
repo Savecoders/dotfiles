@@ -69,9 +69,13 @@ Scope {
 
         active: false
 
-        sourceComponent: Rectangle {
+        sourceComponent: StyledRect {
             id: overlay
 
+            variant: "pane"
+            useDefaultRadius: false
+            border.width: 0
+            radius: 0
             color: Qt.alpha(Colours.palette.scrim, 0.5)
             opacity: 0
             anchors.fill: parent
@@ -81,9 +85,10 @@ Scope {
                 onClicked: Globals.visibility.powermenu = false
             }
 
-            Rectangle {
+            StyledRect {
                 id: menu
 
+                variant: "popup"
                 width: 300
                 height: 200
                 color: Colours.palette.surface_container
@@ -92,20 +97,20 @@ Scope {
 
                 ColumnLayout {
                     anchors.fill: parent
-                    anchors.margins: 10
-                    spacing: 8
+                    anchors.margins: Styling.spacing.xl
+                    spacing: Styling.spacing.lg
 
                     Text {
                         text: "Powermenu"
                         color: Colours.palette.on_surface
                         font.family: Config.settings.font
-                        font.pixelSize: 18
+                        font.pixelSize: Styling.fontSize.title
                         font.weight: 600
                         Layout.alignment: Qt.AlignHCenter
                     }
 
                     RowLayout {
-                        spacing: 8
+                        spacing: Styling.spacing.lg
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
 
@@ -128,9 +133,10 @@ Scope {
                                 "cmd": "systemctl poweroff"
                             }]
 
-                            delegate: Rectangle {
+                            delegate: StyledRect {
                                 property bool hovered: false
 
+                                variant: hovered ? "internalbg" : "common"
                                 implicitWidth: 60
                                 implicitHeight: 70
                                 color: hovered ? Colours.palette.surface_container_high : "transparent"
@@ -138,13 +144,13 @@ Scope {
 
                                 ColumnLayout {
                                     anchors.centerIn: parent
-                                    spacing: 4
+                                    spacing: Styling.spacing.sm
 
                                     Text {
                                         text: modelData.icon
                                         color: hovered ? Colours.palette.primary : Colours.palette.on_surface
                                         font.family: Config.settings.iconFont
-                                        font.pixelSize: 24
+                                        font.pixelSize: Styling.fontSize.xxl
                                         Layout.alignment: Qt.AlignHCenter
 
                                         Behavior on color {
@@ -161,7 +167,7 @@ Scope {
                                         text: modelData.label
                                         color: Colours.palette.on_surface_variant
                                         font.family: Config.settings.font
-                                        font.pixelSize: 10
+                                        font.pixelSize: Styling.fontSize.xs
                                         Layout.alignment: Qt.AlignHCenter
                                     }
 

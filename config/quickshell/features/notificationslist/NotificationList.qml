@@ -1,12 +1,12 @@
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Notifications
-import QtQuick.Layouts
 import Quickshell.Widgets
 import qs.core
-import qs.services
 import qs.features.common
+import qs.services
 
 Scope {
     signal finished()
@@ -55,7 +55,7 @@ Scope {
                 anchors.horizontalCenter: root.isCenter ? parent.horizontalCenter : undefined
                 anchors.leftMargin: root.isLeft ? 20 : 0
                 anchors.rightMargin: (!root.isLeft && !root.isCenter) ? 20 : 0
-                spacing: 12
+                spacing: Styling.spacing.xxl
 
                 model: ScriptModel {
                     values: (Notifications.popupList || []).slice().reverse().slice(0, root.maxPopups)
