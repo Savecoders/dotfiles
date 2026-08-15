@@ -181,12 +181,12 @@ Singleton {
             notifications: JsonObject {
                 property bool enabled: true
                 property bool doNotDisturb: false
-                property int timeout: 7000
+                property int timeout: 6000
                 property string position: "top-right"
                 property bool compactMode: false
                 property bool showTimeoutBar: true
                 property bool privacyMode: false
-                property int maxVisiblePopups: 4
+                property int maxVisiblePopups: 5
                 property bool soundEnabled: true
             }
 
