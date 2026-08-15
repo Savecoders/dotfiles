@@ -7,7 +7,7 @@ import Quickshell.Io
 import Quickshell.Widgets
 import qs.core
 
-Rectangle {
+StyledRect {
     id: root
 
     property bool isHovered: false
@@ -25,6 +25,7 @@ Rectangle {
             return root.value;
     }
 
+    variant: "internalbg"
     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
     color: isHovered ? Colours.palette.surface_container_high : Colours.palette.surface_container
     radius: Config.settings.borderRadius - 5
@@ -50,7 +51,7 @@ Rectangle {
         Text {
             text: "remove"
             font.family: Config.settings.iconFont
-            font.pixelSize: 15
+            font.pixelSize: Styling.fontSize.md
             color: root.format() == root.minValue ? Qt.alpha(Colours.palette.on_surface, 0.4) : Colours.palette.on_surface
             Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
 
@@ -75,7 +76,7 @@ Rectangle {
         Text {
             text: `${root.format()}`
             font.family: Config.settings.font
-            font.pixelSize: 13
+            font.pixelSize: Styling.fontSize.body
             color: Colours.palette.on_surface
             Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
         }
@@ -83,7 +84,7 @@ Rectangle {
         Text {
             text: "add"
             font.family: Config.settings.iconFont
-            font.pixelSize: 15
+            font.pixelSize: Styling.fontSize.md
             color: root.format() == root.maxValue ? Qt.alpha(Colours.palette.on_surface, 0.4) : Colours.palette.on_surface
             Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
 

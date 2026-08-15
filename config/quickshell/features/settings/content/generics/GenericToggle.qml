@@ -7,7 +7,7 @@ import Quickshell.Io
 import Quickshell.Widgets
 import qs.core
 
-Rectangle {
+StyledRect {
     id: root
 
     property bool isToggled: false
@@ -15,6 +15,8 @@ Rectangle {
     property int rHeight
     property var toRun
 
+    variant: "internalbg"
+    useDefaultRadius: false
     Layout.preferredWidth: rWidth
     Layout.preferredHeight: rHeight
     color: Colours.palette.surface_container
@@ -22,7 +24,10 @@ Rectangle {
     border.color: isToggled ? "transparent" : Qt.alpha(Colours.palette.outline, 0.5)
     radius: Config.settings.borderRadius + 15
 
-    Rectangle {
+    StyledRect {
+        variant: "internalbg"
+        useDefaultRadius: false
+        border.width: 0
         width: parent.rWidth - 5
         height: parent.rHeight - 5
         anchors.top: parent.top
@@ -32,7 +37,10 @@ Rectangle {
         radius: parent.radius
         color: root.isToggled ? Colours.palette.primary : Colours.palette.surface_container
 
-        Rectangle {
+        StyledRect {
+            variant: "focus"
+            useDefaultRadius: false
+            border.width: 0
             width: parent.height - 7
             height: width
             color: root.isToggled ? Colours.palette.on_primary : Colours.palette.on_surface

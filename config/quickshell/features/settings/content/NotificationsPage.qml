@@ -13,12 +13,10 @@ import qs.features.settings.content
 import qs.features.settings.content.generics
 import qs.services
 
-Rectangle {
+Item {
     id: root
 
-    color: "transparent"
-
-    Rectangle {
+    Item {
         id: pageWrapper
 
         width: parent.width - 30
@@ -27,7 +25,6 @@ Rectangle {
         anchors.topMargin: (parent.height / 2) - (height / 2)
         anchors.left: parent.left
         anchors.leftMargin: (parent.width / 2) - (width / 2)
-        color: "transparent"
 
         ScrollView {
             anchors.fill: parent
@@ -196,11 +193,12 @@ Rectangle {
                     Layout.fillWidth: true
                     Layout.topMargin: 5
 
-                    Rectangle {
+                    StyledRect {
                         id: testBtn
 
                         property bool hovered: false
 
+                        variant: "focus"
                         Layout.preferredWidth: 220
                         Layout.preferredHeight: 40
                         radius: Config.settings.borderRadius - 8
@@ -208,19 +206,19 @@ Rectangle {
 
                         RowLayout {
                             anchors.centerIn: parent
-                            spacing: 8
+                            spacing: Styling.spacing.lg
 
                             Text {
                                 text: "send"
                                 font.family: Config.settings.iconFont
-                                font.pixelSize: 18
+                                font.pixelSize: Styling.fontSize.title
                                 color: Colours.palette.on_primary
                             }
 
                             Text {
                                 text: "Send Test Notification"
                                 font.family: Config.settings.font
-                                font.pixelSize: 13
+                                font.pixelSize: Styling.fontSize.body
                                 font.weight: 600
                                 color: Colours.palette.on_primary
                             }

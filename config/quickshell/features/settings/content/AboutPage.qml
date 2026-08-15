@@ -14,12 +14,10 @@ import qs.features.settings.content
 import qs.features.settings.content.generics
 import qs.services
 
-Rectangle {
+Item {
     id: root
 
-    color: "transparent"
-
-    Rectangle {
+    Item {
         id: pageWrapper
 
         width: parent.width - 30
@@ -28,7 +26,6 @@ Rectangle {
         anchors.topMargin: (parent.height / 2) - (height / 2)
         anchors.left: parent.left
         anchors.leftMargin: (parent.width / 2) - (width / 2)
-        color: "transparent"
 
         ScrollView {
             anchors.fill: parent
@@ -49,7 +46,7 @@ Rectangle {
                 Text {
                     text: "Quickshell Dotfiles"
                     font.family: Config.settings.font
-                    font.pixelSize: 22
+                    font.pixelSize: Styling.fontSize.xl
                     font.weight: 600
                     color: Colours.palette.on_surface
                     Layout.alignment: Qt.AlignHCenter
@@ -58,7 +55,7 @@ Rectangle {
                 Text {
                     text: "Version " + (Config.settings.shell.version || "1.0.0")
                     font.family: Config.settings.font
-                    font.pixelSize: 14
+                    font.pixelSize: Styling.fontSize.bodyLarge
                     color: Qt.alpha(Colours.palette.on_surface, 0.7)
                     Layout.alignment: Qt.AlignHCenter
                 }
@@ -73,7 +70,7 @@ Rectangle {
                 Text {
                     text: "Custom Quickshell Desktop Environment setup for Hyprland and AwesomeWM."
                     font.family: Config.settings.font
-                    font.pixelSize: 14
+                    font.pixelSize: Styling.fontSize.bodyLarge
                     color: Qt.alpha(Colours.palette.on_surface, 0.8)
                     Layout.alignment: Qt.AlignHCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -86,11 +83,13 @@ Rectangle {
                 }
 
                 // Whisker-style Open JSON Config file button
-                Rectangle {
+                StyledRect {
                     id: openJsonBtn
 
                     property bool hovered: false
 
+                    variant: "internalbg"
+                    useDefaultRadius: false
                     Layout.alignment: Qt.AlignHCenter
                     Layout.preferredWidth: 240
                     Layout.preferredHeight: 42
@@ -101,19 +100,19 @@ Rectangle {
 
                     RowLayout {
                         anchors.centerIn: parent
-                        spacing: 8
+                        spacing: Styling.spacing.lg
 
                         Text {
                             text: "edit_note"
                             font.family: Config.settings.iconFont
-                            font.pixelSize: 20
+                            font.pixelSize: Styling.fontSize.headline
                             color: Colours.palette.primary
                         }
 
                         Text {
                             text: "Open Configuration File"
                             font.family: Config.settings.font
-                            font.pixelSize: 13
+                            font.pixelSize: Styling.fontSize.body
                             font.weight: 600
                             color: Colours.palette.on_surface
                         }

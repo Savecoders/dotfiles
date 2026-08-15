@@ -12,55 +12,55 @@ import qs.features.settings
 import qs.features.settings.sidebar
 import qs.services
 
-Rectangle {
+Item {
     id: root
 
     property int location: SettingsControl.settingsLocation
     property bool collapsed: false
 
-    color: "transparent"
-
     ColumnLayout {
         anchors.fill: parent
-        spacing: 4
+        spacing: Styling.spacing.sm
 
         // Sidebar Header with Collapse Toggle Button
         RowLayout {
             Layout.fillWidth: true
             Layout.preferredHeight: 36
-            Layout.bottomMargin: 4
+            Layout.bottomMargin: Styling.spacing.sm
 
             Text {
                 visible: !root.collapsed
                 text: "SETTINGS"
                 font.family: Config.settings.font
-                font.pixelSize: 11
+                font.pixelSize: Styling.fontSize.sm
                 font.weight: 700
                 color: Qt.alpha(Colours.palette.on_surface, 0.4)
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                Layout.leftMargin: 8
+                Layout.leftMargin: Styling.spacing.lg
             }
 
             Item {
                 Layout.fillWidth: true
             }
 
-            Rectangle {
+            StyledRect {
                 id: collapseBtn
 
                 property bool hovered: false
 
+                variant: "internalbg"
+                useDefaultRadius: false
                 Layout.preferredWidth: 36
                 Layout.preferredHeight: 36
                 Layout.alignment: root.collapsed ? (Qt.AlignHCenter | Qt.AlignVCenter) : (Qt.AlignRight | Qt.AlignVCenter)
-                radius: 18
+                radius: Styling.radius.xxl
                 color: hovered ? Colours.palette.surface_container_highest : Colours.palette.surface_container
 
                 Text {
                     anchors.centerIn: parent
                     text: root.collapsed ? "chevron_right" : "chevron_left"
                     font.family: Config.settings.iconFont
-                    font.pixelSize: 20
+                    font.pixelSize: Styling.fontSize.headline
                     color: Colours.palette.on_surface
                 }
 
@@ -94,11 +94,11 @@ Rectangle {
             visible: !root.collapsed
             text: "APPEARANCE"
             font.family: Config.settings.font
-            font.pixelSize: 10
+            font.pixelSize: Styling.fontSize.xs
             font.weight: 700
             color: Qt.alpha(Colours.palette.on_surface, 0.4)
-            Layout.topMargin: 4
-            Layout.leftMargin: 8
+            Layout.topMargin: Styling.spacing.sm
+            Layout.leftMargin: Styling.spacing.lg
         }
 
         SidebarButton {
@@ -145,11 +145,11 @@ Rectangle {
             visible: !root.collapsed
             text: "SYSTEM"
             font.family: Config.settings.font
-            font.pixelSize: 10
+            font.pixelSize: Styling.fontSize.xs
             font.weight: 700
             color: Qt.alpha(Colours.palette.on_surface, 0.4)
-            Layout.topMargin: 8
-            Layout.leftMargin: 8
+            Layout.topMargin: Styling.spacing.lg
+            Layout.leftMargin: Styling.spacing.lg
         }
 
         SidebarButton {
@@ -209,11 +209,11 @@ Rectangle {
             visible: !root.collapsed
             text: "INFORMATION"
             font.family: Config.settings.font
-            font.pixelSize: 10
+            font.pixelSize: Styling.fontSize.xs
             font.weight: 700
             color: Qt.alpha(Colours.palette.on_surface, 0.4)
-            Layout.topMargin: 8
-            Layout.leftMargin: 8
+            Layout.topMargin: Styling.spacing.lg
+            Layout.leftMargin: Styling.spacing.lg
         }
 
         SidebarButton {

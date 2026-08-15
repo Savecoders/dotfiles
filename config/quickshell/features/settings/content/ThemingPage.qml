@@ -15,7 +15,7 @@ import qs.features.settings.content
 import qs.features.settings.content.generics
 import qs.services
 
-Rectangle {
+Item {
     id: root
 
     property string searchQuery: ""
@@ -39,14 +39,13 @@ Rectangle {
         });
     }
 
-    color: "transparent"
     Component.onCompleted: {
         if (!Wallpaper.wallpapersList || Wallpaper.wallpapersList.length === 0)
             Wallpaper.reloadWallpapers();
 
     }
 
-    Rectangle {
+    Item {
         id: pageWrapper
 
         width: parent.width - 30
@@ -55,7 +54,6 @@ Rectangle {
         anchors.topMargin: (parent.height / 2) - (height / 2)
         anchors.left: parent.left
         anchors.leftMargin: (parent.width / 2) - (width / 2)
-        color: "transparent"
 
         ScrollView {
             anchors.fill: parent
@@ -215,11 +213,12 @@ Rectangle {
                     Layout.topMargin: 10
                     spacing: 10
 
-                    Rectangle {
+                    StyledRect {
                         id: randomBtn
 
                         property bool hovered: false
 
+                        variant: "internalbg"
                         implicitWidth: randomRow.implicitWidth + 24
                         implicitHeight: 32
                         radius: Math.max(4, Config.settings.borderRadius - 12)
@@ -240,19 +239,19 @@ Rectangle {
                             id: randomRow
 
                             anchors.centerIn: parent
-                            spacing: 6
+                            spacing: Styling.spacing.md
 
                             Text {
                                 text: "casino"
                                 font.family: Config.settings.iconFont
-                                font.pixelSize: 16
+                                font.pixelSize: Styling.fontSize.lg
                                 color: Colours.palette.primary
                             }
 
                             Text {
                                 text: "Random Wallpaper"
                                 font.family: Config.settings.font
-                                font.pixelSize: 12
+                                font.pixelSize: Styling.fontSize.label
                                 font.weight: 600
                                 color: Colours.palette.on_surface
                             }
@@ -274,7 +273,8 @@ Rectangle {
                     }
 
                     // Whisker-style Search Input Field
-                    Rectangle {
+                    StyledRect {
+                        variant: "internalbg"
                         Layout.preferredWidth: 200
                         Layout.preferredHeight: 32
                         radius: Math.max(4, Config.settings.borderRadius - 12)
@@ -284,14 +284,14 @@ Rectangle {
 
                         RowLayout {
                             anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 8
-                            spacing: 6
+                            anchors.leftMargin: Styling.spacing.lg
+                            anchors.rightMargin: Styling.spacing.lg
+                            spacing: Styling.spacing.md
 
                             Text {
                                 text: "search"
                                 font.family: Config.settings.iconFont
-                                font.pixelSize: 14
+                                font.pixelSize: Styling.fontSize.bodyLarge
                                 color: Qt.alpha(Colours.palette.on_surface, 0.6)
                             }
 
@@ -301,7 +301,7 @@ Rectangle {
                                 Layout.fillWidth: true
                                 text: root.searchQuery
                                 font.family: Config.settings.font
-                                font.pixelSize: 12
+                                font.pixelSize: Styling.fontSize.label
                                 color: Colours.palette.on_surface
                                 selectByMouse: true
                                 onTextChanged: {
@@ -311,7 +311,7 @@ Rectangle {
                                 Text {
                                     text: "Search wallpapers..."
                                     font.family: Config.settings.font
-                                    font.pixelSize: 12
+                                    font.pixelSize: Styling.fontSize.label
                                     color: Qt.alpha(Colours.palette.on_surface, 0.4)
                                     visible: searchInput.text === "" && !searchInput.activeFocus
                                 }
@@ -321,7 +321,7 @@ Rectangle {
                             Text {
                                 text: "close"
                                 font.family: Config.settings.iconFont
-                                font.pixelSize: 14
+                                font.pixelSize: Styling.fontSize.bodyLarge
                                 color: Qt.alpha(Colours.palette.on_surface, 0.6)
                                 visible: searchInput.text !== ""
 
@@ -347,7 +347,7 @@ Rectangle {
                     Text {
                         text: root.filteredWallpapers.length + " / " + (Wallpaper.wallpapersList ? Wallpaper.wallpapersList.length : 0) + " wallpapers"
                         font.family: Config.settings.font
-                        font.pixelSize: 11
+                        font.pixelSize: Styling.fontSize.sm
                         color: Colours.palette.on_surface_variant
                     }
 
@@ -360,7 +360,7 @@ Rectangle {
                     Layout.preferredHeight: 90
                     Layout.topMargin: 5
                     orientation: ListView.Horizontal
-                    spacing: 10
+                    spacing: Styling.spacing.xl
                     clip: true
                     cacheBuffer: 300
                     model: root.filteredWallpapers
@@ -370,16 +370,17 @@ Rectangle {
                         visible: !Wallpaper.wallpapersList || Wallpaper.wallpapersList.length === 0
                         text: "No wallpapers found in ~/Pictures/Wallpapers"
                         font.family: Config.settings.font
-                        font.pixelSize: 12
+                        font.pixelSize: Styling.fontSize.label
                         color: Colours.palette.on_surface_variant
                     }
 
-                    delegate: Rectangle {
+                    delegate: StyledRect {
                         id: galleryCard
 
                         property bool isSelected: (Config.settings.currentWallpaper === modelData || Config.settings.wallpaperToSet === modelData)
                         property bool isHovered: false
 
+                        variant: "common"
                         width: 140
                         height: 90
                         radius: Math.max(6, Config.settings.borderRadius - 8)
@@ -389,7 +390,7 @@ Rectangle {
 
                         Image {
                             anchors.fill: parent
-                            anchors.margins: 2
+                            anchors.margins: Styling.spacing.xs
                             source: "file://" + modelData
                             sourceSize.width: 280
                             sourceSize.height: 180
@@ -397,7 +398,10 @@ Rectangle {
                             asynchronous: true
                             cache: true
 
-                            Rectangle {
+                            StyledRect {
+                                variant: "internalbg"
+                                useDefaultRadius: false
+                                border.width: 0
                                 anchors.fill: parent
                                 radius: galleryCard.radius - 2
                                 color: galleryCard.isHovered ? Qt.alpha(Colours.palette.on_surface, 0.1) : "transparent"

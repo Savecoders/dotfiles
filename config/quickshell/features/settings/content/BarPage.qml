@@ -1,24 +1,22 @@
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Effects
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
-import QtQuick
-import QtQuick.Layouts
-import QtQuick.Effects
-import QtQuick.Controls
 import Quickshell.Widgets
+import qs.core
+import qs.features
+import qs.features.common
 import qs.features.settings
 import qs.features.settings.content
 import qs.features.settings.content.generics
-import qs.core
-import qs.features.common
-import qs.features
 import qs.services
 
-Rectangle {
+Item {
     id: root
 
-    color: "transparent"
-
-    Rectangle {
+    Item {
         id: pageWrapper
 
         width: parent.width - 30
@@ -27,7 +25,6 @@ Rectangle {
         anchors.topMargin: (parent.height / 2) - (height / 2)
         anchors.left: parent.left
         anchors.leftMargin: (parent.width / 2) - (width / 2)
-        color: "transparent"
 
         ScrollView {
             anchors.fill: parent
@@ -215,9 +212,10 @@ Rectangle {
                     Layout.preferredHeight: 4
                 }
 
-                Rectangle {
+                StyledRect {
                     id: customPageCard
 
+                    variant: "pane"
                     Layout.preferredWidth: pageWrapper.width - 20
                     Layout.preferredHeight: widgetReorderColumn.implicitHeight + 40
                     Layout.topMargin: 12
@@ -461,11 +459,12 @@ Rectangle {
                                 width: parent.width
                                 implicitHeight: 80
 
-                                Rectangle {
+                                StyledRect {
                                     id: barPreview
 
                                     readonly property real wantedWidth: selectedModel.count > 0 ? widgetReorder.selectedContentWidth(widgetReorder.dragFromSelection ? widgetReorder.dragSelectedIndex : -1) + 40 : 200
 
+                                    variant: "popup"
                                     anchors.centerIn: parent
                                     width: Math.min(parent.width - 40, Math.max(200, wantedWidth))
                                     height: 48
@@ -479,7 +478,7 @@ Rectangle {
                                         visible: selectedModel.count === 0
                                         text: "+"
                                         font.family: Config.settings.font
-                                        font.pixelSize: 22
+                                        font.pixelSize: Styling.fontSize.xl
                                         font.weight: Font.DemiBold
                                         color: Qt.alpha(Colours.palette.on_surface, 0.4)
                                     }
@@ -553,7 +552,7 @@ Rectangle {
                         }
 
                         // Individual chip component for palette and bar preview
-                        component WidgetChip: Rectangle {
+                        component WidgetChip: StyledRect {
                             id: chip
 
                             property string widgetId: ""
@@ -566,6 +565,7 @@ Rectangle {
                             readonly property bool draggable: interactive && (fromSelection || !paletteDisabled)
                             readonly property bool hiddenByDrag: widgetReorder.dragActive && widgetReorder.dragWidgetId === widgetId && widgetReorder.dragFromSelection === fromSelection && (!fromSelection || widgetReorder.dragSelectedIndex === selectedIndex)
 
+                            variant: "internalbg"
                             width: def ? def.previewWidth : 60
                             height: 34
                             radius: 8
@@ -585,7 +585,7 @@ Rectangle {
                                     Text {
                                         text: modelData
                                         font.family: Config.settings.iconFont
-                                        font.pixelSize: 14
+                                        font.pixelSize: Styling.fontSize.bodyLarge
                                         color: chip.fromSelection ? Colours.palette.on_primary_container : Colours.palette.primary
                                     }
 
@@ -594,7 +594,7 @@ Rectangle {
                                 Text {
                                     text: chip.def ? (chip.def.previewText || chip.def.displayName) : chip.widgetId
                                     font.family: Config.settings.font
-                                    font.pixelSize: 12
+                                    font.pixelSize: Styling.fontSize.label
                                     font.weight: 600
                                     color: chip.fromSelection ? Colours.palette.on_primary_container : Colours.palette.on_surface
                                     elide: Text.ElideRight

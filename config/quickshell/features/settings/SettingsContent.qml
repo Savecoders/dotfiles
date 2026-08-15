@@ -12,9 +12,7 @@ import qs.features.settings
 import qs.features.settings.content
 import qs.services
 
-Rectangle {
-    color: "transparent"
-
+Item {
     SwipeView {
         id: swipeView
 

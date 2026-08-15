@@ -7,7 +7,7 @@ import Quickshell.Io
 import Quickshell.Widgets
 import qs.core
 
-Rectangle {
+StyledRect {
     id: root
 
     property bool isHovered: false
@@ -22,10 +22,12 @@ Rectangle {
     property string bgColourHovered: Colours.palette.surface_container_highest
     property string colourHovered: Colours.palette.on_surface
     property string bigText: "Placeholder"
-    property int bigTextSize: 14
+    property int bigTextSize: Styling.fontSize.bodyLarge
     property string iconCode: "settings"
-    property real iconSize: 22
+    property real iconSize: Styling.fontSize.xl
 
+    variant: (root.selected == root.number) ? "focus" : "internalbg"
+    useDefaultRadius: false
     Layout.preferredWidth: root.collapsed ? 40 : rWidth
     Layout.preferredHeight: rHeight
     Layout.alignment: root.collapsed ? Qt.AlignHCenter : Qt.AlignLeft
@@ -41,15 +43,14 @@ Rectangle {
 
     RowLayout {
         anchors.fill: parent
-        anchors.leftMargin: root.collapsed ? 0 : 12
-        anchors.rightMargin: root.collapsed ? 0 : 12
-        spacing: 10
+        anchors.leftMargin: root.collapsed ? 0 : Styling.spacing.xxl
+        anchors.rightMargin: root.collapsed ? 0 : Styling.spacing.xxl
+        spacing: Styling.spacing.xl
 
-        Rectangle {
+        Item {
             Layout.alignment: root.collapsed ? Qt.AlignHCenter | Qt.AlignVCenter : Qt.AlignLeft | Qt.AlignVCenter
             Layout.preferredWidth: 28
             Layout.preferredHeight: 28
-            color: "transparent"
 
             Text {
                 anchors.centerIn: parent

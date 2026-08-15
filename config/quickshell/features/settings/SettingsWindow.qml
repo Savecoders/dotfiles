@@ -102,10 +102,11 @@ Loader {
                         }
                     }
 
-                    Rectangle {
+                    StyledRect {
                         readonly property var sectionTitles: ["Desktop", "Bar", "Theming", "Notifications", "Lockscreen", "Services & Extras", "Components", "About"]
                         readonly property string currentSection: sectionTitles[SettingsControl.settingsLocation] || ""
 
+                        variant: "pane"
                         anchors.fill: parent
                         color: Colours.palette.surface
                         radius: Config.settings.borderRadius
@@ -115,7 +116,7 @@ Loader {
 
                             text: "settings"
                             font.family: Config.settings.iconFont
-                            font.pixelSize: 18
+                            font.pixelSize: Styling.fontSize.title
                             color: Qt.alpha(Colours.palette.on_surface, 0.8)
                             anchors.top: parent.top
                             anchors.left: parent.left
@@ -127,13 +128,13 @@ Loader {
                             anchors.top: parent.top
                             anchors.left: windowIcon.right
                             anchors.topMargin: 14
-                            anchors.leftMargin: 10
-                            spacing: 6
+                            anchors.leftMargin: Styling.spacing.xl
+                            spacing: Styling.spacing.md
 
                             Text {
                                 text: "Settings"
                                 font.family: Config.settings.font
-                                font.pixelSize: 16
+                                font.pixelSize: Styling.fontSize.lg
                                 font.weight: 600
                                 color: Colours.palette.on_surface
                             }
@@ -141,28 +142,30 @@ Loader {
                             Text {
                                 text: "•"
                                 font.family: Config.settings.font
-                                font.pixelSize: 16
+                                font.pixelSize: Styling.fontSize.lg
                                 color: Qt.alpha(Colours.palette.on_surface, 0.4)
                             }
 
                             Text {
                                 text: parent.parent.currentSection
                                 font.family: Config.settings.font
-                                font.pixelSize: 15
+                                font.pixelSize: Styling.fontSize.md
                                 font.weight: 500
                                 color: Colours.palette.primary
                             }
 
                         }
 
-                        Rectangle {
+                        StyledRect {
                             id: closeBtn
 
                             property bool hovered: false
 
+                            variant: "internalbg"
+                            useDefaultRadius: false
                             anchors.top: parent.top
                             anchors.right: parent.right
-                            anchors.topMargin: 10
+                            anchors.topMargin: Styling.spacing.xl
                             anchors.rightMargin: 15
                             color: hovered ? Colours.palette.surface_container_highest : Colours.palette.surface_container
                             radius: Math.max(4, Config.settings.borderRadius - 10)
@@ -173,7 +176,7 @@ Loader {
                                 anchors.centerIn: parent
                                 text: "close"
                                 font.family: Config.settings.iconFont
-                                font.pixelSize: 18
+                                font.pixelSize: Styling.fontSize.title
                                 color: closeBtn.hovered ? Qt.alpha(Colours.palette.on_surface, 0.9) : Qt.alpha(Colours.palette.on_surface, 0.6)
                             }
 
@@ -202,15 +205,15 @@ Loader {
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.bottom: parent.bottom
-                            spacing: 0
+                            spacing: Styling.spacing.none
 
                             SettingsSidebar {
                                 id: sidebar
 
                                 Layout.fillHeight: true
                                 Layout.preferredWidth: sidebar.collapsed ? 64 : 220
-                                Layout.leftMargin: 10
-                                Layout.bottomMargin: 10
+                                Layout.leftMargin: Styling.spacing.xl
+                                Layout.bottomMargin: Styling.spacing.xl
 
                                 Behavior on Layout.preferredWidth {
                                     PropertyAnimation {
@@ -226,7 +229,7 @@ Loader {
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                                 Layout.rightMargin: 15
-                                Layout.bottomMargin: 10
+                                Layout.bottomMargin: Styling.spacing.xl
                             }
 
                         }

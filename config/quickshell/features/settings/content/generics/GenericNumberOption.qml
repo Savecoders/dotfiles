@@ -22,7 +22,7 @@ RowLayout {
     property string iconCode: "settings"
     property int iconSize: 20
 
-    spacing: 12
+    spacing: Styling.spacing.xxl
     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
     Layout.preferredWidth: pageWrapper.width
     Layout.preferredHeight: 50
@@ -50,7 +50,7 @@ RowLayout {
         Layout.fillWidth: true
         text: root.message
         font.family: Config.settings.font
-        font.pixelSize: 15
+        font.pixelSize: Styling.fontSize.md
         color: Qt.alpha(Colours.palette.on_surface, 0.9)
 
         Behavior on color {

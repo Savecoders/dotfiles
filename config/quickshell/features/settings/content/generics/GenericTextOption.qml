@@ -18,7 +18,7 @@ RowLayout {
     property string iconCode: "settings"
     property int iconSize: 20
 
-    spacing: 12
+    spacing: Styling.spacing.xxl
     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
     Layout.preferredWidth: pageWrapper.width
     Layout.preferredHeight: 50
@@ -37,7 +37,7 @@ RowLayout {
         Layout.fillWidth: true
         text: root.message
         font.family: Config.settings.font
-        font.pixelSize: 15
+        font.pixelSize: Styling.fontSize.md
         color: Qt.alpha(Colours.palette.on_surface, 0.9)
     }
 
@@ -51,10 +51,12 @@ RowLayout {
         placeholderText: "Enter value..."
         color: Colours.palette.on_surface
         font.family: Config.settings.font
-        font.pixelSize: 14
+        font.pixelSize: Styling.fontSize.bodyLarge
         onTextEdited: root.toRun(text)
 
-        background: Rectangle {
+        background: StyledRect {
+            variant: "internalbg"
+            useDefaultRadius: false
             color: Colours.palette.surface_container
             radius: Math.max(4, Config.settings.borderRadius - 12)
             border.color: inputField.activeFocus ? Colours.palette.primary : Qt.alpha(Colours.palette.outline, 0.5)

@@ -14,7 +14,7 @@ import qs.features.settings.content
 import qs.features.settings.content.generics
 import qs.services
 
-Rectangle {
+Item {
     id: root
 
     property var availableScreens: {
@@ -30,9 +30,7 @@ Rectangle {
     }
     property var availableEncoders: ["libx264", "libx265", "libvpx-vp9", "libaom-av1", "h264_vaapi", "hevc_vaapi", "h264_nvenc", "hevc_nvenc"]
 
-    color: "transparent"
-
-    Rectangle {
+    Item {
         id: pageWrapper
 
         width: parent.width - 30
@@ -41,7 +39,6 @@ Rectangle {
         anchors.topMargin: (parent.height / 2) - (height / 2)
         anchors.left: parent.left
         anchors.leftMargin: (parent.width / 2) - (width / 2)
-        color: "transparent"
 
         ScrollView {
             anchors.fill: parent
@@ -182,7 +179,7 @@ Rectangle {
                 RowLayout {
                     id: folderRow
 
-                    spacing: 12
+                    spacing: Styling.spacing.xxl
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     Layout.preferredWidth: pageWrapper.width
                     Layout.preferredHeight: 50
@@ -191,7 +188,7 @@ Rectangle {
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                         text: "folder"
                         font.family: Config.settings.iconFont
-                        font.pixelSize: 20
+                        font.pixelSize: Styling.fontSize.headline
                         color: Qt.alpha(Colours.palette.on_surface, 0.75)
                     }
 
@@ -200,13 +197,13 @@ Rectangle {
                         Layout.fillWidth: true
                         text: "Video Output Directory"
                         font.family: Config.settings.font
-                        font.pixelSize: 15
+                        font.pixelSize: Styling.fontSize.md
                         color: Qt.alpha(Colours.palette.on_surface, 0.9)
                     }
 
                     RowLayout {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                        spacing: 6
+                        spacing: Styling.spacing.md
 
                         TextField {
                             id: dirInput
@@ -217,12 +214,13 @@ Rectangle {
                             placeholderText: "~/Videos"
                             color: Colours.palette.on_surface
                             font.family: Config.settings.font
-                            font.pixelSize: 13
+                            font.pixelSize: Styling.fontSize.body
                             onTextEdited: {
                                 Config.updateKey("recorder.output_loc", text);
                             }
 
-                            background: Rectangle {
+                            background: StyledRect {
+                                variant: "internalbg"
                                 color: Colours.palette.surface_container
                                 radius: Math.max(4, Config.settings.borderRadius - 12)
                                 border.color: dirInput.activeFocus ? Colours.palette.primary : Qt.alpha(Colours.palette.outline, 0.5)
@@ -231,11 +229,12 @@ Rectangle {
 
                         }
 
-                        Rectangle {
+                        StyledRect {
                             id: browseBtn
 
                             property bool hovered: false
 
+                            variant: "internalbg"
                             Layout.preferredWidth: 34
                             Layout.preferredHeight: 32
                             radius: Math.max(4, Config.settings.borderRadius - 12)
@@ -247,7 +246,7 @@ Rectangle {
                                 anchors.centerIn: parent
                                 text: "folder_open"
                                 font.family: Config.settings.iconFont
-                                font.pixelSize: 18
+                                font.pixelSize: Styling.fontSize.title
                                 color: Colours.palette.primary
                             }
 
@@ -272,11 +271,12 @@ Rectangle {
 
                         }
 
-                        Rectangle {
+                        StyledRect {
                             id: openThunarBtn
 
                             property bool hovered: false
 
+                            variant: "internalbg"
                             Layout.preferredWidth: 34
                             Layout.preferredHeight: 32
                             radius: Math.max(4, Config.settings.borderRadius - 12)
@@ -288,7 +288,7 @@ Rectangle {
                                 anchors.centerIn: parent
                                 text: "launch"
                                 font.family: Config.settings.iconFont
-                                font.pixelSize: 18
+                                font.pixelSize: Styling.fontSize.title
                                 color: Colours.palette.primary
                             }
 

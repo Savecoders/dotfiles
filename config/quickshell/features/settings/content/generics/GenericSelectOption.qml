@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Layouts
+import QtQuick.Templates as T
 import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
@@ -19,7 +20,7 @@ RowLayout {
     property string iconCode: "settings"
     property int iconSize: 20
 
-    spacing: 12
+    spacing: Styling.spacing.xxl
     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
     Layout.preferredWidth: pageWrapper.width
     Layout.preferredHeight: 50
@@ -38,11 +39,11 @@ RowLayout {
         Layout.fillWidth: true
         text: root.message
         font.family: Config.settings.font
-        font.pixelSize: 15
+        font.pixelSize: Styling.fontSize.md
         color: Qt.alpha(Colours.palette.on_surface, 0.9)
     }
 
-    ComboBox {
+    T.ComboBox {
         id: control
 
         model: root.options
@@ -64,7 +65,7 @@ RowLayout {
                 anchors.centerIn: parent
                 text: "expand_more"
                 font.family: Config.settings.iconFont
-                font.pixelSize: 18
+                font.pixelSize: Styling.fontSize.title
                 color: Colours.palette.on_surface
             }
 
@@ -83,14 +84,17 @@ RowLayout {
                 text: modelData
                 color: itemDelegate.hovered ? Colours.palette.on_primary : Colours.palette.on_surface
                 font.family: Config.settings.font
-                font.pixelSize: 13
+                font.pixelSize: Styling.fontSize.body
                 font.weight: itemDelegate.hovered ? Font.Bold : Font.Normal
                 elide: Text.ElideRight
                 verticalAlignment: Text.AlignVCenter
             }
 
-            background: Rectangle {
-                radius: 8
+            background: StyledRect {
+                variant: "internalbg"
+                useDefaultRadius: false
+                border.width: 0
+                radius: Styling.radius.sm
                 color: itemDelegate.hovered ? Colours.palette.primary : "transparent"
             }
 
@@ -101,13 +105,14 @@ RowLayout {
             rightPadding: 28
             text: control.displayText
             font.family: Config.settings.font
-            font.pixelSize: 13
+            font.pixelSize: Styling.fontSize.body
             color: Colours.palette.on_surface
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
         }
 
-        background: Rectangle {
+        background: StyledRect {
+            variant: control.focus ? "focus" : "internalbg"
             implicitWidth: 120
             implicitHeight: 32
             color: Colours.palette.surface_container
@@ -124,7 +129,7 @@ RowLayout {
 
             contentItem: ListView {
                 clip: true
-                spacing: 2
+                spacing: Styling.spacing.xs
                 implicitHeight: contentHeight
                 model: control.popup.visible ? control.delegateModel : null
                 currentIndex: control.highlightedIndex
@@ -134,7 +139,8 @@ RowLayout {
 
             }
 
-            background: Rectangle {
+            background: StyledRect {
+                variant: "popup"
                 border.color: Qt.alpha(Colours.palette.outline, 0.4)
                 border.width: 1
                 radius: Math.max(8, Config.settings.borderRadius - 8)

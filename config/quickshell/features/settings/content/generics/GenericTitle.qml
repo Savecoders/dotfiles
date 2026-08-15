@@ -3,14 +3,13 @@ import Quickshell
 import Quickshell.Io
 import qs.core
 
-Rectangle {
+Item {
     id: root
 
     property string text: "Placeholder"
     property string iconCode: "settings"
     property int iconSize: 23
 
-    color: "transparent"
     implicitHeight: 25
     implicitWidth: childrenRect.width
 
@@ -26,11 +25,11 @@ Rectangle {
 
     Text {
         anchors.left: icon.right
-        anchors.leftMargin: 10
+        anchors.leftMargin: Styling.spacing.xl
         anchors.verticalCenter: parent.verticalCenter
         text: root.text
         font.family: Config.settings.font
-        font.pixelSize: 20
+        font.pixelSize: Styling.fontSize.headline
         color: Colours.palette.on_surface
     }
 

@@ -13,12 +13,10 @@ import qs.features.settings.content
 import qs.features.settings.content.generics
 import qs.services
 
-Rectangle {
+Item {
     id: root
 
-    color: "transparent"
-
-    Rectangle {
+    Item {
         id: pageWrapper
 
         width: parent.width - 30
@@ -27,7 +25,6 @@ Rectangle {
         anchors.topMargin: (parent.height / 2) - (height / 2)
         anchors.left: parent.left
         anchors.leftMargin: (parent.width / 2) - (width / 2)
-        color: "transparent"
 
         ScrollView {
             anchors.fill: parent
