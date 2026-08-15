@@ -1,9 +1,9 @@
-pragma Singleton
+import QtQuick
 import Quickshell
 import Quickshell.Io
-import QtQuick
 import qs.core
 import qs.services
+pragma Singleton
 
 Singleton {
     id: root

@@ -1,6 +1,6 @@
-pragma Singleton
-import qs.core
 import Quickshell
+import qs.core
+pragma Singleton
 
 Singleton {
     id: root

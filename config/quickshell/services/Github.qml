@@ -1,8 +1,8 @@
-pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
 import qs.core
+pragma Singleton
 
 Singleton {
     id: root
@@ -100,13 +100,17 @@ Singleton {
                     const recentContribs = allContribs.filter((c) => {
                         return c && c.date && new Date(c.date) >= cutoff;
                     }).sort((a, b) => {
-                        return new Date(a.date) - new Date(b.date);
+                        return (new Date(a.date)).getTime() - (new Date(b.date)).getTime();
                     });
-                    root.contributions = recentContribs;
-                    root.loaded = true;
+                    Qt.callLater(() => {
+                        root.contributions = recentContribs;
+                        root.loaded = true;
+                    });
                 } catch (e) {
                     console.error("Failed to parse GitHub contributions:", e);
-                    root.loaded = false;
+                    Qt.callLater(() => {
+                        root.loaded = false;
+                    });
                 }
             }
         }
@@ -141,12 +145,16 @@ Singleton {
                     const recentContribs = allContribs.filter((c) => {
                         return c && c.date && new Date(c.date) >= cutoff;
                     }).sort((a, b) => {
-                        return new Date(a.date) - new Date(b.date);
+                        return (new Date(a.date)).getTime() - (new Date(b.date)).getTime();
                     });
-                    root.contributions = recentContribs;
-                    root.loaded = true;
+                    Qt.callLater(() => {
+                        root.contributions = recentContribs;
+                        root.loaded = true;
+                    });
                 } catch (e) {
-                    root.loaded = false;
+                    Qt.callLater(() => {
+                        root.loaded = false;
+                    });
                 }
             }
         }

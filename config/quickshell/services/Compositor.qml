@@ -1,8 +1,8 @@
-pragma Singleton
 import QtQuick
 import Quickshell
-import Quickshell.Wayland
 import Quickshell.Io
+import Quickshell.Wayland
+pragma Singleton
 
 Singleton {
     id: root

@@ -1,10 +1,10 @@
-pragma Singleton
-import qs.features.common
-import qs.core
 import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Notifications
+import qs.core
+import qs.features.common
+pragma Singleton
 
 /**
  * Provides extra features not in Quickshell.Services.Notifications:

@@ -1,8 +1,8 @@
-pragma Singleton
-import qs.core
+import QtQuick
 import Quickshell
 import Quickshell.Services.Pipewire
-import QtQuick
+import qs.core
+pragma Singleton
 
 Singleton {
     id: root
@@ -38,12 +38,14 @@ Singleton {
     }
 
     function incrementVolume(amount) {
-        let step = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        let raw = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        let step = raw > 1 ? (raw / 100) : raw;
         setVolume(volume + step);
     }
 
     function decrementVolume(amount) {
-        let step = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        let raw = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        let step = raw > 1 ? (raw / 100) : raw;
         setVolume(volume - step);
     }
 
@@ -55,12 +57,14 @@ Singleton {
     }
 
     function incrementSourceVolume(amount) {
-        let step = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        let raw = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        let step = raw > 1 ? (raw / 100) : raw;
         setSourceVolume(sourceVolume + step);
     }
 
     function decrementSourceVolume(amount) {
-        let step = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        let raw = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        let step = raw > 1 ? (raw / 100) : raw;
         setSourceVolume(sourceVolume - step);
     }
 
