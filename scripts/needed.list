@@ -1,10 +1,7 @@
-# Window Managers & Compositors
 awesome-git
 hyprland
 picom-git
 xorg-xwayland
-
-# Wayland & Desktop Integration Portals
 xdg-desktop-portal
 xdg-desktop-portal-hyprland
 xdg-desktop-portal-gtk
@@ -14,8 +11,6 @@ hyprlock
 hypridle
 hyprsunset
 gammastep
-
-# Qt (Qt5 / Qt6) Integration
 qt5-wayland
 qt6-wayland
 qt5ct
@@ -25,35 +20,24 @@ qt5-quickcontrols2
 qt5-graphicaleffects
 qt6-declarative
 qt6-svg
-
-# GTK & Matugen Dynamic Theming
 gtk3
 gtk4
 gsettings-desktop-schemas
-adw-gtk3
+adw-gtk-theme
 matugen-bin
-
-# Audio Architecture & PipeWire
 pipewire
 pipewire-audio
 pipewire-pulse
 pipewire-alsa
 wireplumber
-pulseaudio-utils
 playerctl
-
-# Authentication Agent
 polkit-kde-agent
-
-# Launchers, Shell & Terminals
 quickshell
 vicinae-bin
 rofi
 kitty
 wezterm
 herdr
-
-# Editors & Applications
 neovim
 zed
 visual-studio-code-bin
@@ -63,8 +47,6 @@ zen-browser-bin
 thunar
 btop
 fastfetch
-
-# Audio / Video & Visualizers
 mpd
 mpc
 mpdris2
@@ -73,8 +55,6 @@ cava
 ffmpeg
 feh
 mpv
-
-# Wayland / X11 Utilities & OCR
 wl-clipboard
 cliphist
 grim
@@ -86,8 +66,6 @@ tesseract-data-eng
 tesseract-data-spa
 imagemagick
 gpick
-
-# Hardware, Power & Network
 acpi
 acpid
 acpi_call
@@ -100,8 +78,6 @@ lm_sensors
 networkmanager
 wf-recorder
 curl
-
-# Base Utilities
 zsh
 zsh-autosuggestions
 zsh-syntax-highlighting
@@ -117,8 +93,6 @@ rainfall
 eza
 bat
 fzf
-
-# Fonts & Display Manager
 noto-fonts-emoji
 ttf-cascadia-code
 ttf-firacode-nerd
