@@ -104,7 +104,7 @@ Item {
                     message: "Eye protection notification interval (minutes)"
                     value: Config.settings.minutesBetweenHealthNotif !== undefined ? Config.settings.minutesBetweenHealthNotif : 30
                     maxValue: 180
-                    minValue: 5
+                    minValue: 15
                     amountIncrease: () => {
                         let cur = Config.settings.minutesBetweenHealthNotif !== undefined ? Config.settings.minutesBetweenHealthNotif : 30;
                         if (cur < 180)
@@ -113,7 +113,7 @@ Item {
                     }
                     amountDecrease: () => {
                         let cur = Config.settings.minutesBetweenHealthNotif !== undefined ? Config.settings.minutesBetweenHealthNotif : 30;
-                        if (cur > 5)
+                        if (cur > 15)
                             Config.updateKey("minutesBetweenHealthNotif", cur - 5);
 
                     }

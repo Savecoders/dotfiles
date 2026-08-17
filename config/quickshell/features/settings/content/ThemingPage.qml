@@ -447,8 +447,8 @@ Item {
                 GenericNumberOption {
                     message: "Border radius"
                     value: Config.settings.borderRadius
-                    maxValue: 30
-                    minValue: 5
+                    maxValue: 32
+                    minValue: 2
                     amountIncrease: () => {
                         let cur = Config.settings.borderRadius ?? 8;
                         if (cur < 30)
@@ -457,7 +457,7 @@ Item {
                     }
                     amountDecrease: () => {
                         let cur = Config.settings.borderRadius ?? 8;
-                        if (cur > 5)
+                        if (cur > 2)
                             Config.updateKey("borderRadius", cur - 1);
 
                     }
