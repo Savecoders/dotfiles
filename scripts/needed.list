@@ -20,6 +20,9 @@ qt5-quickcontrols2
 qt5-graphicaleffects
 qt6-declarative
 qt6-svg
+qt6-multimedia
+qt6-multimedia-ffmpeg
+qt6-5compat
 gtk3
 gtk4
 gsettings-desktop-schemas
