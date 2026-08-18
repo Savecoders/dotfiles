@@ -18,7 +18,12 @@ Scope {
             id: root
 
             property var modelData
-            readonly property string notifPos: (Config.settings.notifications && Config.settings.notifications.position) ? Config.settings.notifications.position : "top-right"
+            readonly property string barPos: Config.settings.bar.position.toLowerCase() ?? "left"
+            readonly property real barMargin: Config.settings.bar.margin ?? 8
+            readonly property real barThickness: 40
+            readonly property real barOffset: barThickness + (barMargin * 2) + 12
+            readonly property real defaultMargin: 20
+            readonly property string notifPos: Config.settings.notifications.position ?? "top-right"
             readonly property bool isTop: notifPos.startsWith("top")
             readonly property bool isLeft: notifPos.endsWith("left")
             readonly property bool isCenter: notifPos.endsWith("center")
@@ -28,8 +33,8 @@ Scope {
             screen: modelData
             aboveWindows: true
             exclusionMode: ExclusionMode.Ignore
-            implicitHeight: 800
-            implicitWidth: 450
+            implicitHeight: 800 + root.barOffset
+            implicitWidth: 450 + root.barOffset
             color: "transparent"
             visible: true
 
@@ -48,13 +53,13 @@ Scope {
                 implicitWidth: 400
                 anchors.top: root.isTop ? parent.top : undefined
                 anchors.bottom: !root.isTop ? parent.bottom : undefined
-                anchors.topMargin: root.isTop ? 20 : 0
-                anchors.bottomMargin: !root.isTop ? 20 : 0
                 anchors.left: root.isLeft ? parent.left : (root.isCenter ? undefined : parent.left)
                 anchors.right: (!root.isLeft && !root.isCenter) ? parent.right : undefined
                 anchors.horizontalCenter: root.isCenter ? parent.horizontalCenter : undefined
-                anchors.leftMargin: root.isLeft ? 20 : 0
-                anchors.rightMargin: (!root.isLeft && !root.isCenter) ? 20 : 0
+                anchors.topMargin: (root.barPos === "top" && root.isTop) ? root.barOffset : (root.isTop ? root.defaultMargin : 0)
+                anchors.bottomMargin: (root.barPos === "bottom" && !root.isTop) ? root.barOffset : (!root.isTop ? root.defaultMargin : 0)
+                anchors.leftMargin: (root.barPos === "left" && root.isLeft) ? root.barOffset : (root.isLeft ? root.defaultMargin : 0)
+                anchors.rightMargin: (root.barPos === "right" && (!root.isLeft && !root.isCenter)) ? root.barOffset : ((!root.isLeft && !root.isCenter) ? root.defaultMargin : 0)
                 spacing: Styling.spacing.xxl
 
                 model: ScriptModel {

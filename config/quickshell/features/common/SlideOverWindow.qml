@@ -10,24 +10,51 @@ Loader {
     required property bool isOpen
     property Component contentComponent
     property int panelWidth: 515
-    property int panelHeight: 800
-    property int horiPadding: 60
-    property int vertPadding: 60
-    readonly property string _pos: {
-        const p = (Config.settings && Config.settings.bar && Config.settings.bar.position) ? Config.settings.bar.position : "left";
-        return (p === "left" || p === "right") ? p : "left";
-    }
-    readonly property bool _isLeft: _pos === "left"
-    property bool ani
-    property real _targetMargin: -root.panelWidth
+    property int panelHeight: 880
+    property string side: "left"
+    readonly property string barPos: Config.settings.bar.position.toLowerCase() ?? "left"
+    readonly property bool isBarLeft: barPos === "left"
+    readonly property bool isBarRight: barPos === "right"
+    readonly property bool isBarTop: barPos === "top"
+    readonly property bool isBarBottom: barPos === "bottom"
+    readonly property bool isBarVertical: isBarLeft || isBarRight
+    readonly property bool isBarHorizontal: isBarTop || isBarBottom
+    readonly property real barMargin: Config.settings.bar.margin ?? 8
+    readonly property real barThickness: 40
+    readonly property real barClearance: barThickness + (barMargin * 2) + 8
+    readonly property real sideMargin: barMargin + 8
+    property bool animatedIn: false
 
     active: false
     onIsOpenChanged: {
-        if (root.isOpen === true) {
+        if (root.isOpen) {
             root.active = true;
-            root.ani = true;
+            openTimer.start();
         } else {
-            root.ani = false;
+            root.animatedIn = false;
+            closeTimer.start();
+        }
+    }
+
+    Timer {
+        id: openTimer
+
+        interval: 10
+        repeat: false
+        onTriggered: {
+            root.animatedIn = true;
+        }
+    }
+
+    Timer {
+        id: closeTimer
+
+        interval: (Config.settings && Config.settings.animationSpeed !== undefined) ? (Config.settings.animationSpeed + 50) : 250
+        repeat: false
+        onTriggered: {
+            if (!root.isOpen)
+                root.active = false;
+
         }
     }
 
@@ -45,65 +72,37 @@ Loader {
                 screen: modelData
                 aboveWindows: true
                 color: "transparent"
-                implicitHeight: root.panelHeight + root.vertPadding
-                implicitWidth: root.panelWidth + root.horiPadding
                 exclusionMode: ExclusionMode.Ignore
                 visible: true
+                implicitWidth: root.isBarVertical ? (root.panelWidth + root.barClearance) : (root.panelWidth + (root.sideMargin * 2))
+                implicitHeight: root.isBarVertical ? (root.panelHeight + root.sideMargin) : (root.panelHeight + root.barClearance)
 
                 anchors {
-                    bottom: true
-                    left: root._isLeft
-                    right: !root._isLeft
+                    top: root.isBarTop
+                    bottom: !root.isBarTop
+                    left: root.isBarLeft || (root.isBarHorizontal && root.side === "left")
+                    right: root.isBarRight || (root.isBarHorizontal && root.side === "right")
                 }
 
                 Item {
                     id: maskId
 
-                    implicitHeight: 0
                     implicitWidth: root.panelWidth
-                    anchors.leftMargin: root._isLeft ? root._targetMargin : undefined
-                    anchors.rightMargin: !root._isLeft ? root._targetMargin : undefined
-                    opacity: 0
-                    anchors.bottomMargin: root.vertPadding
+                    implicitHeight: root.panelHeight
+                    opacity: root.animatedIn ? 1 : 0
                     clip: true
 
-                    anchors {
-                        bottom: parent.bottom
-                        top: undefined
-                        left: root._isLeft ? parent.left : undefined
-                        right: !root._isLeft ? parent.right : undefined
-                    }
+                    // Anchoring rules per bar orientation
+                    anchors.top: root.isBarTop ? parent.top : undefined
+                    anchors.bottom: !root.isBarTop ? parent.bottom : undefined
+                    anchors.left: (root.isBarLeft || (root.isBarHorizontal && root.side === "left")) ? parent.left : undefined
+                    anchors.right: (root.isBarRight || (root.isBarHorizontal && root.side === "right")) ? parent.right : undefined
 
-                    Timer {
-                        running: root.ani
-                        repeat: false
-                        interval: 1
-                        onTriggered: {
-                            maskId.implicitHeight = root.panelHeight;
-                            root._targetMargin = root.horiPadding;
-                            maskId.opacity = 1;
-                        }
-                    }
-
-                    Timer {
-                        running: !root.ani
-                        repeat: false
-                        interval: 1
-                        onTriggered: {
-                            root._targetMargin = -root.panelWidth;
-                            maskId.implicitHeight = 0;
-                            maskId.opacity = 0;
-                        }
-                    }
-
-                    Timer {
-                        running: !root.ani
-                        repeat: false
-                        interval: 250
-                        onTriggered: {
-                            root.active = false;
-                        }
-                    }
+                    // Margin animations per orientation
+                    anchors.topMargin: root.isBarTop ? (root.animatedIn ? root.barClearance : -root.panelHeight) : 0
+                    anchors.bottomMargin: root.isBarBottom ? (root.animatedIn ? root.barClearance : -root.panelHeight) : (root.isBarVertical ? root.sideMargin : 0)
+                    anchors.leftMargin: root.isBarLeft ? (root.animatedIn ? root.barClearance : -root.panelWidth) : (root.isBarHorizontal && root.side === "left" ? root.sideMargin : 0)
+                    anchors.rightMargin: root.isBarRight ? (root.animatedIn ? root.barClearance : -root.panelWidth) : (root.isBarHorizontal && root.side === "right" ? root.sideMargin : 0)
 
                     StyledRect {
                         id: mainPanel
@@ -111,7 +110,7 @@ Loader {
                         variant: "popup"
                         anchors.fill: parent
                         color: Colours.palette.surface
-                        radius: (Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 8
+                        radius:  Config.settings.borderRadius ?? 8
                         border.color: Qt.alpha(Colours.palette.outline, 0.15)
                         border.width: 1
                         clip: true
@@ -123,33 +122,41 @@ Loader {
 
                     }
 
+                    Behavior on anchors.topMargin {
+                        PropertyAnimation {
+                            duration: Config.settings.animationSpeed ?? 200
+                            easing.type: Easing.OutCubic
+                        }
+
+                    }
+
+                    Behavior on anchors.bottomMargin {
+                        PropertyAnimation {
+                            duration: Config.settings.animationSpeed ?? 200
+                            easing.type: Easing.OutCubic
+                        }
+
+                    }
+
                     Behavior on anchors.leftMargin {
                         PropertyAnimation {
-                            duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
-                            easing.type: Easing.InSine
+                            duration: Config.settings.animationSpeed ?? 200
+                            easing.type: Easing.OutCubic
                         }
 
                     }
 
                     Behavior on anchors.rightMargin {
                         PropertyAnimation {
-                            duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
-                            easing.type: Easing.InSine
-                        }
-
-                    }
-
-                    Behavior on implicitHeight {
-                        PropertyAnimation {
-                            duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
-                            easing.type: Easing.InSine
+                            duration: Config.settings.animationSpeed ?? 200
+                            easing.type: Easing.OutCubic
                         }
 
                     }
 
                     Behavior on opacity {
                         PropertyAnimation {
-                            duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                            duration: Config.settings.animationSpeed ?? 200
                             easing.type: Easing.InSine
                         }
 

@@ -12,6 +12,7 @@ SlideOverWindow {
     isOpen: isNotificationsOpen
     panelWidth: 515
     panelHeight: 960
+    side: "right"
 
     contentComponent: Component {
         NotificationLog {

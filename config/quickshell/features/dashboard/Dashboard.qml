@@ -13,6 +13,7 @@ SlideOverWindow {
     isOpen: isDashboardOpen
     panelWidth: 515
     panelHeight: 880
+    side: "left"
 
     contentComponent: Component {
         Item {
@@ -20,17 +21,25 @@ SlideOverWindow {
 
             MouseArea {
                 property int startX
+                property int startY
 
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton
                 onPressed: (event) => {
                     startX = event.x;
+                    startY = event.y;
                 }
                 onPositionChanged: (event) => {
-                    let difference = startX - event.x;
-                    if ((root._isLeft && difference > 30) || (!root._isLeft && difference < -30))
+                    let diffX = startX - event.x;
+                    let diffY = startY - event.y;
+                    if (root.isBarLeft && diffX > 30)
                         IPCLoader.isDashboardOpen = false;
-
+                    else if (root.isBarRight && diffX < -30)
+                        IPCLoader.isDashboardOpen = false;
+                    else if (root.isBarTop && diffY > 30)
+                        IPCLoader.isDashboardOpen = false;
+                    else if (root.isBarBottom && diffY < -30)
+                        IPCLoader.isDashboardOpen = false;
                 }
             }
 
