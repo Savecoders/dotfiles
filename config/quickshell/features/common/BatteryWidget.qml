@@ -1,44 +1,25 @@
 import QtQuick
-import QtQuick.Controls
 import qs.core
 import qs.features.common
+import qs.services
 
-Text {
-    text: {
-        if (Battery.charging == false) {
-            if (Battery.percent <= 10)
-                return "battery_0_bar";
-            else if (Battery.percent <= 20)
-                return "battery_1_bar";
-            else if (Battery.percent <= 30)
-                return "battery_2_bar";
-            else if (Battery.percent <= 40)
-                return "battery_3_bar";
-            else if (Battery.percent <= 60)
-                return "battery_4_bar";
-            else if (Battery.percent <= 80)
-                return "battery_5_bar";
-            else if (Battery.percent <= 90)
-                return "battery_6_bar";
-            else
-                return "battery_full";
-        } else {
-            if (Battery.percent <= 10)
-                return "battery_charging_full";
-            else if (Battery.percent <= 20)
-                return "battery_charging_20";
-            else if (Battery.percent <= 30)
-                return "battery_charging_30";
-            else if (Battery.percent <= 40)
-                return "battery_charging_50";
-            else if (Battery.percent <= 60)
-                return "battery_charging_60";
-            else if (Battery.percent <= 80)
-                return "battery_charging_80";
-            else if (Battery.percent <= 90)
-                return "battery_charging_90";
-            else
-                return "battery_charging_full";
-        }
+ResourceWidget {
+    id: root
+
+    readonly property int batPercent: (Battery.percent !== undefined) ? Battery.percent : 100
+    readonly property bool isCharging: !!Battery.charging
+
+    tooltipText: "Battery: " + root.batPercent + "% (" + (root.isCharging ? (root.batPercent === 100 ? "Full" : "Charging") : "Discharging") + ")"
+    progressValue: Math.max(0, Math.min(1, root.batPercent / 100))
+    iconName: root.isCharging ? "battery_charging_full" : (root.batPercent <= 20 ? "battery_alert" : "battery_std")
+    labelText: root.batPercent + "%"
+    fgColor: {
+        if (root.isCharging)
+            return Accents.green;
+
+        if (root.batPercent <= 20)
+            return Colours.palette.error;
+
+        return Colours.palette.primary;
     }
 }
