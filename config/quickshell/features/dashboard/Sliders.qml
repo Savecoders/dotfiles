@@ -11,11 +11,12 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.leftMargin: 20
     Layout.rightMargin: 20
-    spacing: Styling.spacing.xl
+    spacing: Styling.spacing.section
 
     MSlider {
         Layout.fillWidth: true
-        iconCode: Audio.muted ? "volume_off" : "volume_up"
+        title: "Volume"
+        iconCode: Audio.muted ? "volume_off" : (Audio.volume > 0.5 ? "volume_up" : (Audio.volume > 0.05 ? "volume_down" : "volume_mute"))
         from: 0
         to: 1
         value: Audio.volume ?? 0
@@ -25,10 +26,12 @@ ColumnLayout {
 
     MSlider {
         Layout.fillWidth: true
+        title: "Brightness"
         iconCode: "brightness_medium"
-        from: 0
+        from: 1
         to: 100
         value: Brightness.brightnessPercent ?? 50
+        isEnabled: true
         onMoved: Brightness.setBrightnessPercent(value)
     }
 
