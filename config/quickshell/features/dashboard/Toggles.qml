@@ -43,7 +43,7 @@ Item {
             Layout.preferredHeight: root.rowHeight
             spacing: root.spacing
 
-            WideToggle {
+            Toggle {
                 rWidth: root.row1WideWidth
                 rHeight: root.rowHeight
                 isToggled: Network.getBool()
@@ -62,9 +62,10 @@ Item {
                 }
             }
 
-            CubeToggle {
+            Toggle {
                 rWidth: root.row1CubeWidth
                 rHeight: root.rowHeight
+                compact: true
                 isToggled: Recorder.isRecordingRunning
                 bigText: Recorder.isRecordingRunning ? Recorder.fullTime : "Screen Capture"
                 iconCode: "screen_record"
@@ -79,9 +80,10 @@ Item {
                 }
             }
 
-            CubeToggle {
+            Toggle {
                 rWidth: root.row1CubeWidthLast
                 rHeight: root.rowHeight
+                compact: true
                 isToggled: Notifications.popupInhibited
                 bigText: Notifications.popupInhibited ? "Do Not\nDisturb" : "Disturb"
                 iconCode: Notifications.popupInhibited ? "do_not_disturb_on" : "do_not_disturb_off"
@@ -98,7 +100,7 @@ Item {
             Layout.preferredHeight: root.rowHeight
             spacing: root.spacing
 
-            WideToggle {
+            Toggle {
                 rWidth: root.row2WideWidth
                 rHeight: root.rowHeight
                 isToggled: Bluetooth.getBool()
@@ -117,7 +119,7 @@ Item {
                 }
             }
 
-            WideToggle {
+            Toggle {
                 rWidth: root.row2WideWidthLast
                 rHeight: root.rowHeight
                 isToggled: Nightmode.isNightmodeOn
