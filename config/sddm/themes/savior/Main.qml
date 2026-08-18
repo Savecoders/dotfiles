@@ -1,8 +1,8 @@
+import Qt5Compat.GraphicalEffects
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Window
-import Qt5Compat.GraphicalEffects
 import "components"
 
 Rectangle {
@@ -11,43 +11,32 @@ Rectangle {
     property bool isUnlocked: false
     property int userIndex: (typeof userModel !== "undefined" && userModel && userModel.lastIndex !== undefined && userModel.lastIndex >= 0) ? userModel.lastIndex : 0
     property string errorMessage: ""
-    // OS Username & Real Name Resolver
+    property var usersList: []
+    readonly property var currentUser: (root.usersList && root.userIndex >= 0 && root.userIndex < root.usersList.length) ? root.usersList[root.userIndex] : null
     readonly property string currentUsername: {
-        if (typeof userModel !== "undefined" && userModel) {
-            if (userModel.get && userModel.rowCount && userModel.rowCount() > 0) {
-                var u = userModel.get(root.userIndex);
-                if (u && u.name)
-                    return u.name;
+        if (currentUser && currentUser.name && currentUser.name.length > 0)
+            return currentUser.name;
 
-            }
-            if (userModel.lastUser && userModel.lastUser.length > 0)
-                return userModel.lastUser;
+        if (typeof userModel !== "undefined" && userModel && userModel.lastUser && userModel.lastUser.length > 0)
+            return userModel.lastUser;
 
-        }
-        return "salva";
+        return "save";
     }
     readonly property string currentRealName: {
-        if (typeof userModel !== "undefined" && userModel) {
-            if (userModel.get && userModel.rowCount && userModel.rowCount() > 0) {
-                var u2 = userModel.get(root.userIndex);
-                if (u2 && u2.realName && u2.realName.length > 0)
-                    return u2.realName;
+        if (currentUser) {
+            if (currentUser.realName && currentUser.realName.length > 0)
+                return currentUser.realName;
 
-                if (u2 && u2.name && u2.name.length > 0)
-                    return u2.name;
-
-            }
-            if (userModel.lastUser && userModel.lastUser.length > 0)
-                return userModel.lastUser;
+            if (currentUser.name && currentUser.name.length > 0)
+                return currentUser.name;
 
         }
-        return "Salva";
+        return root.currentUsername;
     }
     readonly property string currentAvatarPath: {
-        if (typeof userModel !== "undefined" && userModel && userModel.get && userModel.rowCount && userModel.rowCount() > 0) {
-            var item = userModel.get(root.userIndex);
-            return item ? (item.icon || "") : "";
-        }
+        if (currentUser && currentUser.icon && currentUser.icon.length > 0)
+            return currentUser.icon;
+
         return "";
     }
     readonly property Theme
@@ -75,6 +64,28 @@ Rectangle {
     width: Screen.width
     height: Screen.height
     color: config.surface ? config.surface : "#0f1512"
+
+    Instantiator {
+        id: userCollector
+
+        model: (typeof userModel !== "undefined" && userModel) ? userModel : null
+        onObjectAdded: (idx, obj) => {
+            var list = root.usersList.slice();
+            list[idx] = {
+                "name": obj.uName,
+                "realName": obj.uRealName,
+                "icon": obj.uIcon
+            };
+            root.usersList = list;
+        }
+
+        delegate: QtObject {
+            property string uName: (typeof name !== "undefined" && name) ? name : ""
+            property string uRealName: (typeof realName !== "undefined" && realName) ? realName : ""
+            property string uIcon: (typeof icon !== "undefined" && icon) ? icon : ""
+        }
+
+    }
 
     FontLoader {
         id: iconFontLoader
@@ -206,23 +217,33 @@ Rectangle {
             id: loginPanel
 
             theme: root.theme
+            userItems: (typeof userModel !== "undefined" && userModel) ? userModel : null
+            userIndex: root.userIndex
             userName: root.currentRealName
             userLogin: root.currentUsername
             avatarPath: root.currentAvatarPath
             avatarFallback: Qt.resolvedUrl("icon.png")
-            canSwitchUser: typeof userModel !== "undefined" && userModel && userModel.rowCount && userModel.rowCount() > 1
             errorMessage: root.errorMessage
+            onUserSelected: (index) => {
+                root.userIndex = index;
+                loginPanel.focusPassword();
+            }
             onUserSwitchRequested: {
-                if (typeof userModel !== "undefined" && userModel && userModel.rowCount && userModel.rowCount() > 1)
-                    root.userIndex = (root.userIndex + 1) % userModel.rowCount();
-
+                if (typeof userModel !== "undefined" && userModel) {
+                    var total = (typeof userModel.rowCount === "function") ? userModel.rowCount() : (userModel.count || 1);
+                    if (total > 1) {
+                        root.userIndex = (root.userIndex + 1) % total;
+                        loginPanel.focusPassword();
+                    }
+                }
             }
             onLoginRequested: (username, password) => {
                 root.errorMessage = "";
+                var targetUser = username || root.currentUsername;
                 if (typeof sddm !== "undefined")
-                    sddm.login(username, password, powerBar.sessionIndex);
+                    sddm.login(targetUser, password, powerBar.sessionIndex);
                 else
-                    console.log("SDDM Login simulation:", username, password, powerBar.sessionIndex);
+                    console.log("SDDM Login simulation:", targetUser, password, powerBar.sessionIndex);
             }
         }
 
