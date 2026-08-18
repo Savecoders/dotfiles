@@ -9,7 +9,7 @@ import qs.core
 import qs.features
 import qs.features.common
 import qs.features.dashboard
-import qs.features.dashboard.bottom
+import qs.features.dashboard.power
 import qs.services
 
 Item {
@@ -18,8 +18,8 @@ Item {
     property bool isPowerMenuOpen: false
 
     Layout.fillWidth: true
-    Layout.preferredHeight: 45
-    implicitHeight: 45
+    Layout.preferredHeight: 56
+    implicitHeight: 56
 
     StyledRect {
         id: powerBtn
@@ -45,14 +45,14 @@ Item {
         }
 
         variant: "internalbg"
-        height: 30
-        width: hovered ? 47 : 45
+        height: 32
+        width: hovered ? 48 : 46
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 15
         color: getColour()
-        radius: hovered ? Math.max(4, Config.settings.borderRadius - 4) : Math.max(4, Config.settings.borderRadius - 8)
+        radius: hovered ? Config.settings.borderRadius + 4 : Config.settings.borderRadius
 
         Text {
             anchors.left: parent.left
@@ -230,10 +230,10 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: root.isPowerMenuOpen ? 55 : 15
         width: root.isPowerMenuOpen ? 130 : 45
-        height: root.isPowerMenuOpen ? 200 : 30
+        height: root.isPowerMenuOpen ? 240 : 30
         anchors.left: parent.left
         anchors.leftMargin: 20
-        radius: Math.max(4, Config.settings.borderRadius - 6)
+        radius: Config.settings.borderRadius
         color: Colours.palette.surface_container
         opacity: root.isPowerMenuOpen ? 1 : 0
         visible: height == 30 ? false : true
@@ -242,7 +242,6 @@ Item {
 
         MouseArea {
             anchors.fill: parent
-            // to prevent clicks or focus going below
             hoverEnabled: true
         }
 
@@ -261,6 +260,14 @@ Item {
                 text: "Lock"
                 toRun: () => {
                     return Quickshell.execDetached(["qs", "ipc", "call", "lock", "lock"]);
+                }
+            }
+
+            PowerButton {
+                iconCode: "logout"
+                text: "Logout"
+                toRun: () => {
+                    return Quickshell.execDetached(["qs", "ipc", "call", "session", "logout"]);
                 }
             }
 

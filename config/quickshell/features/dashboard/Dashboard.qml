@@ -12,7 +12,7 @@ SlideOverWindow {
 
     isOpen: isDashboardOpen
     panelWidth: 515
-    panelHeight: 800
+    panelHeight: 880
 
     contentComponent: Component {
         Item {
@@ -59,7 +59,7 @@ SlideOverWindow {
                     }
 
                     MusicCard {
-                        cardHeight: 88
+                        cardHeight: 96
                         cardColor: Qt.alpha(Colours.palette.surface, 0.85)
                         borderColor: Qt.alpha(Colours.palette.outline, 0.25)
                         Layout.fillWidth: true
@@ -73,7 +73,7 @@ SlideOverWindow {
                     SystemStats {
                     }
 
-                    Bottom {
+                    Footer {
                         Layout.fillWidth: true
                         Layout.leftMargin: 20
                         Layout.rightMargin: 20
