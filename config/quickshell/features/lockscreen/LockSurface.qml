@@ -218,9 +218,12 @@ StyledRect {
             id: loginPill
 
             theme: root.theme
+            userName: (typeof User !== "undefined" && User && User.username) ? User.username : "user"
+            userLogin: (typeof User !== "undefined" && User && User.username) ? User.username : "user"
             errorMessage: root.context.showFailure ? "Incorrect password" : ""
             avatarPath: root.avatarPath
             avatarFallback: Qt.resolvedUrl(Quickshell.shellDir + "/assets/icon.png")
+            canSwitchUser: false
             onLoginRequested: root.context.tryUnlock()
             onPasswordChanged: {
                 if (root.context.currentText !== loginPill.password)
@@ -286,8 +289,6 @@ StyledRect {
                     showClock: false
                     showNetwork: true
                     showBluetooth: true
-                    showBattery: true
-                    showBatteryPercentage: true
                     contentColor: Qt.rgba(1, 1, 1, 0.9)
                     iconPixelSize: Styling.fontSize.headline
                 }
