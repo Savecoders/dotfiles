@@ -28,9 +28,16 @@ QtObject {
         "displayName": "Quick Status & Actions",
         "iconCode": "dashboard",
         "previewIcon": "schedule",
-        "previewIcons": ["schedule", "wifi", "battery_full"],
+        "previewIcons": ["schedule", "wifi"],
         "previewText": "12:34",
-        "previewWidth": 130
+        "previewWidth": 90
+    }, {
+        "widgetId": "battery",
+        "displayName": "Battery",
+        "iconCode": "battery_charging_full",
+        "previewIcon": "battery_charging_full",
+        "previewText": "100%",
+        "previewWidth": 68
     }, {
         "widgetId": "cpu",
         "displayName": "CPU",

@@ -133,7 +133,7 @@ Singleton {
                 property real opacity: 0.95
                 property int margin: 10
                 property var leftWidgets: ["icon", "workspaces"]
-                property var rightWidgets: ["systray", "cpu", "ram", "temp", "notifications", "quickactions", "recording"]
+                property var rightWidgets: ["systray", "cpu", "ram", "temp", "battery", "notifications", "quickactions", "recording"]
             }
 
             desktop: JsonObject {

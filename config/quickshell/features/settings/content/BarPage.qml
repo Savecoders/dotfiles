@@ -201,7 +201,7 @@ Item {
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     Layout.preferredHeight: 24
                     Layout.topMargin: 24
-                    text: "Custom Page"
+                    text: "Bar Widgets"
                     iconCode: "dashboard"
                 }
 

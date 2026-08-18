@@ -368,8 +368,8 @@ Scope {
 
                         variant: "internalbg"
                         useDefaultRadius: false
-                        implicitWidth: barWindow.isVertical ? 36 : Math.max(140, statusGroup.implicitWidth + 24)
-                        implicitHeight: barWindow.isVertical ? Math.max(104, statusGroup.implicitHeight + 20) : 32
+                        implicitWidth: barWindow.isVertical ? 36 : Math.max(96, statusGroup.implicitWidth + 24)
+                        implicitHeight: barWindow.isVertical ? Math.max(96, statusGroup.implicitHeight + 20) : 32
                         width: implicitWidth
                         height: implicitHeight
                         Layout.alignment: barWindow.isVertical ? Qt.AlignHCenter : Qt.AlignVCenter
@@ -387,8 +387,6 @@ Scope {
                             showClock: true
                             showNetwork: true
                             showBluetooth: true
-                            showBattery: true
-                            showBatteryPercentage: true
                             contentColor: quickActionsButton.isColoured ? Colours.palette.on_primary : Qt.alpha(Colours.palette.on_surface, metrics.widgetAlpha)
                         }
 
@@ -472,6 +470,15 @@ Scope {
 
                 }
 
+                Component {
+                    id: batteryComp
+
+                    BatteryWidget {
+                        isVertical: barWindow.isVertical
+                    }
+
+                }
+
                 GridLayout {
                     id: bottomLayout
 
@@ -522,6 +529,8 @@ Scope {
                                     return ramComp;
                                 case "temp":
                                     return tempComp;
+                                case "battery":
+                                    return batteryComp;
                                 default:
                                     return null;
                                 }
