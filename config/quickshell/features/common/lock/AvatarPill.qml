@@ -8,6 +8,7 @@ StyledRect {
     property string avatarPath: ""
     property url fallbackSource: ""
 
+    variant: "focus"
     useDefaultRadius: false
     width: 44
     height: 44

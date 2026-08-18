@@ -13,7 +13,7 @@ ColumnLayout {
     property bool showDate: true
     property string dateFormat: "dddd, MMMM d"
 
-    spacing: Styling.spacing.lg
+    spacing: Styling.spacing.xxl
 
     Theme {
         id: themeDefault
@@ -49,7 +49,7 @@ ColumnLayout {
         color: root.theme.on_surface
         opacity: 0.9
         font.family: root.theme.fontFamily
-        font.pixelSize: Styling.fontSize.display
+        font.pixelSize: Styling.fontSize.headline
         font.weight: Font.DemiBold
         Layout.alignment: Qt.AlignHCenter
         style: Text.Outline

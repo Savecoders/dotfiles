@@ -19,6 +19,7 @@ StyledRect {
     signal rebootClicked()
     signal suspendClicked()
 
+    variant: "pane"
     useDefaultRadius: false
     implicitWidth: 380
     implicitHeight: 64
@@ -32,7 +33,7 @@ StyledRect {
     }
 
     RowLayout {
-        spacing: Styling.spacing.lg
+        spacing: Styling.spacing.xxl
 
         anchors {
             fill: parent
@@ -59,10 +60,11 @@ StyledRect {
             implicitHeight: 40
             textRole: "name"
             font.family: root.theme.fontFamily
-            font.pixelSize: Styling.fontSize.label
+            font.pixelSize: Styling.fontSize.body
             font.weight: Font.DemiBold
 
             background: StyledRect {
+                variant: "internalbg"
                 useDefaultRadius: false
                 radius: Math.max(2, root.theme.innerRadius)
                 color: sessionBox.hovered ? root.theme.hoverOverlay : root.theme.pillColor
@@ -79,7 +81,7 @@ StyledRect {
                 Text {
                     text: "arrow_drop_down"
                     font.family: root.theme.iconFontFamily
-                    font.pixelSize: Styling.fontSize.lg
+                    font.pixelSize: Styling.fontSize.title
                     color: root.theme.on_surface
                     anchors.centerIn: parent
                 }
@@ -87,7 +89,7 @@ StyledRect {
             }
 
             contentItem: RowLayout {
-                spacing: Styling.spacing.lg
+                spacing: Styling.spacing.xxl
 
                 anchors {
                     fill: parent
@@ -98,7 +100,7 @@ StyledRect {
                 Text {
                     text: "desktop_windows"
                     font.family: root.theme.iconFontFamily
-                    font.pixelSize: Styling.fontSize.lg
+                    font.pixelSize: Styling.fontSize.title
                     color: root.theme.on_surface
                 }
 
@@ -126,13 +128,14 @@ StyledRect {
                     text: (typeof name !== "undefined" && name !== null) ? name : (typeof modelData !== "undefined" && modelData ? (modelData.name || modelData) : "")
                     color: itemDelegate.hovered ? root.theme.on_primary : root.theme.on_surface
                     font.family: root.theme.fontFamily
-                    font.pixelSize: Styling.fontSize.label
+                    font.pixelSize: Styling.fontSize.body
                     font.weight: itemDelegate.hovered ? Font.Bold : Font.Normal
                     elide: Text.ElideRight
                     verticalAlignment: Text.AlignVCenter
                 }
 
                 background: StyledRect {
+                    variant: "focus"
                     useDefaultRadius: false
                     border.width: 0
                     radius: Math.max(2, Math.round(root.theme.innerRadius / 4))
@@ -156,6 +159,7 @@ StyledRect {
                 }
 
                 background: StyledRect {
+                    variant: "popup"
                     useDefaultRadius: false
                     border.color: root.theme.cardBorderColor
                     border.width: 1

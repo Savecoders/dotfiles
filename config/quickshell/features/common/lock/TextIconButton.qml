@@ -5,17 +5,18 @@ StyledRect {
     id: root
 
     property Theme theme: themeDefault
-    property string iconName: ""
+    property string iconName: "power_settings_new"
     property bool danger: false
 
     signal clicked()
 
+    variant: "internalbg"
     useDefaultRadius: false
     width: 40
     height: 40
     radius: Math.max(2, root.theme.innerRadius)
-    color: mouse.containsMouse ? (root.danger ? Qt.alpha(root.theme.error, 0.4) : root.theme.hoverOverlay) : root.theme.pillColor
-    border.color: root.danger ? (mouse.containsMouse ? root.theme.error : root.theme.pillBorderColor) : root.theme.pillBorderColor
+    color: mouse.containsMouse ? (root.danger ? root.theme.errorContainer : root.theme.hoverOverlay) : root.theme.pillColor
+    border.color: (root.danger && mouse.containsMouse) ? root.theme.error : root.theme.pillBorderColor
     border.width: 1
 
     Theme {
