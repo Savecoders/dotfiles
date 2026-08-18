@@ -128,7 +128,7 @@ ClippingRectangle {
         if (!modelData)
             return ;
 
-        // 1. Freedesktop Spec: Invoke default action if provided by client app
+        // Invoke default action if provided by client app
         if (modelData.actions && modelData.actions.length > 0) {
             let defAction = modelData.actions.find((a) => {
                 return a.identifier === "default";
@@ -138,7 +138,7 @@ ClippingRectangle {
                 return ;
             }
         }
-        // 2. Open file/image/URL target via default system application handler
+        // Open file/image/URL target via default system application handler
         let pathCandidate = getValidNotificationPath();
         if (pathCandidate && pathCandidate.length > 0) {
             Quickshell.execDetached(["xdg-open", pathCandidate]);
@@ -147,7 +147,7 @@ ClippingRectangle {
 
             return ;
         }
-        // 3. Fallback: toggle expand view or dismiss popup
+        // Fallback: toggle expand view or dismiss popup
         if (singleNotif.popup)
             Notifications.timeoutNotification(modelData.notificationId);
         else
@@ -170,7 +170,7 @@ ClippingRectangle {
             singleNotif.startTimeout();
 
     }
-    radius: Math.max(6, (Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 8)
+    radius: Config.settings.borderRadius
     color: singleNotif.popup ? Colours.palette.surface_container : Qt.alpha(Colours.palette.surface_container_low, 0.7)
     border.color: Qt.alpha(Colours.palette.outline, 0.15)
     border.width: 1
@@ -373,7 +373,7 @@ ClippingRectangle {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
                         text: modelData ? modelData.summary : ""
-                        font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
+                        font.family: Config.settings.font ?? "SF Pro Display"
                         font.weight: Font.DemiBold
                         font.pixelSize: Styling.fontSize.body
                         color: Colours.palette.on_surface
@@ -383,8 +383,8 @@ ClippingRectangle {
                     Text {
                         Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
                         text: modelData ? NotificationUtils.getFriendlyNotifTimeString(modelData.time) : ""
-                        font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
-                        font.weight: Font.Medium
+                        font.family: Config.settings.font ?? "SF Pro Display"
+                        font.weight: Font.Normal
                         font.pixelSize: Styling.fontSize.sm
                         color: Colours.palette.outline
                     }
@@ -397,11 +397,10 @@ ClippingRectangle {
 
                         variant: "internalbg"
                         useDefaultRadius: false
-                        border.width: 0
                         Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
                         Layout.preferredWidth: 20
                         Layout.preferredHeight: 20
-                        radius: Styling.spacing.xl
+                        radius: Styling.spacing.sm
                         color: hovered ? Colours.palette.surface_container_highest : "transparent"
                         visible: !!(modelData && modelData.body && modelData.body.length > 40)
 
@@ -451,9 +450,9 @@ ClippingRectangle {
 
                         return modelData.body;
                     }
-                    font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
-                    font.weight: Font.Normal
-                    font.pixelSize: Styling.fontSize.label
+                    font.family: Config.settings.font ?? "SF Pro Display"
+                    font.weight: Font.Light
+                    font.pixelSize: Styling.fontSize.md
                     color: Qt.alpha(Colours.palette.on_surface, 0.7)
                     wrapMode: singleNotif.expanded ? Text.Wrap : Text.NoWrap
                     elide: singleNotif.expanded ? Text.ElideNone : Text.ElideRight
