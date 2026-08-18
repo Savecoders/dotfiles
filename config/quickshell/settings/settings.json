@@ -2,6 +2,7 @@
     "animationSpeed": 200,
     "bar": {
         "expand": false,
+        "floating": true,
         "leftWidgets": [
             "icon",
             "workspaces"

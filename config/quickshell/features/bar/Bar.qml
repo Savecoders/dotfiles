@@ -27,7 +27,10 @@ Scope {
             readonly property string pos: Config.settings.bar.position.toLowerCase()
             readonly property bool isVertical: pos === "left" || pos === "right"
             readonly property bool isHorizontal: pos === "top" || pos === "bottom"
+            readonly property bool isFloating: Config.settings.bar.floating ?? true
             readonly property real marginVal: Config.settings.bar.margin !== undefined ? Config.settings.bar.margin : metrics.marginFallback
+            readonly property real edgeGap: (Config.settings.desktop.desktopRoundingShown) ? Styling.desktopGap : 0
+            readonly property real effectiveMargin: isFloating ? marginVal : edgeGap
 
             function resolvePfpPath(loc) {
                 const location = loc || "~/.face";
@@ -37,10 +40,10 @@ Scope {
 
             screen: modelData
             color: "transparent"
-            implicitWidth: barWindow.isVertical ? (metrics.barThickness + (barWindow.marginVal * 2)) : 0
-            implicitHeight: barWindow.isHorizontal ? (metrics.barThickness + (barWindow.marginVal * 2)) : 0
+            implicitWidth: barWindow.isVertical ? (metrics.barThickness + (barWindow.isFloating ? (barWindow.marginVal * 2) : barWindow.edgeGap)) : 0
+            implicitHeight: barWindow.isHorizontal ? (metrics.barThickness + (barWindow.isFloating ? (barWindow.marginVal * 2) : barWindow.edgeGap)) : 0
             visible: true
-            exclusiveZone: metrics.barThickness + barWindow.marginVal
+            exclusiveZone: metrics.barThickness + barWindow.effectiveMargin
             exclusionMode: ExclusionMode.Auto
 
             QtObject {
@@ -83,16 +86,51 @@ Scope {
                 anchors.right: barWindow.isVertical ? (barWindow.pos === "right" ? parent.right : undefined) : undefined
                 anchors.top: barWindow.isVertical ? undefined : (barWindow.pos === "top" ? parent.top : undefined)
                 anchors.bottom: barWindow.isVertical ? undefined : (barWindow.pos === "bottom" ? parent.bottom : undefined)
-                anchors.leftMargin: barWindow.isVertical ? marginVal : (Config.settings.bar.expand ? marginVal : 0)
-                anchors.rightMargin: barWindow.isVertical ? marginVal : (Config.settings.bar.expand ? marginVal : 0)
-                anchors.topMargin: barWindow.isVertical ? (Config.settings.bar.expand ? marginVal : 0) : marginVal
-                anchors.bottomMargin: barWindow.isVertical ? (Config.settings.bar.expand ? marginVal : 0) : marginVal
+                anchors.leftMargin: barWindow.isVertical ? (barWindow.pos === "left" ? barWindow.effectiveMargin : marginVal) : (Config.settings.bar.expand ? marginVal : 0)
+                anchors.rightMargin: barWindow.isVertical ? (barWindow.pos === "right" ? barWindow.effectiveMargin : marginVal) : (Config.settings.bar.expand ? marginVal : 0)
+                anchors.topMargin: barWindow.isVertical ? (Config.settings.bar.expand ? marginVal : 0) : (barWindow.pos === "top" ? barWindow.effectiveMargin : marginVal)
+                anchors.bottomMargin: barWindow.isVertical ? (Config.settings.bar.expand ? marginVal : 0) : (barWindow.pos === "bottom" ? barWindow.effectiveMargin : marginVal)
                 width: barWindow.isVertical ? metrics.barThickness : (Config.settings.bar.expand ? (barWindow.width - (marginVal * 2)) : dynamicWidth)
                 height: barWindow.isVertical ? (Config.settings.bar.expand ? (barWindow.height - (marginVal * 2)) : dynamicHeight) : metrics.barThickness
                 color: Qt.alpha(Colours.palette.surface, Config.settings.bar.opacity !== undefined ? Config.settings.bar.opacity : metrics.opacityFallback)
-                // smoothEdgesShown is false; now the inner buttons follow the
-                // same flag through metrics.radiusOuter/Inner/InnerSmall below,
-                // instead of always using a fixed radius.
+                border.width: barWindow.isFloating ? 1 : 0
+                border.color: barWindow.isFloating ? Colours.palette.outline_variant : "transparent"
+                topLeftRadius: {
+                    if (!Config.settings.bar.smoothEdgesShown)
+                        return 0;
+
+                    if (barWindow.isFloating)
+                        return metrics.radiusOuter;
+
+                    return (barWindow.pos === "bottom" || barWindow.pos === "right") ? metrics.radiusOuter : 0;
+                }
+                topRightRadius: {
+                    if (!Config.settings.bar.smoothEdgesShown)
+                        return 0;
+
+                    if (barWindow.isFloating)
+                        return metrics.radiusOuter;
+
+                    return (barWindow.pos === "bottom" || barWindow.pos === "left") ? metrics.radiusOuter : 0;
+                }
+                bottomLeftRadius: {
+                    if (!Config.settings.bar.smoothEdgesShown)
+                        return 0;
+
+                    if (barWindow.isFloating)
+                        return metrics.radiusOuter;
+
+                    return (barWindow.pos === "top" || barWindow.pos === "right") ? metrics.radiusOuter : 0;
+                }
+                bottomRightRadius: {
+                    if (!Config.settings.bar.smoothEdgesShown)
+                        return 0;
+
+                    if (barWindow.isFloating)
+                        return metrics.radiusOuter;
+
+                    return (barWindow.pos === "top" || barWindow.pos === "left") ? metrics.radiusOuter : 0;
+                }
                 radius: Config.settings.bar.smoothEdgesShown ? metrics.radiusOuter : 0
 
                 IconImage {

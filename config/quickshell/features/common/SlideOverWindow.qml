@@ -91,13 +91,11 @@ Loader {
                     implicitHeight: root.panelHeight
                     opacity: root.animatedIn ? 1 : 0
                     clip: true
-
                     // Anchoring rules per bar orientation
                     anchors.top: root.isBarTop ? parent.top : undefined
                     anchors.bottom: !root.isBarTop ? parent.bottom : undefined
                     anchors.left: (root.isBarLeft || (root.isBarHorizontal && root.side === "left")) ? parent.left : undefined
                     anchors.right: (root.isBarRight || (root.isBarHorizontal && root.side === "right")) ? parent.right : undefined
-
                     // Margin animations per orientation
                     anchors.topMargin: root.isBarTop ? (root.animatedIn ? root.barClearance : -root.panelHeight) : 0
                     anchors.bottomMargin: root.isBarBottom ? (root.animatedIn ? root.barClearance : -root.panelHeight) : (root.isBarVertical ? root.sideMargin : 0)
@@ -110,7 +108,7 @@ Loader {
                         variant: "popup"
                         anchors.fill: parent
                         color: Colours.palette.surface
-                        radius:  Config.settings.borderRadius ?? 8
+                        radius: Config.settings.borderRadius ?? 8
                         border.color: Qt.alpha(Colours.palette.outline, 0.15)
                         border.width: 1
                         clip: true

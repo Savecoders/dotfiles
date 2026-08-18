@@ -5,6 +5,7 @@ pragma Singleton
 Singleton {
     id: root
 
+    readonly property int desktopGap: 4
     readonly property QtObject
     fontSize: QtObject {
         property int xs: 8

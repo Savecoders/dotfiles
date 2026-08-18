@@ -63,6 +63,19 @@ Item {
                 }
 
                 GenericToggleOption {
+                    message: "Floating bar"
+                    option: Config.settings.bar.floating ?? true
+                    toRun: () => {
+                        let cur = Config.settings.bar.floating ?? true;
+                        let newValue = !cur;
+                        Config.updateKey("bar.floating", newValue);
+                        return newValue;
+                    }
+                    withIcon: true
+                    iconCode: "picture_in_picture"
+                }
+
+                GenericToggleOption {
                     message: "Show smooth edges around bar"
                     option: Config.settings.bar.smoothEdgesShown
                     toRun: () => {

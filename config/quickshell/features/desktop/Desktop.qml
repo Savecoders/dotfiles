@@ -50,10 +50,10 @@ Scope {
 
                 anchors.top: parent.top
                 anchors.left: parent.left
-                width: Config.settings.desktop.desktopRoundingShown ? parent.width - 8 : parent.width
-                height: Config.settings.desktop.desktopRoundingShown ? parent.height - 8 : parent.height
-                anchors.topMargin: 4
-                anchors.leftMargin: 4
+                width: Config.settings.desktop.desktopRoundingShown ? parent.width - (Styling.desktopGap * 2) : parent.width
+                height: Config.settings.desktop.desktopRoundingShown ? parent.height - (Styling.desktopGap * 2) : parent.height
+                anchors.topMargin: Config.settings.desktop.desktopRoundingShown ? Styling.desktopGap : 0
+                anchors.leftMargin: Config.settings.desktop.desktopRoundingShown ? Styling.desktopGap : 0
                 radius: Config.settings.desktop.desktopRoundingShown ? Config.settings.borderRadius : 0
                 color: "transparent"
                 opacity: 1
@@ -119,10 +119,10 @@ Scope {
 
                 anchors.top: parent.top
                 anchors.left: parent.left
-                width: Config.settings.desktop.desktopRoundingShown ? parent.width - 8 : parent.width
-                height: Config.settings.desktop.desktopRoundingShown ? parent.height - 8 : parent.height
-                anchors.topMargin: 4
-                anchors.leftMargin: 4
+                width: Config.settings.desktop.desktopRoundingShown ? parent.width - (Styling.desktopGap * 2) : parent.width
+                height: Config.settings.desktop.desktopRoundingShown ? parent.height - (Styling.desktopGap * 2) : parent.height
+                anchors.topMargin: Config.settings.desktop.desktopRoundingShown ? Styling.desktopGap : 0
+                anchors.leftMargin: Config.settings.desktop.desktopRoundingShown ? Styling.desktopGap : 0
                 radius: Config.settings.desktop.desktopRoundingShown ? Config.settings.borderRadius : 0
                 color: "transparent"
                 opacity: 1

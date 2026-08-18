@@ -126,6 +126,7 @@ Singleton {
             }
 
             bar: JsonObject {
+                property bool floating: true
                 property bool smoothEdgesShown: false
                 property bool workspacesCenterAligned: true
                 property bool expand: false
