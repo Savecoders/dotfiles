@@ -7,14 +7,24 @@ pragma Singleton
 Singleton {
     id: root
 
-    property int percent
-    property bool charging
+    property int percent: 100
+    property bool charging: false
 
     function getBatteryColour(percent) {
         if (percent >= 40)
             return Accents.green;
 
         return Accents.red;
+    }
+
+    Component.onCompleted: {
+        const capText = String(batCapacity.text()).trim();
+        const val = parseInt(capText, 10);
+        if (!isNaN(val))
+            root.percent = val;
+
+        const status = String(batStatus.text()).trim();
+        root.charging = (status === "Charging" || status === "Full");
     }
 
     FileView {
