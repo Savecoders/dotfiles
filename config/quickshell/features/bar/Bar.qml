@@ -46,11 +46,6 @@ Scope {
             exclusiveZone: metrics.barThickness + barWindow.effectiveMargin
             exclusionMode: ExclusionMode.Auto
 
-            component StdAnim: PropertyAnimation {
-                duration: Config.settings.animationSpeed
-                easing.type: Easing.InSine
-            }
-
             QtObject {
                 id: metrics
 
@@ -91,20 +86,30 @@ Scope {
                 readonly property real marginVal: barWindow.marginVal
                 readonly property real dynamicWidth: Math.min(barWindow.width - (marginVal * 2), Math.max(metrics.minBarLength, metrics.iconLeadingOffset + (workspacesWidget ? workspacesWidget.width : metrics.workspacesFallbackLength) + (bottomLayout ? bottomLayout.implicitWidth : metrics.bottomLayoutFallbackLength) + metrics.lengthPadding))
                 readonly property real dynamicHeight: Math.min(barWindow.height - (marginVal * 2), Math.max(metrics.minBarLength, metrics.iconLeadingOffset + (workspacesWidget ? workspacesWidget.height : metrics.workspacesFallbackLength) + (bottomLayout ? bottomLayout.implicitHeight : metrics.bottomLayoutFallbackLength) + metrics.lengthPadding))
+                readonly property var widgetComponents: ({
+                    "systray": sysTrayComp,
+                    "recording": recordingComp,
+                    "notifications": notificationComp,
+                    "quickactions": quickActionsComp,
+                    "cpu": cpuComp,
+                    "ram": ramComp,
+                    "temp": tempComp,
+                    "battery": batteryComp
+                })
 
                 function cornerRadius(corner) {
                     if (!Config.settings.bar.smoothEdgesShown)
                         return 0;
+
                     if (barWindow.isFloating)
                         return metrics.radiusOuter;
 
                     const roundedCorners = {
-                        top: ["bl", "br"],
-                        bottom: ["tl", "tr"],
-                        left: ["tr", "br"],
-                        right: ["tl", "bl"]
+                        "top": ["bl", "br"],
+                        "bottom": ["tl", "tr"],
+                        "left": ["tr", "br"],
+                        "right": ["tl", "bl"]
                     }[barWindow.pos] ?? [];
-
                     return roundedCorners.includes(corner) ? metrics.radiusOuter : 0;
                 }
 
@@ -144,8 +149,11 @@ Scope {
                     source: Qt.resolvedUrl(Quickshell.shellDir + "/assets/icon.png")
 
                     Behavior on opacity {
-                        StdAnim {}
+                        StdAnim {
+                        }
+
                     }
+
                 }
 
                 ClippingWrapperRectangle {
@@ -175,13 +183,18 @@ Scope {
                             onStatusChanged: {
                                 if (status === Image.Error)
                                     pfpFailed = true;
+
                             }
                         }
+
                     }
 
                     Behavior on opacity {
-                        StdAnim {}
+                        StdAnim {
+                        }
+
                     }
+
                 }
 
                 WorkspacesWidget {
@@ -251,13 +264,19 @@ Scope {
                                 visible: iconButton.visible
 
                                 Behavior on color {
-                                    StdAnim {}
+                                    StdAnim {
+                                    }
+
                                 }
 
                                 Behavior on opacity {
-                                    StdAnim {}
+                                    StdAnim {
+                                    }
+
                                 }
+
                             }
+
                         }
 
                         MouseArea {
@@ -270,31 +289,45 @@ Scope {
                         }
 
                         Behavior on bottomLeftRadius {
-                            StdAnim {}
+                            StdAnim {
+                            }
+
                         }
 
                         Behavior on bottomRightRadius {
-                            StdAnim {}
+                            StdAnim {
+                            }
+
                         }
 
                         Behavior on topLeftRadius {
-                            StdAnim {}
+                            StdAnim {
+                            }
+
                         }
 
                         Behavior on topRightRadius {
-                            StdAnim {}
+                            StdAnim {
+                            }
+
                         }
 
                         Behavior on color {
-                            StdAnim {}
+                            StdAnim {
+                            }
+
                         }
 
                         Behavior on implicitHeight {
-                            StdAnim {}
+                            StdAnim {
+                            }
+
                         }
 
                         Behavior on implicitWidth {
-                            StdAnim {}
+                            StdAnim {
+                            }
+
                         }
 
                     }
@@ -390,24 +423,35 @@ Scope {
                         }
 
                         Behavior on color {
-                            StdAnim {}
+                            StdAnim {
+                            }
+
                         }
 
                         Behavior on implicitHeight {
-                            StdAnim {}
+                            StdAnim {
+                            }
+
                         }
 
                         Behavior on implicitWidth {
-                            StdAnim {}
+                            StdAnim {
+                            }
+
                         }
 
                         Behavior on topLeftRadius {
-                            StdAnim {}
+                            StdAnim {
+                            }
+
                         }
 
                         Behavior on topRightRadius {
-                            StdAnim {}
+                            StdAnim {
+                            }
+
                         }
+
                     }
 
                 }
@@ -448,17 +492,6 @@ Scope {
 
                 }
 
-                readonly property var widgetComponents: ({
-                    "systray": sysTrayComp,
-                    "recording": recordingComp,
-                    "notifications": notificationComp,
-                    "quickactions": quickActionsComp,
-                    "cpu": cpuComp,
-                    "ram": ramComp,
-                    "temp": tempComp,
-                    "battery": batteryComp
-                })
-
                 GridLayout {
                     id: bottomLayout
 
@@ -492,17 +525,28 @@ Scope {
                 }
 
                 Behavior on width {
-                    StdAnim {}
+                    StdAnim {
+                    }
+
                 }
 
                 Behavior on height {
-                    StdAnim {}
+                    StdAnim {
+                    }
+
                 }
 
                 Behavior on color {
-                    StdAnim {}
+                    StdAnim {
+                    }
+
                 }
 
+            }
+
+            component StdAnim: PropertyAnimation {
+                duration: Config.settings.animationSpeed
+                easing.type: Easing.InSine
             }
 
             mask: Region {

@@ -34,7 +34,6 @@ ClippingWrapperRectangle {
         }
         let pLen = Number(p.length) || 0;
         let pPos = Number(p.position) || 0;
-
         // Verify length differs from position to discard live streams or placeholder durations
         if (pLen > 2 && isFinite(pLen) && Math.abs(pLen - pPos) > 1.5)
             return pLen;
@@ -47,18 +46,6 @@ ClippingWrapperRectangle {
     property real polledPosition: 0
     readonly property real currentPosition: isDragging ? dragPosition : (hasValidLength ? polledPosition : 0)
     readonly property real progressFrac: (hasValidLength && trackLength > 0) ? Math.max(0, Math.min(1, currentPosition / trackLength)) : 0
-
-    component MediaCtrlBtn: PlayerControl {
-        readonly property real ctrlSize: root.isCompact ? 30 : 32
-
-        width: ctrlSize
-        height: ctrlSize
-        radius: Math.max(2, root.cardRadius - 2)
-        bgColour: Qt.rgba(0, 0, 0, 0.35)
-        colour: Qt.rgba(1, 1, 1, 0.9)
-        bgColourHovered: Qt.rgba(1, 1, 1, 0.2)
-        colourHovered: Colours.palette.on_surface
-    }
 
     function formatTime(sec) {
         let n = Number(sec);
@@ -428,6 +415,18 @@ ClippingWrapperRectangle {
 
         }
 
+    }
+
+    component MediaCtrlBtn: PlayerControl {
+        readonly property real ctrlSize: root.isCompact ? 30 : 32
+
+        width: ctrlSize
+        height: ctrlSize
+        radius: Math.max(2, root.cardRadius - 2)
+        bgColour: Qt.rgba(0, 0, 0, 0.35)
+        colour: Qt.rgba(1, 1, 1, 0.9)
+        bgColourHovered: Qt.rgba(1, 1, 1, 0.2)
+        colourHovered: Colours.palette.on_surface
     }
 
 }
