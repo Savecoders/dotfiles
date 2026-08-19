@@ -1,29 +1,25 @@
 {
-    "animationSpeed": 200,
+    "animationSpeed": 250,
     "bar": {
         "expand": false,
-        "floating": true,
+        "floating": false,
         "leftWidgets": [
             "icon",
             "workspaces"
         ],
         "margin": 8,
-        "opacity": 0.8,
-        "position": "top",
+        "opacity": 0.6,
+        "position": "bottom",
         "rightWidgets": [
             "systray",
-            "cpu",
-            "ram",
-            "temp",
-            "battery",
             "notifications",
             "quickactions",
             "recording"
         ],
         "smoothEdgesShown": true,
-        "workspacesCenterAligned": true
+        "workspacesCenterAligned": false
     },
-    "borderRadius": 4,
+    "borderRadius": 8,
     "colours": {
         "enableScheme": true,
         "genType": "scheme-fidelity",
@@ -37,11 +33,11 @@
         "lockscreenIsEnabled": true,
         "notifsIsEnabled": true
     },
-    "currentWallpaper": "~/Pictures/Wallpapers/gruvbox/coffee-cup.jpg",
+    "currentWallpaper": "/home/save/Pictures/Wallpapers/dark/in.JPG",
     "desktop": {
         "desktopRoundingShown": true,
         "dimDesktopWallpaper": false,
-        "targetScreen": "all"
+        "targetScreen": "HDMI-A-1"
     },
     "font": "SF Pro Display",
     "iconFont": "Material Symbols Rounded",
@@ -55,6 +51,7 @@
     },
     "minutesBetweenHealthNotif": 20,
     "misc": {
+        "audioIncrement": 5,
         "githubUsername": "Savecoders"
     },
     "monitors": {
@@ -70,7 +67,7 @@
         "privacyMode": false,
         "showTimeoutBar": true,
         "soundEnabled": true,
-        "timeout": 6000
+        "timeout": 8000
     },
     "overlays": {
         "enabled": true
@@ -78,17 +75,17 @@
     "pfpLocation": "~/.face",
     "plugins": {
     },
-    "previousWallpaper": "~/Pictures/Wallpapers/gruvbox/girl_update_pc.png",
+    "previousWallpaper": "/home/save/Pictures/Wallpapers/gruvbox/00220.jpg",
     "recorder": {
-        "encoder": "libx264",
-        "output_loc": "~/Videos",
+        "encoder": "vp9_vaapi",
+        "output_loc": "/home/save/Videos/shell",
         "screen": "eDP-1"
     },
-    "secondPreviousWallpaper": "~/Pictures/Wallpapers/dark/RDT_20260129_2058456592035500134510953.jpg",
+    "secondPreviousWallpaper": "/home/save/Pictures/Wallpapers/dark/a_tree_in_a_forest.png",
     "shell": {
         "version": "1.0.0"
     },
     "usePfpInsteadOfLogo": false,
-    "wallpaperToSet": "~/Pictures/Wallpapers/gruvbox/coffee-cup.jpg",
+    "wallpaperToSet": "/home/save/Pictures/Wallpapers/dark/in.JPG",
     "weatherLocation": "Guayaquil"
 }
