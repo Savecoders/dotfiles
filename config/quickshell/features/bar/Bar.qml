@@ -46,6 +46,11 @@ Scope {
             exclusiveZone: metrics.barThickness + barWindow.effectiveMargin
             exclusionMode: ExclusionMode.Auto
 
+            component StdAnim: PropertyAnimation {
+                duration: Config.settings.animationSpeed
+                easing.type: Easing.InSine
+            }
+
             QtObject {
                 id: metrics
 
@@ -55,6 +60,15 @@ Scope {
                 readonly property int innerSpacing: 8
                 readonly property int minBarLength: 120
                 readonly property int lengthPadding: 48
+                readonly property int iconLeadingOffset: 56
+                readonly property int workspacesFallbackLength: 160
+                readonly property int bottomLayoutFallbackLength: 180
+                readonly property int quickActionsMinLength: 96
+                readonly property int quickActionsPaddingH: 24
+                readonly property int quickActionsPaddingV: 20
+                readonly property int quickActionsThickness: 36
+                readonly property int quickActionsDefaultThickness: 32
+                readonly property real quickActionsRadiusCollapsed: 8
                 readonly property real marginFallback: 16
                 readonly property real opacityFallback: 0.9
                 readonly property real widgetAlpha: 0.8
@@ -75,8 +89,24 @@ Scope {
                 id: barBase
 
                 readonly property real marginVal: barWindow.marginVal
-                readonly property real dynamicWidth: Math.min(barWindow.width - (marginVal * 2), Math.max(metrics.minBarLength, 56 + (workspacesWidget ? workspacesWidget.width : 160) + (bottomLayout ? bottomLayout.implicitWidth : 180) + metrics.lengthPadding))
-                readonly property real dynamicHeight: Math.min(barWindow.height - (marginVal * 2), Math.max(metrics.minBarLength, 56 + (workspacesWidget ? workspacesWidget.height : 160) + (bottomLayout ? bottomLayout.implicitHeight : 180) + metrics.lengthPadding))
+                readonly property real dynamicWidth: Math.min(barWindow.width - (marginVal * 2), Math.max(metrics.minBarLength, metrics.iconLeadingOffset + (workspacesWidget ? workspacesWidget.width : metrics.workspacesFallbackLength) + (bottomLayout ? bottomLayout.implicitWidth : metrics.bottomLayoutFallbackLength) + metrics.lengthPadding))
+                readonly property real dynamicHeight: Math.min(barWindow.height - (marginVal * 2), Math.max(metrics.minBarLength, metrics.iconLeadingOffset + (workspacesWidget ? workspacesWidget.height : metrics.workspacesFallbackLength) + (bottomLayout ? bottomLayout.implicitHeight : metrics.bottomLayoutFallbackLength) + metrics.lengthPadding))
+
+                function cornerRadius(corner) {
+                    if (!Config.settings.bar.smoothEdgesShown)
+                        return 0;
+                    if (barWindow.isFloating)
+                        return metrics.radiusOuter;
+
+                    const roundedCorners = {
+                        top: ["bl", "br"],
+                        bottom: ["tl", "tr"],
+                        left: ["tr", "br"],
+                        right: ["tl", "bl"]
+                    }[barWindow.pos] ?? [];
+
+                    return roundedCorners.includes(corner) ? metrics.radiusOuter : 0;
+                }
 
                 variant: "pane"
                 useDefaultRadius: false
@@ -95,42 +125,10 @@ Scope {
                 color: Qt.alpha(Colours.palette.surface, Config.settings.bar.opacity !== undefined ? Config.settings.bar.opacity : metrics.opacityFallback)
                 border.width: barWindow.isFloating ? 1 : 0
                 border.color: barWindow.isFloating ? Colours.palette.outline_variant : "transparent"
-                topLeftRadius: {
-                    if (!Config.settings.bar.smoothEdgesShown)
-                        return 0;
-
-                    if (barWindow.isFloating)
-                        return metrics.radiusOuter;
-
-                    return (barWindow.pos === "bottom" || barWindow.pos === "right") ? metrics.radiusOuter : 0;
-                }
-                topRightRadius: {
-                    if (!Config.settings.bar.smoothEdgesShown)
-                        return 0;
-
-                    if (barWindow.isFloating)
-                        return metrics.radiusOuter;
-
-                    return (barWindow.pos === "bottom" || barWindow.pos === "left") ? metrics.radiusOuter : 0;
-                }
-                bottomLeftRadius: {
-                    if (!Config.settings.bar.smoothEdgesShown)
-                        return 0;
-
-                    if (barWindow.isFloating)
-                        return metrics.radiusOuter;
-
-                    return (barWindow.pos === "top" || barWindow.pos === "right") ? metrics.radiusOuter : 0;
-                }
-                bottomRightRadius: {
-                    if (!Config.settings.bar.smoothEdgesShown)
-                        return 0;
-
-                    if (barWindow.isFloating)
-                        return metrics.radiusOuter;
-
-                    return (barWindow.pos === "top" || barWindow.pos === "left") ? metrics.radiusOuter : 0;
-                }
+                topLeftRadius: cornerRadius("tl")
+                topRightRadius: cornerRadius("tr")
+                bottomLeftRadius: cornerRadius("bl")
+                bottomRightRadius: cornerRadius("br")
                 radius: Config.settings.bar.smoothEdgesShown ? metrics.radiusOuter : 0
 
                 IconImage {
@@ -146,13 +144,8 @@ Scope {
                     source: Qt.resolvedUrl(Quickshell.shellDir + "/assets/icon.png")
 
                     Behavior on opacity {
-                        PropertyAnimation {
-                            duration: Config.settings.animationSpeed
-                            easing.type: Easing.InSine
-                        }
-
+                        StdAnim {}
                     }
-
                 }
 
                 ClippingWrapperRectangle {
@@ -173,25 +166,22 @@ Scope {
                         active: !!Config.settings.pfpLocation && Config.settings.pfpLocation !== ""
 
                         sourceComponent: IconImage {
+                            property bool pfpFailed: false
+                            property string targetSource: resolvePfpPath(Config.settings.pfpLocation)
+
                             anchors.fill: parent
-                            source: resolvePfpPath(Config.settings.pfpLocation)
+                            onTargetSourceChanged: pfpFailed = false
+                            source: pfpFailed ? Qt.resolvedUrl(Quickshell.shellDir + "/assets/icon.png") : targetSource
                             onStatusChanged: {
                                 if (status === Image.Error)
-                                    source = Qt.resolvedUrl(Quickshell.shellDir + "/assets/icon.png");
-
+                                    pfpFailed = true;
                             }
                         }
-
                     }
 
                     Behavior on opacity {
-                        PropertyAnimation {
-                            duration: Config.settings.animationSpeed
-                            easing.type: Easing.InSine
-                        }
-
+                        StdAnim {}
                     }
-
                 }
 
                 WorkspacesWidget {
@@ -261,23 +251,13 @@ Scope {
                                 visible: iconButton.visible
 
                                 Behavior on color {
-                                    PropertyAnimation {
-                                        duration: Config.settings.animationSpeed
-                                        easing.type: Easing.InSine
-                                    }
-
+                                    StdAnim {}
                                 }
 
                                 Behavior on opacity {
-                                    PropertyAnimation {
-                                        duration: Config.settings.animationSpeed
-                                        easing.type: Easing.InSine
-                                    }
-
+                                    StdAnim {}
                                 }
-
                             }
-
                         }
 
                         MouseArea {
@@ -290,59 +270,31 @@ Scope {
                         }
 
                         Behavior on bottomLeftRadius {
-                            PropertyAnimation {
-                                duration: Config.settings.animationSpeed
-                                easing.type: Easing.InSine
-                            }
-
+                            StdAnim {}
                         }
 
                         Behavior on bottomRightRadius {
-                            PropertyAnimation {
-                                duration: Config.settings.animationSpeed
-                                easing.type: Easing.InSine
-                            }
-
+                            StdAnim {}
                         }
 
                         Behavior on topLeftRadius {
-                            PropertyAnimation {
-                                duration: Config.settings.animationSpeed
-                                easing.type: Easing.InSine
-                            }
-
+                            StdAnim {}
                         }
 
                         Behavior on topRightRadius {
-                            PropertyAnimation {
-                                duration: Config.settings.animationSpeed
-                                easing.type: Easing.InSine
-                            }
-
+                            StdAnim {}
                         }
 
                         Behavior on color {
-                            PropertyAnimation {
-                                duration: Config.settings.animationSpeed
-                                easing.type: Easing.InSine
-                            }
-
+                            StdAnim {}
                         }
 
                         Behavior on implicitHeight {
-                            PropertyAnimation {
-                                duration: Config.settings.animationSpeed
-                                easing.type: Easing.InSine
-                            }
-
+                            StdAnim {}
                         }
 
                         Behavior on implicitWidth {
-                            PropertyAnimation {
-                                duration: Config.settings.animationSpeed
-                                easing.type: Easing.InSine
-                            }
-
+                            StdAnim {}
                         }
 
                     }
@@ -406,13 +358,13 @@ Scope {
 
                         variant: "internalbg"
                         useDefaultRadius: false
-                        implicitWidth: barWindow.isVertical ? 36 : Math.max(96, statusGroup.implicitWidth + 24)
-                        implicitHeight: barWindow.isVertical ? Math.max(96, statusGroup.implicitHeight + 20) : 32
+                        implicitWidth: barWindow.isVertical ? metrics.quickActionsThickness : Math.max(metrics.quickActionsMinLength, statusGroup.implicitWidth + metrics.quickActionsPaddingH)
+                        implicitHeight: barWindow.isVertical ? Math.max(metrics.quickActionsMinLength, statusGroup.implicitHeight + metrics.quickActionsPaddingV) : metrics.quickActionsDefaultThickness
                         width: implicitWidth
                         height: implicitHeight
                         Layout.alignment: barWindow.isVertical ? Qt.AlignHCenter : Qt.AlignVCenter
-                        topLeftRadius: hovered ? metrics.radiusInnerSmall : 8
-                        topRightRadius: hovered ? metrics.radiusInnerSmall : 8
+                        topLeftRadius: hovered ? metrics.radiusInnerSmall : metrics.quickActionsRadiusCollapsed
+                        topRightRadius: hovered ? metrics.radiusInnerSmall : metrics.quickActionsRadiusCollapsed
                         bottomLeftRadius: metrics.radiusInnerSmall
                         bottomRightRadius: metrics.radiusInnerSmall
                         color: isColoured ? Qt.alpha(Colours.palette.primary, metrics.widgetAlpha) : Qt.alpha(Colours.palette.surface, metrics.widgetAlpha)
@@ -438,45 +390,24 @@ Scope {
                         }
 
                         Behavior on color {
-                            PropertyAnimation {
-                                duration: Config.settings.animationSpeed
-                                easing.type: Easing.InSine
-                            }
-
+                            StdAnim {}
                         }
 
                         Behavior on implicitHeight {
-                            PropertyAnimation {
-                                duration: Config.settings.animationSpeed
-                                easing.type: Easing.InSine
-                            }
-
+                            StdAnim {}
                         }
 
                         Behavior on implicitWidth {
-                            PropertyAnimation {
-                                duration: Config.settings.animationSpeed
-                                easing.type: Easing.InSine
-                            }
-
+                            StdAnim {}
                         }
 
                         Behavior on topLeftRadius {
-                            PropertyAnimation {
-                                duration: Config.settings.animationSpeed
-                                easing.type: Easing.InSine
-                            }
-
+                            StdAnim {}
                         }
 
                         Behavior on topRightRadius {
-                            PropertyAnimation {
-                                duration: Config.settings.animationSpeed
-                                easing.type: Easing.InSine
-                            }
-
+                            StdAnim {}
                         }
-
                     }
 
                 }
@@ -517,6 +448,17 @@ Scope {
 
                 }
 
+                readonly property var widgetComponents: ({
+                    "systray": sysTrayComp,
+                    "recording": recordingComp,
+                    "notifications": notificationComp,
+                    "quickactions": quickActionsComp,
+                    "cpu": cpuComp,
+                    "ram": ramComp,
+                    "temp": tempComp,
+                    "battery": batteryComp
+                })
+
                 GridLayout {
                     id: bottomLayout
 
@@ -531,12 +473,6 @@ Scope {
                     anchors.horizontalCenter: barWindow.isVertical ? parent.horizontalCenter : undefined
                     anchors.verticalCenter: barWindow.isVertical ? undefined : parent.verticalCenter
 
-                    // NOTE: this switch still duplicates the id list that
-                    // BarWidgets.definitionForId already knows about. Ideally
-                    // BarWidgets would expose the Component directly (e.g.
-                    // BarWidgets.componentForId(id)) so this map only lives in
-                    // one place; left as-is here since BarWidgets.qml wasn't
-                    // provided, but flagged for follow-up.
                     Repeater {
                         id: rightWidgetsRepeater
 
@@ -548,31 +484,7 @@ Scope {
                             Layout.alignment: barWindow.isVertical ? Qt.AlignHCenter : Qt.AlignVCenter
                             Layout.preferredWidth: item ? item.implicitWidth : 0
                             Layout.preferredHeight: item ? item.implicitHeight : 0
-                            sourceComponent: {
-                                if (!BarWidgets.definitionForId(modelData))
-                                    return null;
-
-                                switch (modelData) {
-                                case "systray":
-                                    return sysTrayComp;
-                                case "recording":
-                                    return recordingComp;
-                                case "notifications":
-                                    return notificationComp;
-                                case "quickactions":
-                                    return quickActionsComp;
-                                case "cpu":
-                                    return cpuComp;
-                                case "ram":
-                                    return ramComp;
-                                case "temp":
-                                    return tempComp;
-                                case "battery":
-                                    return batteryComp;
-                                default:
-                                    return null;
-                                }
-                            }
+                            sourceComponent: BarWidgets.definitionForId(modelData) ? (barBase.widgetComponents[modelData] ?? null) : null
                         }
 
                     }
@@ -580,27 +492,15 @@ Scope {
                 }
 
                 Behavior on width {
-                    PropertyAnimation {
-                        duration: Config.settings.animationSpeed
-                        easing.type: Easing.InSine
-                    }
-
+                    StdAnim {}
                 }
 
                 Behavior on height {
-                    PropertyAnimation {
-                        duration: Config.settings.animationSpeed
-                        easing.type: Easing.InSine
-                    }
-
+                    StdAnim {}
                 }
 
                 Behavior on color {
-                    PropertyAnimation {
-                        duration: Config.settings.animationSpeed
-                        easing.type: Easing.InSine
-                    }
-
+                    StdAnim {}
                 }
 
             }
