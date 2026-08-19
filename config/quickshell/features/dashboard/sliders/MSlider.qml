@@ -17,9 +17,9 @@ Item {
     property bool isEnabled: true
     property bool isHovered: false
     property bool showPercent: true
-    property int trackHeight: 20
-    property int handleHeight: 26
-    property int handleWidth: 6
+    property int trackHeight: 12
+    property int handleHeight: 18
+    property int handleWidth: 4
     readonly property real sliderRadius: (Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 8
     readonly property real normalizedProgress: Math.max(0, Math.min(1, (slider.value - slider.from) / Math.max(0.0001, slider.to - slider.from)))
     readonly property string percentString: Math.round(slider.normalizedProgress * 100) + "%"
@@ -34,7 +34,7 @@ Item {
         id: contentColumn
 
         anchors.fill: parent
-        spacing: Styling.spacing.lg
+        spacing: Styling.spacing.md
 
         // Top Header Row: [Icon + Title] on the left, [Percentage %] on the right
         RowLayout {
