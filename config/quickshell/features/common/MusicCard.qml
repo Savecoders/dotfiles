@@ -16,12 +16,104 @@ ClippingWrapperRectangle {
     property real cardRadius: (Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 4
     property color cardColor: Qt.rgba(0, 0, 0, 0.5)
     property color borderColor: Qt.rgba(1, 1, 1, 0.15)
+    readonly property bool isCompact: cardHeight <= 70
+    readonly property bool hasPlayer: Media.activePlayer != null
+    readonly property real trackLength: {
+        if (!hasPlayer)
+            return 0;
+
+        let p = Media.activePlayer;
+        if (p.metadata && p.metadata["mpris:length"] !== undefined) {
+            let metaLen = Number(p.metadata["mpris:length"]) || 0;
+            if (metaLen > 1000)
+                metaLen = metaLen / 1e+06;
+
+            if (metaLen > 2 && isFinite(metaLen))
+                return metaLen;
+
+        }
+        let pLen = Number(p.length) || 0;
+        let pPos = Number(p.position) || 0;
+
+        // Verify length differs from position to discard live streams or placeholder durations
+        if (pLen > 2 && isFinite(pLen) && Math.abs(pLen - pPos) > 1.5)
+            return pLen;
+
+        return 0;
+    }
+    readonly property bool hasValidLength: hasPlayer && trackLength > 2 && trackLength < 86400
+    property bool isDragging: false
+    property real dragPosition: 0
+    property real polledPosition: 0
+    readonly property real currentPosition: isDragging ? dragPosition : (hasValidLength ? polledPosition : 0)
+    readonly property real progressFrac: (hasValidLength && trackLength > 0) ? Math.max(0, Math.min(1, currentPosition / trackLength)) : 0
+
+    component MediaCtrlBtn: PlayerControl {
+        readonly property real ctrlSize: root.isCompact ? 30 : 32
+
+        width: ctrlSize
+        height: ctrlSize
+        radius: Math.max(2, root.cardRadius - 2)
+        bgColour: Qt.rgba(0, 0, 0, 0.35)
+        colour: Qt.rgba(1, 1, 1, 0.9)
+        bgColourHovered: Qt.rgba(1, 1, 1, 0.2)
+        colourHovered: Colours.palette.on_surface
+    }
+
+    function formatTime(sec) {
+        let n = Number(sec);
+        if (isNaN(n) || n <= 0 || !isFinite(n))
+            return "0:00";
+
+        let totalSec = Math.floor(n);
+        let h = Math.floor(totalSec / 3600);
+        let m = Math.floor((totalSec % 3600) / 60);
+        let s = totalSec % 60;
+        if (h > 0)
+            return h + ":" + (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
+
+        return m + ":" + (s < 10 ? "0" + s : s);
+    }
+
+    function pollProgress() {
+        if (!hasPlayer || !hasValidLength) {
+            polledPosition = 0;
+            return ;
+        }
+        polledPosition = Number(Media.activePlayer.position) || 0;
+    }
 
     implicitHeight: cardHeight
     radius: cardRadius
     color: cardColor
     border.color: borderColor
     border.width: 1
+
+    Timer {
+        id: posTimer
+
+        interval: 500
+        running: Media.isPlaying && root.hasPlayer && root.hasValidLength && !root.isDragging
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: root.pollProgress()
+    }
+
+    Connections {
+        function onPositionChanged() {
+            if (!root.isDragging)
+                root.pollProgress();
+
+        }
+
+        function onLengthChanged() {
+            if (!root.isDragging)
+                root.pollProgress();
+
+        }
+
+        target: Media.activePlayer
+    }
 
     Item {
         anchors.fill: parent
@@ -31,7 +123,7 @@ ClippingWrapperRectangle {
             id: bgArt
 
             anchors.fill: parent
-            visible: Media.activePlayer != null && Media.stableArtUrl !== ""
+            visible: root.hasPlayer && Media.stableArtUrl !== ""
             source: Media.stableArtUrl
             fillMode: Image.PreserveAspectCrop
             sourceSize: Qt.size(200, 200)
@@ -70,7 +162,7 @@ ClippingWrapperRectangle {
             ClippingWrapperRectangle {
                 id: art
 
-                readonly property real artSize: Math.max(36, root.cardHeight - 22)
+                readonly property real artSize: Math.max(36, root.cardHeight - (root.hasValidLength ? 26 : 20))
 
                 radius: Styling.radius.full
                 Layout.preferredWidth: artSize
@@ -86,7 +178,7 @@ ClippingWrapperRectangle {
 
                         anchors.fill: parent
                         sourceSize: Qt.size(art.artSize, art.artSize)
-                        visible: Media.activePlayer != null && Media.stableArtUrl !== "" && (status === Image.Ready || status === Image.Loading)
+                        visible: root.hasPlayer && Media.stableArtUrl !== "" && (status === Image.Ready || status === Image.Loading)
                         source: Media.stableArtUrl
                         fillMode: Image.PreserveAspectCrop
                         asynchronous: true
@@ -94,7 +186,7 @@ ClippingWrapperRectangle {
 
                     Text {
                         anchors.centerIn: parent
-                        visible: Media.activePlayer == null || Media.stableArtUrl === "" || albumCover.status === Image.Error || albumCover.status === Image.Null
+                        visible: !root.hasPlayer || Media.stableArtUrl === "" || albumCover.status === Image.Error || albumCover.status === Image.Null
                         color: Colours.palette.outline
                         text: "music_note"
                         font.family: Config.settings.iconFont
@@ -105,25 +197,25 @@ ClippingWrapperRectangle {
 
             }
 
-            // Title and Artist Info
+            // Title, Artist and Timeline Info
             ColumnLayout {
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                 Layout.fillWidth: true
                 spacing: Styling.spacing.xs
 
                 Text {
-                    visible: Media.activePlayer == null
-                    font.pixelSize: root.cardHeight > 70 ? Styling.fontSize.bodyLarge : Styling.fontSize.body
-                    font.family: Config.settings.font
+                    visible: !root.hasPlayer
+                    font.pixelSize: root.isCompact ? Styling.fontSize.body : Styling.fontSize.bodyLarge
+                    font.family: Config.settings.font ?? "SF Pro Display"
                     font.weight: Font.DemiBold
                     color: Qt.rgba(1, 1, 1, 0.7)
                     text: "No media playing"
                 }
 
                 Text {
-                    visible: Media.activePlayer != null
-                    font.pixelSize: root.cardHeight > 70 ? Styling.fontSize.bodyLarge : Styling.fontSize.body
-                    font.family: Config.settings.font
+                    visible: root.hasPlayer
+                    font.pixelSize: root.isCompact ? Styling.fontSize.body : Styling.fontSize.bodyLarge
+                    font.family: Config.settings.font ?? "SF Pro Display"
                     font.weight: Font.Bold
                     color: Qt.rgba(1, 1, 1, 0.95)
                     text: Media.stableTitle || "Untitled"
@@ -132,48 +224,190 @@ ClippingWrapperRectangle {
                 }
 
                 Text {
-                    visible: Media.activePlayer != null
-                    font.pixelSize: root.cardHeight > 70 ? Styling.fontSize.label : Styling.fontSize.sm
-                    font.family: Config.settings.font
+                    visible: root.hasPlayer
+                    font.pixelSize: root.isCompact ? Styling.fontSize.sm : Styling.fontSize.label
+                    font.family: Config.settings.font ?? "SF Pro Display"
                     color: Qt.rgba(1, 1, 1, 0.7)
                     text: Media.stableArtist || "Unknown Artist"
                     elide: Text.ElideRight
                     Layout.fillWidth: true
                 }
 
+                RowLayout {
+                    id: timelineRow
+
+                    visible: root.hasValidLength
+                    Layout.fillWidth: true
+                    Layout.topMargin: 2
+                    spacing: Styling.spacing.sm
+
+                    Text {
+                        text: root.formatTime(root.currentPosition)
+                        font.pixelSize: Styling.fontSize.sm
+                        font.family: Config.settings.font ?? "SF Pro Display"
+                        font.weight: Font.Normal
+                        color: Qt.rgba(1, 1, 1, 0.6)
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+
+                    Item {
+                        id: timelineContainer
+
+                        property bool isHovered: false
+
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 12
+                        Layout.alignment: Qt.AlignVCenter
+
+                        StyledRect {
+                            id: bgTimeline
+
+                            variant: "internalbg"
+                            useDefaultRadius: false
+                            border.width: 0
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                            height: 4
+                            radius: 2
+                            color: timelineContainer.isHovered ? Colours.palette.surface_container_highest : Qt.alpha(Colours.palette.surface_container_high, 0.85)
+
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 150
+                                }
+
+                            }
+
+                        }
+
+                        StyledRect {
+                            id: timelineProgressFill
+
+                            variant: "focus"
+                            useDefaultRadius: false
+                            border.width: 0
+                            anchors.left: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
+                            height: 4
+                            width: Math.max(5, Math.min(parent.width, root.progressFrac * parent.width))
+                            radius: 2
+                            color: Colours.palette.tertiary
+
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 150
+                                }
+
+                            }
+
+                        }
+
+                        // Thumb
+                        StyledRect {
+                            id: timelineThumb
+
+                            variant: "common"
+                            useDefaultRadius: false
+                            border.width: 0
+                            width: 4
+                            height: 10
+                            radius: 2
+                            anchors.verticalCenter: parent.verticalCenter
+                            x: Math.max(0, Math.min(parent.width - width, root.progressFrac * (parent.width - width)))
+                            color: Colours.palette.tertiary
+
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 150
+                                }
+
+                            }
+
+                            Behavior on opacity {
+                                NumberAnimation {
+                                    duration: 150
+                                }
+
+                            }
+
+                        }
+
+                        // Interactive Seeking MouseArea
+                        MouseArea {
+                            function calculateFrac(mouse) {
+                                const localX = mouse.x - 4;
+                                return Math.max(0, Math.min(1, localX / timelineContainer.width));
+                            }
+
+                            anchors.fill: parent
+                            anchors.margins: -4
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onEntered: timelineContainer.isHovered = true
+                            onExited: timelineContainer.isHovered = false
+                            onPressed: (mouse) => {
+                                if (root.hasValidLength && root.trackLength > 0) {
+                                    root.isDragging = true;
+                                    root.dragPosition = calculateFrac(mouse) * root.trackLength;
+                                }
+                            }
+                            onPositionChanged: (mouse) => {
+                                if (pressed && root.hasValidLength && root.trackLength > 0)
+                                    root.dragPosition = calculateFrac(mouse) * root.trackLength;
+
+                            }
+                            onReleased: (mouse) => {
+                                if (root.isDragging) {
+                                    let targetSec = calculateFrac(mouse) * root.trackLength;
+                                    if (Media.activePlayer && (Media.activePlayer.canSeek ?? true))
+                                        Media.activePlayer.position = targetSec;
+
+                                    root.polledPosition = targetSec;
+                                    root.isDragging = false;
+                                }
+                            }
+                        }
+
+                    }
+
+                    Text {
+                        text: root.formatTime(root.trackLength)
+                        font.pixelSize: Styling.fontSize.sm
+                        font.family: Config.settings.font ?? "SF Pro Display"
+                        font.weight: Font.Normal
+                        color: Qt.rgba(1, 1, 1, 0.6)
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+
+                }
+
             }
 
             // Media Controls
             RowLayout {
-                visible: Media.activePlayer != null
+                visible: root.hasPlayer
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 spacing: Styling.spacing.sm
 
-                PlayerControl {
+                MediaCtrlBtn {
                     iconName: "skip_previous"
                     toRun: () => {
                         if (Media.activePlayer && Media.activePlayer.canGoPrevious)
                             Media.activePlayer.previous();
 
                     }
-                    width: root.cardHeight > 70 ? 32 : 30
-                    height: root.cardHeight > 70 ? 32 : 30
-                    radius: Math.max(2, root.cardRadius - 2)
-                    bgColour: Qt.rgba(0, 0, 0, 0.35)
-                    colour: Qt.rgba(1, 1, 1, 0.9)
-                    bgColourHovered: Qt.rgba(1, 1, 1, 0.2)
-                    colourHovered: "#ffffff"
                 }
 
                 PlayerControl {
                     iconName: Media.isPlaying ? "pause" : "play_arrow"
-                    toRun: function() {
+                    toRun: () => {
                         if (Media.activePlayer)
                             Media.activePlayer.togglePlaying();
 
                     }
-                    width: root.cardHeight > 70 ? 36 : 30
-                    height: root.cardHeight > 70 ? 36 : 30
+                    width: root.isCompact ? 30 : 36
+                    height: root.isCompact ? 30 : 36
                     radius: Math.max(2, root.cardRadius - 2)
                     bgColour: Colours.palette.primary
                     colour: Colours.palette.on_primary
@@ -181,20 +415,13 @@ ClippingWrapperRectangle {
                     colourHovered: Colours.palette.on_primary
                 }
 
-                PlayerControl {
+                MediaCtrlBtn {
                     iconName: "skip_next"
                     toRun: () => {
                         if (Media.activePlayer && Media.activePlayer.canGoNext)
                             Media.activePlayer.next();
 
                     }
-                    width: root.cardHeight > 70 ? 32 : 30
-                    height: root.cardHeight > 70 ? 32 : 30
-                    radius: Math.max(2, root.cardRadius - 2)
-                    bgColour: Qt.rgba(0, 0, 0, 0.35)
-                    colour: Qt.rgba(1, 1, 1, 0.9)
-                    bgColourHovered: Qt.rgba(1, 1, 1, 0.2)
-                    colourHovered: "#ffffff"
                 }
 
             }
