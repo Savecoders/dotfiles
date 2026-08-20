@@ -28,7 +28,8 @@ Item {
         }
         return list.length > 0 ? list : ["eDP-1"];
     }
-    property var availableEncoders: ["libx264", "libx265", "libvpx-vp9", "libaom-av1", "h264_vaapi", "hevc_vaapi", "h264_nvenc", "hevc_nvenc"]
+    property var availableEncoders: []
+    property var _tempEncoders: []
 
     Item {
         id: pageWrapper
@@ -322,13 +323,15 @@ Item {
                     message: "Video Encoder"
                     options: root.availableEncoders
                     currentIndex: {
-                        let cur = Config.settings.recorder.encoder || "libx264";
+                        let cur = (Config.settings && Config.settings.recorder && Config.settings.recorder.encoder) ? Config.settings.recorder.encoder : "libx264";
                         let idx = root.availableEncoders.indexOf(cur);
                         return idx >= 0 ? idx : 0;
                     }
                     toRun: (index) => {
                         let selected = root.availableEncoders[index];
-                        Config.updateKey("recorder.encoder", selected);
+                        if (selected)
+                            Config.updateKey("recorder.encoder", selected);
+
                     }
                     withIcon: true
                     iconCode: "movie"
@@ -344,22 +347,18 @@ Item {
         id: encoderDetector
 
         running: true
-        command: ["bash", "-c", "ffmpeg -encoders 2>/dev/null | grep -E '^ V\\.\\.\\.\\.D' | awk '{print $2}' | grep -E 'x264|x265|vpx|aom|svtav1|rav1e|h264|hevc|av1|vp8|vp9' | sort -u"]
+        command: ["bash", "-c", "ffmpeg -encoders 2>/dev/null | awk '/^ V/ {print $2}' | grep -E 'x264|x265|vpx|aom|svtav1|rav1e|h264|hevc|av1|vp8|vp9' | sort -u"]
+        onExited: (exitCode) => {
+            if (root._tempEncoders.length > 0)
+                root.availableEncoders = root._tempEncoders;
+
+        }
 
         stdout: SplitParser {
             onRead: (data) => {
-                let lines = `${data}`.trim().split("\n");
-                let list = [];
-                for (let i = 0; i < lines.length; i++) {
-                    let e = lines[i].trim();
-                    if (e.length > 0 && list.indexOf(e) === -1)
-                        list.push(e);
-
-                }
-                if (list.length > 0)
-                    Qt.callLater(() => {
-                    root.availableEncoders = list;
-                });
+                let e = `${data}`.trim();
+                if (e.length > 0 && root._tempEncoders.indexOf(e) === -1)
+                    root._tempEncoders.push(e);
 
             }
         }

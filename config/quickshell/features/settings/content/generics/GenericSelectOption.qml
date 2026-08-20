@@ -55,6 +55,22 @@ RowLayout {
         Layout.preferredWidth: 200
         Layout.preferredHeight: 32
 
+        Connections {
+            function onCurrentIndexChanged() {
+                if (control.currentIndex !== root.currentIndex)
+                    control.currentIndex = root.currentIndex;
+
+            }
+
+            function onOptionsChanged() {
+                if (control.currentIndex !== root.currentIndex)
+                    control.currentIndex = root.currentIndex;
+
+            }
+
+            target: root
+        }
+
         indicator: Item {
             x: control.width - width - 10
             anchors.verticalCenter: control.verticalCenter
