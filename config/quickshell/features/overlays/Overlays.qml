@@ -89,6 +89,57 @@ Scope {
                 target: Brightness
             }
 
+            StyledRect {
+                id: floatingTooltip
+
+                readonly property bool isScreenMatch: !Tooltip.targetScreen || Tooltip.targetScreen === overlaysWindow.screen
+                readonly property bool shouldShow: Tooltip.visible && Tooltip.text !== "" && isScreenMatch
+
+                variant: "popup"
+                visible: opacity > 0
+                opacity: shouldShow ? 1 : 0
+                scale: shouldShow ? 1 : 0.94
+                implicitWidth: tooltipText.implicitWidth + (Styling.spacing.lg * 2)
+                implicitHeight: tooltipText.implicitHeight + (Styling.spacing.md * 2)
+                width: implicitWidth
+                height: implicitHeight
+                x: Math.max(Styling.spacing.lg, Math.min(parent.width - width - Styling.spacing.lg, Tooltip.globalX + (Tooltip.targetWidth / 2) - (width / 2)))
+                y: {
+                    if (Tooltip.preferredPos === "top" || (Tooltip.preferredPos === "auto" && Tooltip.globalY > parent.height / 2))
+                        return Math.max(Styling.spacing.lg, Tooltip.globalY - height - Styling.spacing.sm);
+                    else
+                        return Math.min(parent.height - height - Styling.spacing.lg, Tooltip.globalY + Tooltip.targetHeight + Styling.spacing.sm);
+                }
+
+                Text {
+                    id: tooltipText
+
+                    anchors.centerIn: parent
+                    text: Tooltip.text
+                    font.family: Config.settings.font ?? "SF Pro Display"
+                    font.pixelSize: Styling.fontSize.sm
+                    font.weight: Font.Medium
+                    color: Colours.palette.on_surface
+                }
+
+                Behavior on opacity {
+                    NumberAnimation {
+                        duration: Config.settings.animationSpeed ?? 150
+                        easing.type: Easing.OutQuad
+                    }
+
+                }
+
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: Config.settings.animationSpeed ?? 150
+                        easing.type: Easing.OutQuad
+                    }
+
+                }
+
+            }
+
             mask: Region {
             }
 

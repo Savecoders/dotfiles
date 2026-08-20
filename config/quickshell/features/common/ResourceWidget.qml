@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
 import qs.core
 import qs.services
@@ -18,15 +17,19 @@ StyledRect {
     color: "transparent"
     implicitWidth: isVertical ? 32 : (contentRow.implicitWidth + 4)
     implicitHeight: 32
-    ToolTip.visible: mouseArea.containsMouse
-    ToolTip.delay: 200
-    ToolTip.text: root.tooltipText
+    Component.onDestruction: Tooltip.hide()
 
     MouseArea {
         id: mouseArea
 
         anchors.fill: parent
         hoverEnabled: true
+        onEntered: {
+            if (root.tooltipText !== "")
+                Tooltip.showItem(root, root.tooltipText);
+
+        }
+        onExited: Tooltip.hide()
     }
 
     RowLayout {

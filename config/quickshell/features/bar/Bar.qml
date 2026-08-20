@@ -229,6 +229,7 @@ Scope {
                         property color inactiveContentColor: Qt.alpha(Colours.palette.on_surface, metrics.widgetAlpha)
                         property bool topRadiusFollowsNeighbour: false // e.g. notifications sits under recording
                         property bool hovered: false
+                        property string tooltipText: ""
                         readonly property bool expanded: !collapsible || active
 
                         signal activated()
@@ -283,8 +284,16 @@ Scope {
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
-                            onEntered: iconButton.hovered = true
-                            onExited: iconButton.hovered = false
+                            onEntered: {
+                                iconButton.hovered = true;
+                                if (iconButton.tooltipText !== "")
+                                    Tooltip.showItem(iconButton, iconButton.tooltipText);
+
+                            }
+                            onExited: {
+                                iconButton.hovered = false;
+                                Tooltip.hide();
+                            }
                             onClicked: iconButton.activated()
                         }
 
@@ -345,6 +354,9 @@ Scope {
                                 return Recorder.isRecordingRunning;
                             });
                             item.iconGlyph = "screen_record";
+                            item.tooltipText = Qt.binding(() => {
+                                return Recorder.isRecordingRunning ? "Recording in progress (Click to stop)" : "Screen Recorder";
+                            });
                             item.activeColor = Colours.palette.error_container;
                             item.activeContentColor = Colours.palette.on_error_container;
                             item.inactiveColor = Qt.alpha(Colours.palette.secondary_fixed, metrics.widgetAlpha);
@@ -368,6 +380,9 @@ Scope {
                             item.collapsible = false;
                             item.iconGlyph = Qt.binding(() => {
                                 return Notifications.list.length != 0 ? "notifications_unread" : "notifications";
+                            });
+                            item.tooltipText = Qt.binding(() => {
+                                return Notifications.list.length != 0 ? (Notifications.list.length + " Notifications") : "No notifications";
                             });
                             item.activated.connect(() => {
                                 return IPCLoader.toggleNotifications();
@@ -417,8 +432,14 @@ Scope {
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
-                            onEntered: quickActionsButton.hovered = true
-                            onExited: quickActionsButton.hovered = false
+                            onEntered: {
+                                quickActionsButton.hovered = true;
+                                Tooltip.showItem(quickActionsButton, "Control Center & Dashboard");
+                            }
+                            onExited: {
+                                quickActionsButton.hovered = false;
+                                Tooltip.hide();
+                            }
                             onClicked: IPCLoader.toggleDashboard()
                         }
 

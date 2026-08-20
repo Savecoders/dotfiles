@@ -19,11 +19,10 @@ Item {
     property int spacing: Styling.spacing.xl
     property int rowHeight: 87
     readonly property int availWidth: root.width > 0 ? root.width : 475
-    readonly property int row1WideWidth: Math.floor((availWidth - 2 * spacing) * 0.5)
-    readonly property int row1CubeWidth: Math.floor((availWidth - 2 * spacing) * 0.25)
-    readonly property int row1CubeWidthLast: (availWidth - 2 * spacing) - row1WideWidth - row1CubeWidth
-    readonly property int row2WideWidth: Math.floor((availWidth - spacing) * 0.5)
-    readonly property int row2WideWidthLast: (availWidth - spacing) - row2WideWidth
+    readonly property int cubeWidth: Math.floor((availWidth - 3 * spacing) / 4)
+    readonly property int wideWidth: 2 * cubeWidth + spacing
+    readonly property int lastCubeWidth: availWidth - wideWidth - cubeWidth - (2 * spacing)
+    readonly property int lastWideWidth: availWidth - wideWidth - spacing
 
     Layout.fillWidth: true
     Layout.leftMargin: 20
@@ -44,7 +43,7 @@ Item {
             spacing: root.spacing
 
             Toggle {
-                rWidth: root.row1WideWidth
+                rWidth: root.wideWidth
                 rHeight: root.rowHeight
                 isToggled: Network.getBool()
                 bigText: Network.textLabel
@@ -63,7 +62,7 @@ Item {
             }
 
             Toggle {
-                rWidth: root.row1CubeWidth
+                rWidth: root.cubeWidth
                 rHeight: root.rowHeight
                 compact: true
                 isToggled: Recorder.isRecordingRunning
@@ -81,7 +80,7 @@ Item {
             }
 
             Toggle {
-                rWidth: root.row1CubeWidthLast
+                rWidth: root.lastCubeWidth
                 rHeight: root.rowHeight
                 compact: true
                 isToggled: Notifications.popupInhibited
@@ -101,7 +100,7 @@ Item {
             spacing: root.spacing
 
             Toggle {
-                rWidth: root.row2WideWidth
+                rWidth: root.wideWidth
                 rHeight: root.rowHeight
                 isToggled: Bluetooth.getBool()
                 bigText: Bluetooth.textLabel
@@ -120,7 +119,7 @@ Item {
             }
 
             Toggle {
-                rWidth: root.row2WideWidthLast
+                rWidth: root.lastWideWidth
                 rHeight: root.rowHeight
                 isToggled: Nightmode.isNightmodeOn
                 bigText: Nightmode.isNightmodeOn ? "Nightmode On" : "Nightmode Off"

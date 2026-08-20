@@ -57,7 +57,7 @@ StyledRect {
     }
 
     variant: "common"
-    Layout.fillWidth: true
+    Layout.fillWidth: root.rWidth <= 0
     Layout.preferredWidth: root.rWidth > 0 ? root.rWidth : -1
     Layout.preferredHeight: root.rHeight
     color: root.getColourBg()
