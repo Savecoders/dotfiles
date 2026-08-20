@@ -21,7 +21,7 @@ Singleton {
     property string _tempPickedPath: ""
 
     function getNormalizedDir() {
-        let loc = Config.settings.recorder.output_loc || "~/Videos";
+        let loc = (Config.settings && Config.settings.recorder && Config.settings.recorder.output_loc) ? Config.settings.recorder.output_loc : "~/Videos";
         let path = loc.startsWith("/") ? loc : `${Quickshell.env("HOME")}/${loc.replace(/^~\//, "")}`;
         return path.replace(/\/+$/, "");
     }
@@ -72,7 +72,8 @@ Singleton {
 
     onRecorderExitCodeChanged: {
         if (recorderExitCode != 0 && recorderExitCode != 130 && recorderExitCode != 2) {
-            Quickshell.execDetached(["notify-send", "Failed to start recording", `Check output folder or screen: ${Config.settings.recorder.screen}`]);
+            let scr = (Config.settings && Config.settings.recorder && Config.settings.recorder.screen) ? Config.settings.recorder.screen : "eDP-1";
+            Quickshell.execDetached(["notify-send", "Failed to start recording", `Check output folder or screen: ${scr}`]);
             recorderExitCode = 0;
         }
     }
@@ -81,8 +82,8 @@ Singleton {
         fullOutputFile = `${root.getNormalizedDir()}/${cleanName}`;
         if (_pendingStart) {
             _pendingStart = false;
-            let screenName = Config.settings.recorder.screen || "eDP-1";
-            let encoderName = Config.settings.recorder.encoder || "libx264";
+            let screenName = (Config.settings && Config.settings.recorder && Config.settings.recorder.screen) ? Config.settings.recorder.screen : "eDP-1";
+            let encoderName = (Config.settings && Config.settings.recorder && Config.settings.recorder.encoder) ? Config.settings.recorder.encoder : "libx264";
             recorderProc.command = ["wf-recorder", "-o", screenName, "-c", encoderName, "-f", fullOutputFile];
             recorderProc.running = true;
         }

@@ -77,7 +77,7 @@
     },
     "previousWallpaper": "/home/save/Pictures/Wallpapers/gruvbox/00220.jpg",
     "recorder": {
-        "encoder": "vp9_vaapi",
+        "encoder": "libx264",
         "output_loc": "/home/save/Videos/shell",
         "screen": "eDP-1"
     },
