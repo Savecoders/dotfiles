@@ -4,6 +4,7 @@ import Quickshell.Io
 import qs.core
 import qs.features
 import qs.features.bar
+import qs.features.common
 import qs.features.dashboard
 import qs.features.desktop
 import qs.features.lockscreen
@@ -11,6 +12,14 @@ import qs.features.notificationslist
 import qs.features.settings
 
 Scope {
+    BatteryPopup {
+        isBatteryOpen: IPCLoader.isBatteryOpen
+    }
+
+    RecordingPopup {
+        isRecordingOpen: IPCLoader.isRecordingOpen
+    }
+
     Loader {
         active: (Config.settings && Config.settings.componentControl && Config.settings.componentControl.notifsIsEnabled !== undefined) ? Config.settings.componentControl.notifsIsEnabled : true
 
@@ -22,7 +31,7 @@ Scope {
     Loader {
         id: barHost
 
-        property string lastPos: (Config.settings && Config.settings.bar && Config.settings.bar.position) ? Config.settings.bar.position : "top"
+        property string lastPos: Config.barPosition
 
         active: (Config.settings && Config.settings.componentControl && Config.settings.componentControl.barIsEnabled !== undefined) ? Config.settings.componentControl.barIsEnabled : true
         onLastPosChanged: {
