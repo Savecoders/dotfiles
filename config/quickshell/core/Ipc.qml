@@ -66,6 +66,13 @@ Singleton {
             Brightness.update();
         }
 
+        function toggleShortcuts() {
+            SettingsControl.setLocation(7);
+            if (!IPCLoader.isSettingsOpen)
+                IPCLoader.toggleSettings();
+
+        }
+
         target: "global"
     }
 

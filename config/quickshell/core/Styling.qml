@@ -8,18 +8,19 @@ Singleton {
     readonly property int desktopGap: 4
     readonly property QtObject
     fontSize: QtObject {
+        property int caption: 10
         property int xs: 8
         property int sm: 12
-        property int label: 16
         property int body: 13
         property int bodyLarge: 14
         property int md: 14
+        property int label: 14
         property int lg: 16
         property int title: 18
         property int headline: 20
         property int xl: 20
         property int xxl: 24
-        property int display: 28
+        property int display: 32
         property int hero: 104 //hero lookscreen
     }
 

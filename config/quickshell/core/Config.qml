@@ -16,6 +16,7 @@ Singleton {
     property int readWriteDelay: 50
     property bool blockWrites: false
     property bool pauseAutoSave: false
+    readonly property string barPosition: (root.settings && root.settings.bar && root.settings.bar.position) ? root.settings.bar.position.toLowerCase() : "bottom"
 
     function updateKey(nestedKey, value) {
         let keys = nestedKey.split(".");
