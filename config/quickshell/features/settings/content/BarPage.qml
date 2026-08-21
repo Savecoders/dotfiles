@@ -50,16 +50,7 @@ Item {
                     Layout.preferredHeight: 3
                 }
 
-                GenericSelectOption {
-                    message: "Bar position"
-                    options: ["left", "right", "top", "bottom"]
-                    currentIndex: ["left", "right", "top", "bottom"].indexOf(Config.settings.bar.position)
-                    toRun: (index) => {
-                        let val = ["left", "right", "top", "bottom"][index];
-                        Config.updateKey("bar.position", val);
-                    }
-                    withIcon: true
-                    iconCode: "align_justify_stretch"
+                ScreenPositionPicker {
                 }
 
                 GenericToggleOption {
