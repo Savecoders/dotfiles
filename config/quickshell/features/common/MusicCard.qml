@@ -132,7 +132,7 @@ ClippingWrapperRectangle {
         // Dark Overlay
         StyledRect {
             anchors.fill: parent
-            color: Qt.rgba(0, 0, 0, 0.35)
+            color: Qt.alpha(Colours.palette.surface, 0.4)
             radius: root.radius
             useDefaultRadius: false
             border.width: 0
@@ -155,7 +155,7 @@ ClippingWrapperRectangle {
                 Layout.preferredWidth: artSize
                 Layout.preferredHeight: artSize
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                color: Qt.rgba(0, 0, 0, 0.4)
+                color: Qt.alpha(Colours.palette.surface_container_highest, 0.8)
 
                 Item {
                     anchors.fill: parent
@@ -195,7 +195,7 @@ ClippingWrapperRectangle {
                     font.pixelSize: root.isCompact ? Styling.fontSize.body : Styling.fontSize.bodyLarge
                     font.family: Config.settings.font ?? "SF Pro Display"
                     font.weight: Font.DemiBold
-                    color: Qt.rgba(1, 1, 1, 0.7)
+                    color: Colours.palette.on_surface_variant
                     text: "No media playing"
                 }
 
@@ -204,7 +204,7 @@ ClippingWrapperRectangle {
                     font.pixelSize: root.isCompact ? Styling.fontSize.body : Styling.fontSize.bodyLarge
                     font.family: Config.settings.font ?? "SF Pro Display"
                     font.weight: Font.Bold
-                    color: Qt.rgba(1, 1, 1, 0.95)
+                    color: Colours.palette.on_surface
                     text: Media.stableTitle || "Untitled"
                     elide: Text.ElideRight
                     Layout.fillWidth: true
@@ -214,7 +214,7 @@ ClippingWrapperRectangle {
                     visible: root.hasPlayer
                     font.pixelSize: root.isCompact ? Styling.fontSize.sm : Styling.fontSize.label
                     font.family: Config.settings.font ?? "SF Pro Display"
-                    color: Qt.rgba(1, 1, 1, 0.7)
+                    color: Colours.palette.on_surface_variant
                     text: Media.stableArtist || "Unknown Artist"
                     elide: Text.ElideRight
                     Layout.fillWidth: true
@@ -233,7 +233,7 @@ ClippingWrapperRectangle {
                         font.pixelSize: Styling.fontSize.sm
                         font.family: Config.settings.font ?? "SF Pro Display"
                         font.weight: Font.Normal
-                        color: Qt.rgba(1, 1, 1, 0.6)
+                        color: Colours.palette.on_surface_variant
                         Layout.alignment: Qt.AlignVCenter
                     }
 
@@ -243,81 +243,65 @@ ClippingWrapperRectangle {
                         property bool isHovered: false
 
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 12
+                        Layout.preferredHeight: 18
                         Layout.alignment: Qt.AlignVCenter
 
-                        StyledRect {
-                            id: bgTimeline
+                        // Waveform Bars Visualizer
+                        Row {
+                            id: waveformRow
 
-                            variant: "internalbg"
-                            useDefaultRadius: false
-                            border.width: 0
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.verticalCenter: parent.verticalCenter
-                            height: 4
-                            radius: 2
-                            color: timelineContainer.isHovered ? Colours.palette.surface_container_highest : Qt.alpha(Colours.palette.surface_container_high, 0.85)
+                            readonly property var barHeights: [0.25, 0.4, 0.7, 0.55, 0.9, 0.65, 0.35, 0.8, 0.95, 0.6, 0.45, 0.75, 1, 0.85, 0.5, 0.3, 0.7, 0.85, 0.6, 0.4, 0.65, 0.9, 0.75, 0.5, 0.8, 0.95, 0.7, 0.4, 0.6, 0.85, 0.7, 0.5, 0.35, 0.6, 0.45, 0.3]
 
-                            Behavior on color {
-                                ColorAnimation {
-                                    duration: 150
+                            anchors.fill: parent
+                            anchors.topMargin: 2
+                            anchors.bottomMargin: 2
+                            spacing: Math.max(2, Math.floor((parent.width - (36 * 3)) / 35))
+
+                            Repeater {
+                                model: waveformRow.barHeights.length
+
+                                StyledRect {
+                                    id: wBar
+
+                                    readonly property real frac: index / (waveformRow.barHeights.length - 1)
+                                    readonly property bool isPast: frac <= root.progressFrac
+                                    readonly property real barHeightFactor: waveformRow.barHeights[index]
+
+                                    variant: "common"
+                                    useDefaultRadius: false
+                                    border.width: 0
+                                    width: 3
+                                    height: Math.max(3, barHeightFactor * waveformRow.height)
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    radius: 1.5
+                                    color: isPast ? Colours.palette.primary : Qt.alpha(Colours.palette.surface_container_highest, 0.85)
+
+                                    Behavior on color {
+                                        ColorAnimation {
+                                            duration: 100
+                                        }
+
+                                    }
+
                                 }
 
                             }
 
                         }
 
+                        // Needle Indicator
                         StyledRect {
-                            id: timelineProgressFill
-
-                            variant: "focus"
-                            useDefaultRadius: false
-                            border.width: 0
-                            anchors.left: parent.left
-                            anchors.verticalCenter: parent.verticalCenter
-                            height: 4
-                            width: Math.max(5, Math.min(parent.width, root.progressFrac * parent.width))
-                            radius: 2
-                            color: Colours.palette.tertiary
-
-                            Behavior on color {
-                                ColorAnimation {
-                                    duration: 150
-                                }
-
-                            }
-
-                        }
-
-                        // Thumb
-                        StyledRect {
-                            id: timelineThumb
+                            id: timelineNeedle
 
                             variant: "common"
                             useDefaultRadius: false
                             border.width: 0
-                            width: 4
-                            height: 10
-                            radius: 2
+                            width: 2
+                            height: parent.height
+                            radius: 1
                             anchors.verticalCenter: parent.verticalCenter
                             x: Math.max(0, Math.min(parent.width - width, root.progressFrac * (parent.width - width)))
-                            color: Colours.palette.tertiary
-
-                            Behavior on color {
-                                ColorAnimation {
-                                    duration: 150
-                                }
-
-                            }
-
-                            Behavior on opacity {
-                                NumberAnimation {
-                                    duration: 150
-                                }
-
-                            }
-
+                            color: Colours.palette.on_surface
                         }
 
                         // Interactive Seeking MouseArea
@@ -363,7 +347,7 @@ ClippingWrapperRectangle {
                         font.pixelSize: Styling.fontSize.sm
                         font.family: Config.settings.font ?? "SF Pro Display"
                         font.weight: Font.Normal
-                        color: Qt.rgba(1, 1, 1, 0.6)
+                        color: Colours.palette.on_surface_variant
                         Layout.alignment: Qt.AlignVCenter
                     }
 

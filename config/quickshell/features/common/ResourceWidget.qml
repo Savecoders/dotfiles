@@ -13,6 +13,8 @@ StyledRect {
     property string labelText: ""
     property color fgColor: Colours.palette.primary
 
+    signal clicked()
+
     variant: "transparent"
     color: "transparent"
     implicitWidth: isVertical ? 32 : (contentRow.implicitWidth + 4)
@@ -24,12 +26,14 @@ StyledRect {
 
         anchors.fill: parent
         hoverEnabled: true
+        cursorShape: Qt.PointingHandCursor
         onEntered: {
             if (root.tooltipText !== "")
                 Tooltip.showItem(root, root.tooltipText);
 
         }
         onExited: Tooltip.hide()
+        onClicked: root.clicked()
     }
 
     RowLayout {
