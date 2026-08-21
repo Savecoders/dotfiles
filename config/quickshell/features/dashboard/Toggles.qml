@@ -17,7 +17,7 @@ Item {
 
     property int fHeight: 184
     property int spacing: Styling.spacing.xl
-    property int rowHeight: 87
+    property int rowHeight: 88
     readonly property int availWidth: root.width > 0 ? root.width : 475
     readonly property int cubeWidth: Math.floor((availWidth - 3 * spacing) / 4)
     readonly property int wideWidth: 2 * cubeWidth + spacing
@@ -48,10 +48,14 @@ Item {
                 isToggled: Network.getBool()
                 bigText: Network.textLabel
                 smallText: {
-                    if (Network.textLabel == "Disconnected")
-                        return "Not connected to Wifi";
-                    else if (Network.textLabel == "Network Off")
-                        return "Wifi disabled";
+                    if (Network.textLabel === "Disconnected")
+                        return "Not connected";
+                    else if (Network.textLabel === "Network Off")
+                        return "Network disabled";
+                    else if (Network.connectionType === "ethernet")
+                        return "Wired connection";
+                    else if (Network.connectionType === "vpn")
+                        return "VPN active";
                     else
                         return "Connected";
                 }
