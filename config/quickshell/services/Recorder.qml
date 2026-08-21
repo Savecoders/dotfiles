@@ -9,15 +9,18 @@ Singleton {
     id: root
 
     property bool isRecordingRunning: false
-    property string outputFile: "capture_undefined.mp4"
-    property string fullOutputFile: `${root.getNormalizedDir()}/${root.outputFile}`
+    property bool isPaused: false
+    property int fps: 60
+    property bool recordSystemAudio: true
+    property bool recordMicrophone: false
+    property string outputFile: ""
+    property string fullOutputFile: ""
     property int seconds: 0
     property int minutes: 0
     property int hours: 0
     property string fullTime: "00:00:00"
     property int recorderExitCode: 0
     property bool readyToNotif: false
-    property bool _pendingStart: false
     property string _tempPickedPath: ""
 
     function getNormalizedDir() {
@@ -31,26 +34,59 @@ Singleton {
         minutes = 0;
         hours = 0;
         fullTime = "00:00:00";
+        isPaused = false;
     }
 
     function closeRecording() {
         Quickshell.execDetached(["pkill", "-SIGINT", "wf-recorder"]);
     }
 
+    function pauseRecording() {
+        if (isRecordingRunning && !isPaused) {
+            isPaused = true;
+            Quickshell.execDetached(["pkill", "-SIGSTOP", "wf-recorder"]);
+        }
+    }
+
+    function resumeRecording() {
+        if (isRecordingRunning && isPaused) {
+            isPaused = false;
+            Quickshell.execDetached(["pkill", "-SIGCONT", "wf-recorder"]);
+        }
+    }
+
+    function openRecordingsFolder() {
+        Quickshell.execDetached(["thunar", root.getNormalizedDir()]);
+    }
+
     function startRecording() {
         resetTime();
         let dir = root.getNormalizedDir();
         Quickshell.execDetached(["mkdir", "-p", dir]);
-        isRecordingRunning = true;
-        _pendingStart = true;
-        dateProc.running = true;
+        let now = new Date();
+        let pad = (n) => {
+            return (n < 10 ? "0" + n : String(n));
+        };
+        let dateStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}-${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+        root.outputFile = `capture_${dateStr}.mp4`;
+        root.fullOutputFile = `${dir}/${root.outputFile}`;
+        let screenName = (Config.settings && Config.settings.recorder && Config.settings.recorder.screen) ? Config.settings.recorder.screen : "eDP-1";
+        let encoderName = (Config.settings && Config.settings.recorder && Config.settings.recorder.encoder) ? Config.settings.recorder.encoder : "libx264";
+        let cmd = ["wf-recorder", "-o", screenName, "-c", encoderName, "-r", String(root.fps)];
+        if (root.recordSystemAudio || root.recordMicrophone)
+            cmd.push("-a");
+
+        cmd.push("-f", root.fullOutputFile);
+        recorderProc.command = cmd;
+        recorderProc.running = false;
+        recorderProc.running = true;
+        root.isRecordingRunning = true;
     }
 
     function stopRecording() {
         let savedPath = fullOutputFile;
         resetTime();
-        isRecordingRunning = false;
-        dateProc.running = false;
+        root.isRecordingRunning = false;
         closeRecording();
         Qt.callLater(() => {
             Quickshell.execDetached(["notify-send", "Screen Recording Saved", savedPath]);
@@ -67,6 +103,7 @@ Singleton {
     function openFolderPicker() {
         let dir = root.getNormalizedDir() + "/";
         zenityPicker.command = ["bash", "-c", `zenity --file-selection --directory --filename='${dir}' --title='Select Video Output Directory' 2>/dev/null`];
+        zenityPicker.running = false;
         zenityPicker.running = true;
     }
 
@@ -77,21 +114,10 @@ Singleton {
             recorderExitCode = 0;
         }
     }
-    onOutputFileChanged: {
-        let cleanName = root.outputFile.trim();
-        fullOutputFile = `${root.getNormalizedDir()}/${cleanName}`;
-        if (_pendingStart) {
-            _pendingStart = false;
-            let screenName = (Config.settings && Config.settings.recorder && Config.settings.recorder.screen) ? Config.settings.recorder.screen : "eDP-1";
-            let encoderName = (Config.settings && Config.settings.recorder && Config.settings.recorder.encoder) ? Config.settings.recorder.encoder : "libx264";
-            recorderProc.command = ["wf-recorder", "-o", screenName, "-c", encoderName, "-f", fullOutputFile];
-            recorderProc.running = true;
-        }
-    }
 
     Timer {
         interval: 1000
-        running: isRecordingRunning
+        running: isRecordingRunning && !isPaused
         repeat: true
         onTriggered: {
             seconds += 1;
@@ -128,23 +154,6 @@ Singleton {
         onExited: (exitCode) => {
             root.isRecordingRunning = (exitCode === 0);
         }
-    }
-
-    Process {
-        id: dateProc
-
-        running: false
-        command: ["date", "+%Y-%m-%d-%H-%M-%S"]
-
-        stdout: SplitParser {
-            onRead: (data) => {
-                let clean = `${data}`.trim();
-                if (clean.length > 0)
-                    root.outputFile = `capture_${clean}.mp4`;
-
-            }
-        }
-
     }
 
     Process {
