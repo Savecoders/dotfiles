@@ -15,6 +15,8 @@ hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(apps.fileManager))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(apps.code))
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(apps.menu))
+hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("qs ipc call dashboard toggle"))
+hl.bind(mainMod .. " + I", hl.dsp.exec_cmd("qs ipc call settings toggle"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))

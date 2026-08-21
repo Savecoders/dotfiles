@@ -16,6 +16,7 @@ ShellRoot {
         Qt.callLater(() => {
             Notifications.dummyInit();
             EyeProtection;
+            Ipc;
         });
         deferredInitTimer.start();
     }

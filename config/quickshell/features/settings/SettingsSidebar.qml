@@ -92,7 +92,7 @@ Item {
         // Section 1: Appearance
         Text {
             visible: !root.collapsed
-            text: "APPEARANCE"
+            text: "Appearance"
             font.family: Config.settings.font
             font.pixelSize: Styling.fontSize.xs
             font.weight: 700
@@ -143,7 +143,7 @@ Item {
         // Section 2: System
         Text {
             visible: !root.collapsed
-            text: "SYSTEM"
+            text: "System"
             font.family: Config.settings.font
             font.pixelSize: Styling.fontSize.xs
             font.weight: 700
@@ -207,7 +207,7 @@ Item {
         // Section 3: Information
         Text {
             visible: !root.collapsed
-            text: "INFORMATION"
+            text: "Information"
             font.family: Config.settings.font
             font.pixelSize: Styling.fontSize.xs
             font.weight: 700
@@ -220,12 +220,25 @@ Item {
             rWidth: parent.width
             rHeight: 40
             collapsed: root.collapsed
-            bigText: "About"
-            iconCode: "info"
+            bigText: "Shortcuts"
+            iconCode: "keyboard"
             toRun: () => {
                 return SettingsControl.setLocation(7);
             }
             number: 7
+            selected: root.location
+        }
+
+        SidebarButton {
+            rWidth: parent.width
+            rHeight: 40
+            collapsed: root.collapsed
+            bigText: "About"
+            iconCode: "info"
+            toRun: () => {
+                return SettingsControl.setLocation(8);
+            }
+            number: 8
             selected: root.location
         }
 

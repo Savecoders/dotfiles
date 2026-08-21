@@ -80,6 +80,14 @@ Item {
         Loader {
             active: swipeView.currentIndex === 7
 
+            sourceComponent: ShortcutsPage {
+            }
+
+        }
+
+        Loader {
+            active: swipeView.currentIndex === 8
+
             sourceComponent: AboutPage {
             }
 

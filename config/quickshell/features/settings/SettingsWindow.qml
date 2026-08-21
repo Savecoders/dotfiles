@@ -103,7 +103,7 @@ Loader {
                     }
 
                     StyledRect {
-                        readonly property var sectionTitles: ["Desktop", "Bar", "Theming", "Notifications", "Lockscreen", "Services & Extras", "Components", "About"]
+                        readonly property var sectionTitles: ["Desktop", "Bar", "Theming", "Notifications", "Lockscreen", "Services & Extras", "Components", "Shortcuts", "About"]
                         readonly property string currentSection: sectionTitles[SettingsControl.settingsLocation] || ""
 
                         variant: "pane"
