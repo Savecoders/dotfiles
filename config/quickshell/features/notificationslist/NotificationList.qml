@@ -18,7 +18,7 @@ Scope {
             id: root
 
             property var modelData
-            readonly property string barPos: Config.settings.bar.position.toLowerCase() ?? "left"
+            readonly property string barPos: Config.barPosition
             readonly property real barMargin: Config.settings.bar.margin ?? 8
             readonly property real barThickness: 40
             readonly property real barOffset: barThickness + (barMargin * 2) + 12

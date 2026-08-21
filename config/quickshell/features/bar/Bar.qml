@@ -24,7 +24,7 @@ Scope {
             id: barWindow
 
             property var modelData
-            readonly property string pos: Config.settings.bar.position.toLowerCase()
+            readonly property string pos: Config.barPosition
             readonly property bool isVertical: pos === "left" || pos === "right"
             readonly property bool isHorizontal: pos === "top" || pos === "bottom"
             readonly property bool isFloating: Config.settings.bar.floating ?? true
@@ -349,19 +349,19 @@ Scope {
                     Loader {
                         sourceComponent: barIconButtonComp
                         onLoaded: {
-                            item.collapsible = true;
+                            item.collapsible = false;
                             item.active = Qt.binding(() => {
                                 return Recorder.isRecordingRunning;
                             });
                             item.iconGlyph = "screen_record";
                             item.tooltipText = Qt.binding(() => {
-                                return Recorder.isRecordingRunning ? "Recording in progress (Click to stop)" : "Screen Recorder";
+                                return Recorder.isRecordingRunning ? "Recording in progress (Click for controls)" : "Screen Recorder";
                             });
                             item.activeColor = Colours.palette.error_container;
                             item.activeContentColor = Colours.palette.on_error_container;
                             item.inactiveColor = Qt.alpha(Colours.palette.secondary_fixed, metrics.widgetAlpha);
                             item.activated.connect(() => {
-                                return Recorder.stopRecording();
+                                return IPCLoader.toggleRecordingAt(item);
                             });
                         }
                         Layout.alignment: barWindow.isVertical ? Qt.AlignHCenter : Qt.AlignVCenter

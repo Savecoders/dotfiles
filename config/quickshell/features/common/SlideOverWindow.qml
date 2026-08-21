@@ -12,7 +12,7 @@ Loader {
     property int panelWidth: 515
     property int panelHeight: 880
     property string side: "left"
-    readonly property string barPos: Config.settings.bar.position.toLowerCase() ?? "left"
+    readonly property string barPos: Config.barPosition
     readonly property bool isBarLeft: barPos === "left"
     readonly property bool isBarRight: barPos === "right"
     readonly property bool isBarTop: barPos === "top"
@@ -49,7 +49,7 @@ Loader {
     Timer {
         id: closeTimer
 
-        interval: (Config.settings && Config.settings.animationSpeed !== undefined) ? (Config.settings.animationSpeed + 50) : 250
+        interval: (Config.settings.animationSpeed + 50) ?? 250
         repeat: false
         onTriggered: {
             if (!root.isOpen)

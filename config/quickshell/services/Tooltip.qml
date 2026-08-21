@@ -42,7 +42,7 @@ Singleton {
         let scr = win ? win.screen : null;
         let scrW = (scr && scr.width) ? scr.width : 1920;
         let scrH = (scr && scr.height) ? scr.height : 1080;
-        let barPos = (Config.settings && Config.settings.bar && Config.settings.bar.position) ? Config.settings.bar.position.toLowerCase() : "bottom";
+        let barPos = Config.barPosition;
         if (win) {
             if (barPos === "bottom")
                 winY = scrH - win.height;
