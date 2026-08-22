@@ -52,9 +52,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Enable Notifications"
-                    option: Config.settings.notifications.enabled
+                    option: Config.get("notifications.enabled", true)
                     toRun: () => {
-                        let val = !Config.settings.notifications.enabled;
+                        let val = !Config.get("notifications.enabled", true);
                         Config.updateKey("notifications.enabled", val);
                         return val;
                     }
@@ -64,10 +64,10 @@ Item {
 
                 GenericToggleOption {
                     message: "Do Not Disturb"
-                    option: Config.settings.notifications.doNotDisturb
+                    option: Config.get("notifications.doNotDisturb", false)
                     toRun: () => {
                         Notifications.toggleDND();
-                        return Config.settings.notifications.doNotDisturb;
+                        return Config.get("notifications.doNotDisturb", false);
                     }
                     withIcon: true
                     iconCode: "do_not_disturb_on"
@@ -77,7 +77,7 @@ Item {
                     message: "Notification Position"
                     options: ["top-right", "top-left", "top-center", "bottom-right", "bottom-left", "bottom-center"]
                     currentIndex: {
-                        let pos = Config.settings.notifications.position || "top-right";
+                        let pos = Config.get("notifications.position", "top-right");
                         let idx = ["top-right", "top-left", "top-center", "bottom-right", "bottom-left", "bottom-center"].indexOf(pos);
                         return idx !== -1 ? idx : 0;
                     }
@@ -92,17 +92,17 @@ Item {
 
                 GenericNumberOption {
                     message: "Max Visible Popups"
-                    value: Config.settings.notifications.maxVisiblePopups || 5
+                    value: Config.get("notifications.maxVisiblePopups", 5)
                     maxValue: 8
                     minValue: 1
                     amountIncrease: () => {
-                        let cur = Config.settings.notifications.maxVisiblePopups || 5;
+                        let cur = Config.get("notifications.maxVisiblePopups", 5);
                         if (cur < 8)
                             Config.updateKey("notifications.maxVisiblePopups", cur + 1);
 
                     }
                     amountDecrease: () => {
-                        let cur = Config.settings.notifications.maxVisiblePopups || 5;
+                        let cur = Config.get("notifications.maxVisiblePopups", 5);
                         if (cur > 1)
                             Config.updateKey("notifications.maxVisiblePopups", cur - 1);
 
@@ -114,17 +114,17 @@ Item {
 
                 GenericNumberOption {
                     message: "Popup Timeout (seconds)"
-                    value: Math.round((Config.settings.notifications.timeout || 6000) / 1000)
+                    value: Math.round(Config.get("notifications.timeout", 6000) / 1000)
                     maxValue: 30
                     minValue: 3
                     amountIncrease: () => {
-                        let cur = Config.settings.notifications.timeout || 6000;
+                        let cur = Config.get("notifications.timeout", 6000);
                         if (cur < 30000)
                             Config.updateKey("notifications.timeout", cur + 1000);
 
                     }
                     amountDecrease: () => {
-                        let cur = Config.settings.notifications.timeout || 6000;
+                        let cur = Config.get("notifications.timeout", 6000);
                         if (cur > 3000)
                             Config.updateKey("notifications.timeout", cur - 1000);
 
@@ -136,9 +136,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Compact Notification Cards"
-                    option: Config.settings.notifications.compactMode
+                    option: Config.get("notifications.compactMode", false)
                     toRun: () => {
-                        let val = !Config.settings.notifications.compactMode;
+                        let val = !Config.get("notifications.compactMode", false);
                         Config.updateKey("notifications.compactMode", val);
                         return val;
                     }
@@ -148,9 +148,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Show Timeout Progress Bar"
-                    option: Config.settings.notifications.showTimeoutBar
+                    option: Config.get("notifications.showTimeoutBar", true)
                     toRun: () => {
-                        let val = !Config.settings.notifications.showTimeoutBar;
+                        let val = !Config.get("notifications.showTimeoutBar", true);
                         Config.updateKey("notifications.showTimeoutBar", val);
                         return val;
                     }
@@ -160,9 +160,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Privacy Mode (Hide Content)"
-                    option: Config.settings.notifications.privacyMode
+                    option: Config.get("notifications.privacyMode", false)
                     toRun: () => {
-                        let val = !Config.settings.notifications.privacyMode;
+                        let val = !Config.get("notifications.privacyMode", false);
                         Config.updateKey("notifications.privacyMode", val);
                         return val;
                     }
@@ -172,9 +172,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Play Notification Sound"
-                    option: Config.settings.notifications.soundEnabled
+                    option: Config.get("notifications.soundEnabled", true)
                     toRun: () => {
-                        let val = !Config.settings.notifications.soundEnabled;
+                        let val = !Config.get("notifications.soundEnabled", true);
                         Config.updateKey("notifications.soundEnabled", val);
                         return val;
                     }
@@ -201,7 +201,7 @@ Item {
                         variant: "focus"
                         Layout.preferredWidth: 220
                         Layout.preferredHeight: 40
-                        radius: Config.settings.borderRadius - 8
+                        radius: Config.get("borderRadius", 20) - 8
                         color: hovered ? Colours.palette.primary : Qt.alpha(Colours.palette.primary, 0.85)
 
                         RowLayout {

@@ -52,9 +52,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Blur Desktop Background"
-                    option: Config.settings.lockscreen.blurBackground
+                    option: Config.get("lockscreen.blurBackground", true)
                     toRun: () => {
-                        let val = !Config.settings.lockscreen.blurBackground;
+                        let val = !Config.get("lockscreen.blurBackground", true);
                         Config.updateKey("lockscreen.blurBackground", val);
                         return val;
                     }
@@ -64,9 +64,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Show Clock Header"
-                    option: Config.settings.lockscreen.showClock
+                    option: Config.get("lockscreen.showClock", true)
                     toRun: () => {
-                        let val = !Config.settings.lockscreen.showClock;
+                        let val = !Config.get("lockscreen.showClock", true);
                         Config.updateKey("lockscreen.showClock", val);
                         return val;
                     }
@@ -76,9 +76,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Show Date Subtitle"
-                    option: Config.settings.lockscreen.showDate
+                    option: Config.get("lockscreen.showDate", true)
                     toRun: () => {
-                        let val = !Config.settings.lockscreen.showDate;
+                        let val = !Config.get("lockscreen.showDate", true);
                         Config.updateKey("lockscreen.showDate", val);
                         return val;
                     }
@@ -88,9 +88,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Show Media Player Pill"
-                    option: Config.settings.lockscreen.showMedia
+                    option: Config.get("lockscreen.showMedia", true)
                     toRun: () => {
-                        let val = !Config.settings.lockscreen.showMedia;
+                        let val = !Config.get("lockscreen.showMedia", true);
                         Config.updateKey("lockscreen.showMedia", val);
                         return val;
                     }
@@ -100,9 +100,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Show System Status Pill"
-                    option: Config.settings.lockscreen.showSystemPill
+                    option: Config.get("lockscreen.showSystemPill", true)
                     toRun: () => {
-                        let val = !Config.settings.lockscreen.showSystemPill;
+                        let val = !Config.get("lockscreen.showSystemPill", true);
                         Config.updateKey("lockscreen.showSystemPill", val);
                         return val;
                     }
@@ -112,9 +112,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Show Power Button"
-                    option: Config.settings.lockscreen.showPowerBtn
+                    option: Config.get("lockscreen.showPowerBtn", true)
                     toRun: () => {
-                        let val = !Config.settings.lockscreen.showPowerBtn;
+                        let val = !Config.get("lockscreen.showPowerBtn", true);
                         Config.updateKey("lockscreen.showPowerBtn", val);
                         return val;
                     }
@@ -141,7 +141,7 @@ Item {
                         variant: "focus"
                         Layout.preferredWidth: 200
                         Layout.preferredHeight: 40
-                        radius: Config.settings.borderRadius - 8
+                        radius: Config.get("borderRadius", 20) - 8
                         color: hovered ? Colours.palette.primary : Qt.alpha(Colours.palette.primary, 0.85)
 
                         RowLayout {

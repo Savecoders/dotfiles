@@ -53,7 +53,7 @@ Item {
                 }
 
                 Text {
-                    text: "Version " + (Config.settings.shell.version || "1.0.0")
+                    text: "Version " + Config.get("shell.version", "1.0.0")
                     font.family: Config.settings.font
                     font.pixelSize: Styling.fontSize.bodyLarge
                     color: Qt.alpha(Colours.palette.on_surface, 0.7)

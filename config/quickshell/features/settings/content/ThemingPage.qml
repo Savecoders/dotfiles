@@ -446,17 +446,17 @@ Item {
 
                 GenericNumberOption {
                     message: "Border radius"
-                    value: Config.settings.borderRadius
+                    value: Config.get("borderRadius", 20)
                     maxValue: 32
                     minValue: 2
                     amountIncrease: () => {
-                        let cur = Config.settings.borderRadius ?? 8;
+                        let cur = Config.get("borderRadius", 20);
                         if (cur < 30)
                             Config.updateKey("borderRadius", cur + 1);
 
                     }
                     amountDecrease: () => {
-                        let cur = Config.settings.borderRadius ?? 8;
+                        let cur = Config.get("borderRadius", 20);
                         if (cur > 2)
                             Config.updateKey("borderRadius", cur - 1);
 
@@ -467,17 +467,17 @@ Item {
 
                 GenericNumberOption {
                     message: "Animation duration (ms)"
-                    value: Config.settings.animationSpeed
+                    value: Config.get("animationSpeed", 200)
                     maxValue: 1000
                     minValue: 50
                     amountIncrease: () => {
-                        let cur = Config.settings.animationSpeed ?? 200;
+                        let cur = Config.get("animationSpeed", 200);
                         if (cur < 1000)
                             Config.updateKey("animationSpeed", cur + 25);
 
                     }
                     amountDecrease: () => {
-                        let cur = Config.settings.animationSpeed ?? 200;
+                        let cur = Config.get("animationSpeed", 200);
                         if (cur > 50)
                             Config.updateKey("animationSpeed", cur - 25);
 
@@ -503,9 +503,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Enable color schemes"
-                    option: Config.settings.colours.enableScheme !== false
+                    option: Config.get("colours.enableScheme", true)
                     toRun: () => {
-                        let val = !Config.settings.colours.enableScheme;
+                        let val = !Config.get("colours.enableScheme", true);
                         Config.updateKey("colours.enableScheme", val);
                         Wallpaper.changeColourProp();
                         return val;
@@ -515,11 +515,11 @@ Item {
                 }
 
                 GenericSelectOption {
-                    visible: Config.settings.colours.enableScheme !== false
+                    visible: Config.get("colours.enableScheme", true)
                     message: "Matugen color scheme"
                     options: ["scheme-tonal-spot", "scheme-expressive", "scheme-vibrant", "scheme-fruit-salad", "scheme-rainbow", "scheme-monochrome", "scheme-fidelity", "scheme-content"]
                     currentIndex: {
-                        let idx = options.indexOf(Config.settings.colours.genType);
+                        let idx = options.indexOf(Config.get("colours.genType", "scheme-expressive"));
                         return idx >= 0 ? idx : 0;
                     }
                     toRun: (index) => {
@@ -531,11 +531,34 @@ Item {
                     iconCode: "palette"
                 }
 
+                GenericNumberOption {
+                    message: "Matugen source color index"
+                    value: Config.get("colours.sourceColorIndex", 0)
+                    maxValue: 4
+                    minValue: 0
+                    amountIncrease: () => {
+                        let cur = Config.get("colours.sourceColorIndex", 0);
+                        if (cur < 4) {
+                            Config.updateKey("colours.sourceColorIndex", cur + 1);
+                            Wallpaper.changeColourProp();
+                        }
+                    }
+                    amountDecrease: () => {
+                        let cur = Config.get("colours.sourceColorIndex", 0);
+                        if (cur > 0) {
+                            Config.updateKey("colours.sourceColorIndex", cur - 1);
+                            Wallpaper.changeColourProp();
+                        }
+                    }
+                    withIcon: true
+                    iconCode: "colorize"
+                }
+
                 GenericToggleOption {
                     message: "Use dark mode"
-                    option: Config.settings.colours.mode === "dark"
+                    option: Config.get("colours.mode", "dark") === "dark"
                     toRun: () => {
-                        let nextMode = (Config.settings.colours.mode === "dark") ? "light" : "dark";
+                        let nextMode = (Config.get("colours.mode", "dark") === "dark") ? "light" : "dark";
                         Config.updateKey("colours.mode", nextMode);
                         Wallpaper.changeColourProp();
                         return nextMode === "dark";
@@ -546,9 +569,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Use custom colours (overrides generated colours for widgets)"
-                    option: Config.settings.colours.useCustom
+                    option: Config.get("colours.useCustom", false)
                     toRun: () => {
-                        let val = !Config.settings.colours.useCustom;
+                        let val = !Config.get("colours.useCustom", false);
                         Config.updateKey("colours.useCustom", val);
                         return val;
                     }

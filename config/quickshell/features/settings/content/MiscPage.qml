@@ -67,9 +67,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Nightmode on Startup"
-                    option: Config.settings.nightmodeOnStartup
+                    option: Config.get("nightmodeOnStartup", false)
                     toRun: () => {
-                        let newValue = !Config.settings.nightmodeOnStartup;
+                        let newValue = !Config.get("nightmodeOnStartup", false);
                         Config.updateKey("nightmodeOnStartup", newValue);
                         return newValue;
                     }
@@ -79,18 +79,18 @@ Item {
 
                 GenericNumberOption {
                     message: "Nightmode colour temperature"
-                    value: parseInt(Config.settings.nightmodeColourTemp) || 5500
+                    value: parseInt(Config.get("nightmodeColourTemp", "5500")) || 5500
                     maxValue: 10000
                     minValue: 1000
                     amountIncrease: () => {
-                        let current = parseInt(Config.settings.nightmodeColourTemp) || 5500;
+                        let current = parseInt(Config.get("nightmodeColourTemp", "5500")) || 5500;
                         if (current < 10000) {
                             let nextVal = String(current + 500);
                             Config.updateKey("nightmodeColourTemp", nextVal);
                         }
                     }
                     amountDecrease: () => {
-                        let current = parseInt(Config.settings.nightmodeColourTemp) || 5500;
+                        let current = parseInt(Config.get("nightmodeColourTemp", "5500")) || 5500;
                         if (current > 1000) {
                             let nextVal = String(current - 500);
                             Config.updateKey("nightmodeColourTemp", nextVal);
@@ -103,17 +103,17 @@ Item {
 
                 GenericNumberOption {
                     message: "Eye protection notification interval (minutes)"
-                    value: Config.settings.minutesBetweenHealthNotif !== undefined ? Config.settings.minutesBetweenHealthNotif : 30
+                    value: Config.get("minutesBetweenHealthNotif", 30)
                     maxValue: 180
                     minValue: 15
                     amountIncrease: () => {
-                        let cur = Config.settings.minutesBetweenHealthNotif !== undefined ? Config.settings.minutesBetweenHealthNotif : 30;
+                        let cur = Config.get("minutesBetweenHealthNotif", 30);
                         if (cur < 180)
                             Config.updateKey("minutesBetweenHealthNotif", cur + 5);
 
                     }
                     amountDecrease: () => {
-                        let cur = Config.settings.minutesBetweenHealthNotif !== undefined ? Config.settings.minutesBetweenHealthNotif : 30;
+                        let cur = Config.get("minutesBetweenHealthNotif", 30);
                         if (cur > 15)
                             Config.updateKey("minutesBetweenHealthNotif", cur - 5);
 
@@ -125,7 +125,7 @@ Item {
 
                 GenericTextOption {
                     message: "Weather Location (City)"
-                    textValue: Config.settings.weatherLocation
+                    textValue: Config.get("weatherLocation", "Guayaquil")
                     toRun: (text) => {
                         Config.updateKey("weatherLocation", text);
                         return text;
@@ -136,7 +136,7 @@ Item {
 
                 GenericTextOption {
                     message: "GitHub Username"
-                    textValue: Config.settings.misc.githubUsername || ""
+                    textValue: Config.get("misc.githubUsername", "")
                     toRun: (text) => {
                         Config.updateKey("misc.githubUsername", text);
                         return text;
@@ -165,7 +165,7 @@ Item {
                     message: "Target Monitor / Screen"
                     options: root.availableScreens
                     currentIndex: {
-                        let cur = Config.settings.recorder.screen || "eDP-1";
+                        let cur = Config.get("recorder.screen", "eDP-1");
                         let idx = root.availableScreens.indexOf(cur);
                         return idx >= 0 ? idx : 0;
                     }
@@ -211,7 +211,7 @@ Item {
 
                             Layout.preferredWidth: 160
                             Layout.preferredHeight: 32
-                            text: Config.settings.recorder.output_loc || "~/Videos"
+                            text: Config.get("recorder.output_loc", "~/Videos")
                             placeholderText: "~/Videos"
                             color: Colours.palette.on_surface
                             font.family: Config.settings.font
@@ -223,7 +223,7 @@ Item {
                             background: StyledRect {
                                 variant: "internalbg"
                                 color: Colours.palette.surface_container
-                                radius: Math.max(4, Config.settings.borderRadius - 12)
+                                radius: Math.max(4, Config.get("borderRadius", 20) - 12)
                                 border.color: dirInput.activeFocus ? Colours.palette.primary : Qt.alpha(Colours.palette.outline, 0.5)
                                 border.width: 1
                             }
@@ -238,7 +238,7 @@ Item {
                             variant: "internalbg"
                             Layout.preferredWidth: 34
                             Layout.preferredHeight: 32
-                            radius: Math.max(4, Config.settings.borderRadius - 12)
+                            radius: Math.max(4, Config.get("borderRadius", 20) - 12)
                             color: hovered ? Colours.palette.surface_container_highest : Colours.palette.surface_container
                             border.color: Qt.alpha(Colours.palette.outline, 0.5)
                             border.width: 1
@@ -280,7 +280,7 @@ Item {
                             variant: "internalbg"
                             Layout.preferredWidth: 34
                             Layout.preferredHeight: 32
-                            radius: Math.max(4, Config.settings.borderRadius - 12)
+                            radius: Math.max(4, Config.get("borderRadius", 20) - 12)
                             color: hovered ? Colours.palette.surface_container_highest : Colours.palette.surface_container
                             border.color: Qt.alpha(Colours.palette.outline, 0.5)
                             border.width: 1
@@ -300,7 +300,7 @@ Item {
                                 onEntered: openThunarBtn.hovered = true
                                 onExited: openThunarBtn.hovered = false
                                 onClicked: {
-                                    let loc = Config.settings.recorder.output_loc || "~/Videos";
+                                    let loc = Config.get("recorder.output_loc", "~/Videos");
                                     let path = loc.startsWith("/") ? loc : `${Quickshell.env("HOME")}/${loc.replace(/^~\//, "")}`;
                                     Quickshell.execDetached(["thunar", path]);
                                 }
@@ -323,7 +323,7 @@ Item {
                     message: "Video Encoder"
                     options: root.availableEncoders
                     currentIndex: {
-                        let cur = (Config.settings && Config.settings.recorder && Config.settings.recorder.encoder) ? Config.settings.recorder.encoder : "libx264";
+                        let cur = Config.get("recorder.encoder", "libx264");
                         let idx = root.availableEncoders.indexOf(cur);
                         return idx >= 0 ? idx : 0;
                     }

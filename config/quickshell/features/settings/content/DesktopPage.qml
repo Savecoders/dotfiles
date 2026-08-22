@@ -13,7 +13,7 @@ import qs.services
 Item {
     id: root
 
-    property string currentTarget: (Config.settings && Config.settings.desktop && Config.settings.desktop.targetScreen) ? Config.settings.desktop.targetScreen : "all"
+    property string currentTarget: Config.get("desktop.targetScreen", "all")
     property string selectedMonName: currentTarget
     property var _pendingApply: null
     // Static option lists shared across all monitors
@@ -860,9 +860,9 @@ Item {
 
                     GenericToggleOption {
                         message: "Show a rounded border"
-                        option: Config.settings.desktop.desktopRoundingShown
+                        option: Config.get("desktop.desktopRoundingShown", true)
                         toRun: () => {
-                            let val = !Config.settings.desktop.desktopRoundingShown;
+                            let val = !Config.get("desktop.desktopRoundingShown", true);
                             Config.updateKey("desktop.desktopRoundingShown", val);
                             return val;
                         }
@@ -872,9 +872,9 @@ Item {
 
                     GenericToggleOption {
                         message: "Dim the wallpaper"
-                        option: Config.settings.desktop.dimDesktopWallpaper
+                        option: Config.get("desktop.dimDesktopWallpaper", false)
                         toRun: () => {
-                            let val = !Config.settings.desktop.dimDesktopWallpaper;
+                            let val = !Config.get("desktop.dimDesktopWallpaper", false);
                             Config.updateKey("desktop.dimDesktopWallpaper", val);
                             return val;
                         }

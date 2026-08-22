@@ -55,9 +55,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Floating bar"
-                    option: Config.settings.bar.floating ?? true
+                    option: Config.get("bar.floating", true)
                     toRun: () => {
-                        let cur = Config.settings.bar.floating ?? true;
+                        let cur = Config.get("bar.floating", true);
                         let newValue = !cur;
                         Config.updateKey("bar.floating", newValue);
                         return newValue;
@@ -68,9 +68,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Show smooth edges around bar"
-                    option: Config.settings.bar.smoothEdgesShown
+                    option: Config.get("bar.smoothEdgesShown", false)
                     toRun: () => {
-                        let newValue = !Config.settings.bar.smoothEdgesShown;
+                        let newValue = !Config.get("bar.smoothEdgesShown", false);
                         Config.updateKey("bar.smoothEdgesShown", newValue);
                         return newValue;
                     }
@@ -80,9 +80,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Expand bar to full length"
-                    option: Config.settings.bar.expand
+                    option: Config.get("bar.expand", false)
                     toRun: () => {
-                        let newValue = !Config.settings.bar.expand;
+                        let newValue = !Config.get("bar.expand", false);
                         Config.updateKey("bar.expand", newValue);
                         return newValue;
                     }
@@ -92,9 +92,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Center workspaces in bar"
-                    option: Config.settings.bar.workspacesCenterAligned
+                    option: Config.get("bar.workspacesCenterAligned", true)
                     toRun: () => {
-                        let newValue = !Config.settings.bar.workspacesCenterAligned;
+                        let newValue = !Config.get("bar.workspacesCenterAligned", true);
                         Config.updateKey("bar.workspacesCenterAligned", newValue);
                         return newValue;
                     }
@@ -119,18 +119,18 @@ Item {
 
                 GenericNumberOption {
                     message: "Bar opacity (transparency)"
-                    value: (Config.settings.bar.opacity !== undefined ? Config.settings.bar.opacity : 0.95)
+                    value: Config.get("bar.opacity", 0.95)
                     maxValue: 1
                     minValue: 0.1
                     amountIncrease: () => {
-                        let cur = Config.settings.bar.opacity !== undefined ? Config.settings.bar.opacity : 0.95;
+                        let cur = Config.get("bar.opacity", 0.95);
                         if (cur < 1) {
                             let nextVal = Math.min(1, parseFloat((cur + 0.05).toFixed(2)));
                             Config.updateKey("bar.opacity", nextVal);
                         }
                     }
                     amountDecrease: () => {
-                        let cur = Config.settings.bar.opacity !== undefined ? Config.settings.bar.opacity : 0.95;
+                        let cur = Config.get("bar.opacity", 0.95);
                         if (cur > 0.1) {
                             let nextVal = Math.max(0.1, parseFloat((cur - 0.05).toFixed(2)));
                             Config.updateKey("bar.opacity", nextVal);
@@ -143,17 +143,17 @@ Item {
 
                 GenericNumberOption {
                     message: "Bar edge margin (gap px)"
-                    value: Config.settings.bar.margin !== undefined ? Config.settings.bar.margin : 10
+                    value: Config.get("bar.margin", 10)
                     maxValue: 20
                     minValue: 0
                     amountIncrease: () => {
-                        let cur = Config.settings.bar.margin !== undefined ? Config.settings.bar.margin : 10;
+                        let cur = Config.get("bar.margin", 10);
                         if (cur < 20)
                             Config.updateKey("bar.margin", cur + 1);
 
                     }
                     amountDecrease: () => {
-                        let cur = Config.settings.bar.margin !== undefined ? Config.settings.bar.margin : 10;
+                        let cur = Config.get("bar.margin", 10);
                         if (cur > 0)
                             Config.updateKey("bar.margin", cur - 1);
 
@@ -180,9 +180,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Show profile picture instead of icon"
-                    option: Config.settings.usePfpInsteadOfLogo
+                    option: Config.get("usePfpInsteadOfLogo", false)
                     toRun: () => {
-                        let newValue = !Config.settings.usePfpInsteadOfLogo;
+                        let newValue = !Config.get("usePfpInsteadOfLogo", false);
                         Config.updateKey("usePfpInsteadOfLogo", newValue);
                         return newValue;
                     }
@@ -192,7 +192,7 @@ Item {
 
                 GenericTextOption {
                     message: "Profile Picture (PFP) path"
-                    textValue: Config.settings.pfpLocation
+                    textValue: Config.get("pfpLocation", "~/.face")
                     toRun: (text) => {
                         Config.updateKey("pfpLocation", text);
                         return text;
@@ -223,7 +223,7 @@ Item {
                     Layout.preferredWidth: pageWrapper.width - 20
                     Layout.preferredHeight: widgetReorderColumn.implicitHeight + 40
                     Layout.topMargin: 12
-                    radius: Config.settings.borderRadius
+                    radius: Config.get("borderRadius", 20)
                     color: Colours.palette.surface_container
                     border.width: 1
                     border.color: Colours.palette.outline_variant
@@ -255,7 +255,7 @@ Item {
                         }
 
                         function loadFromConfig() {
-                            const raw = Config.settings.bar.rightWidgets || ["systray", "recording", "notifications", "quickactions"];
+                            const raw = Config.get("bar.rightWidgets", ["systray", "recording", "notifications", "quickactions"]);
                             selectedModel.clear();
                             const seen = {
                             };

@@ -22,9 +22,10 @@
     "borderRadius": 8,
     "colours": {
         "enableScheme": true,
-        "genType": "scheme-fidelity",
+        "genType": "scheme-expressive",
         "mode": "dark",
-        "useCustom": true
+        "sourceColorIndex": 0,
+        "useCustom": false
     },
     "componentControl": {
         "barIsEnabled": true,

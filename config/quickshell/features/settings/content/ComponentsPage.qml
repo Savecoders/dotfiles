@@ -52,9 +52,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Bar"
-                    option: Config.settings.componentControl.barIsEnabled
+                    option: Config.get("componentControl.barIsEnabled", true)
                     toRun: () => {
-                        let val = !Config.settings.componentControl.barIsEnabled;
+                        let val = !Config.get("componentControl.barIsEnabled", true);
                         Config.updateKey("componentControl.barIsEnabled", val);
                         return val;
                     }
@@ -64,9 +64,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Dashboard"
-                    option: Config.settings.componentControl.dashboardIsEnabled
+                    option: Config.get("componentControl.dashboardIsEnabled", true)
                     toRun: () => {
-                        let val = !Config.settings.componentControl.dashboardIsEnabled;
+                        let val = !Config.get("componentControl.dashboardIsEnabled", true);
                         Config.updateKey("componentControl.dashboardIsEnabled", val);
                         return val;
                     }
@@ -76,9 +76,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Notification Server"
-                    option: Config.settings.componentControl.notifsIsEnabled
+                    option: Config.get("componentControl.notifsIsEnabled", true)
                     toRun: () => {
-                        let val = !Config.settings.componentControl.notifsIsEnabled;
+                        let val = !Config.get("componentControl.notifsIsEnabled", true);
                         Config.updateKey("componentControl.notifsIsEnabled", val);
                         return val;
                     }
@@ -88,9 +88,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Desktop"
-                    option: Config.settings.componentControl.desktopIsEnabled
+                    option: Config.get("componentControl.desktopIsEnabled", true)
                     toRun: () => {
-                        let val = !Config.settings.componentControl.desktopIsEnabled;
+                        let val = !Config.get("componentControl.desktopIsEnabled", true);
                         Config.updateKey("componentControl.desktopIsEnabled", val);
                         return val;
                     }
@@ -100,9 +100,9 @@ Item {
 
                 GenericToggleOption {
                     message: "Lockscreen"
-                    option: Config.settings.componentControl.lockscreenIsEnabled
+                    option: Config.get("componentControl.lockscreenIsEnabled", true)
                     toRun: () => {
-                        let val = !Config.settings.componentControl.lockscreenIsEnabled;
+                        let val = !Config.get("componentControl.lockscreenIsEnabled", true);
                         Config.updateKey("componentControl.lockscreenIsEnabled", val);
                         return val;
                     }
