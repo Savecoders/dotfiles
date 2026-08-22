@@ -20,7 +20,7 @@ Item {
     property int trackHeight: 12
     property int handleHeight: 18
     property int handleWidth: 4
-    readonly property real sliderRadius: (Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 8
+    readonly property real sliderRadius: Config.get("borderRadius", 8)
     readonly property real normalizedProgress: Math.max(0, Math.min(1, (slider.value - slider.from) / Math.max(0.0001, slider.to - slider.from)))
     readonly property string percentString: Math.round(slider.normalizedProgress * 100) + "%"
 
@@ -47,13 +47,13 @@ Item {
 
                 Text {
                     text: slider.iconCode
-                    font.family: Config.settings.iconFont ?? "Material Symbols Rounded"
+                    font.family: Config.get("iconFont", "Material Symbols Rounded")
                     font.pixelSize: Styling.fontSize.headline
                     color: slider.isEnabled ? (slider.isHovered ? Colours.palette.primary : Colours.palette.on_surface) : Qt.alpha(Colours.palette.on_surface, 0.4)
 
                     Behavior on color {
                         ColorAnimation {
-                            duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                            duration: Config.get("animationSpeed", 200)
                         }
 
                     }
@@ -62,14 +62,14 @@ Item {
 
                 Text {
                     text: slider.title
-                    font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
+                    font.family: Config.get("font", "SF Pro Display")
                     font.pixelSize: Styling.fontSize.lg
                     font.weight: Font.Medium
                     color: slider.isEnabled ? Colours.palette.on_surface : Qt.alpha(Colours.palette.on_surface, 0.4)
 
                     Behavior on color {
                         ColorAnimation {
-                            duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                            duration: Config.get("animationSpeed", 200)
                         }
 
                     }
@@ -85,14 +85,14 @@ Item {
             Text {
                 visible: slider.showPercent
                 text: slider.percentString
-                font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
+                font.family: Config.get("font", "SF Pro Display")
                 font.pixelSize: Styling.fontSize.md
                 font.weight: Font.Normal
                 color: slider.isEnabled ? (slider.isHovered ? Colours.palette.primary : Colours.palette.on_surface_variant) : Qt.alpha(Colours.palette.on_surface_variant, 0.4)
 
                 Behavior on color {
                     ColorAnimation {
-                        duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                        duration: Config.get("animationSpeed", 200)
                     }
 
                 }
@@ -124,7 +124,7 @@ Item {
 
                 Behavior on color {
                     ColorAnimation {
-                        duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                        duration: Config.get("animationSpeed", 200)
                     }
 
                 }
@@ -152,7 +152,7 @@ Item {
 
                 Behavior on color {
                     ColorAnimation {
-                        duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                        duration: Config.get("animationSpeed", 200)
                     }
 
                 }
@@ -176,14 +176,14 @@ Item {
 
                 Behavior on color {
                     ColorAnimation {
-                        duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                        duration: Config.get("animationSpeed", 200)
                     }
 
                 }
 
                 Behavior on opacity {
                     NumberAnimation {
-                        duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                        duration: Config.get("animationSpeed", 200)
                     }
 
                 }

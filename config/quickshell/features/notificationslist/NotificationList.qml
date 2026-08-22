@@ -19,15 +19,15 @@ Scope {
 
             property var modelData
             readonly property string barPos: Config.barPosition
-            readonly property real barMargin: Config.settings.bar.margin ?? 8
+            readonly property real barMargin: Config.get("bar.margin", 8)
             readonly property real barThickness: 40
             readonly property real barOffset: barThickness + (barMargin * 2) + 12
             readonly property real defaultMargin: 20
-            readonly property string notifPos: Config.settings.notifications.position ?? "top-right"
+            readonly property string notifPos: Config.get("notifications.position", "top-right")
             readonly property bool isTop: notifPos.startsWith("top")
             readonly property bool isLeft: notifPos.endsWith("left")
             readonly property bool isCenter: notifPos.endsWith("center")
-            property int maxPopups: (Config.settings.notifications && Config.settings.notifications.maxVisiblePopups) ? Config.settings.notifications.maxVisiblePopups : 4
+            property int maxPopups: Config.get("notifications.maxVisiblePopups", 4)
             property int notificationCount: Notifications.popupList.length
 
             screen: modelData

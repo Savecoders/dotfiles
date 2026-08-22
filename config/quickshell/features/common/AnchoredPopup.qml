@@ -20,7 +20,7 @@ Loader {
     readonly property real fallbackScreenWidth: 1920
     readonly property real fallbackScreenHeight: 1080
     readonly property real edgeFallbackOffset: 48
-    readonly property real barMargin: (Config.settings && Config.settings.bar && Config.settings.bar.margin !== undefined) ? Config.settings.bar.margin : 8
+    readonly property real barMargin: Config.get("bar.margin", 8)
     readonly property real barClearance: 12 + barMargin
     readonly property string barPos: Config.barPosition
 
@@ -39,7 +39,7 @@ Loader {
     Timer {
         id: deactivateTimer
 
-        interval: (Config.settings && Config.settings.animationSpeed !== undefined ? Config.settings.animationSpeed : 150) + 50
+        interval: Config.get("animationSpeed", 150) + 50
         repeat: false
         onTriggered: {
             if (!root.isOpen)
@@ -146,7 +146,7 @@ Loader {
 
                     Behavior on opacity {
                         NumberAnimation {
-                            duration: Config.settings && Config.settings.animationSpeed !== undefined ? Config.settings.animationSpeed : 150
+                            duration: Config.get("animationSpeed", 150)
                             easing.type: Easing.OutQuad
                         }
 
@@ -154,7 +154,7 @@ Loader {
 
                     Behavior on scale {
                         NumberAnimation {
-                            duration: Config.settings && Config.settings.animationSpeed !== undefined ? Config.settings.animationSpeed : 150
+                            duration: Config.get("animationSpeed", 150)
                             easing.type: Easing.OutQuad
                         }
 

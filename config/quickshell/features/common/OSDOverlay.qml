@@ -21,7 +21,7 @@ StyledRect {
     width: 144
     height: 144
     color: Colours.palette.surface_container
-    radius: Config.settings && Config.settings.borderRadius !== undefined ? Config.settings.borderRadius : 16
+    radius: Config.get("borderRadius", 16)
     border.color: Qt.alpha(Colours.palette.outline, 0.15)
     border.width: 1
     opacity: 0
@@ -47,7 +47,7 @@ StyledRect {
             target: root
             property: "opacity"
             to: 1
-            duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? (Config.settings.animationSpeed / 2) : 100
+            duration: Math.round(Config.get("animationSpeed", 200) / 2)
         }
 
     }
@@ -59,7 +59,7 @@ StyledRect {
             target: root
             property: "opacity"
             to: 0
-            duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+            duration: Config.get("animationSpeed", 200)
         }
 
         PropertyAction {

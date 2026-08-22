@@ -170,14 +170,14 @@ ClippingRectangle {
             singleNotif.startTimeout();
 
     }
-    radius: Config.settings.borderRadius
+    radius: Config.get("borderRadius", 20)
     color: singleNotif.popup ? Colours.palette.surface_container : Qt.alpha(Colours.palette.surface_container_low, 0.7)
     border.color: Qt.alpha(Colours.palette.outline, 0.15)
     border.width: 1
     implicitWidth: ListView.view ? ListView.view.width : 400
     width: ListView.view ? ListView.view.width : 400
     implicitHeight: {
-        let compact = Config.settings.notifications && Config.settings.notifications.compactMode;
+        let compact = Config.get("notifications.compactMode", false);
         if (expanded) {
             if (areActions)
                 return compact ? 130 : 150;
@@ -305,7 +305,7 @@ ClippingRectangle {
                         fillMode: Image.PreserveAspectCrop
                         asynchronous: true
                         cache: true
-                        layer.enabled: (Config.settings && Config.settings.colours && Config.settings.colours.genType === "scheme-monochrome")
+                        layer.enabled: Config.get("colours.genType", "") === "scheme-monochrome"
 
                         layer.effect: MultiEffect {
                             saturation: -1
@@ -320,7 +320,7 @@ ClippingRectangle {
 
                     IconImage {
                         source: singleNotif.modelData ? singleNotif.resolveImageSource(singleNotif.modelData.image, singleNotif.modelData.appIcon) : ""
-                        layer.enabled: (Config.settings && Config.settings.colours && Config.settings.colours.genType === "scheme-monochrome")
+                        layer.enabled: Config.get("colours.genType", "") === "scheme-monochrome"
 
                         layer.effect: MultiEffect {
                             saturation: -1
@@ -345,7 +345,7 @@ ClippingRectangle {
                     }
                     return "notifications";
                 }
-                font.family: (Config.settings && Config.settings.iconFont) ? Config.settings.iconFont : "Material Symbols Rounded"
+                font.family: Config.get("iconFont", "Material Symbols Rounded")
                 font.pixelSize: Styling.fontSize.xl
                 color: Qt.alpha(Colours.palette.on_surface, 0.8)
             }
@@ -408,13 +408,13 @@ ClippingRectangle {
                             anchors.centerIn: parent
                             text: "keyboard_arrow_up"
                             color: Colours.palette.on_surface
-                            font.family: (Config.settings && Config.settings.iconFont) ? Config.settings.iconFont : "Material Symbols Rounded"
+                            font.family: Config.get("iconFont", "Material Symbols Rounded")
                             font.pixelSize: Styling.fontSize.bodyLarge
                             rotation: singleNotif.expanded ? 180 : 0
 
                             Behavior on rotation {
                                 PropertyAnimation {
-                                    duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                                    duration: Config.get("animationSpeed", 200)
                                     easing.type: Easing.InSine
                                 }
 
@@ -445,12 +445,12 @@ ClippingRectangle {
                         if (!modelData || !modelData.body)
                             return "";
 
-                        if (Config.settings.notifications && Config.settings.notifications.privacyMode && !singleNotif.expanded)
+                        if (Config.get("notifications.privacyMode", false) && !singleNotif.expanded)
                             return "Notification content hidden";
 
                         return modelData.body;
                     }
-                    font.family: Config.settings.font ?? "SF Pro Display"
+                    font.family: Config.get("font", "SF Pro Display")
                     font.weight: Font.Light
                     font.pixelSize: Styling.fontSize.md
                     color: Qt.alpha(Colours.palette.on_surface, 0.7)
@@ -480,14 +480,14 @@ ClippingRectangle {
                             border.width: 0
                             Layout.fillWidth: true
                             Layout.preferredHeight: 28
-                            radius: Math.max(4, ((Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius - 4 : 4))
+                            radius: Math.max(4, Config.get("borderRadius", 8) - 4)
                             color: hovered ? Colours.palette.primary : Colours.palette.surface_container_high
 
                             Text {
                                 anchors.centerIn: parent
                                 text: modelData ? modelData.text : ""
                                 color: parent.hovered ? Colours.palette.on_primary : Colours.palette.on_surface
-                                font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
+                                font.family: Config.get("font", "SF Pro Display")
                                 font.pixelSize: Styling.fontSize.sm
                                 font.weight: Font.Medium
                             }
@@ -529,7 +529,7 @@ ClippingRectangle {
         anchors.bottom: parent.bottom
         color: Colours.palette.primary
         opacity: 0.8
-        visible: singleNotif.popup && (Config.settings.notifications ? Config.settings.notifications.showTimeoutBar : true)
+        visible: singleNotif.popup && Config.get("notifications.showTimeoutBar", true)
     }
 
     NumberAnimation {
@@ -544,7 +544,7 @@ ClippingRectangle {
 
     Behavior on implicitHeight {
         PropertyAnimation {
-            duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+            duration: Config.get("animationSpeed", 200)
             easing.type: Easing.InSine
         }
 

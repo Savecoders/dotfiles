@@ -16,29 +16,29 @@ StyledRect {
     id: root
 
     required property LockContext context
-    // Reactive Lockscreen Settings & Border Radius bindings from Config.settings
-    readonly property bool showClock: Config.settings && Config.settings.lockscreen ? (Config.settings.lockscreen.showClock !== false) : true
-    readonly property bool showDate: Config.settings && Config.settings.lockscreen ? (Config.settings.lockscreen.showDate !== false) : true
-    readonly property bool blurBackground: Config.settings && Config.settings.lockscreen ? (Config.settings.lockscreen.blurBackground !== false) : true
-    readonly property bool showMedia: Config.settings && Config.settings.lockscreen ? (Config.settings.lockscreen.showMedia !== false) : true
-    readonly property bool showSystemPill: Config.settings && Config.settings.lockscreen ? (Config.settings.lockscreen.showSystemPill !== false) : true
-    readonly property bool showPowerBtn: Config.settings && Config.settings.lockscreen ? (Config.settings.lockscreen.showPowerBtn !== false) : true
-    readonly property real configBorderRadius: (Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 4
+    // Reactive Lockscreen Settings & Border Radius bindings from Config
+    readonly property bool showClock: Config.get("lockscreen.showClock", true)
+    readonly property bool showDate: Config.get("lockscreen.showDate", true)
+    readonly property bool blurBackground: Config.get("lockscreen.blurBackground", true)
+    readonly property bool showMedia: Config.get("lockscreen.showMedia", true)
+    readonly property bool showSystemPill: Config.get("lockscreen.showSystemPill", true)
+    readonly property bool showPowerBtn: Config.get("lockscreen.showPowerBtn", true)
+    readonly property real configBorderRadius: Config.get("borderRadius", 4)
     readonly property real cardRadius: root.configBorderRadius
     readonly property Theme
     theme: Theme {
-        primary: Colours.palette.primary ? Colours.palette.primary : "#87d6bd"
-        on_primary: Colours.palette.on_primary ? Colours.palette.on_primary : "#00382c"
-        primaryContainer: Colours.palette.primary_container ? Colours.palette.primary_container : "#005141"
-        on_primary_container: Colours.palette.on_primary_container ? Colours.palette.on_primary_container : "#a2f2d8"
-        primaryFixedDim: Colours.palette.primary_fixed_dim ? Colours.palette.primary_fixed_dim : "#90d1de"
-        error: Colours.palette.error ? Colours.palette.error : "#ffb4ab"
-        on_error: Colours.palette.on_error ? Colours.palette.on_error : "#690005"
-        on_surface: Colours.palette.on_surface ? Colours.palette.on_surface : "#dee4e0"
-        on_surface_variant: Colours.palette.on_surface_variant ? Colours.palette.on_surface_variant : "#bfc9c4"
-        surfaceContainerHigh: Colours.palette.surface_container_high ? Colours.palette.surface_container_high : "#252b29"
-        fontFamily: Config.settings.font
-        iconFontFamily: (iconFontLoader.status === FontLoader.Ready && iconFontLoader.name !== "") ? iconFontLoader.name : (Config.settings.iconFont ? Config.settings.iconFont : "Material Symbols Rounded")
+        primary: Colours.palette.primary
+        on_primary: Colours.palette.on_primary
+        primaryContainer: Colours.palette.primary_container
+        on_primary_container: Colours.palette.on_primary_container
+        primaryFixedDim: Colours.palette.primary_fixed_dim
+        error: Colours.palette.error
+        on_error: Colours.palette.on_error
+        on_surface: Colours.palette.on_surface
+        on_surface_variant: Colours.palette.on_surface_variant
+        surfaceContainerHigh: Colours.palette.surface_container_high
+        fontFamily: Config.get("font", "SF Pro Display")
+        iconFontFamily: (iconFontLoader.status === FontLoader.Ready && iconFontLoader.name !== "") ? iconFontLoader.name : Config.get("iconFont", "Material Symbols Rounded")
         cardRadius: root.configBorderRadius
         cardColor: Qt.rgba(0, 0, 0, 0.5)
         cardBorderColor: Qt.rgba(1, 1, 1, 0.15)
@@ -51,9 +51,9 @@ StyledRect {
 
     property bool isUnlocked: false
     property string avatarPath: {
-        let usePfp = Config.settings && Config.settings.usePfpInsteadOfLogo !== undefined ? Config.settings.usePfpInsteadOfLogo : true;
+        let usePfp = Config.get("usePfpInsteadOfLogo", true);
         if (usePfp) {
-            let loc = Config.settings.pfpLocation || "~/.face";
+            let loc = Config.get("pfpLocation", "~/.face");
             let path = loc.startsWith("/") ? loc : `${Quickshell.env("HOME")}/${loc.replace(/^~\//, "")}`;
             return `file://${path}`;
         }
@@ -79,7 +79,7 @@ StyledRect {
         id: background
 
         anchors.fill: parent
-        source: Config.settings.currentWallpaper
+        source: Config.get("currentWallpaper", "")
         sourceSize: Qt.size(width > 0 ? width : Screen.width, height > 0 ? height : Screen.height)
         fillMode: Image.PreserveAspectCrop
         asynchronous: false
@@ -154,7 +154,7 @@ StyledRect {
             anchors.centerIn: parent
             text: "Click or press Enter to unlock"
             color: Qt.rgba(1, 1, 1, 0.85)
-            font.family: Config.settings.font
+            font.family: Config.get("font", "SF Pro Display")
             font.pixelSize: Styling.fontSize.lg
             font.weight: Font.Medium
 
@@ -279,8 +279,8 @@ StyledRect {
                 spacing: Styling.spacing.lg
 
                 Text {
-                    text: Config.settings.notifications && Config.settings.notifications.doNotDisturb ? "notifications_off" : "notifications"
-                    font.family: Config.settings.iconFont
+                    text: Config.get("notifications.doNotDisturb", false) ? "notifications_off" : "notifications"
+                    font.family: Config.get("iconFont", "Material Symbols Rounded")
                     font.pixelSize: Styling.fontSize.headline
                     color: Qt.rgba(1, 1, 1, 0.8)
                 }

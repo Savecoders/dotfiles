@@ -33,7 +33,7 @@ Item {
             variant: "common"
             Layout.fillWidth: true
             Layout.fillHeight: true
-            radius: Math.max(8, ((Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 8) - 2)
+            radius: Math.max(8, Config.get("borderRadius", 8) - 2)
             color: cpuCard.hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container
             border.color: Qt.alpha(Colours.palette.outline, 0.15)
             border.width: 1
@@ -74,7 +74,7 @@ Item {
             variant: "common"
             Layout.fillWidth: true
             Layout.fillHeight: true
-            radius: Math.max(8, ((Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 8) - 2)
+            radius: Math.max(8, Config.get("borderRadius", 8) - 2)
             color: ramCard.hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container
             border.color: Qt.alpha(Colours.palette.outline, 0.15)
             border.width: 1
@@ -115,7 +115,7 @@ Item {
             variant: "common"
             Layout.fillWidth: true
             Layout.fillHeight: true
-            radius: Math.max(8, ((Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 8) - 2)
+            radius: Math.max(8, Config.get("borderRadius", 8) - 2)
             color: tempCard.hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container
             border.color: Qt.alpha(Colours.palette.outline, 0.15)
             border.width: 1

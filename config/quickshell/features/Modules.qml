@@ -21,7 +21,7 @@ Scope {
     }
 
     Loader {
-        active: (Config.settings && Config.settings.componentControl && Config.settings.componentControl.notifsIsEnabled !== undefined) ? Config.settings.componentControl.notifsIsEnabled : true
+        active: Config.get("componentControl.notifsIsEnabled", true)
 
         sourceComponent: NotificationList {
         }
@@ -33,7 +33,7 @@ Scope {
 
         property string lastPos: Config.barPosition
 
-        active: (Config.settings && Config.settings.componentControl && Config.settings.componentControl.barIsEnabled !== undefined) ? Config.settings.componentControl.barIsEnabled : true
+        active: Config.get("componentControl.barIsEnabled", true)
         onLastPosChanged: {
             if (active) {
                 active = false;
@@ -61,7 +61,7 @@ Scope {
     }
 
     Loader {
-        active: (Config.settings && Config.settings.componentControl && Config.settings.componentControl.dashboardIsEnabled !== undefined) ? Config.settings.componentControl.dashboardIsEnabled : true
+        active: Config.get("componentControl.dashboardIsEnabled", true)
 
         sourceComponent: Dashboard {
             isDashboardOpen: IPCLoader.isDashboardOpen
@@ -70,7 +70,7 @@ Scope {
     }
 
     Loader {
-        active: (Config.settings && Config.settings.componentControl && Config.settings.componentControl.lockscreenIsEnabled !== undefined) ? Config.settings.componentControl.lockscreenIsEnabled : true
+        active: Config.get("componentControl.lockscreenIsEnabled", true)
 
         sourceComponent: Lockscreen {
         }
@@ -78,7 +78,7 @@ Scope {
     }
 
     Loader {
-        active: (Config.settings && Config.settings.componentControl && Config.settings.componentControl.desktopIsEnabled !== undefined) ? Config.settings.componentControl.desktopIsEnabled : true
+        active: Config.get("componentControl.desktopIsEnabled", true)
 
         sourceComponent: Desktop {
         }
@@ -90,7 +90,7 @@ Scope {
     }
 
     Loader {
-        active: (Config.settings && Config.settings.componentControl && Config.settings.componentControl.notifsIsEnabled !== undefined) ? Config.settings.componentControl.notifsIsEnabled : true
+        active: Config.get("componentControl.notifsIsEnabled", true)
 
         sourceComponent: NotificationCenterWindow {
             isNotificationsOpen: IPCLoader.isNotificationsOpen

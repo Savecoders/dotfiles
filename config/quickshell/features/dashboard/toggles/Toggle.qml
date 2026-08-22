@@ -53,7 +53,7 @@ StyledRect {
     }
 
     function getRadius() {
-        return Math.max(4, ((Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 8) - 4);
+        return Math.max(4, Config.get("borderRadius", 8) - 4);
     }
 
     variant: "common"
@@ -81,14 +81,14 @@ StyledRect {
             Text {
                 anchors.centerIn: parent
                 text: root.iconCode
-                font.family: (Config.settings && Config.settings.iconFont) ? Config.settings.iconFont : "Material Symbols Rounded"
+                font.family: Config.get("iconFont", "Material Symbols Rounded")
                 font.pixelSize: root.iconSize
                 font.weight: 500
                 color: root.getColour()
 
                 Behavior on color {
                     PropertyAnimation {
-                        duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                        duration: Config.get("animationSpeed", 200)
                         easing.type: Easing.InSine
                     }
 
@@ -110,7 +110,7 @@ StyledRect {
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 text: root.bigText
-                font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
+                font.family: Config.get("font", "SF Pro Display")
                 font.pixelSize: root.bigTextSize
                 font.weight: 500
                 wrapMode: Text.WordWrap
@@ -118,7 +118,7 @@ StyledRect {
 
                 Behavior on color {
                     PropertyAnimation {
-                        duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                        duration: Config.get("animationSpeed", 200)
                         easing.type: Easing.InSine
                     }
 
@@ -148,14 +148,14 @@ StyledRect {
             Text {
                 anchors.centerIn: parent
                 text: root.iconCode
-                font.family: (Config.settings && Config.settings.iconFont) ? Config.settings.iconFont : "Material Symbols Rounded"
+                font.family: Config.get("iconFont", "Material Symbols Rounded")
                 font.pixelSize: root.iconSize
                 font.weight: 500
                 color: root.getColour()
 
                 Behavior on color {
                     PropertyAnimation {
-                        duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                        duration: Config.get("animationSpeed", 200)
                         easing.type: Easing.InSine
                     }
 
@@ -173,7 +173,7 @@ StyledRect {
             Text {
                 Layout.fillWidth: true
                 text: root.bigText
-                font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
+                font.family: Config.get("font", "SF Pro Display")
                 font.pixelSize: root.bigTextSize
                 font.weight: 500
                 elide: Text.ElideRight
@@ -181,7 +181,7 @@ StyledRect {
 
                 Behavior on color {
                     PropertyAnimation {
-                        duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                        duration: Config.get("animationSpeed", 200)
                         easing.type: Easing.InSine
                     }
 
@@ -193,7 +193,7 @@ StyledRect {
                 Layout.fillWidth: true
                 visible: root.smallText !== ""
                 text: root.smallText
-                font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
+                font.family: Config.get("font", "SF Pro Display")
                 font.pixelSize: root.smallTextSize
                 font.weight: 500
                 elide: Text.ElideRight
@@ -201,7 +201,7 @@ StyledRect {
 
                 Behavior on color {
                     PropertyAnimation {
-                        duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+                        duration: Config.get("animationSpeed", 200)
                         easing.type: Easing.InSine
                     }
 
@@ -228,7 +228,7 @@ StyledRect {
 
     Behavior on color {
         PropertyAnimation {
-            duration: (Config.settings && Config.settings.animationSpeed !== undefined) ? Config.settings.animationSpeed : 200
+            duration: Config.get("animationSpeed", 200)
             easing.type: Easing.InSine
         }
 

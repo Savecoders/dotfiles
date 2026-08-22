@@ -151,7 +151,7 @@ Singleton {
     }
 
     function toggleNotifications() {
-        if ((!Config.settings || !Config.settings.componentControl || !Config.settings.componentControl.notifsIsEnabled) && !root.isNotificationsOpen)
+        if (!Config.get("componentControl.notifsIsEnabled", true) && !root.isNotificationsOpen)
             return ;
 
         root.isNotificationsOpen = !root.isNotificationsOpen;
@@ -159,31 +159,31 @@ Singleton {
 
     Connections {
         function onBarIsEnabledChanged() {
-            if (!Config.settings.componentControl.barIsEnabled)
+            if (!Config.get("componentControl.barIsEnabled", true))
                 root.isBarOpen = false;
             else
                 root.isBarOpen = true;
         }
 
         function onDashboardIsEnabledChanged() {
-            if (!Config.settings.componentControl.dashboardIsEnabled)
+            if (!Config.get("componentControl.dashboardIsEnabled", true))
                 root.isDashboardOpen = false;
 
         }
 
         function onLockscreenIsEnabledChanged() {
-            if (!Config.settings.componentControl.lockscreenIsEnabled)
+            if (!Config.get("componentControl.lockscreenIsEnabled", true))
                 root.isLockscreenOpen = false;
 
         }
 
         function onNotifsIsEnabledChanged() {
-            if (!Config.settings.componentControl.notifsIsEnabled)
+            if (!Config.get("componentControl.notifsIsEnabled", true))
                 root.isNotificationsOpen = false;
 
         }
 
-        target: (Config.settings && Config.settings.componentControl) ? Config.settings.componentControl : null
+        target: Config.get("componentControl", null)
     }
 
     IpcHandler {

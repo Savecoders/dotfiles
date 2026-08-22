@@ -13,7 +13,7 @@ ClippingWrapperRectangle {
     id: root
 
     property int cardHeight: 64
-    property real cardRadius: (Config.settings && Config.settings.borderRadius !== undefined) ? Config.settings.borderRadius : 4
+    property real cardRadius: Config.get("borderRadius", 4)
     property color cardColor: Qt.rgba(0, 0, 0, 0.5)
     property color borderColor: Qt.rgba(1, 1, 1, 0.15)
     readonly property bool isCompact: cardHeight <= 70

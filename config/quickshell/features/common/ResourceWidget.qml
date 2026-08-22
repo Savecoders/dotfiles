@@ -55,7 +55,7 @@ StyledRect {
         Text {
             visible: !root.isVertical
             text: root.labelText
-            font.family: (Config.settings && Config.settings.font) ? Config.settings.font : "SF Pro Display"
+            font.family: Config.get("font", "SF Pro Display")
             font.pixelSize: Styling.fontSize.body
             font.weight: 600
             color: Colours.palette.on_surface
