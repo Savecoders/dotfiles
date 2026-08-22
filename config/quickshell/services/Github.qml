@@ -8,7 +8,7 @@ Singleton {
     id: root
 
     property int contributionNumber: 0
-    property string author: (Config.settings && Config.settings.misc) ? (Config.settings.misc.githubUsername || "") : ""
+    property string author: Config.get("misc.githubUsername", "")
     property bool loaded: false
     property var contributions: []
 

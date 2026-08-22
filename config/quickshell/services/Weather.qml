@@ -91,9 +91,10 @@ Singleton {
     }
 
     function reload() {
-        if (Config.settings.weatherLocation) {
-            if (location != Config.settings.weatherLocation)
-                location = Config.settings.weatherLocation;
+        let loc = Config.get("weatherLocation", "Guayaquil");
+        if (loc && loc.length > 0) {
+            if (location != loc)
+                location = loc;
             else
                 fetchWeather();
         } else if (!location) {

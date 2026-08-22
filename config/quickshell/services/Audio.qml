@@ -38,13 +38,13 @@ Singleton {
     }
 
     function incrementVolume(amount) {
-        let raw = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        let raw = amount || Config.get("misc.audioIncrement", 5);
         let step = raw > 1 ? (raw / 100) : raw;
         setVolume(volume + step);
     }
 
     function decrementVolume(amount) {
-        let raw = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        let raw = amount || Config.get("misc.audioIncrement", 5);
         let step = raw > 1 ? (raw / 100) : raw;
         setVolume(volume - step);
     }
@@ -57,13 +57,13 @@ Singleton {
     }
 
     function incrementSourceVolume(amount) {
-        let raw = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        let raw = amount || Config.get("misc.audioIncrement", 5);
         let step = raw > 1 ? (raw / 100) : raw;
         setSourceVolume(sourceVolume + step);
     }
 
     function decrementSourceVolume(amount) {
-        let raw = amount || ((Config.settings && Config.settings.misc && Config.settings.misc.audioIncrement !== undefined) ? Config.settings.misc.audioIncrement : 5);
+        let raw = amount || Config.get("misc.audioIncrement", 5);
         let step = raw > 1 ? (raw / 100) : raw;
         setSourceVolume(sourceVolume - step);
     }

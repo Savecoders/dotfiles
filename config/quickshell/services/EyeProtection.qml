@@ -7,7 +7,7 @@ pragma Singleton
 Singleton {
     id: root
 
-    readonly property int minutes: (Config.settings && Config.settings.minutesBetweenHealthNotif !== undefined) ? Config.settings.minutesBetweenHealthNotif : 30
+    readonly property int minutes: Config.get("minutesBetweenHealthNotif", 30)
     readonly property bool isEnabled: root.minutes > 0
 
     function runNotify() {

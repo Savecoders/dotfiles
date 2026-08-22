@@ -23,18 +23,22 @@ Singleton {
     }
 
     function getMatugenArgs(cleanPath) {
-        let args = ["matugen", "image", cleanPath, "-m", `${Config.settings.colours.mode}`, "--source-color-index", "0"];
-        if (Config.settings.colours.enableScheme !== false) {
+        let mode = Config.get("colours.mode", "dark");
+        let enableScheme = Config.get("colours.enableScheme", true);
+        let genType = Config.get("colours.genType", "scheme-expressive");
+        let sourceIndex = Config.get("colours.sourceColorIndex", 0);
+        let args = ["matugen", "image", cleanPath, "-m", `${mode}`, "--source-color-index", `${sourceIndex}`];
+        if (enableScheme !== false) {
             args.push("-t");
-            args.push(`${Config.settings.colours.genType}`);
+            args.push(`${genType}`);
         }
         return args;
     }
 
     function setNewWallpaper(path) {
         let clean = cleanWallpaperPath(path);
-        let secondPrev = `${Config.settings.previousWallpaper}`;
-        let prev = `${Config.settings.currentWallpaper}`;
+        let secondPrev = `${Config.get("previousWallpaper", "null")}`;
+        let prev = `${Config.get("currentWallpaper", "")}`;
         // Update Config settings
         Config.pauseAutoSave = true;
         Config.updateKey("secondPreviousWallpaper", secondPrev);
@@ -44,14 +48,21 @@ Singleton {
         Config.pauseAutoSave = false;
         // Update ~/.current.wall symlink
         Quickshell.execDetached(["sh", "-c", "ln -sf \"" + clean + "\" ~/.current.wall"]);
-        // Run Matugen to regenerate themes
-        Quickshell.execDetached(getMatugenArgs(clean));
-        Quickshell.execDetached(["notify-send", "Wallpaper & Theme Updated", "New wallpaper and Matugen color palette applied."]);
+        // Run Matugen to regenerate themes unless custom colours are enabled
+        if (!Config.get("colours.useCustom", false))
+            Quickshell.execDetached(getMatugenArgs(clean));
+
+        Quickshell.execDetached(["notify-send", "Wallpaper & Theme Updated", "New wallpaper and color palette applied."]);
     }
 
     function changeColourProp() {
-        let clean = cleanWallpaperPath(Config.settings.currentWallpaper);
-        Quickshell.execDetached(getMatugenArgs(clean));
+        if (Config.get("colours.useCustom", false))
+            return ;
+
+        let clean = cleanWallpaperPath(Config.get("currentWallpaper", ""));
+        if (clean && clean !== "")
+            Quickshell.execDetached(getMatugenArgs(clean));
+
     }
 
     function setRandomWallpaper() {

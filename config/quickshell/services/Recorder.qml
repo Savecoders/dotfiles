@@ -24,7 +24,7 @@ Singleton {
     property string _tempPickedPath: ""
 
     function getNormalizedDir() {
-        let loc = (Config.settings && Config.settings.recorder && Config.settings.recorder.output_loc) ? Config.settings.recorder.output_loc : "~/Videos";
+        let loc = Config.get("recorder.output_loc", "~/Videos");
         let path = loc.startsWith("/") ? loc : `${Quickshell.env("HOME")}/${loc.replace(/^~\//, "")}`;
         return path.replace(/\/+$/, "");
     }
@@ -70,8 +70,8 @@ Singleton {
         let dateStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}-${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
         root.outputFile = `capture_${dateStr}.mp4`;
         root.fullOutputFile = `${dir}/${root.outputFile}`;
-        let screenName = (Config.settings && Config.settings.recorder && Config.settings.recorder.screen) ? Config.settings.recorder.screen : "eDP-1";
-        let encoderName = (Config.settings && Config.settings.recorder && Config.settings.recorder.encoder) ? Config.settings.recorder.encoder : "libx264";
+        let screenName = Config.get("recorder.screen", "eDP-1");
+        let encoderName = Config.get("recorder.encoder", "libx264");
         let cmd = ["wf-recorder", "-o", screenName, "-c", encoderName, "-r", String(root.fps)];
         if (root.recordSystemAudio || root.recordMicrophone)
             cmd.push("-a");
@@ -109,7 +109,7 @@ Singleton {
 
     onRecorderExitCodeChanged: {
         if (recorderExitCode != 0 && recorderExitCode != 130 && recorderExitCode != 2) {
-            let scr = (Config.settings && Config.settings.recorder && Config.settings.recorder.screen) ? Config.settings.recorder.screen : "eDP-1";
+            let scr = Config.get("recorder.screen", "eDP-1");
             Quickshell.execDetached(["notify-send", "Failed to start recording", `Check output folder or screen: ${scr}`]);
             recorderExitCode = 0;
         }

@@ -11,7 +11,7 @@ Singleton {
 
     function turnOn() {
         isNightmodeOn = true;
-        let temp = parseInt(Config.settings.nightmodeColourTemp) || 4500;
+        let temp = parseInt(Config.get("nightmodeColourTemp", "4500")) || 4500;
         Quickshell.execDetached(["bash", "-c", "hyprsunset -t " + temp + " || gammastep -O " + temp + " || hyprshade on blue-light-filter"]);
     }
 

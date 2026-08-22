@@ -22,7 +22,7 @@ Singleton {
     property var popupList: list.filter((notif) => {
         return notif.popup;
     })
-    property bool popupInhibited: Config.settings.notifications ? Config.settings.notifications.doNotDisturb : false
+    property bool popupInhibited: Config.get("notifications.doNotDisturb", false)
     property var latestTimeForApp: ({
     })
     property var groupsByAppName: groupsForList(root.list)
@@ -68,7 +68,7 @@ Singleton {
     }
 
     function toggleDND() {
-        let current = Config.settings.notifications ? Config.settings.notifications.doNotDisturb : false;
+        let current = Config.get("notifications.doNotDisturb", false);
         let nextVal = !current;
         Config.updateKey("notifications.doNotDisturb", nextVal);
         popupInhibited = nextVal;
@@ -194,7 +194,7 @@ Singleton {
     }
 
     function playNotificationSound() {
-        if (Config.settings.notifications && Config.settings.notifications.soundEnabled) {
+        if (Config.get("notifications.soundEnabled", true)) {
             if (!notifSoundProc.running)
                 notifSoundProc.running = true;
 
@@ -312,7 +312,7 @@ Singleton {
                 if (notification.expireTimeout != 0)
                     newNotifObject.timer = notifTimerComponent.createObject(root, {
                     "notificationId": newNotifObject.notificationId,
-                    "interval": notification.expireTimeout < 0 ? (Config.settings.notifications.timeout ?? 7000) : notification.expireTimeout
+                    "interval": notification.expireTimeout < 0 ? Config.get("notifications.timeout", 6000) : notification.expireTimeout
                 });
 
             }
