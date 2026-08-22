@@ -1,3 +1,7 @@
+// Colours.qml — Dynamic color palette singleton
+// RULE: Outside of this file, do NOT write redundant fallback ternaries like `Colours.palette.x ? Colours.palette.x : "#hex"`.
+// `Colours.palette` contains 94+ default colors. Use `Colours.palette.name` directly, or `Colours.get("name", fallback)` for safe lookup.
+
 import QtQuick
 import Quickshell
 import Quickshell.Io
@@ -9,6 +13,14 @@ Singleton {
     property var palette: jsonColoursContent
 
     signal coloursChanged()
+
+    function get(name, fallback) {
+        if (!name || typeof name !== "string")
+            return fallback || "#ff00ff";
+
+        const v = root.palette ? root.palette[name] : undefined;
+        return (v !== undefined && v !== null && v !== "") ? v : (fallback || "#ff00ff");
+    }
 
     FileView {
         id: jsonColoursSink

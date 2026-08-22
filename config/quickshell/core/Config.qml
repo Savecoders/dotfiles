@@ -1,3 +1,7 @@
+// Config.qml — Central configuration singleton
+// RULE: Outside of this file, do NOT write chained manual guards like `Config.settings && Config.settings.x && Config.settings.x.y`.
+// Use `Config.get("x.y", fallback)` for safe path resolution with fallbacks, or `Config.settings` for reactive property bindings.
+
 import QtCore
 import QtQuick
 import Quickshell
@@ -10,17 +14,32 @@ Singleton {
     id: root
 
     property string filePath: Directories.shellConfigPath
-    property alias runtime: jsonAdapterConfig
     property alias settings: jsonAdapterConfig
     property bool initialized: false
     property int readWriteDelay: 50
     property bool blockWrites: false
     property bool pauseAutoSave: false
-    readonly property string barPosition: (root.settings && root.settings.bar && root.settings.bar.position) ? root.settings.bar.position.toLowerCase() : "bottom"
+    readonly property string barPosition: root.get("bar.position", "bottom").toLowerCase()
+
+    function get(path, fallback) {
+        let obj = root.settings;
+        if (!obj || typeof path !== "string")
+            return fallback;
+
+        let keys = path.split(".");
+        for (let i = 0; i < keys.length; ++i) {
+            let k = keys[i];
+            if (obj === null || obj === undefined || typeof obj !== "object" || obj[k] === undefined)
+                return fallback;
+
+            obj = obj[k];
+        }
+        return (obj !== undefined && obj !== null) ? obj : fallback;
+    }
 
     function updateKey(nestedKey, value) {
         let keys = nestedKey.split(".");
-        let obj = root.runtime;
+        let obj = root.settings;
         if (!obj)
             return ;
 

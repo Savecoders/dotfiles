@@ -7,8 +7,9 @@ Rectangle {
 
     property string variant: "common" // "pane", "popup", "common", "internalbg", "focus"
     property bool useDefaultRadius: true
+    property int customRadius: 0
 
-    radius: useDefaultRadius ? Config.settings.borderRadius : root.radius
+    radius: useDefaultRadius ? Config.get("borderRadius", 20) : root.customRadius
     color: {
         switch (variant) {
         case "pane":

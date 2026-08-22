@@ -8,7 +8,7 @@ Singleton {
 
     readonly property var targetScreens: {
         const screens = Quickshell.screens || [];
-        const target = (Config.settings && Config.settings.desktop && Config.settings.desktop.targetScreen) ? Config.settings.desktop.targetScreen : "all";
+        const target = Config.get("desktop.targetScreen", "all");
         if (target === "all" || target === "")
             return screens;
 
