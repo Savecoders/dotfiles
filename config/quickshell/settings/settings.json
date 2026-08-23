@@ -12,6 +12,7 @@
         "position": "bottom",
         "rightWidgets": [
             "systray",
+            "weather",
             "notifications",
             "quickactions",
             "recording"

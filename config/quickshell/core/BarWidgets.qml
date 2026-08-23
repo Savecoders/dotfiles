@@ -59,6 +59,13 @@ QtObject {
         "previewIcon": "thermostat",
         "previewText": "52°C",
         "previewWidth": 70
+    }, {
+        "widgetId": "weather",
+        "displayName": "Weather",
+        "iconCode": "partly_cloudy_day",
+        "previewIcon": "partly_cloudy_day",
+        "previewText": "24°C",
+        "previewWidth": 68
     }]
 
     function definitionForId(widgetId) {

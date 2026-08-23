@@ -94,7 +94,8 @@ Scope {
                     "cpu": cpuComp,
                     "ram": ramComp,
                     "temp": tempComp,
-                    "battery": batteryComp
+                    "battery": batteryComp,
+                    "weather": weatherComp
                 })
 
                 function cornerRadius(corner) {
@@ -513,6 +514,15 @@ Scope {
 
                 }
 
+                Component {
+                    id: weatherComp
+
+                    WeatherWidget {
+                        isVertical: barWindow.isVertical
+                    }
+
+                }
+
                 GridLayout {
                     id: bottomLayout
 
@@ -530,7 +540,7 @@ Scope {
                     Repeater {
                         id: rightWidgetsRepeater
 
-                        model: Config.settings.bar.rightWidgets || ["systray", "recording", "notifications", "quickactions"]
+                        model: Config.settings.bar.rightWidgets || ["systray", "weather", "recording", "notifications", "quickactions"]
 
                         Loader {
                             id: widgetLoader
