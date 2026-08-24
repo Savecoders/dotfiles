@@ -151,7 +151,10 @@ AnchoredPopup {
                                 cursorShape: Qt.PointingHandCursor
                                 onEntered: fpsPill.hovered = true
                                 onExited: fpsPill.hovered = false
-                                onClicked: Recorder.fps = fpsPill.fpsVal
+                                onClicked: {
+                                    Recorder.fps = fpsPill.fpsVal;
+                                    Config.updateKey("recorder.fps", fpsPill.fpsVal);
+                                }
                             }
 
                         }
@@ -169,6 +172,7 @@ AnchoredPopup {
                 isToggled: Recorder.recordSystemAudio
                 onToggled: (st) => {
                     Recorder.recordSystemAudio = st;
+                    Config.updateKey("recorder.recordSystemAudio", st);
                 }
             }
 
@@ -178,6 +182,7 @@ AnchoredPopup {
                 isToggled: Recorder.recordMicrophone
                 onToggled: (st) => {
                     Recorder.recordMicrophone = st;
+                    Config.updateKey("recorder.recordMicrophone", st);
                 }
             }
 

@@ -80,7 +80,10 @@
     "previousWallpaper": "/home/save/Pictures/Wallpapers/gruvbox/00220.jpg",
     "recorder": {
         "encoder": "libx264",
+        "fps": 60,
         "output_loc": "/home/save/Videos/shell",
+        "recordMicrophone": false,
+        "recordSystemAudio": true,
         "screen": "eDP-1"
     },
     "secondPreviousWallpaper": "/home/save/Pictures/Wallpapers/dark/a_tree_in_a_forest.png",
