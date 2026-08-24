@@ -1,9 +1,7 @@
 import QtQuick
-import QtQuick.Effects
-import QtQuick.Layouts
+import QtQuick.Shapes
 import Quickshell
-import Quickshell.Io
-import Quickshell.Services.SystemTray
+import Quickshell.Wayland
 import Quickshell.Widgets
 import qs.core
 import qs.features
@@ -22,11 +20,18 @@ Scope {
             id: desktopWindow
 
             property var modelData
+            readonly property bool roundingShown: Config.get("desktop.desktopRoundingShown", true)
+            readonly property real targetGap: roundingShown ? Styling.desktopGap : 0
+            readonly property real targetRadius: roundingShown ? (Config.settings.borderRadius ?? 16) : 0
+
+            property real animatedGap: targetGap
+            property real animatedRadius: targetRadius
 
             screen: modelData
-            color: Colours.palette.surface
+            color: "transparent"
             visible: true
             aboveWindows: false
+            WlrLayershell.layer: WlrLayer.Bottom
             exclusionMode: ExclusionMode.Ignore
             exclusiveZone: 0
 
@@ -37,176 +42,81 @@ Scope {
                 right: true
             }
 
-            Connections {
-                function onWallpaperToSetChanged() {
-                    realWallpaper.opacity = 0;
-                }
-
-                target: Config.settings
+            mask: Region {
             }
 
-            ClippingWrapperRectangle {
-                id: wallpaperUnderlay
-
-                anchors.top: parent.top
-                anchors.left: parent.left
-                width: Config.settings.desktop.desktopRoundingShown ? parent.width - (Styling.desktopGap * 2) : parent.width
-                height: Config.settings.desktop.desktopRoundingShown ? parent.height - (Styling.desktopGap * 2) : parent.height
-                anchors.topMargin: Config.settings.desktop.desktopRoundingShown ? Styling.desktopGap : 0
-                anchors.leftMargin: Config.settings.desktop.desktopRoundingShown ? Styling.desktopGap : 0
-                radius: Config.settings.desktop.desktopRoundingShown ? Config.settings.borderRadius : 0
-                color: "transparent"
-                opacity: 1
-
-                Image {
-                    id: backgroundUnderlay
-
-                    source: Config.settings.wallpaperToSet
-                    fillMode: Image.PreserveAspectCrop
-                    sourceSize: Qt.size(desktopWindow.width, desktopWindow.height)
-                    asynchronous: true
-                    cache: true
-
-                    MultiEffect {
-                        id: darkenEffectUnderlay
-
-                        source: backgroundUnderlay
-                        anchors.fill: parent
-                        enabled: Config.settings.desktop.dimDesktopWallpaper
-                        opacity: Config.settings.desktop.dimDesktopWallpaper ? 1 : 0
-                        brightness: -0.1
-
-                        Behavior on opacity {
-                            PropertyAnimation {
-                                duration: Config.settings.animationSpeed
-                                easing.type: Easing.InSine
-                            }
-
-                        }
-
-                    }
-
+            Behavior on animatedGap {
+                NumberAnimation {
+                    duration: Config.settings.animationSpeed ?? 200
+                    easing.type: Easing.OutQuad
                 }
-
-                Behavior on radius {
-                    PropertyAnimation {
-                        duration: Config.settings.animationSpeed
-                        easing.type: Easing.InSine
-                    }
-
-                }
-
-                Behavior on height {
-                    PropertyAnimation {
-                        duration: Config.settings.animationSpeed
-                        easing.type: Easing.InSine
-                    }
-
-                }
-
-                Behavior on width {
-                    PropertyAnimation {
-                        duration: Config.settings.animationSpeed
-                        easing.type: Easing.InSine
-                    }
-
-                }
-
             }
 
-            ClippingWrapperRectangle {
-                id: realWallpaper
-
-                anchors.top: parent.top
-                anchors.left: parent.left
-                width: Config.settings.desktop.desktopRoundingShown ? parent.width - (Styling.desktopGap * 2) : parent.width
-                height: Config.settings.desktop.desktopRoundingShown ? parent.height - (Styling.desktopGap * 2) : parent.height
-                anchors.topMargin: Config.settings.desktop.desktopRoundingShown ? Styling.desktopGap : 0
-                anchors.leftMargin: Config.settings.desktop.desktopRoundingShown ? Styling.desktopGap : 0
-                radius: Config.settings.desktop.desktopRoundingShown ? Config.settings.borderRadius : 0
-                color: "transparent"
-                opacity: 1
-                onOpacityChanged: {
-                    if (opacity === 0) {
-                        Config.updateKey("currentWallpaper", Config.settings.wallpaperToSet);
-                        realWallpaper.opacity = 1;
-                    }
+            Behavior on animatedRadius {
+                NumberAnimation {
+                    duration: Config.settings.animationSpeed ?? 200
+                    easing.type: Easing.OutQuad
                 }
+            }
 
-                Image {
-                    id: background
+            // Outer decorative border frame with inner rounded cutout (OddEvenFill)
+            Shape {
+                id: borderShape
 
-                    source: Config.settings.currentWallpaper
-                    fillMode: Image.PreserveAspectCrop
-                    sourceSize: Qt.size(desktopWindow.width, desktopWindow.height)
-                    asynchronous: true
-                    cache: true
+                anchors.fill: parent
+                visible: desktopWindow.animatedGap > 0
+                asynchronous: true
 
-                    MultiEffect {
-                        id: darkenEffect
+                ShapePath {
+                    fillColor: Colours.palette.surface
+                    strokeColor: "transparent"
+                    strokeWidth: 0
+                    fillRule: ShapePath.OddEvenFill
 
-                        source: background
-                        anchors.fill: background
-                        enabled: Config.settings.desktop.dimDesktopWallpaper
-                        opacity: Config.settings.desktop.dimDesktopWallpaper ? 1 : 0
-                        brightness: -0.1
-
-                        Behavior on opacity {
-                            PropertyAnimation {
-                                duration: Config.settings.animationSpeed
-                                easing.type: Easing.InSine
-                            }
-
+                    Behavior on fillColor {
+                        ColorAnimation {
+                            duration: Config.settings.animationSpeed ?? 200
                         }
-
                     }
 
-                }
-
-                Behavior on radius {
-                    PropertyAnimation {
-                        duration: Config.settings.animationSpeed
-                        easing.type: Easing.InSine
+                    // Outer screen boundary
+                    PathRectangle {
+                        x: 0
+                        y: 0
+                        width: desktopWindow.width
+                        height: desktopWindow.height
                     }
 
-                }
-
-                Behavior on height {
-                    PropertyAnimation {
-                        duration: Config.settings.animationSpeed
-                        easing.type: Easing.InSine
+                    // Inner cutout displaying wallpaper underneath
+                    PathRectangle {
+                        x: desktopWindow.animatedGap
+                        y: desktopWindow.animatedGap
+                        width: Math.max(0, desktopWindow.width - (desktopWindow.animatedGap * 2))
+                        height: Math.max(0, desktopWindow.height - (desktopWindow.animatedGap * 2))
+                        radius: desktopWindow.animatedRadius
                     }
-
                 }
+            }
 
-                Behavior on width {
-                    PropertyAnimation {
-                        duration: Config.settings.animationSpeed
-                        easing.type: Easing.InSine
-                    }
+            Rectangle {
+                id: dimmingOverlay
 
-                }
+                x: desktopWindow.animatedGap
+                y: desktopWindow.animatedGap
+                width: Math.max(0, desktopWindow.width - (desktopWindow.animatedGap * 2))
+                height: Math.max(0, desktopWindow.height - (desktopWindow.animatedGap * 2))
+                radius: desktopWindow.animatedRadius
+                color: "black"
+                opacity: Config.get("desktop.dimDesktopWallpaper", false) ? 0.15 : 0
+                visible: opacity > 0
 
                 Behavior on opacity {
-                    PropertyAnimation {
-                        duration: Config.settings.animationSpeed + 400
-                        easing.type: Easing.InSine
+                    NumberAnimation {
+                        duration: Config.settings.animationSpeed ?? 200
+                        easing.type: Easing.OutQuad
                     }
-
                 }
-
             }
-
-            ColorQuantizer {
-                id: colorQuantizer
-
-                source: Qt.resolvedUrl(Config.settings.currentWallpaper)
-                depth: 0
-                rescaleSize: 128
-            }
-
         }
-
     }
-
 }
