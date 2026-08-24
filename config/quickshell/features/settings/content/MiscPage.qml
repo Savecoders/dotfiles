@@ -337,6 +337,55 @@ Item {
                     iconCode: "movie"
                 }
 
+                GenericSelectOption {
+                    message: "Recording Framerate (FPS)"
+                    options: ["30 fps", "60 fps", "120 fps"]
+                    currentIndex: {
+                        let cur = Config.get("recorder.fps", 60);
+                        if (cur === 30)
+                            return 0;
+
+                        if (cur === 120)
+                            return 2;
+
+                        return 1;
+                    }
+                    toRun: (index) => {
+                        let fpsMap = [30, 60, 120];
+                        let val = fpsMap[index] || 60;
+                        Config.updateKey("recorder.fps", val);
+                        Recorder.fps = val;
+                    }
+                    withIcon: true
+                    iconCode: "speed"
+                }
+
+                GenericToggleOption {
+                    message: "Record system audio (desktop & media sound)"
+                    option: Config.get("recorder.recordSystemAudio", true)
+                    toRun: () => {
+                        let val = !Config.get("recorder.recordSystemAudio", true);
+                        Config.updateKey("recorder.recordSystemAudio", val);
+                        Recorder.recordSystemAudio = val;
+                        return val;
+                    }
+                    withIcon: true
+                    iconCode: "volume_up"
+                }
+
+                GenericToggleOption {
+                    message: "Record microphone input"
+                    option: Config.get("recorder.recordMicrophone", false)
+                    toRun: () => {
+                        let val = !Config.get("recorder.recordMicrophone", false);
+                        Config.updateKey("recorder.recordMicrophone", val);
+                        Recorder.recordMicrophone = val;
+                        return val;
+                    }
+                    withIcon: true
+                    iconCode: "mic"
+                }
+
             }
 
         }

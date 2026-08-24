@@ -197,6 +197,9 @@ Singleton {
                 property string screen: "eDP-1"
                 property string encoder: "libx264"
                 property string output_loc: "~/Videos"
+                property int fps: 60
+                property bool recordSystemAudio: true
+                property bool recordMicrophone: false
             }
 
             notifications: JsonObject {

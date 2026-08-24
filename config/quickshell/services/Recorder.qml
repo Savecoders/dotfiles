@@ -10,9 +10,9 @@ Singleton {
 
     property bool isRecordingRunning: false
     property bool isPaused: false
-    property int fps: 60
-    property bool recordSystemAudio: true
-    property bool recordMicrophone: false
+    property int fps: (Config.settings && Config.settings.recorder && Config.settings.recorder.fps !== undefined) ? Config.settings.recorder.fps : 60
+    property bool recordSystemAudio: (Config.settings && Config.settings.recorder && Config.settings.recorder.recordSystemAudio !== undefined) ? Config.settings.recorder.recordSystemAudio : true
+    property bool recordMicrophone: (Config.settings && Config.settings.recorder && Config.settings.recorder.recordMicrophone !== undefined) ? Config.settings.recorder.recordMicrophone : false
     property string outputFile: ""
     property string fullOutputFile: ""
     property int seconds: 0
@@ -72,12 +72,42 @@ Singleton {
         root.fullOutputFile = `${dir}/${root.outputFile}`;
         let screenName = Config.get("recorder.screen", "eDP-1");
         let encoderName = Config.get("recorder.encoder", "libx264");
-        let cmd = ["wf-recorder", "-o", screenName, "-c", encoderName, "-r", String(root.fps)];
-        if (root.recordSystemAudio || root.recordMicrophone)
-            cmd.push("-a");
+        let fpsVal = root.fps || 60;
+        let recSys = root.recordSystemAudio ? "1" : "0";
+        let recMic = root.recordMicrophone ? "1" : "0";
+        let bashScript = `
+screenName='${screenName}'
+encoderName='${encoderName}'
+fps='${fpsVal}'
+outputFile='${root.fullOutputFile}'
+recSys='${recSys}'
+recMic='${recMic}'
 
-        cmd.push("-f", root.fullOutputFile);
-        recorderProc.command = cmd;
+cleanup() {
+    if [ -n "$MOD_SYS" ]; then pactl unload-module "$MOD_SYS" 2>/dev/null || true; fi
+    if [ -n "$MOD_MIC" ]; then pactl unload-module "$MOD_MIC" 2>/dev/null || true; fi
+    if [ -n "$MOD_SINK" ]; then pactl unload-module "$MOD_SINK" 2>/dev/null || true; fi
+}
+trap cleanup EXIT INT TERM
+
+AUDIO_ARG=()
+if [ "$recSys" = "1" ] && [ "$recMic" = "1" ]; then
+    MIX_SINK="RecorderMix_$$"
+    MOD_SINK=$(pactl load-module module-null-sink sink_name="$MIX_SINK" sink_properties=device.description=RecorderMix 2>/dev/null)
+    MOD_MIC=$(pactl load-module module-loopback source="$(pactl get-default-source)" sink="$MIX_SINK" latency_msec=20 2>/dev/null)
+    MOD_SYS=$(pactl load-module module-loopback source="$(pactl get-default-sink).monitor" sink="$MIX_SINK" latency_msec=20 2>/dev/null)
+    AUDIO_ARG=("--audio=\${MIX_SINK}.monitor")
+elif [ "$recSys" = "1" ]; then
+    SYS_SINK="$(pactl get-default-sink).monitor"
+    AUDIO_ARG=("--audio=\${SYS_SINK}")
+elif [ "$recMic" = "1" ]; then
+    MIC_SRC="$(pactl get-default-source)"
+    AUDIO_ARG=("--audio=\${MIC_SRC}")
+fi
+
+wf-recorder -o "$screenName" -c "$encoderName" -r "$fps" "\${AUDIO_ARG[@]}" -f "$outputFile"
+`;
+        recorderProc.command = ["bash", "-c", bashScript];
         recorderProc.running = false;
         recorderProc.running = true;
         root.isRecordingRunning = true;
@@ -107,12 +137,55 @@ Singleton {
         zenityPicker.running = true;
     }
 
+    onFpsChanged: {
+        if (Config.get("recorder.fps", 60) !== fps)
+            Config.updateKey("recorder.fps", fps);
+
+    }
+    onRecordSystemAudioChanged: {
+        if (Config.get("recorder.recordSystemAudio", true) !== recordSystemAudio)
+            Config.updateKey("recorder.recordSystemAudio", recordSystemAudio);
+
+    }
+    onRecordMicrophoneChanged: {
+        if (Config.get("recorder.recordMicrophone", false) !== recordMicrophone)
+            Config.updateKey("recorder.recordMicrophone", recordMicrophone);
+
+    }
     onRecorderExitCodeChanged: {
-        if (recorderExitCode != 0 && recorderExitCode != 130 && recorderExitCode != 2) {
+        if (recorderExitCode !== 0 && recorderExitCode !== 130 && recorderExitCode !== 2) {
             let scr = Config.get("recorder.screen", "eDP-1");
             Quickshell.execDetached(["notify-send", "Failed to start recording", `Check output folder or screen: ${scr}`]);
             recorderExitCode = 0;
         }
+    }
+
+    Connections {
+        function onFpsChanged() {
+            if (Config.settings && Config.settings.recorder && Config.settings.recorder.fps !== undefined) {
+                if (root.fps !== Config.settings.recorder.fps)
+                    root.fps = Config.settings.recorder.fps;
+
+            }
+        }
+
+        function onRecordSystemAudioChanged() {
+            if (Config.settings && Config.settings.recorder && Config.settings.recorder.recordSystemAudio !== undefined) {
+                if (root.recordSystemAudio !== Config.settings.recorder.recordSystemAudio)
+                    root.recordSystemAudio = Config.settings.recorder.recordSystemAudio;
+
+            }
+        }
+
+        function onRecordMicrophoneChanged() {
+            if (Config.settings && Config.settings.recorder && Config.settings.recorder.recordMicrophone !== undefined) {
+                if (root.recordMicrophone !== Config.settings.recorder.recordMicrophone)
+                    root.recordMicrophone = Config.settings.recorder.recordMicrophone;
+
+            }
+        }
+
+        target: (Config.settings && Config.settings.recorder) ? Config.settings.recorder : null
     }
 
     Timer {
@@ -121,11 +194,11 @@ Singleton {
         repeat: true
         onTriggered: {
             seconds += 1;
-            if (seconds == 60) {
+            if (seconds === 60) {
                 minutes += 1;
                 seconds = 0;
             }
-            if (minutes == 60) {
+            if (minutes === 60) {
                 hours += 1;
                 minutes = 0;
             }
