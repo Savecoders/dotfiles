@@ -83,9 +83,15 @@ Item {
                     Layout.preferredHeight: pageWrapper.width / 2
                     spacing: 10
 
-                    ClippingWrapperRectangle {
-                        color: Colours.palette.surface_container
+                    StyledRect {
+                        id: mainPreviewContainer
+
+                        variant: "pane"
+                        useDefaultRadius: false
                         radius: Config.settings.borderRadius
+                        color: Colours.palette.surface_container
+                        border.color: Colours.palette.outline_variant
+                        border.width: 1
                         Layout.preferredWidth: {
                             if (Config.settings.currentWallpaper === Config.settings.previousWallpaper && Config.settings.currentWallpaper === Config.settings.secondPreviousWallpaper)
                                 return pageWrapper.width;
@@ -94,26 +100,35 @@ Item {
                         }
                         Layout.preferredHeight: pageWrapper.width / 2
 
-                        Image {
-                            id: background
+                        ClippingWrapperRectangle {
+                            anchors.fill: parent
+                            anchors.margins: 1
+                            radius: Math.max(0, Config.settings.borderRadius - 1)
+                            color: "transparent"
 
-                            source: Config.settings.currentWallpaper ? Config.settings.currentWallpaper : ""
-                            sourceSize.width: 800
-                            sourceSize.height: 450
-                            fillMode: Image.PreserveAspectCrop
+                            Image {
+                                id: background
 
-                            MultiEffect {
-                                id: darkenEffect
+                                anchors.fill: parent
+                                source: Config.settings.currentWallpaper ? Config.settings.currentWallpaper : ""
+                                sourceSize.width: 800
+                                sourceSize.height: 450
+                                fillMode: Image.PreserveAspectCrop
 
-                                source: background
-                                anchors.fill: background
-                                opacity: Config.settings.desktop.dimDesktopWallpaper ? 1 : 0
-                                brightness: -0.1
+                                MultiEffect {
+                                    id: darkenEffect
 
-                                Behavior on opacity {
-                                    PropertyAnimation {
-                                        duration: Config.settings.animationSpeed
-                                        easing.type: Easing.InSine
+                                    source: background
+                                    anchors.fill: background
+                                    opacity: Config.settings.desktop.dimDesktopWallpaper ? 1 : 0
+                                    brightness: -0.1
+
+                                    Behavior on opacity {
+                                        PropertyAnimation {
+                                            duration: Config.settings.animationSpeed ?? 150
+                                            easing.type: Easing.InSine
+                                        }
+
                                     }
 
                                 }
@@ -124,7 +139,7 @@ Item {
 
                         Behavior on Layout.preferredWidth {
                             PropertyAnimation {
-                                duration: Config.settings.animationSpeed
+                                duration: Config.settings.animationSpeed ?? 150
                                 easing.type: Easing.InSine
                             }
 
@@ -137,9 +152,18 @@ Item {
                         Layout.preferredHeight: pageWrapper.width / 2
                         spacing: 8
 
-                        ClippingWrapperRectangle {
-                            color: Colours.palette.surface_container
+                        StyledRect {
+                            id: prevPreview1
+
+                            property bool hovered: prev1Mouse.containsMouse
+
+                            variant: "pane"
+                            useDefaultRadius: false
+                            customRadius: Config.settings.borderRadius
                             radius: Config.settings.borderRadius
+                            color: hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container
+                            border.color: hovered ? Colours.palette.outline : Colours.palette.outline_variant
+                            border.width: 1
                             Layout.preferredWidth: pageWrapper.width / 4
                             Layout.preferredHeight: {
                                 if (Config.settings.previousWallpaper === Config.settings.secondPreviousWallpaper)
@@ -148,56 +172,103 @@ Item {
                                     return (pageWrapper.width / 4) - 5;
                             }
 
-                            Image {
-                                source: isValidPath(Config.settings.previousWallpaper) ? Config.settings.previousWallpaper : ""
-                                sourceSize.width: 400
-                                sourceSize.height: 225
-                                fillMode: Image.PreserveAspectCrop
-                                visible: source !== ""
+                            ClippingWrapperRectangle {
+                                anchors.fill: parent
+                                anchors.margins: 1
+                                radius: Math.max(0, Config.settings.borderRadius - 1)
+                                color: "transparent"
 
-                                MouseArea {
+                                Image {
                                     anchors.fill: parent
-                                    cursorShape: Qt.PointingHandCursor
-                                    onClicked: Wallpaper.setNewWallpaper(Config.settings.previousWallpaper)
+                                    source: isValidPath(Config.settings.previousWallpaper) ? Config.settings.previousWallpaper : ""
+                                    sourceSize.width: 400
+                                    sourceSize.height: 225
+                                    fillMode: Image.PreserveAspectCrop
+                                    visible: source !== ""
                                 }
 
                             }
 
+                            MouseArea {
+                                id: prev1Mouse
+
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: Wallpaper.setNewWallpaper(Config.settings.previousWallpaper)
+                            }
+
                             Behavior on Layout.preferredHeight {
                                 PropertyAnimation {
-                                    duration: Config.settings.animationSpeed
+                                    duration: Config.settings.animationSpeed ?? 150
                                     easing.type: Easing.InSine
+                                }
+
+                            }
+
+                            Behavior on border.color {
+                                PropertyAnimation {
+                                    duration: Config.settings.animationSpeed ?? 150
+                                    easing.type: Easing.OutQuad
                                 }
 
                             }
 
                         }
 
-                        ClippingWrapperRectangle {
-                            color: Colours.palette.surface_container
+                        StyledRect {
+                            id: prevPreview2
+
+                            property bool hovered: prev2Mouse.containsMouse
+
+                            variant: "pane"
+                            useDefaultRadius: false
+                            customRadius: Config.settings.borderRadius
                             radius: Config.settings.borderRadius
+                            color: hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container
+                            border.color: hovered ? Colours.palette.outline : Colours.palette.outline_variant
+                            border.width: 1
                             Layout.preferredWidth: pageWrapper.width / 4
                             Layout.preferredHeight: (pageWrapper.width / 4) - 5
                             opacity: Config.settings.previousWallpaper === Config.settings.secondPreviousWallpaper ? 0 : 1
 
-                            Image {
-                                source: isValidPath(Config.settings.secondPreviousWallpaper) ? Config.settings.secondPreviousWallpaper : ""
-                                sourceSize.width: 400
-                                sourceSize.height: 225
-                                fillMode: Image.PreserveAspectCrop
-                                visible: source !== ""
+                            ClippingWrapperRectangle {
+                                anchors.fill: parent
+                                anchors.margins: 1
+                                radius: Math.max(0, Config.settings.borderRadius - 1)
+                                color: "transparent"
 
-                                MouseArea {
+                                Image {
                                     anchors.fill: parent
-                                    cursorShape: Qt.PointingHandCursor
-                                    onClicked: Wallpaper.setNewWallpaper(Config.settings.secondPreviousWallpaper)
+                                    source: isValidPath(Config.settings.secondPreviousWallpaper) ? Config.settings.secondPreviousWallpaper : ""
+                                    sourceSize.width: 400
+                                    sourceSize.height: 225
+                                    fillMode: Image.PreserveAspectCrop
+                                    visible: source !== ""
                                 }
 
                             }
 
+                            MouseArea {
+                                id: prev2Mouse
+
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: Wallpaper.setNewWallpaper(Config.settings.secondPreviousWallpaper)
+                            }
+
                             Behavior on opacity {
                                 PropertyAnimation {
-                                    duration: Config.settings.animationSpeed
+                                    duration: Config.settings.animationSpeed ?? 150
+                                }
+
+                            }
+
+                            Behavior on border.color {
+                                PropertyAnimation {
+                                    duration: Config.settings.animationSpeed ?? 150
+                                    easing.type: Easing.OutQuad
                                 }
 
                             }
@@ -260,7 +331,7 @@ Item {
 
                         Behavior on color {
                             PropertyAnimation {
-                                duration: Config.settings.animationSpeed
+                                duration: Config.settings.animationSpeed ?? 150
                                 easing.type: Easing.InSine
                             }
 
@@ -337,7 +408,7 @@ Item {
 
                         Behavior on border.color {
                             ColorAnimation {
-                                duration: Config.settings.animationSpeed
+                                duration: Config.settings.animationSpeed ?? 150
                             }
 
                         }
@@ -377,50 +448,50 @@ Item {
                     delegate: StyledRect {
                         id: galleryCard
 
-                        property bool isSelected: (Config.settings.currentWallpaper === modelData || Config.settings.wallpaperToSet === modelData)
-                        property bool isHovered: false
+                        readonly property bool isSelected: (Config.settings.currentWallpaper === modelData || Config.settings.wallpaperToSet === modelData)
+                        readonly property bool isHovered: cardMouseArea.containsMouse
 
                         variant: "common"
                         width: 140
                         height: 90
-                        radius: Math.max(6, Config.settings.borderRadius - 8)
-                        color: Colours.palette.surface_container
-                        border.color: isSelected ? Colours.palette.primary : (isHovered ? Colours.palette.outline : "transparent")
+                        useDefaultRadius: false
+                        customRadius: Math.max(6, Config.settings.borderRadius - 8)
+                        radius: customRadius
+                        color: isHovered ? Colours.palette.surface_container_high : Colours.palette.surface_container
+                        border.color: isSelected ? Colours.palette.primary : (isHovered ? Colours.palette.outline : Colours.palette.outline_variant)
                         border.width: isSelected ? 2 : 1
 
-                        Image {
+                        ClippingWrapperRectangle {
                             anchors.fill: parent
-                            anchors.margins: Styling.spacing.xs
-                            source: "file://" + modelData
-                            sourceSize.width: 280
-                            sourceSize.height: 180
-                            fillMode: Image.PreserveAspectCrop
-                            asynchronous: true
-                            cache: true
+                            anchors.margins: galleryCard.isSelected ? 2 : 1
+                            radius: Math.max(4, galleryCard.radius - (galleryCard.isSelected ? 2 : 1))
+                            color: "transparent"
 
-                            StyledRect {
-                                variant: "internalbg"
-                                useDefaultRadius: false
-                                border.width: 0
+                            Image {
                                 anchors.fill: parent
-                                radius: galleryCard.radius - 2
-                                color: galleryCard.isHovered ? Qt.alpha(Colours.palette.on_surface, 0.1) : "transparent"
+                                source: modelData.startsWith("file://") ? modelData : ("file://" + modelData)
+                                sourceSize.width: 280
+                                sourceSize.height: 180
+                                fillMode: Image.PreserveAspectCrop
+                                asynchronous: true
+                                cache: true
                             }
 
                         }
 
                         MouseArea {
+                            id: cardMouseArea
+
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
-                            onEntered: galleryCard.isHovered = true
-                            onExited: galleryCard.isHovered = false
                             onClicked: Wallpaper.setNewWallpaper(modelData)
                         }
 
                         Behavior on border.color {
-                            ColorAnimation {
-                                duration: Config.settings.animationSpeed
+                            PropertyAnimation {
+                                duration: Config.settings.animationSpeed ?? 150
+                                easing.type: Easing.OutQuad
                             }
 
                         }
