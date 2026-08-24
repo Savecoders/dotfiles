@@ -126,7 +126,7 @@ Singleton {
     }
 
     function toggleBar() {
-        if ((!Config.settings || !Config.settings.componentControl || !Config.settings.componentControl.barIsEnabled) && !root.isBarOpen)
+        if (!Config.get("componentControl.barIsEnabled", true) && !root.isBarOpen)
             return ;
 
         root.isBarOpen = !root.isBarOpen;
@@ -137,14 +137,14 @@ Singleton {
     }
 
     function toggleDashboard() {
-        if ((!Config.settings || !Config.settings.componentControl || !Config.settings.componentControl.dashboardIsEnabled) && !root.isDashboardOpen)
+        if (!Config.get("componentControl.dashboardIsEnabled", true) && !root.isDashboardOpen)
             return ;
 
         root.isDashboardOpen = !root.isDashboardOpen;
     }
 
     function toggleLockscreen() {
-        if ((!Config.settings || !Config.settings.componentControl || !Config.settings.componentControl.lockscreenIsEnabled) && !root.isLockscreenOpen)
+        if (!Config.get("componentControl.lockscreenIsEnabled", true) && !root.isLockscreenOpen)
             return ;
 
         root.isLockscreenOpen = !root.isLockscreenOpen;

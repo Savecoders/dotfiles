@@ -19,7 +19,7 @@ Loader {
     readonly property bool isBarBottom: barPos === "bottom"
     readonly property bool isBarVertical: isBarLeft || isBarRight
     readonly property bool isBarHorizontal: isBarTop || isBarBottom
-    readonly property real barMargin: Config.settings.bar.margin ?? 8
+    readonly property real barMargin: Config.get("bar.margin", 8)
     readonly property real barThickness: 40
     readonly property real barClearance: barThickness + (barMargin * 2) + 8
     readonly property real sideMargin: barMargin + 8
@@ -49,7 +49,7 @@ Loader {
     Timer {
         id: closeTimer
 
-        interval: (Config.settings.animationSpeed + 50) ?? 250
+        interval: Config.get("animationSpeed", 200) + 50
         repeat: false
         onTriggered: {
             if (!root.isOpen)

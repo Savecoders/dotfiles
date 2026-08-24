@@ -10,9 +10,9 @@ Singleton {
 
     property bool isRecordingRunning: false
     property bool isPaused: false
-    property int fps: (Config.settings && Config.settings.recorder && Config.settings.recorder.fps !== undefined) ? Config.settings.recorder.fps : 60
-    property bool recordSystemAudio: (Config.settings && Config.settings.recorder && Config.settings.recorder.recordSystemAudio !== undefined) ? Config.settings.recorder.recordSystemAudio : true
-    property bool recordMicrophone: (Config.settings && Config.settings.recorder && Config.settings.recorder.recordMicrophone !== undefined) ? Config.settings.recorder.recordMicrophone : false
+    property int fps: Config.get("recorder.fps", 60)
+    property bool recordSystemAudio: Config.get("recorder.recordSystemAudio", true)
+    property bool recordMicrophone: Config.get("recorder.recordMicrophone", false)
     property string outputFile: ""
     property string fullOutputFile: ""
     property int seconds: 0
@@ -162,30 +162,27 @@ wf-recorder -o "$screenName" -c "$encoderName" -r "$fps" "\${AUDIO_ARG[@]}" -f "
 
     Connections {
         function onFpsChanged() {
-            if (Config.settings && Config.settings.recorder && Config.settings.recorder.fps !== undefined) {
-                if (root.fps !== Config.settings.recorder.fps)
-                    root.fps = Config.settings.recorder.fps;
+            const val = Config.get("recorder.fps", root.fps);
+            if (root.fps !== val)
+                root.fps = val;
 
-            }
         }
 
         function onRecordSystemAudioChanged() {
-            if (Config.settings && Config.settings.recorder && Config.settings.recorder.recordSystemAudio !== undefined) {
-                if (root.recordSystemAudio !== Config.settings.recorder.recordSystemAudio)
-                    root.recordSystemAudio = Config.settings.recorder.recordSystemAudio;
+            const val = Config.get("recorder.recordSystemAudio", root.recordSystemAudio);
+            if (root.recordSystemAudio !== val)
+                root.recordSystemAudio = val;
 
-            }
         }
 
         function onRecordMicrophoneChanged() {
-            if (Config.settings && Config.settings.recorder && Config.settings.recorder.recordMicrophone !== undefined) {
-                if (root.recordMicrophone !== Config.settings.recorder.recordMicrophone)
-                    root.recordMicrophone = Config.settings.recorder.recordMicrophone;
+            const val = Config.get("recorder.recordMicrophone", root.recordMicrophone);
+            if (root.recordMicrophone !== val)
+                root.recordMicrophone = val;
 
-            }
         }
 
-        target: (Config.settings && Config.settings.recorder) ? Config.settings.recorder : null
+        target: Config.settings.recorder
     }
 
     Timer {

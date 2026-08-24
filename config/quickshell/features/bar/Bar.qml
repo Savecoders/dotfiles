@@ -27,7 +27,7 @@ Scope {
             readonly property string pos: Config.barPosition
             readonly property bool isVertical: pos === "left" || pos === "right"
             readonly property bool isHorizontal: pos === "top" || pos === "bottom"
-            readonly property bool isFloating: Config.settings.bar.floating ?? true
+            readonly property bool isFloating: Config.get("bar.floating", true)
             readonly property real marginVal: Config.settings.bar.margin !== undefined ? Config.settings.bar.margin : metrics.marginFallback
             readonly property real edgeGap: (Config.settings.desktop.desktopRoundingShown) ? Styling.desktopGap : 0
             readonly property real effectiveMargin: isFloating ? marginVal : edgeGap
@@ -172,11 +172,11 @@ Scope {
 
                     Loader {
                         anchors.fill: parent
-                        active: !!Config.settings.pfpLocation && Config.settings.pfpLocation !== ""
+                        active: Config.get("pfpLocation", "") !== ""
 
                         sourceComponent: IconImage {
                             property bool pfpFailed: false
-                            property string targetSource: resolvePfpPath(Config.settings.pfpLocation)
+                            property string targetSource: resolvePfpPath(Config.get("pfpLocation", ""))
 
                             anchors.fill: parent
                             onTargetSourceChanged: pfpFailed = false
