@@ -241,46 +241,43 @@ ClippingWrapperRectangle {
                         id: timelineContainer
 
                         property bool isHovered: false
+                        readonly property var barHeights: [0.25, 0.4, 0.7, 0.55, 0.9, 0.65, 0.35, 0.8, 0.95, 0.6, 0.45, 0.75, 1, 0.85, 0.5, 0.3, 0.7, 0.85, 0.6, 0.4, 0.65, 0.9, 0.75, 0.5, 0.8, 0.95, 0.7, 0.4, 0.6, 0.85, 0.7, 0.5, 0.35, 0.6, 0.45, 0.3]
+                        readonly property int barCount: barHeights.length
+                        readonly property real barWidth: 3
 
                         Layout.fillWidth: true
                         Layout.preferredHeight: 18
                         Layout.alignment: Qt.AlignVCenter
 
-                        // Waveform Bars Visualizer
-                        Row {
-                            id: waveformRow
+                        // Waveform Bars Visualizer (distributed uniformly across 100% of width)
+                        Repeater {
+                            model: timelineContainer.barCount
 
-                            readonly property var barHeights: [0.25, 0.4, 0.7, 0.55, 0.9, 0.65, 0.35, 0.8, 0.95, 0.6, 0.45, 0.75, 1, 0.85, 0.5, 0.3, 0.7, 0.85, 0.6, 0.4, 0.65, 0.9, 0.75, 0.5, 0.8, 0.95, 0.7, 0.4, 0.6, 0.85, 0.7, 0.5, 0.35, 0.6, 0.45, 0.3]
+                            StyledRect {
+                                id: wBar
 
-                            anchors.fill: parent
-                            anchors.topMargin: 2
-                            anchors.bottomMargin: 2
-                            spacing: Math.max(2, Math.floor((parent.width - (36 * 3)) / 35))
+                                readonly property real frac: timelineContainer.barCount > 1 ? index / (timelineContainer.barCount - 1) : 0
+                                readonly property bool isPast: frac <= root.progressFrac
+                                readonly property real barHeightFactor: timelineContainer.barHeights[index]
 
-                            Repeater {
-                                model: waveformRow.barHeights.length
+                                variant: "common"
+                                useDefaultRadius: false
+                                border.width: 0
+                                width: timelineContainer.barWidth
+                                height: Math.max(3, barHeightFactor * (timelineContainer.height - 4))
+                                anchors.verticalCenter: parent.verticalCenter
+                                radius: 1.5
+                                x: {
+                                    if (timelineContainer.width <= timelineContainer.barWidth || timelineContainer.barCount <= 1)
+                                        return 0;
 
-                                StyledRect {
-                                    id: wBar
+                                    return (index * (timelineContainer.width - timelineContainer.barWidth)) / (timelineContainer.barCount - 1);
+                                }
+                                color: isPast ? Colours.palette.primary : Qt.alpha(Colours.palette.surface_container_highest, 0.85)
 
-                                    readonly property real frac: index / (waveformRow.barHeights.length - 1)
-                                    readonly property bool isPast: frac <= root.progressFrac
-                                    readonly property real barHeightFactor: waveformRow.barHeights[index]
-
-                                    variant: "common"
-                                    useDefaultRadius: false
-                                    border.width: 0
-                                    width: 3
-                                    height: Math.max(3, barHeightFactor * waveformRow.height)
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    radius: 1.5
-                                    color: isPast ? Colours.palette.primary : Qt.alpha(Colours.palette.surface_container_highest, 0.85)
-
-                                    Behavior on color {
-                                        ColorAnimation {
-                                            duration: 100
-                                        }
-
+                                Behavior on color {
+                                    ColorAnimation {
+                                        duration: 100
                                     }
 
                                 }
@@ -289,7 +286,7 @@ ClippingWrapperRectangle {
 
                         }
 
-                        // Needle Indicator
+                        // Needle Indicator (aligned 1:1 with progress fraction and waveform)
                         StyledRect {
                             id: timelineNeedle
 
@@ -302,17 +299,33 @@ ClippingWrapperRectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             x: Math.max(0, Math.min(parent.width - width, root.progressFrac * (parent.width - width)))
                             color: Colours.palette.on_surface
+
+                            Behavior on x {
+                                enabled: !root.isDragging && Media.isPlaying
+
+                                NumberAnimation {
+                                    duration: 450
+                                    easing.type: Easing.Linear
+                                }
+
+                            }
+
                         }
 
                         // Interactive Seeking MouseArea
                         MouseArea {
+                            id: seekMouseArea
+
                             function calculateFrac(mouse) {
-                                const localX = mouse.x - 4;
-                                return Math.max(0, Math.min(1, localX / timelineContainer.width));
+                                if (timelineContainer.width <= 0)
+                                    return 0;
+
+                                return Math.max(0, Math.min(1, mouse.x / timelineContainer.width));
                             }
 
                             anchors.fill: parent
-                            anchors.margins: -4
+                            anchors.topMargin: -4
+                            anchors.bottomMargin: -4
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
                             onEntered: timelineContainer.isHovered = true
