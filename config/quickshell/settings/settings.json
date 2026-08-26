@@ -37,9 +37,13 @@
     },
     "currentWallpaper": "/home/save/Pictures/Wallpapers/dark/in.JPG",
     "desktop": {
+        "desktopGap": 4,
         "desktopRoundingShown": true,
         "dimDesktopWallpaper": false,
-        "targetScreen": "HDMI-A-1"
+        "gapsIn": 4,
+        "gapsOut": 16,
+        "targetScreen": "HDMI-A-1",
+        "workspaceGaps": 0
     },
     "font": "SF Pro Display",
     "iconFont": "Material Symbols Rounded",

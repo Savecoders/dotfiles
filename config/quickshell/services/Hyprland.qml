@@ -115,12 +115,24 @@ Singleton {
         hyprctlDevices.running = true;
     }
 
+    function syncGaps() {
+        if (!isHyprland)
+            return ;
+
+        let inG = Config.get("desktop.gapsIn", 4);
+        let outG = Config.get("desktop.gapsOut", 16);
+        let wsG = Config.get("desktop.workspaceGaps", 0);
+        let luaStr = `hl.config({ general = { gaps_in = ${inG}, gaps_out = ${outG}, gaps_workspaces = ${wsG} } })`;
+        Quickshell.execDetached(["hyprctl", "eval", luaStr]);
+    }
+
     onWindowListChanged: _focusedWindowCache = ({
     })
     Component.onCompleted: {
         if (isHyprland) {
             updateAll();
             refreshKeyboardLayout();
+            syncGaps();
         }
     }
 
