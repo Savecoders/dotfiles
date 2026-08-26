@@ -197,6 +197,18 @@ Item {
         applyProcess.running = true;
     }
 
+    function applyHyprlandGaps(inVal, outVal, wsVal) {
+        let inG = inVal !== undefined ? inVal : Config.get("desktop.gapsIn", 4);
+        let outG = outVal !== undefined ? outVal : Config.get("desktop.gapsOut", 16);
+        let wsG = wsVal !== undefined ? wsVal : Config.get("desktop.workspaceGaps", 0);
+        let luaEvalStr = `hl.config({ general = { gaps_in = ${inG}, gaps_out = ${outG}, gaps_workspaces = ${wsG} } })`;
+        applyGapsProcess._lastLuaStr = luaEvalStr;
+        applyGapsProcess._triedFallback = false;
+        applyGapsProcess.command = ["hyprctl", "eval", luaEvalStr];
+        applyGapsProcess.running = false;
+        applyGapsProcess.running = true;
+    }
+
     onCurrentTargetChanged: {
         if (root.selectedMonName !== root.currentTarget)
             root.selectedMonName = root.currentTarget;
@@ -235,10 +247,27 @@ Item {
             }
             applyProcess._triedFallback = false;
             Hyprland.updateAll();
-            if (exitCode !== 0) {
-                console.warn("[DesktopPage] Failed to apply display configuration, exitCode:", exitCode);
-                Quickshell.execDetached(["notify-send", "-u", "critical", "Display Configuration", "Could not apply monitor mode. Check supported resolutions."]);
+        }
+    }
+
+    Process {
+        id: applyGapsProcess
+
+        property bool _triedFallback: false
+        property string _lastLuaStr: ""
+
+        onExited: (exitCode) => {
+            if (exitCode !== 0 && !applyGapsProcess._triedFallback) {
+                applyGapsProcess._triedFallback = true;
+                let inG = Config.get("desktop.gapsIn", 4);
+                let outG = Config.get("desktop.gapsOut", 16);
+                let wsG = Config.get("desktop.workspaceGaps", 0);
+                applyGapsProcess.command = ["bash", "-c", `hyprctl keyword general:gaps_in ${inG} && hyprctl keyword general:gaps_out ${outG} && hyprctl keyword general:gaps_workspaces ${wsG}`];
+                applyGapsProcess.running = false;
+                applyGapsProcess.running = true;
+                return ;
             }
+            applyGapsProcess._triedFallback = false;
         }
     }
 
@@ -341,7 +370,7 @@ Item {
                             useDefaultRadius: true
                             width: 172
                             height: 102
-                            color: hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container_low
+                            color: Colours.palette.surface_container_low
                             border.color: isSelected ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
                             border.width: isSelected ? 2 : 1
 
@@ -639,7 +668,7 @@ Item {
                                                 font.family: Config.settings.font
                                                 font.pixelSize: Styling.fontSize.sm
                                                 font.weight: resPill.isSelected ? Font.Medium : Font.Normal
-                                                color: resPill.isSelected ? (resPill.hovered ? Colours.palette.on_primary_container : Colours.palette.primary) : Colours.palette.on_surface
+                                                color: Colours.palette.primary
                                             }
 
                                             Item {
@@ -650,7 +679,7 @@ Item {
                                                 text: resPill.modelData
                                                 font.family: Config.settings.font
                                                 font.pixelSize: Styling.fontSize.md
-                                                color: resPill.isSelected ? (resPill.hovered ? Colours.palette.on_primary_container : Colours.palette.primary) : Colours.palette.on_surface_variant
+                                                color: resPill.isSelected ? Colours.palette.primary : Colours.palette.on_surface_variant
                                             }
 
                                         }
@@ -702,7 +731,7 @@ Item {
                                             font.family: Config.settings.font
                                             font.pixelSize: Styling.fontSize.sm
                                             font.weight: hzPill.isSelected ? Font.Medium : Font.Normal
-                                            color: hzPill.isSelected ? (hzPill.hovered ? Colours.palette.on_primary_container : Colours.palette.primary) : Colours.palette.on_surface
+                                            color: hzPill.isSelected ? Colours.palette.primary : Colours.palette.on_surface
                                         }
 
                                     }
@@ -757,7 +786,7 @@ Item {
                                                 font.family: Config.settings.font
                                                 font.pixelSize: Styling.fontSize.sm
                                                 font.weight: scalePill.isSelected ? Font.Medium : Font.Normal
-                                                color: scalePill.isSelected ? (scalePill.hovered ? Colours.palette.on_primary_container : Colours.palette.primary) : Colours.palette.on_surface
+                                                color: scalePill.isSelected ? Colours.palette.primary : Colours.palette.on_surface
                                             }
 
                                         }
@@ -810,7 +839,7 @@ Item {
                                             font.family: Config.settings.font
                                             font.pixelSize: Styling.fontSize.sm
                                             font.weight: orientPill.isSelected ? Font.Medium : Font.Normal
-                                            color: orientPill.isSelected ? (orientPill.hovered ? Colours.palette.on_primary_container : Colours.palette.primary) : Colours.palette.on_surface
+                                            color: orientPill.isSelected ? Colours.palette.primary : Colours.palette.on_surface
                                         }
 
                                     }
@@ -839,6 +868,107 @@ Item {
 
                 }
 
+                // Window & Workspace Gaps Section
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: Styling.spacing.md
+
+                    GenericTitle {
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.preferredHeight: 20
+                        Layout.topMargin: Styling.spacing.sm
+                        text: "Window & Workspace Gaps"
+                        iconCode: "space_dashboard"
+                    }
+
+                    GenericSeperator {
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                        Layout.topMargin: 4
+                        Layout.preferredWidth: pageWrapper.width - 24
+                        Layout.preferredHeight: 3
+                    }
+
+                    GenericNumberOption {
+                        message: "Inner gaps (between windows)"
+                        value: Config.get("desktop.gapsIn", 4)
+                        maxValue: 32
+                        minValue: 0
+                        amountIncrease: () => {
+                            let cur = Config.get("desktop.gapsIn", 4);
+                            if (cur < 32) {
+                                let nextVal = cur + 1;
+                                Config.updateKey("desktop.gapsIn", nextVal);
+                                root.applyHyprlandGaps(nextVal, undefined, undefined);
+                            }
+                        }
+                        amountDecrease: () => {
+                            let cur = Config.get("desktop.gapsIn", 4);
+                            if (cur > 0) {
+                                let nextVal = cur - 1;
+                                Config.updateKey("desktop.gapsIn", nextVal);
+                                root.applyHyprlandGaps(nextVal, undefined, undefined);
+                            }
+                        }
+                        isFloat: false
+                        withIcon: true
+                        iconCode: "splitscreen"
+                    }
+
+                    GenericNumberOption {
+                        message: "Outer gaps (between windows & screen edge)"
+                        value: Config.get("desktop.gapsOut", 16)
+                        maxValue: 64
+                        minValue: 0
+                        amountIncrease: () => {
+                            let cur = Config.get("desktop.gapsOut", 16);
+                            if (cur < 64) {
+                                let nextVal = cur + 2;
+                                Config.updateKey("desktop.gapsOut", nextVal);
+                                root.applyHyprlandGaps(undefined, nextVal, undefined);
+                            }
+                        }
+                        amountDecrease: () => {
+                            let cur = Config.get("desktop.gapsOut", 16);
+                            if (cur > 0) {
+                                let nextVal = Math.max(0, cur - 2);
+                                Config.updateKey("desktop.gapsOut", nextVal);
+                                root.applyHyprlandGaps(undefined, nextVal, undefined);
+                            }
+                        }
+                        isFloat: false
+                        withIcon: true
+                        iconCode: "border_outer"
+                    }
+
+                    GenericNumberOption {
+                        message: "Workspace gaps (gap between workspaces)"
+                        value: Config.get("desktop.workspaceGaps", 0)
+                        maxValue: 64
+                        minValue: 0
+                        amountIncrease: () => {
+                            let cur = Config.get("desktop.workspaceGaps", 0);
+                            if (cur < 64) {
+                                let nextVal = cur + 2;
+                                Config.updateKey("desktop.workspaceGaps", nextVal);
+                                root.applyHyprlandGaps(undefined, undefined, nextVal);
+                            }
+                        }
+                        amountDecrease: () => {
+                            let cur = Config.get("desktop.workspaceGaps", 0);
+                            if (cur > 0) {
+                                let nextVal = Math.max(0, cur - 2);
+                                Config.updateKey("desktop.workspaceGaps", nextVal);
+                                root.applyHyprlandGaps(undefined, undefined, nextVal);
+                            }
+                        }
+                        isFloat: false
+                        withIcon: true
+                        iconCode: "view_carousel"
+                    }
+
+                }
+
+                // Desktop Appearance Section
                 ColumnLayout {
                     Layout.fillWidth: true
                     spacing: Styling.spacing.md
@@ -859,7 +989,7 @@ Item {
                     }
 
                     GenericToggleOption {
-                        message: "Show a rounded border"
+                        message: "Show a rounded desktop border"
                         option: Config.get("desktop.desktopRoundingShown", true)
                         toRun: () => {
                             let val = !Config.get("desktop.desktopRoundingShown", true);
@@ -868,6 +998,29 @@ Item {
                         }
                         withIcon: true
                         iconCode: "capture"
+                    }
+
+                    GenericNumberOption {
+                        visible: Config.get("desktop.desktopRoundingShown", true)
+                        message: "Desktop screen border gap (outer cutout px)"
+                        value: Config.get("desktop.desktopGap", 4)
+                        maxValue: 24
+                        minValue: 0
+                        amountIncrease: () => {
+                            let cur = Config.get("desktop.desktopGap", 4);
+                            if (cur < 24)
+                                Config.updateKey("desktop.desktopGap", cur + 1);
+
+                        }
+                        amountDecrease: () => {
+                            let cur = Config.get("desktop.desktopGap", 4);
+                            if (cur > 0)
+                                Config.updateKey("desktop.desktopGap", cur - 1);
+
+                        }
+                        isFloat: false
+                        withIcon: true
+                        iconCode: "margin"
                     }
 
                     GenericToggleOption {
@@ -904,12 +1057,7 @@ Item {
         useDefaultRadius: true
         Layout.fillWidth: true
         scale: pressed ? 0.98 : 1
-        color: {
-            if (isSelected)
-                return hovered ? Colours.palette.primary_container : Colours.palette.surface_container_high;
-
-            return hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container_low;
-        }
+        color: Colours.palette.surface_container_low
         border.color: isSelected ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
         border.width: isSelected ? 2 : 1
 
@@ -920,14 +1068,6 @@ Item {
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             onClicked: pill.activated()
-        }
-
-        Behavior on color {
-            PropertyAnimation {
-                duration: Config.settings.animationSpeed ?? 150
-                easing.type: Easing.OutQuad
-            }
-
         }
 
         Behavior on border.color {
