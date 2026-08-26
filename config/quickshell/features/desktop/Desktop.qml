@@ -21,9 +21,8 @@ Scope {
 
             property var modelData
             readonly property bool roundingShown: Config.get("desktop.desktopRoundingShown", true)
-            readonly property real targetGap: roundingShown ? Styling.desktopGap : 0
+            readonly property real targetGap: roundingShown ? Config.get("desktop.desktopGap", 4) : 0
             readonly property real targetRadius: roundingShown ? (Config.settings.borderRadius ?? 16) : 0
-
             property real animatedGap: targetGap
             property real animatedRadius: targetRadius
 
@@ -42,23 +41,6 @@ Scope {
                 right: true
             }
 
-            mask: Region {
-            }
-
-            Behavior on animatedGap {
-                NumberAnimation {
-                    duration: Config.settings.animationSpeed ?? 200
-                    easing.type: Easing.OutQuad
-                }
-            }
-
-            Behavior on animatedRadius {
-                NumberAnimation {
-                    duration: Config.settings.animationSpeed ?? 200
-                    easing.type: Easing.OutQuad
-                }
-            }
-
             // Outer decorative border frame with inner rounded cutout (OddEvenFill)
             Shape {
                 id: borderShape
@@ -72,12 +54,6 @@ Scope {
                     strokeColor: "transparent"
                     strokeWidth: 0
                     fillRule: ShapePath.OddEvenFill
-
-                    Behavior on fillColor {
-                        ColorAnimation {
-                            duration: Config.settings.animationSpeed ?? 200
-                        }
-                    }
 
                     // Outer screen boundary
                     PathRectangle {
@@ -95,7 +71,16 @@ Scope {
                         height: Math.max(0, desktopWindow.height - (desktopWindow.animatedGap * 2))
                         radius: desktopWindow.animatedRadius
                     }
+
+                    Behavior on fillColor {
+                        ColorAnimation {
+                            duration: Config.settings.animationSpeed ?? 200
+                        }
+
+                    }
+
                 }
+
             }
 
             Rectangle {
@@ -115,8 +100,32 @@ Scope {
                         duration: Config.settings.animationSpeed ?? 200
                         easing.type: Easing.OutQuad
                     }
+
                 }
+
             }
+
+            mask: Region {
+            }
+
+            Behavior on animatedGap {
+                NumberAnimation {
+                    duration: Config.settings.animationSpeed ?? 200
+                    easing.type: Easing.OutQuad
+                }
+
+            }
+
+            Behavior on animatedRadius {
+                NumberAnimation {
+                    duration: Config.settings.animationSpeed ?? 200
+                    easing.type: Easing.OutQuad
+                }
+
+            }
+
         }
+
     }
+
 }

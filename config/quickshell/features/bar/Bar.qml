@@ -29,7 +29,7 @@ Scope {
             readonly property bool isHorizontal: pos === "top" || pos === "bottom"
             readonly property bool isFloating: Config.get("bar.floating", true)
             readonly property real marginVal: Config.settings.bar.margin !== undefined ? Config.settings.bar.margin : metrics.marginFallback
-            readonly property real edgeGap: (Config.settings.desktop.desktopRoundingShown) ? Styling.desktopGap : 0
+            readonly property real edgeGap: (Config.settings.desktop.desktopRoundingShown) ? Config.get("desktop.desktopGap", 4) : 0
             readonly property real effectiveMargin: isFloating ? marginVal : edgeGap
 
             function resolvePfpPath(loc) {

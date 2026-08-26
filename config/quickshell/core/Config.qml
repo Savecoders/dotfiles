@@ -161,6 +161,10 @@ Singleton {
                 property bool desktopRoundingShown: true
                 property bool dimDesktopWallpaper: false
                 property string targetScreen: "all"
+                property int desktopGap: 4
+                property int gapsIn: 4
+                property int gapsOut: 16
+                property int workspaceGaps: 0
             }
 
             colours: JsonObject {

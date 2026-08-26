@@ -39,7 +39,6 @@ Singleton {
         let clean = cleanWallpaperPath(path);
         let secondPrev = `${Config.get("previousWallpaper", "null")}`;
         let prev = `${Config.get("currentWallpaper", "")}`;
-
         // Update Config settings
         Config.pauseAutoSave = true;
         Config.updateKey("secondPreviousWallpaper", secondPrev);
@@ -47,15 +46,12 @@ Singleton {
         Config.updateKey("currentWallpaper", clean);
         Config.updateKey("wallpaperToSet", clean);
         Config.pauseAutoSave = false;
-
         // Update ~/.current.wall symlink
         Quickshell.execDetached(["sh", "-c", "ln -sf \"" + clean + "\" ~/.current.wall"]);
-
         // Apply wallpaper with awww/swww daemon using dynamic transitions
         let transitions = ["grow", "outer", "wave", "circle", "wipe", "center", "fade"];
         let trans = transitions[Math.floor(Math.random() * transitions.length)];
         Quickshell.execDetached(["sh", "-c", "if command -v awww >/dev/null 2>&1; then awww img \"" + clean + "\" --transition-type " + trans + " --transition-duration 1.2 --transition-fps 60; elif command -v swww >/dev/null 2>&1; then swww img \"" + clean + "\" --transition-type " + trans + " --transition-duration 1.2 --transition-fps 60; fi"]);
-
         // Run Matugen to regenerate themes unless custom colours are enabled
         if (!Config.get("colours.useCustom", false))
             Quickshell.execDetached(getMatugenArgs(clean));

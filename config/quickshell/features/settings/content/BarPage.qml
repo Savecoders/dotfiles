@@ -142,13 +142,13 @@ Item {
                 }
 
                 GenericNumberOption {
-                    message: "Bar edge margin (gap px)"
+                    message: "Floating bar edge margin (px)"
                     value: Config.get("bar.margin", 10)
-                    maxValue: 20
+                    maxValue: 32
                     minValue: 0
                     amountIncrease: () => {
                         let cur = Config.get("bar.margin", 10);
-                        if (cur < 20)
+                        if (cur < 32)
                             Config.updateKey("bar.margin", cur + 1);
 
                     }
