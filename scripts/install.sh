@@ -287,24 +287,10 @@ extract_and_copy_icons() {
     return 1
   fi
 
-  # Find the top-level directory inside the extracted content
-  local top_level_dir
-  # This assumes the archive extracts into a single top-level directory (e.g., 'Tela')
-  top_level_dir=$(find "${extract_dir}" -maxdepth 1 -mindepth 1 -type d -print -quit)
-
-  if [[ -n "$top_level_dir" ]]; then
-    echo "Copying extracted content from ${top_level_dir} to ${HOME}/.icons/..."
-    cp -r "${top_level_dir}" "${HOME}/.icons/" || {
-      echo "Error: Failed to copy extracted icons to ~/.icons/."
-      return 1
-    }
-  else
-    echo "Warning: Could not find a single top-level directory in ${extract_dir}. Copying all contents directly."
-    cp -r "${extract_dir}"/* "${HOME}/.icons/" || {
-      echo "Error: Failed to copy extracted icons to ~/.icons/."
-      return 1
-    }
-  fi
+  # Copy all extracted contents directly to icons directories
+  mkdir -p "${HOME}/.icons" "${HOME}/.local/share/icons"
+  cp -r "${extract_dir}"/* "${HOME}/.icons/" 2>/dev/null || true
+  cp -r "${extract_dir}"/* "${HOME}/.local/share/icons/" 2>/dev/null || true
 
   echo "Cleaning up temporary extraction directory: ${extract_dir}"
   rm -rf "${extract_dir}"
@@ -314,7 +300,7 @@ extract_and_copy_icons() {
 # Call the function for each icon archive
 extract_and_copy_icons "01-Tela.tar.xz"
 extract_and_copy_icons "01-WhiteSur.tar.xz"
-extract_and_copy_icons "Mkos-Big-Sur.tar.tar.xz"
+extract_and_copy_icons "Mkos-Big-Sur.tar.xz"
 
 echo "All icons processed."
 
@@ -358,23 +344,8 @@ extract_and_copy_themes() {
     return 1
   fi
 
-  # Find the top-level directory inside the extracted content
-  local top_level_dir
-  top_level_dir=$(find "${extract_dir}" -maxdepth 1 -mindepth 1 -type d -print -quit)
-
-  if [[ -n "$top_level_dir" ]]; then
-    echo "Copying extracted content from ${top_level_dir} to ${HOME}/.local/share/themes/..."
-    cp -r "${top_level_dir}" "${HOME}/.local/share/themes/" || {
-      echo "Error: Failed to copy extracted theme to ~/.local/share/themes/."
-      return 1
-    }
-  else
-    echo "Warning: Could not find a single top-level directory in ${extract_dir}. Copying all contents directly."
-    cp -r "${extract_dir}"/* "${HOME}/.local/share/themes/" || {
-      echo "Error: Failed to copy extracted theme to ~/.local/share/themes/."
-      return 1
-    }
-  fi
+  # Copy all extracted theme contents
+  cp -r "${extract_dir}"/* "${HOME}/.local/share/themes/" 2>/dev/null || true
 
   echo "Cleaning up temporary extraction directory: ${extract_dir}"
   rm -rf "${extract_dir}"
