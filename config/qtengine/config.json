@@ -1,0 +1,22 @@
+{
+  "theme": {
+    "colorScheme": "/home/save/.local/share/color-schemes/Matugen.colors",
+    "iconTheme": "WhiteSur-dark",
+    "style": "Breeze",
+    "font": {
+      "family": "SF Pro Display",
+      "size": 11,
+      "weight": -1
+    },
+    "fontFixed": {
+      "family": "SF Pro Display",
+      "size": 11,
+      "weight": -1
+    }
+  },
+  "misc": {
+    "menusHaveIcons": true,
+    "singleClickActivate": false,
+    "shortcutsForContextMenus": true
+  }
+}

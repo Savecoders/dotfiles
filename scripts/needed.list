@@ -6,6 +6,7 @@ xdg-desktop-portal
 xdg-desktop-portal-hyprland
 xdg-desktop-portal-gtk
 xdg-utils
+awww-git
 hyprpaper
 hyprlock
 hypridle
@@ -15,6 +16,7 @@ qt5-wayland
 qt6-wayland
 qt5ct
 qt6ct
+qtengine
 kvantum
 qt5-quickcontrols2
 qt5-graphicaleffects
