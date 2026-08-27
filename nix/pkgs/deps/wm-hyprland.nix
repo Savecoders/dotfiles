@@ -8,6 +8,7 @@ with pkgs; [
   (if inputs ? hyprland
    then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
    else pkgs.hyprland)
+  (pkgs.awww or pkgs.swww or pkgs.hyprpaper)
   hyprpaper
   hyprlock
   hypridle
