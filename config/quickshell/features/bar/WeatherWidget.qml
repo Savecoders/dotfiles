@@ -29,8 +29,8 @@ StyledRect {
 
     variant: "transparent"
     color: "transparent"
-    implicitWidth: isVertical ? 32 : (contentRow.implicitWidth + 8)
-    implicitHeight: 32
+    implicitWidth: isVertical ? 36 : (contentLayout.implicitWidth + 8)
+    implicitHeight: isVertical ? 42 : 32
     Component.onDestruction: Tooltip.hide()
 
     MouseArea {
@@ -51,11 +51,14 @@ StyledRect {
         }
     }
 
-    RowLayout {
-        id: contentRow
+    GridLayout {
+        id: contentLayout
 
         anchors.centerIn: parent
-        spacing: Styling.spacing.sm
+        columns: root.isVertical ? 1 : 2
+        rows: root.isVertical ? 2 : 1
+        columnSpacing: root.isVertical ? 0 : Styling.spacing.sm
+        rowSpacing: root.isVertical ? 2 : 0
 
         Text {
             id: iconText
@@ -81,14 +84,14 @@ StyledRect {
         Text {
             id: tempText
 
-            visible: !root.isVertical
             text: Weather.temp || "--"
             font.family: Config.get("font", "SF Pro Display")
-            font.pixelSize: Styling.fontSize.body
+            font.pixelSize: root.isVertical ? 10 : Styling.fontSize.body
             font.weight: 600
             color: mouseArea.containsMouse ? Colours.palette.primary : Colours.palette.on_surface
+            horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
             Behavior on color {
                 PropertyAnimation {
