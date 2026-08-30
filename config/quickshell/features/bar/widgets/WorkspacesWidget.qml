@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import qs.core
+import qs.features.bar
 import qs.features.common
 import qs.services
 
@@ -12,9 +13,7 @@ Item {
     property var bottomLayout: null
     property int workspaceCount: 12
     readonly property int count: Workspaces.hyprWorkspaces ? Workspaces.hyprWorkspaces.length : workspaceCount
-    // Single formula, evaluated once and reused for both orientations
-    // instead of being duplicated between width: and height:.
-    readonly property real crossAxisLength: (metrics.restSlotSize * (count - 1)) + metrics.activeSlotSize + (metrics.slotSpacing * (count - 1)) + metrics.outerPadding
+    readonly property real crossAxisLength: metrics.thickness * count + metrics.slotSpacing * (count - 1) + metrics.outerPadding
 
     width: isVertical ? metrics.thickness : crossAxisLength
     height: isVertical ? crossAxisLength : metrics.thickness
@@ -51,14 +50,14 @@ Item {
         id: metrics
 
         readonly property int thickness: 40 // bar thickness / collapsed slot size
-        readonly property int slotSpacing: Styling.spacing.md
+        readonly property int slotSpacing: Styling.spacing.sm
         readonly property int outerPadding: Styling.spacing.lg
-        readonly property int edgeMargin: Styling.spacing.section * 2
+        readonly property int edgeMargin: 48
         readonly property int centeringOffset: Styling.spacing.xxxl
         readonly property int fallbackOppositeLength: 180
-        readonly property int hoverSlotSize: Styling.fontSize.xxl + Styling.spacing.md
-        readonly property int activeSlotSize: metrics.thickness
-        readonly property int restSlotSize: Styling.fontSize.xxl
+        readonly property int hoverSlotSize: 48
+        readonly property int activeSlotSize: 40
+        readonly property int restSlotSize: 24
         readonly property real occupiedTextAlpha: 0.9
     }
 
@@ -79,17 +78,6 @@ Item {
                 property bool isActive: modelData.id === (Workspaces.activeWorkspace ? Workspaces.activeWorkspace.id : undefined)
                 property bool hasWindows: modelData.windows > 0
 
-                // list counts as "outermost". Merged into one function.
-                function edgeRadius(isOutermost) {
-                    if (hovered || isActive)
-                        return Config.settings.borderRadius;
-
-                    if (isOutermost)
-                        return Config.settings.borderRadius + 4;
-
-                    return Config.settings.borderRadius / 2;
-                }
-
                 variant: isActive ? "focus" : "internalbg"
                 useDefaultRadius: false
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -105,10 +93,13 @@ Item {
                     else
                         return "transparent";
                 }
-                topLeftRadius: edgeRadius(index === 0)
-                topRightRadius: edgeRadius(index === 0)
-                bottomLeftRadius: edgeRadius(index + 1 === Workspaces.hyprWorkspaces.length)
-                bottomRightRadius: edgeRadius(index + 1 === Workspaces.hyprWorkspaces.length)
+                border.width: (isActive || hasWindows || hovered) ? 0.5 : 0
+                border.color: Qt.alpha(Colours.palette.outline, 0.15)
+                radius: Math.min(Layout.preferredWidth, Layout.preferredHeight) / 2
+                topLeftRadius: radius
+                topRightRadius: radius
+                bottomLeftRadius: radius
+                bottomRightRadius: radius
 
                 // active workspace indicator
                 Text {

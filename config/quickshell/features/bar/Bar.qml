@@ -4,11 +4,11 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
-import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import qs.core
 import qs.features
 import qs.features.bar
+import qs.features.bar.widgets
 import qs.features.common
 import qs.services
 
@@ -32,12 +32,6 @@ Scope {
             readonly property real edgeGap: (Config.settings.desktop.desktopRoundingShown) ? Config.get("desktop.desktopGap", 4) : 0
             readonly property real effectiveMargin: isFloating ? marginVal : edgeGap
 
-            function resolvePfpPath(loc) {
-                const location = loc || "~/.face";
-                const path = location.startsWith("/") ? location : `${Quickshell.env("HOME")}/${location.replace(/^~\//, "")}`;
-                return `file://${path}`;
-            }
-
             screen: modelData
             color: "transparent"
             implicitWidth: barWindow.isVertical ? (metrics.barThickness + (barWindow.isFloating ? (barWindow.marginVal * 2) : barWindow.edgeGap)) : 0
@@ -58,19 +52,9 @@ Scope {
                 readonly property int iconLeadingOffset: 56
                 readonly property int workspacesFallbackLength: 160
                 readonly property int bottomLayoutFallbackLength: 180
-                readonly property int quickActionsMinLength: 96
-                readonly property int quickActionsPaddingH: 24
-                readonly property int quickActionsPaddingV: 20
-                readonly property int quickActionsThickness: 36
-                readonly property int quickActionsDefaultThickness: 32
-                readonly property real quickActionsRadiusCollapsed: 8
                 readonly property real marginFallback: 16
                 readonly property real opacityFallback: 0.9
-                readonly property real widgetAlpha: 0.8
                 readonly property real radiusOuter: Config.settings.borderRadius
-                readonly property real radiusInner: Math.max(0, Config.settings.borderRadius - 4)
-                readonly property real radiusInnerSmall: Math.max(0, Config.settings.borderRadius - 2)
-                readonly property real radiusCollapsed: 4
             }
 
             anchors {
@@ -137,65 +121,15 @@ Scope {
                 bottomRightRadius: cornerRadius("br")
                 radius: Config.settings.bar.smoothEdgesShown ? metrics.radiusOuter : 0
 
-                IconImage {
-                    id: icon
+                AvatarWidget {
+                    id: avatarWidget
 
-                    width: metrics.iconSize
-                    height: metrics.iconSize
-                    opacity: Config.settings.usePfpInsteadOfLogo ? 0 : 1
+                    isVertical: barWindow.isVertical
+                    iconSize: metrics.iconSize
                     anchors.top: parent.top
                     anchors.left: parent.left
                     anchors.leftMargin: barWindow.isVertical ? (parent.width / 2) - (width / 2) : metrics.outerPadding
                     anchors.topMargin: barWindow.isVertical ? metrics.outerPadding : (parent.height / 2) - (height / 2)
-                    source: Qt.resolvedUrl(Quickshell.shellDir + "/assets/icon.png")
-
-                    Behavior on opacity {
-                        StdAnim {
-                        }
-
-                    }
-
-                }
-
-                ClippingWrapperRectangle {
-                    id: pfp
-
-                    width: metrics.iconSize
-                    height: metrics.iconSize
-                    opacity: Config.settings.usePfpInsteadOfLogo ? 1 : 0
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.leftMargin: barWindow.isVertical ? (parent.width / 2) - (width / 2) - 1 : metrics.outerPadding
-                    anchors.topMargin: barWindow.isVertical ? metrics.outerPadding : (parent.height / 2) - (height / 2) - 1
-                    color: "transparent"
-                    radius: Styling.radius.round
-
-                    Loader {
-                        anchors.fill: parent
-                        active: Config.get("pfpLocation", "") !== ""
-
-                        sourceComponent: IconImage {
-                            property bool pfpFailed: false
-                            property string targetSource: resolvePfpPath(Config.get("pfpLocation", ""))
-
-                            anchors.fill: parent
-                            onTargetSourceChanged: pfpFailed = false
-                            source: pfpFailed ? Qt.resolvedUrl(Quickshell.shellDir + "/assets/icon.png") : targetSource
-                            onStatusChanged: {
-                                if (status === Image.Error)
-                                    pfpFailed = true;
-
-                            }
-                        }
-
-                    }
-
-                    Behavior on opacity {
-                        StdAnim {
-                        }
-
-                    }
-
                 }
 
                 WorkspacesWidget {
@@ -208,7 +142,7 @@ Scope {
                 Component {
                     id: sysTrayComp
 
-                    SysTray {
+                    SysTrayWidget {
                         Layout.alignment: barWindow.isVertical ? Qt.AlignHCenter : Qt.AlignVCenter
                         bar: barWindow
                     }
@@ -216,157 +150,11 @@ Scope {
                 }
 
                 Component {
-                    id: barIconButtonComp
-
-                    StyledRect {
-                        id: iconButton
-
-                        property bool active: false
-                        property bool collapsible: false
-                        property string iconGlyph: "notifications"
-                        property color activeColor: Colours.palette.primary
-                        property color activeContentColor: Colours.palette.on_primary
-                        property color inactiveColor: Qt.alpha(Colours.palette.surface, metrics.widgetAlpha)
-                        property color inactiveContentColor: Qt.alpha(Colours.palette.on_surface, metrics.widgetAlpha)
-                        property bool topRadiusFollowsNeighbour: false // e.g. notifications sits under recording
-                        property bool hovered: false
-                        property string tooltipText: ""
-                        readonly property bool expanded: !collapsible || active
-
-                        signal activated()
-
-                        variant: "internalbg"
-                        useDefaultRadius: false
-                        implicitWidth: barWindow.isVertical ? (barBase.width - 8) : (expanded ? (hovered ? 48 : 40) : 0)
-                        implicitHeight: barWindow.isVertical ? (expanded ? (hovered ? 48 : 40) : 0) : (barBase.height - 8)
-                        width: implicitWidth
-                        height: implicitHeight
-                        Layout.alignment: barWindow.isVertical ? Qt.AlignHCenter : Qt.AlignVCenter
-                        visible: (barWindow.isVertical ? height : width) > 0
-                        topLeftRadius: hovered ? metrics.radiusInnerSmall : metrics.radiusCollapsed
-                        topRightRadius: hovered ? metrics.radiusInnerSmall : metrics.radiusCollapsed
-                        bottomLeftRadius: hovered ? metrics.radiusInnerSmall : metrics.radiusCollapsed
-                        bottomRightRadius: hovered ? metrics.radiusInnerSmall : metrics.radiusCollapsed
-                        color: (hovered || active) ? activeColor : inactiveColor
-
-                        ColumnLayout {
-                            width: parent.width
-                            height: parent.height
-
-                            Text {
-                                color: (iconButton.hovered || iconButton.active) ? iconButton.activeContentColor : iconButton.inactiveContentColor
-                                text: iconButton.iconGlyph
-                                font.family: Config.settings.iconFont
-                                font.weight: 400
-                                font.pixelSize: Styling.fontSize.lg
-                                Layout.preferredHeight: 16
-                                Layout.leftMargin: 0
-                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                                opacity: iconButton.expanded ? 1 : 0
-                                visible: iconButton.visible
-
-                                Behavior on color {
-                                    StdAnim {
-                                    }
-
-                                }
-
-                                Behavior on opacity {
-                                    StdAnim {
-                                    }
-
-                                }
-
-                            }
-
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onEntered: {
-                                iconButton.hovered = true;
-                                if (iconButton.tooltipText !== "")
-                                    Tooltip.showItem(iconButton, iconButton.tooltipText);
-
-                            }
-                            onExited: {
-                                iconButton.hovered = false;
-                                Tooltip.hide();
-                            }
-                            onClicked: iconButton.activated()
-                        }
-
-                        Behavior on bottomLeftRadius {
-                            StdAnim {
-                            }
-
-                        }
-
-                        Behavior on bottomRightRadius {
-                            StdAnim {
-                            }
-
-                        }
-
-                        Behavior on topLeftRadius {
-                            StdAnim {
-                            }
-
-                        }
-
-                        Behavior on topRightRadius {
-                            StdAnim {
-                            }
-
-                        }
-
-                        Behavior on color {
-                            StdAnim {
-                            }
-
-                        }
-
-                        Behavior on implicitHeight {
-                            StdAnim {
-                            }
-
-                        }
-
-                        Behavior on implicitWidth {
-                            StdAnim {
-                            }
-
-                        }
-
-                    }
-
-                }
-
-                Component {
                     id: recordingComp
 
-                    Loader {
-                        sourceComponent: barIconButtonComp
-                        onLoaded: {
-                            item.collapsible = false;
-                            item.active = Qt.binding(() => {
-                                return Recorder.isRecordingRunning;
-                            });
-                            item.iconGlyph = "screen_record";
-                            item.tooltipText = Qt.binding(() => {
-                                return Recorder.isRecordingRunning ? "Recording in progress (Click for controls)" : "Screen Recorder";
-                            });
-                            item.activeColor = Colours.palette.error_container;
-                            item.activeContentColor = Colours.palette.primary;
-                            item.activated.connect(() => {
-                                return IPCLoader.toggleRecordingAt(item);
-                            });
-                        }
+                    RecordingWidget {
                         Layout.alignment: barWindow.isVertical ? Qt.AlignHCenter : Qt.AlignVCenter
-                        Layout.preferredWidth: item ? item.implicitWidth : 0
-                        Layout.preferredHeight: item ? item.implicitHeight : 0
+                        isVertical: barWindow.isVertical
                     }
 
                 }
@@ -374,23 +162,9 @@ Scope {
                 Component {
                     id: notificationComp
 
-                    Loader {
-                        sourceComponent: barIconButtonComp
-                        onLoaded: {
-                            item.collapsible = false;
-                            item.iconGlyph = Qt.binding(() => {
-                                return Notifications.list.length != 0 ? "notifications_unread" : "notifications";
-                            });
-                            item.tooltipText = Qt.binding(() => {
-                                return Notifications.list.length != 0 ? (Notifications.list.length + " Notifications") : "No notifications";
-                            });
-                            item.activated.connect(() => {
-                                return IPCLoader.toggleNotifications();
-                            });
-                        }
+                    NotificationWidget {
                         Layout.alignment: barWindow.isVertical ? Qt.AlignHCenter : Qt.AlignVCenter
-                        Layout.preferredWidth: item ? item.implicitWidth : 0
-                        Layout.preferredHeight: item ? item.implicitHeight : 0
+                        isVertical: barWindow.isVertical
                     }
 
                 }
@@ -398,81 +172,9 @@ Scope {
                 Component {
                     id: quickActionsComp
 
-                    StyledRect {
-                        id: quickActionsButton
-
-                        property bool hovered: false
-                        readonly property bool isColoured: hovered || IPCLoader.isDashboardOpen
-
-                        variant: "internalbg"
-                        useDefaultRadius: false
-                        implicitWidth: barWindow.isVertical ? metrics.quickActionsThickness : Math.max(metrics.quickActionsMinLength, statusGroup.implicitWidth + metrics.quickActionsPaddingH)
-                        implicitHeight: barWindow.isVertical ? Math.max(metrics.quickActionsMinLength, statusGroup.implicitHeight + metrics.quickActionsPaddingV) : metrics.quickActionsDefaultThickness
-                        width: implicitWidth
-                        height: implicitHeight
+                    QuickActionsWidget {
                         Layout.alignment: barWindow.isVertical ? Qt.AlignHCenter : Qt.AlignVCenter
-                        topLeftRadius: hovered ? metrics.radiusInnerSmall : metrics.quickActionsRadiusCollapsed
-                        topRightRadius: hovered ? metrics.radiusInnerSmall : metrics.quickActionsRadiusCollapsed
-                        bottomLeftRadius: metrics.radiusInnerSmall
-                        bottomRightRadius: metrics.radiusInnerSmall
-                        color: isColoured ? Qt.alpha(Colours.palette.primary, metrics.widgetAlpha) : Qt.alpha(Colours.palette.surface, metrics.widgetAlpha)
-
-                        QuickStatusGroup {
-                            id: statusGroup
-
-                            anchors.centerIn: parent
-                            isVertical: barWindow.isVertical
-                            showClock: true
-                            showNetwork: true
-                            showBluetooth: true
-                            contentColor: quickActionsButton.isColoured ? Colours.palette.on_primary : Qt.alpha(Colours.palette.on_surface, metrics.widgetAlpha)
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onEntered: {
-                                quickActionsButton.hovered = true;
-                                Tooltip.showItem(quickActionsButton, "Control Center & Dashboard");
-                            }
-                            onExited: {
-                                quickActionsButton.hovered = false;
-                                Tooltip.hide();
-                            }
-                            onClicked: IPCLoader.toggleDashboard()
-                        }
-
-                        Behavior on color {
-                            StdAnim {
-                            }
-
-                        }
-
-                        Behavior on implicitHeight {
-                            StdAnim {
-                            }
-
-                        }
-
-                        Behavior on implicitWidth {
-                            StdAnim {
-                            }
-
-                        }
-
-                        Behavior on topLeftRadius {
-                            StdAnim {
-                            }
-
-                        }
-
-                        Behavior on topRightRadius {
-                            StdAnim {
-                            }
-
-                        }
-
+                        isVertical: barWindow.isVertical
                     }
 
                 }

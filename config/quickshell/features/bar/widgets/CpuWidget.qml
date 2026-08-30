@@ -1,5 +1,6 @@
 import QtQuick
 import qs.core
+import qs.features.common
 import qs.services
 
 ResourceWidget {
