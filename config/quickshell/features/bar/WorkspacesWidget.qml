@@ -14,7 +14,7 @@ Item {
     readonly property int count: Workspaces.hyprWorkspaces ? Workspaces.hyprWorkspaces.length : workspaceCount
     // Single formula, evaluated once and reused for both orientations
     // instead of being duplicated between width: and height:.
-    readonly property real crossAxisLength: metrics.thickness * count + metrics.slotSpacing * (count - 1) + metrics.outerPadding
+    readonly property real crossAxisLength: (metrics.restSlotSize * (count - 1)) + metrics.activeSlotSize + (metrics.slotSpacing * (count - 1)) + metrics.outerPadding
 
     width: isVertical ? metrics.thickness : crossAxisLength
     height: isVertical ? crossAxisLength : metrics.thickness
@@ -51,14 +51,14 @@ Item {
         id: metrics
 
         readonly property int thickness: 40 // bar thickness / collapsed slot size
-        readonly property int slotSpacing: Styling.spacing.sm
-        readonly property int outerPadding: Styling.spacing.lg // padding subtracted from preferredWidth/Height
-        readonly property int edgeMargin: 48 // non-centered anchor margin
-        readonly property int centeringOffset: Styling.spacing.xxxl // extra gap subtracted when centering
+        readonly property int slotSpacing: Styling.spacing.md
+        readonly property int outerPadding: Styling.spacing.lg
+        readonly property int edgeMargin: Styling.spacing.section * 2
+        readonly property int centeringOffset: Styling.spacing.xxxl
         readonly property int fallbackOppositeLength: 180
-        readonly property int hoverSlotSize: 48
-        readonly property int activeSlotSize: 40
-        readonly property int restSlotSize: 32
+        readonly property int hoverSlotSize: Styling.fontSize.xxl + Styling.spacing.md
+        readonly property int activeSlotSize: metrics.thickness
+        readonly property int restSlotSize: Styling.fontSize.xxl
         readonly property real occupiedTextAlpha: 0.9
     }
 
@@ -91,9 +91,10 @@ Item {
                 }
 
                 variant: isActive ? "focus" : "internalbg"
+                useDefaultRadius: false
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                Layout.preferredWidth: isVertical ? root.width - 16 : (hovered ? metrics.hoverSlotSize : (isActive ? metrics.hoverSlotSize : metrics.activeSlotSize))
-                Layout.preferredHeight: isVertical ? (hovered ? metrics.activeSlotSize : (isActive ? metrics.activeSlotSize : metrics.restSlotSize)) : root.height - 16
+                Layout.preferredWidth: isVertical ? (root.width - Styling.spacing.xxxl) : (isActive ? metrics.activeSlotSize : (hovered ? metrics.hoverSlotSize : metrics.restSlotSize))
+                Layout.preferredHeight: isVertical ? (isActive ? metrics.activeSlotSize : (hovered ? metrics.hoverSlotSize : metrics.restSlotSize)) : (root.height - Styling.spacing.xxxl)
                 color: {
                     if (isActive)
                         return Colours.palette.primary;

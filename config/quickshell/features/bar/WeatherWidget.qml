@@ -29,8 +29,8 @@ StyledRect {
 
     variant: "transparent"
     color: "transparent"
-    implicitWidth: isVertical ? 36 : (contentLayout.implicitWidth + 8)
-    implicitHeight: isVertical ? 42 : 32
+    implicitWidth: isVertical ? Styling.fontSize.display : (contentLayout.implicitWidth + Styling.spacing.lg)
+    implicitHeight: isVertical ? (Styling.fontSize.display + Styling.spacing.sm) : Styling.fontSize.display
     Component.onDestruction: Tooltip.hide()
 
     MouseArea {
@@ -57,8 +57,8 @@ StyledRect {
         anchors.centerIn: parent
         columns: root.isVertical ? 1 : 2
         rows: root.isVertical ? 2 : 1
-        columnSpacing: root.isVertical ? 0 : Styling.spacing.sm
-        rowSpacing: root.isVertical ? 2 : 0
+        columnSpacing: root.isVertical ? Styling.spacing.none : Styling.spacing.sm
+        rowSpacing: root.isVertical ? Styling.spacing.xs : Styling.spacing.none
 
         Text {
             id: iconText
@@ -86,7 +86,7 @@ StyledRect {
 
             text: Weather.temp || "--"
             font.family: Config.get("font", "SF Pro Display")
-            font.pixelSize: root.isVertical ? 10 : Styling.fontSize.body
+            font.pixelSize: root.isVertical ? Styling.fontSize.caption : Styling.fontSize.body
             font.weight: 600
             color: mouseArea.containsMouse ? Colours.palette.primary : Colours.palette.on_surface
             horizontalAlignment: Text.AlignHCenter

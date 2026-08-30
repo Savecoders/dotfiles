@@ -130,7 +130,7 @@ Scope {
                 height: barWindow.isVertical ? (Config.settings.bar.expand ? (barWindow.height - (marginVal * 2)) : dynamicHeight) : metrics.barThickness
                 color: Qt.alpha(Colours.palette.surface, Config.settings.bar.opacity !== undefined ? Config.settings.bar.opacity : metrics.opacityFallback)
                 border.width: barWindow.isFloating ? 1 : 0
-                border.color: barWindow.isFloating ? Colours.palette.outline_variant : "transparent"
+                border.color: barWindow.isFloating ? Qt.alpha(Colours.palette.outline, 0.15) : "transparent"
                 topLeftRadius: cornerRadius("tl")
                 topRightRadius: cornerRadius("tr")
                 bottomLeftRadius: cornerRadius("bl")
@@ -359,8 +359,7 @@ Scope {
                                 return Recorder.isRecordingRunning ? "Recording in progress (Click for controls)" : "Screen Recorder";
                             });
                             item.activeColor = Colours.palette.error_container;
-                            item.activeContentColor = Colours.palette.on_error_container;
-                            item.inactiveColor = Qt.alpha(Colours.palette.secondary_fixed, metrics.widgetAlpha);
+                            item.activeContentColor = Colours.palette.primary;
                             item.activated.connect(() => {
                                 return IPCLoader.toggleRecordingAt(item);
                             });

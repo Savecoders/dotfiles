@@ -17,8 +17,8 @@ StyledRect {
 
     variant: "transparent"
     color: "transparent"
-    implicitWidth: isVertical ? 32 : (contentRow.implicitWidth + 4)
-    implicitHeight: 32
+    implicitWidth: isVertical ? (Styling.fontSize.xxl + Styling.spacing.sm) : (contentLayout.implicitWidth + Styling.spacing.sm)
+    implicitHeight: isVertical ? (Styling.fontSize.xxl + Styling.spacing.sm) : Styling.fontSize.display
     Component.onDestruction: Tooltip.hide()
 
     MouseArea {
@@ -36,15 +36,19 @@ StyledRect {
         onClicked: root.clicked()
     }
 
-    RowLayout {
-        id: contentRow
+    GridLayout {
+        id: contentLayout
 
         anchors.centerIn: parent
-        spacing: Styling.spacing.md
+        columns: root.isVertical ? 1 : 2
+        rows: root.isVertical ? 2 : 1
+        columnSpacing: root.isVertical ? Styling.spacing.none : Styling.spacing.md
+        rowSpacing: root.isVertical ? Styling.spacing.none : Styling.spacing.none
 
         CircularProgressIcon {
-            width: 22
-            height: 22
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            width: Styling.fontSize.xxl
+            height: Styling.fontSize.xxl
             strokeWidth: 2
             iconPixelSize: Styling.fontSize.sm
             value: root.progressValue
@@ -59,6 +63,7 @@ StyledRect {
             font.pixelSize: Styling.fontSize.body
             font.weight: 600
             color: Colours.palette.on_surface
+            horizontalAlignment: Text.AlignHCenter
         }
 
     }
