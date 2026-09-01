@@ -48,17 +48,39 @@ Singleton {
 
     function toggle() {
         const adapter = QsBluetooth.Bluetooth.defaultAdapter;
-        if (adapter) {
-            const willEnable = !(adapter.state === QsBluetooth.BluetoothAdapterState.Enabled);
-            adapter.enabled = willEnable;
-            if (willEnable)
-                Quickshell.execDetached(["bluetoothctl", "power", "on"]);
-            else
-                Quickshell.execDetached(["bluetoothctl", "power", "off"]);
+        const isCurrentlyEnabled = adapter && adapter.state === QsBluetooth.BluetoothAdapterState.Enabled;
+        const willEnable = !isCurrentlyEnabled;
+        if (willEnable) {
+            rfkillUnblock.running = true;
         } else {
-            Quickshell.execDetached(["rfkill", "toggle", "bluetooth"]);
+            if (adapter) {
+                try {
+                    adapter.enabled = false;
+                } catch (e) {
+                }
+            }
+            Quickshell.execDetached(["bluetoothctl", "power", "off"]);
         }
         refreshTimer.restart();
+    }
+
+    Process {
+        id: rfkillUnblock
+
+        command: ["rfkill", "unblock", "bluetooth"]
+        onExited: {
+            Quickshell.execDetached(["bluetoothctl", "power", "on"]);
+            Qt.callLater(() => {
+                const adapter = QsBluetooth.Bluetooth.defaultAdapter;
+                if (adapter && adapter.state !== QsBluetooth.BluetoothAdapterState.Enabled) {
+                    try {
+                        adapter.enabled = true;
+                    } catch (e) {
+                    }
+                }
+                root.updateStatus();
+            });
+        }
     }
 
     Connections {
