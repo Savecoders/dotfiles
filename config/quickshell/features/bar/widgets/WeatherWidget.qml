@@ -87,7 +87,7 @@ StyledRect {
             text: Weather.temp || "--"
             font.family: Config.get("font", "SF Pro Display")
             font.pixelSize: root.isVertical ? Styling.fontSize.caption : Styling.fontSize.body
-            font.weight: 600
+            font.weight: 400
             color: mouseArea.containsMouse ? Colours.palette.primary : Colours.palette.on_surface
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter

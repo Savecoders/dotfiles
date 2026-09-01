@@ -95,13 +95,13 @@ func getNetworkInfo() NetworkInfo {
 				}
 			} else if connType == "802-11-wireless" {
 				strength := getWifiSignal()
-				icon := "signal_wifi_4_bar"
+				icon := "network_wifi"
 				if strength <= 25 {
-					icon = "signal_wifi_1_bar"
+					icon = "network_wifi_1_bar"
 				} else if strength <= 50 {
-					icon = "signal_wifi_2_bar"
+					icon = "network_wifi_2_bar"
 				} else if strength <= 75 {
-					icon = "signal_wifi_3_bar"
+					icon = "network_wifi_3_bar"
 				}
 				return NetworkInfo{
 					State:    "connected",
