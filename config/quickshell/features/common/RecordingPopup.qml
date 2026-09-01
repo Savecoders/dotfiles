@@ -108,8 +108,8 @@ AnchoredPopup {
                 Text {
                     text: "FPS"
                     font.family: Config.settings.font
-                    font.pixelSize: Styling.fontSize.xs
-                    font.weight: Font.Bold
+                    font.pixelSize: Styling.fontSize.md
+                    font.weight: Font.Normal
                     color: Colours.palette.on_surface_variant
                     Layout.preferredWidth: 32
                 }
@@ -140,7 +140,7 @@ AnchoredPopup {
                                 anchors.centerIn: parent
                                 text: String(fpsPill.fpsVal)
                                 font.family: Config.settings.font
-                                font.pixelSize: Styling.fontSize.xs
+                                font.pixelSize: Styling.fontSize.md
                                 font.weight: fpsPill.isSelected ? Font.Bold : Font.Normal
                                 color: fpsPill.isSelected ? Colours.palette.primary : Colours.palette.on_surface
                             }

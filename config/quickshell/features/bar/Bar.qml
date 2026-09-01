@@ -79,7 +79,8 @@ Scope {
                     "ram": ramComp,
                     "temp": tempComp,
                     "battery": batteryComp,
-                    "weather": weatherComp
+                    "weather": weatherComp,
+                    "media": mediaComp
                 })
 
                 function cornerRadius(corner) {
@@ -219,6 +220,15 @@ Scope {
                     id: weatherComp
 
                     WeatherWidget {
+                        isVertical: barWindow.isVertical
+                    }
+
+                }
+
+                Component {
+                    id: mediaComp
+
+                    MediaWidget {
                         isVertical: barWindow.isVertical
                     }
 

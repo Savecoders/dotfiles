@@ -140,7 +140,7 @@ AnchoredPopup {
                         Text {
                             text: pCard.iconCode
                             font.family: Config.settings.iconFont
-                            font.pixelSize: Styling.fontSize.md
+                            font.pixelSize: Styling.fontSize.xl
                             color: pCard.isSelected ? (pCard.hovered ? Colours.palette.on_primary_container : Colours.palette.primary) : (pCard.hovered ? Colours.palette.on_surface : Colours.palette.on_surface_variant)
                             Layout.alignment: Qt.AlignHCenter
 
@@ -157,8 +157,8 @@ AnchoredPopup {
                         Text {
                             text: pCard.profLabel
                             font.family: Config.settings.font
-                            font.pixelSize: Styling.fontSize.xs
-                            font.weight: pCard.isSelected ? Font.Bold : Font.Medium
+                            font.pixelSize: Styling.fontSize.body
+                            font.weight: pCard.isSelected ? Font.Medium : Font.Normal
                             color: pCard.isSelected ? (pCard.hovered ? Colours.palette.on_primary_container : Colours.palette.primary) : (pCard.hovered ? Colours.palette.on_surface : Colours.palette.on_surface_variant)
                             Layout.alignment: Qt.AlignHCenter
 
@@ -252,7 +252,7 @@ AnchoredPopup {
                         Text {
                             text: mCard.title
                             font.family: Config.settings.font
-                            font.pixelSize: Styling.fontSize.xs
+                            font.pixelSize: Styling.fontSize.md
                             color: Colours.palette.on_surface_variant
                             Layout.alignment: Qt.AlignHCenter
                         }
