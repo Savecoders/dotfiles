@@ -90,3 +90,9 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true 
 -- prints & ocr
 hl.bind("Print", hl.dsp.exec_cmd(apps.screenshot))
 hl.bind(mainMod .. "+ SHIFT + T", hl.dsp.exec_cmd(apps.ocr))
+
+-- Gestures Config
+hl.gesture({ fingers = 3, direction = "swipe", action = "move" })
+hl.gesture({ fingers = 3, direction = "pinch", action = "float" })
+hl.gesture({ fingers = 4, direction = "horizontal", action = "workspace" })
+hl.gesture({ fingers = 2, direction = "pinch", action = "cursor_zoom", zoom_level = 2, mode = "live" })

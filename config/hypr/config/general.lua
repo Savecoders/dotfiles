@@ -117,8 +117,3 @@ hl.device({
 	name = "epic-mouse-v1",
 	sensitivity = -0.5,
 })
-
--- Gestures Config
-hl.gesture({ fingers = 3, direction = "swipe", action = "move" })
-hl.gesture({ fingers = 3, direction = "pinch", action = "float" })
-hl.gesture({ fingers = 4, direction = "horizontal", action = "workspace" })
