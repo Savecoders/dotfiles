@@ -34,8 +34,8 @@ QtObject {
     }, {
         "widgetId": "battery",
         "displayName": "Battery",
-        "iconCode": "battery_charging_full",
-        "previewIcon": "battery_charging_full",
+        "iconCode": "battery_android_bolt",
+        "previewIcon": "battery_android_bolt",
         "previewText": "100%",
         "previewWidth": 68
     }, {

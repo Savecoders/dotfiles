@@ -41,24 +41,24 @@ Singleton {
 
     function getBatteryIcon() {
         if (root.charging)
-            return "battery_charging_full";
+            return "battery_android_bolt";
 
         if (root.percent <= 10)
-            return "battery_alert";
+            return "battery_android_alert";
         else if (root.percent <= 20)
-            return "battery_1_bar";
+            return "battery_android_1";
         else if (root.percent <= 35)
-            return "battery_2_bar";
+            return "battery_android_2";
         else if (root.percent <= 50)
-            return "battery_3_bar";
+            return "battery_android_3";
         else if (root.percent <= 65)
-            return "battery_4_bar";
+            return "battery_android_4";
         else if (root.percent <= 80)
-            return "battery_5_bar";
+            return "battery_android_5";
         else if (root.percent <= 95)
-            return "battery_6_bar";
+            return "battery_android_6";
         else
-            return "battery_full";
+            return "battery_android_full";
     }
 
     function updateHealth() {

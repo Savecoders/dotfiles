@@ -21,6 +21,12 @@ ShellRoot {
         deferredInitTimer.start();
     }
 
+    FontLoader {
+        id: iconFontLoader
+
+        source: Qt.resolvedUrl(Quickshell.shellDir + "/assets/fonts/MaterialSymbolsRounded.ttf")
+    }
+
     Timer {
         id: deferredInitTimer
 
