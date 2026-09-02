@@ -66,6 +66,13 @@ QtObject {
         "previewIcon": "partly_cloudy_day",
         "previewText": "24°C",
         "previewWidth": 68
+    }, {
+        "widgetId": "media",
+        "displayName": "Media Player",
+        "iconCode": "music_note",
+        "previewIcon": "music_note",
+        "previewText": "Play",
+        "previewWidth": 76
     }]
 
     function definitionForId(widgetId) {

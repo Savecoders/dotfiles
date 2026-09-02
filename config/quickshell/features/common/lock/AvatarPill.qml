@@ -14,8 +14,6 @@ StyledRect {
     height: 44
     radius: width / 2
     color: root.theme.primaryContainer
-    border.color: root.theme.primary
-    border.width: 2
 
     Theme {
         id: themeDefault

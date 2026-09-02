@@ -27,15 +27,15 @@ Singleton {
     }
 
     function refreshProfile() {
-        profileGetProc.running = false;
-        profileGetProc.running = true;
-        refreshPowerDraw();
+        if (!profileGetProc.running)
+            profileGetProc.running = true;
+
     }
 
     function togglePopup() {
         root.isPopupOpen = !root.isPopupOpen;
         if (root.isPopupOpen)
-            refreshProfile();
+            refreshAll();
 
     }
 
@@ -73,35 +73,46 @@ Singleton {
     }
 
     function refreshPowerDraw() {
-        powerNowProc.running = false;
-        powerNowProc.running = true;
+        if (!powerNowProc.running)
+            powerNowProc.running = true;
+
     }
 
-    Component.onCompleted: {
+    function refreshAll() {
+        batCapacity.reload();
         const capText = String(batCapacity.text()).trim();
         const val = parseInt(capText, 10);
         if (!isNaN(val))
             root.percent = val;
 
+        batStatus.reload();
         const st = String(batStatus.text()).trim();
-        root.status = st;
-        root.charging = (st === "Charging" || st === "Full");
+        if (st.length > 0) {
+            root.status = st;
+            root.charging = (st === "Charging" || st === "Full");
+        }
+        batEnergyFull.reload();
+        batEnergyDesign.reload();
         updateHealth();
+        refreshPowerDraw();
         refreshProfile();
+    }
+
+    Timer {
+        id: pollTimer
+
+        interval: 3000
+        running: true
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: root.refreshAll()
     }
 
     FileView {
         id: batCapacity
 
         path: "/sys/class/power_supply/BAT0/capacity"
-        watchChanges: true
         onLoadFailed: () => {
-        }
-        onTextChanged: {
-            const val = parseInt(String(text()).trim(), 10);
-            if (!isNaN(val))
-                root.percent = val;
-
         }
     }
 
@@ -109,14 +120,7 @@ Singleton {
         id: batStatus
 
         path: "/sys/class/power_supply/BAT0/status"
-        watchChanges: true
         onLoadFailed: () => {
-        }
-        onTextChanged: {
-            const st = String(text()).trim();
-            root.status = st;
-            root.charging = (st === "Charging" || st === "Full");
-            root.refreshPowerDraw();
         }
     }
 
@@ -124,15 +128,19 @@ Singleton {
         id: powerNowProc
 
         running: false
-        command: ["sh", "-c", "cat /sys/class/power_supply/BAT0/power_now 2>/dev/null || echo 0"]
+        command: ["sh", "-c", "cat /sys/class/power_supply/BAT0/power_now 2>/dev/null || (c=$(cat /sys/class/power_supply/BAT0/current_now 2>/dev/null) && v=$(cat /sys/class/power_supply/BAT0/voltage_now 2>/dev/null) && [ -n \"$c\" ] && [ -n \"$v\" ] && awk -v c=\"$c\" -v v=\"$v\" 'BEGIN { print (c*v)/1000000000000 }') || echo 0"]
 
         stdout: SplitParser {
             onRead: (data) => {
                 const val = parseFloat(String(data).trim());
-                if (!isNaN(val) && val > 0)
-                    root.powerDrawWatts = Math.round((val / 1e+06) * 10) / 10;
-                else
+                if (!isNaN(val) && val > 0) {
+                    if (val > 1000)
+                        root.powerDrawWatts = Math.round((val / 1e+06) * 10) / 10;
+                    else
+                        root.powerDrawWatts = Math.round(val * 10) / 10;
+                } else {
                     root.powerDrawWatts = 0;
+                }
             }
         }
 
@@ -142,26 +150,22 @@ Singleton {
         id: batEnergyFull
 
         path: "/sys/class/power_supply/BAT0/energy_full"
-        watchChanges: true
         onLoadFailed: () => {
         }
-        onTextChanged: root.updateHealth()
     }
 
     FileView {
         id: batEnergyDesign
 
         path: "/sys/class/power_supply/BAT0/energy_full_design"
-        watchChanges: true
         onLoadFailed: () => {
         }
-        onTextChanged: root.updateHealth()
     }
 
     Process {
         id: profileGetProc
 
-        running: true
+        running: false
         command: ["powerprofilesctl", "get"]
 
         stdout: SplitParser {
