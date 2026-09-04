@@ -19,19 +19,19 @@ type NetworkInfo struct {
 }
 
 func getConnectivity() string {
-	out, err := exec.Command("nmcli", "networking", "connectivity").Output()
+	out, err := exec.Command("nmcli", "networking").Output()
 	if err != nil {
 		return "off"
 	}
 	res := strings.TrimSpace(string(out))
-	if res == "full" || res == "limited" {
+	if res == "enabled" {
 		return "on"
 	}
 	return "off"
 }
 
 func getWifiSignal() int {
-	out, err := exec.Command("nmcli", "-t", "-f", "IN-USE,SIGNAL", "device", "wifi", "list").Output()
+	out, err := exec.Command("nmcli", "-t", "-f", "IN-USE,SIGNAL", "device", "wifi", "list", "--rescan", "no").Output()
 	if err != nil {
 		return 80
 	}

@@ -34,9 +34,11 @@ Singleton {
 
     function togglePopup() {
         root.isPopupOpen = !root.isPopupOpen;
-        if (root.isPopupOpen)
-            refreshAll();
-
+        if (root.isPopupOpen) {
+            refreshBattery();
+            refreshPowerDraw();
+            refreshProfile();
+        }
     }
 
     function getBatteryIcon() {
@@ -78,7 +80,7 @@ Singleton {
 
     }
 
-    function refreshAll() {
+    function refreshBattery() {
         batCapacity.reload();
         const capText = String(batCapacity.text()).trim();
         const val = parseInt(capText, 10);
@@ -91,21 +93,23 @@ Singleton {
             root.status = st;
             root.charging = (st === "Charging" || st === "Full");
         }
+    }
+
+    Component.onCompleted: {
+        refreshBattery();
         batEnergyFull.reload();
         batEnergyDesign.reload();
         updateHealth();
-        refreshPowerDraw();
         refreshProfile();
     }
 
     Timer {
         id: pollTimer
 
-        interval: 3000
+        interval: 10000
         running: true
         repeat: true
-        triggeredOnStart: true
-        onTriggered: root.refreshAll()
+        onTriggered: root.refreshBattery()
     }
 
     FileView {
