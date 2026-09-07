@@ -137,6 +137,7 @@ Singleton {
             property JsonObject recorder
             property JsonObject notifications
             property JsonObject overlays
+            property JsonObject idle
             property JsonObject lockscreen
             property JsonObject misc
             property JsonObject shell
@@ -220,6 +221,25 @@ Singleton {
 
             overlays: JsonObject {
                 property bool enabled: true
+            }
+
+            idle: JsonObject {
+                property bool enabled: true
+                property bool keepAwake: false
+                property bool lockBeforeSuspend: true
+                property bool fadeDimEnabled: true
+                property JsonObject ac: JsonObject {
+                    property int dimTimeout: 120
+                    property int lockTimeout: 300
+                    property int dpmsTimeout: 360
+                    property int suspendTimeout: 1800
+                }
+                property JsonObject battery: JsonObject {
+                    property int dimTimeout: 60
+                    property int lockTimeout: 180
+                    property int dpmsTimeout: 240
+                    property int suspendTimeout: 600
+                }
             }
 
             lockscreen: JsonObject {

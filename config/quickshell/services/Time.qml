@@ -28,6 +28,11 @@ Singleton {
         return Qt.formatDate(new Date(), "dddd, MMMM d, yyyy");
     }
 
+    function resync() {
+        clock.enabled = false;
+        clock.enabled = true;
+    }
+
     SystemClock {
         id: clock
 

@@ -47,6 +47,24 @@
     },
     "font": "SF Pro Display",
     "iconFont": "Material Symbols Rounded",
+    "idle": {
+        "enabled": true,
+        "keepAwake": false,
+        "lockBeforeSuspend": true,
+        "fadeDimEnabled": true,
+        "ac": {
+            "dimTimeout": 120,
+            "lockTimeout": 300,
+            "dpmsTimeout": 360,
+            "suspendTimeout": 1800
+        },
+        "battery": {
+            "dimTimeout": 60,
+            "lockTimeout": 180,
+            "dpmsTimeout": 240,
+            "suspendTimeout": 600
+        }
+    },
     "lockscreen": {
         "blurBackground": true,
         "showClock": true,

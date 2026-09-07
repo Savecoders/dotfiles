@@ -1,3 +1,4 @@
+import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
@@ -19,6 +20,12 @@ Scope {
 
     LazyLoader {
         id: loader
+
+        onActiveChanged: {
+            if (!active)
+                IPCLoader.isLockscreenOpen = false;
+
+        }
 
         WlSessionLock {
             id: lock
@@ -42,19 +49,31 @@ Scope {
 
     }
 
+    Connections {
+        function onIsLockscreenOpenChanged() {
+            if (IPCLoader.isLockscreenOpen) {
+                loader.activeAsync = true;
+            } else {
+                if (loader.item)
+                    loader.item.locked = false;
+
+            }
+        }
+
+        target: IPCLoader
+    }
+
     IpcHandler {
         function lock() {
-            loader.activeAsync = true;
+            IPCLoader.isLockscreenOpen = true;
         }
 
         function unlock() {
-            if (loader.item)
-                loader.item.locked = false;
-
+            IPCLoader.isLockscreenOpen = false;
         }
 
         function isLocked() {
-            return loader.active;
+            return IPCLoader.isLockscreenOpen;
         }
 
         target: "lock"

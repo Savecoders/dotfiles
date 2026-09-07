@@ -4,6 +4,7 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
+import Quickshell.Wayland
 import Quickshell.Widgets
 import qs.core
 import qs.features
@@ -39,6 +40,11 @@ Scope {
             visible: true
             exclusiveZone: metrics.barThickness + barWindow.effectiveMargin
             exclusionMode: ExclusionMode.Auto
+
+            IdleInhibitor {
+                window: barWindow
+                enabled: Idle.enabled && Idle.keepAwake
+            }
 
             QtObject {
                 id: metrics

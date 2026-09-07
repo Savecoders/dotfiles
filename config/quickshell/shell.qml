@@ -17,6 +17,7 @@ ShellRoot {
             Notifications.dummyInit();
             EyeProtection;
             Ipc;
+            Idle;
         });
         deferredInitTimer.start();
     }

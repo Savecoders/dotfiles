@@ -69,17 +69,12 @@ Item {
                 rWidth: root.cubeWidth
                 rHeight: root.rowHeight
                 compact: true
-                isToggled: Recorder.isRecordingRunning
-                bigText: Recorder.isRecordingRunning ? Recorder.fullTime : "Screen Capture"
-                iconCode: "screen_record"
-                bgColour: Qt.alpha(Colours.palette.error_container, 0.8)
-                colour: Qt.alpha(Colours.palette.on_error_container, 0.8)
-                bgColourHovered: Colours.palette.error_container
-                colourHovered: Colours.palette.on_error_container
-                bgColourHoveredUntoggled: Qt.alpha(Colours.palette.error_container, 0.5)
-                colourHoveredUntoggled: Qt.alpha(Colours.palette.on_error_container, 0.8)
+                isToggled: Idle.keepAwake
+                bigText: Idle.keepAwake ? "Keep\nAwake" : "Caffeine"
+                iconCode: "coffee"
+                iconSize: 25
                 toRun: () => {
-                    return Recorder.toggleRecording();
+                    return Idle.toggleKeepAwake();
                 }
             }
 
