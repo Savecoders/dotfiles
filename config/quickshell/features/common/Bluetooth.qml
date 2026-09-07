@@ -42,7 +42,6 @@ Singleton {
     }
 
     function getIcon() {
-        root.updateStatus();
         return root.iconName;
     }
 

@@ -29,6 +29,29 @@ Singleton {
     property var widgetGeometries: ({
     })
 
+    onIsLockscreenOpenChanged: {
+        if (root.isLockscreenOpen) {
+            root.isDashboardOpen = false;
+            root.isSettingsOpen = false;
+            root.isBatteryOpen = false;
+            root.isRecordingOpen = false;
+            root.isNotificationsOpen = false;
+        }
+    }
+
+    Connections {
+        target: Idle
+        function onMonitorsOffChanged() {
+            if (Idle.monitorsOff) {
+                root.isDashboardOpen = false;
+                root.isSettingsOpen = false;
+                root.isBatteryOpen = false;
+                root.isRecordingOpen = false;
+                root.isNotificationsOpen = false;
+            }
+        }
+    }
+
     function calculateItemGeometry(item) {
         if (!item)
             return {

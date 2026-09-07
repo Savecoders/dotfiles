@@ -158,7 +158,7 @@ func main() {
 				info := getNetworkInfo()
 				b, _ := json.Marshal(info)
 				fmt.Println(string(b))
-				time.Sleep(5 * time.Second)
+				time.Sleep(12 * time.Second)
 			}
 		}
 	}

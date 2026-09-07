@@ -28,7 +28,7 @@ Scope {
 
             screen: modelData
             color: "transparent"
-            visible: true
+            visible: (desktopWindow.roundingShown && desktopWindow.targetGap > 0) || Config.get("desktop.dimDesktopWallpaper", false)
             aboveWindows: false
             WlrLayershell.layer: WlrLayer.Bottom
             exclusionMode: ExclusionMode.Ignore

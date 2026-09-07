@@ -48,7 +48,7 @@ Item {
 
         Loader {
             anchors.fill: parent
-            active: Config.get("pfpLocation", "") !== ""
+            active: (Config.settings.usePfpInsteadOfLogo ?? false) && Config.get("pfpLocation", "") !== ""
 
             sourceComponent: IconImage {
                 property bool pfpFailed: false

@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Shapes
 import qs.core
 
 Item {
@@ -20,10 +21,6 @@ Item {
     implicitHeight: 24
     width: implicitWidth
     height: implicitHeight
-    onValueChanged: canvas.requestPaint()
-    onFgColorChanged: canvas.requestPaint()
-    onBgColorChanged: canvas.requestPaint()
-    onInnerCircleColorChanged: canvas.requestPaint()
 
     // Inner background disk (visible when innerCircleColor is set)
     StyledRect {
@@ -36,34 +33,49 @@ Item {
         color: root.innerCircleColor
         visible: root.innerCircleColor !== "transparent" && root.innerCircleColor.a > 0
     }
-
-    Canvas {
-        id: canvas
+    // Hardware-accelerated GPU progress ring
+    Shape {
+        id: shape
 
         anchors.fill: parent
-        renderTarget: Canvas.Image
-        onPaint: {
-            let ctx = getContext("2d");
-            ctx.clearRect(0, 0, width, height);
-            let cx = width / 2;
-            let cy = height / 2;
-            let r = (Math.min(width, height) - root.strokeWidth) / 2;
-            let start = -Math.PI / 2;
-            let progress = Math.max(0, Math.min(1, root.value));
-            let end = start + (2 * Math.PI * progress);
-            ctx.lineWidth = root.strokeWidth;
-            ctx.lineCap = "round";
-            // Track background ring
-            ctx.strokeStyle = root.bgColor;
-            ctx.beginPath();
-            ctx.arc(cx, cy, r, 0, 2 * Math.PI);
-            ctx.stroke();
-            // Progress ring
-            if (progress > 0) {
-                ctx.strokeStyle = root.fgColor;
-                ctx.beginPath();
-                ctx.arc(cx, cy, r, start, end);
-                ctx.stroke();
+        asynchronous: true
+        layer.enabled: true
+        layer.samples: 4
+
+        // Track background ring
+        ShapePath {
+            strokeColor: root.bgColor
+            strokeWidth: root.strokeWidth
+            fillColor: "transparent"
+            capStyle: ShapePath.RoundCap
+
+            PathAngleArc {
+                centerX: shape.width / 2
+                centerY: shape.height / 2
+                radiusX: Math.max(0, (Math.min(shape.width, shape.height) - root.strokeWidth) / 2)
+                radiusY: Math.max(0, (Math.min(shape.width, shape.height) - root.strokeWidth) / 2)
+                startAngle: 0
+                sweepAngle: 360
+            }
+        }
+
+        // Active progress ring
+        ShapePath {
+            readonly property real progress: Math.max(0, Math.min(1, root.value))
+            readonly property bool hasProgress: progress > 0.001
+
+            strokeColor: hasProgress ? root.fgColor : "transparent"
+            strokeWidth: root.strokeWidth
+            fillColor: "transparent"
+            capStyle: ShapePath.RoundCap
+
+            PathAngleArc {
+                centerX: shape.width / 2
+                centerY: shape.height / 2
+                radiusX: Math.max(0, (Math.min(shape.width, shape.height) - root.strokeWidth) / 2)
+                radiusY: Math.max(0, (Math.min(shape.width, shape.height) - root.strokeWidth) / 2)
+                startAngle: -90
+                sweepAngle: Math.max(0, Math.min(1, root.value)) * 360
             }
         }
     }

@@ -14,6 +14,11 @@ let
     # Prepend font dir to XDG_DATA_DIRS instead of clobbering FONTCONFIG_PATH
     export XDG_DATA_DIRS="${savior-fonts}/share:''${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
 
+    # Memory decay, disable THP, simple animation driver
+    export MALLOC_CONF="''${MALLOC_CONF:-thp:never,narenas:4,dirty_decay_ms:2000,muzzy_decay_ms:2000}"
+    export QSG_USE_SIMPLE_ANIMATION_DRIVER=1
+    export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+
     exec ${quickshellPkg}/bin/quickshell -p "$HOME/.config/quickshell/shell.qml" "$@"
   '';
 in pkgs.buildEnv {

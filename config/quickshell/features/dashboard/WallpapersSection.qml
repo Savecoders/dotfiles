@@ -164,7 +164,7 @@ Item {
                     sourceSize: Qt.size(280, 180)
                     fillMode: Image.PreserveAspectCrop
                     asynchronous: true
-                    cache: true
+                    cache: false
 
                     StyledRect {
                         variant: "internalbg"

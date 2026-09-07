@@ -36,7 +36,7 @@ Scope {
             implicitHeight: 800 + root.barOffset
             implicitWidth: 450 + root.barOffset
             color: "transparent"
-            visible: true
+            visible: root.notificationCount > 0
 
             anchors {
                 top: isTop

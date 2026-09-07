@@ -304,7 +304,7 @@ ClippingRectangle {
                         sourceSize: Qt.size(iconPanel.iconSize, iconPanel.iconSize)
                         fillMode: Image.PreserveAspectCrop
                         asynchronous: true
-                        cache: true
+                        cache: false
                         layer.enabled: Config.get("colours.genType", "") === "scheme-monochrome"
 
                         layer.effect: MultiEffect {

@@ -5,11 +5,13 @@ import qs.core
 StyledRect {
     id: root
 
+    property bool showing: false
     property int percent: 10
     property string iconName: "volume_up"
     property string labelText: percent + "%"
 
     function show() {
+        showing = true;
         if (fadeOut.running)
             fadeOut.stop();
 
@@ -25,7 +27,7 @@ StyledRect {
     border.color: Qt.alpha(Colours.palette.outline, 0.15)
     border.width: 1
     opacity: 0
-    visible: false
+    visible: showing
 
     Timer {
         id: hideTimer
@@ -66,6 +68,10 @@ StyledRect {
             target: root
             property: "visible"
             value: false
+        }
+
+        ScriptAction {
+            script: root.showing = false
         }
 
     }

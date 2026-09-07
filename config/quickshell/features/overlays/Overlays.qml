@@ -24,7 +24,7 @@ Scope {
             exclusionMode: ExclusionMode.Ignore
             color: "transparent"
             WlrLayershell.layer: WlrLayer.Overlay
-            visible: true
+            visible: volumeOverlay.showing || brightnessOverlay.showing || floatingTooltip.shouldShow
 
             anchors {
                 top: true

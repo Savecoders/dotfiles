@@ -1,6 +1,8 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import qs.core
+import qs.features
 pragma Singleton
 
 Singleton {
@@ -37,8 +39,8 @@ Singleton {
     }
 
     Timer {
-        interval: 2000
-        running: true
+        interval: 3000
+        running: !Idle.monitorsOff && (typeof IPCLoader !== "undefined" && IPCLoader ? !IPCLoader.isLockscreenOpen : true)
         repeat: true
         triggeredOnStart: true
         onTriggered: {
