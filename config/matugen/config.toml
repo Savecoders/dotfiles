@@ -76,3 +76,8 @@ post_hook = 'touch ~/.config/wezterm/wezterm.lua'
 input_path = '~/.config/matugen/templates/sddm-theme.conf'
 output_path = '~/.config/sddm/themes/savior/theme.conf'
 post_hook = '~/.config/matugen/scripts/sddm-theme-reload'
+
+[templates.nvim]
+input_path = '~/.config/matugen/templates/nvim-colors.vim'
+output_path = '~/.config/nvim/colors/matugen.vim'
+post_hook = 'pkill -SIGUSR1 nvim 2>/dev/null || true'
