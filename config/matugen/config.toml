@@ -63,6 +63,10 @@ output_path = '~/Dev/Learn/Notes/Dev/.obsidian/themes/MatugenWallpaper/theme.css
 input_path = '~/.config/matugen/templates/zed-colors.json'
 output_path = '~/.config/zed/themes/custom-theme.json'
 
+[templates.zed-blur]
+input_path = '~/.config/matugen/templates/zed-colors-blur.json'
+output_path = '~/.config/zed/themes/custom-theme-blur.json'
+
 [templates.quickshell]
 input_path = '~/.config/matugen/templates/quickshell-colours.json'
 output_path = '~/.config/quickshell/settings/colours.json'
