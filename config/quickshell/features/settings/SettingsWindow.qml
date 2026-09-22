@@ -167,7 +167,7 @@ Loader {
                             anchors.right: parent.right
                             anchors.topMargin: Styling.spacing.xl
                             anchors.rightMargin: 15
-                            color: hovered ? Colours.palette.surface_container_highest : Colours.palette.surface_container
+                            color: hovered ? Transparency.colorFor("popup", Colours.palette.surface_container_highest) : Transparency.colorFor("pane")
                             radius: Math.max(4, Config.settings.borderRadius - 10)
                             width: 32
                             height: 32

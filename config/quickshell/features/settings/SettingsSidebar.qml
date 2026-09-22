@@ -54,7 +54,7 @@ Item {
                 Layout.preferredHeight: 36
                 Layout.alignment: root.collapsed ? (Qt.AlignHCenter | Qt.AlignVCenter) : (Qt.AlignRight | Qt.AlignVCenter)
                 radius: Styling.radius.xxl
-                color: hovered ? Colours.palette.surface_container_highest : Colours.palette.surface_container
+                color: hovered ? Transparency.colorFor("popup", Colours.palette.surface_container_highest) : Transparency.colorFor("pane")
 
                 Text {
                     anchors.centerIn: parent

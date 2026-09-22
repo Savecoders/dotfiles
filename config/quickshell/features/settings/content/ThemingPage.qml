@@ -89,7 +89,6 @@ Item {
                         variant: "pane"
                         useDefaultRadius: false
                         radius: Config.settings.borderRadius
-                        color: Colours.palette.surface_container
                         border.color: Colours.palette.outline_variant
                         border.width: 1
                         Layout.preferredWidth: {
@@ -349,7 +348,6 @@ Item {
                         Layout.preferredWidth: 200
                         Layout.preferredHeight: 32
                         radius: Math.max(4, Config.settings.borderRadius - 12)
-                        color: Colours.palette.surface_container
                         border.color: searchInput.activeFocus ? Colours.palette.primary : Qt.alpha(Colours.palette.outline, 0.3)
                         border.width: 1
 
@@ -648,6 +646,162 @@ Item {
                     }
                     withIcon: true
                     iconCode: "category"
+                }
+
+                GenericTitle {
+                    Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                    Layout.preferredHeight: 20
+                    Layout.topMargin: 15
+                    text: "Quickshell Transparency & Blur"
+                    iconCode: "opacity"
+                }
+
+                GenericSeperator {
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    Layout.topMargin: 5
+                    Layout.preferredWidth: pageWrapper.width
+                    Layout.preferredHeight: 3
+                }
+
+                GenericToggleOption {
+                    message: "Enable Quickshell transparency"
+                    option: Config.get("theme.transparency.enabled", false)
+                    toRun: () => {
+                        let val = !Config.get("theme.transparency.enabled", false);
+                        Config.updateKey("theme.transparency.enabled", val);
+                        return val;
+                    }
+                    withIcon: true
+                    iconCode: "opacity"
+                }
+
+                GenericNumberOption {
+                    visible: Config.get("theme.transparency.enabled", false)
+                    message: "Quickshell components opacity"
+                    value: Config.get("theme.transparency.opacity", 0.85)
+                    maxValue: 1.0
+                    minValue: 0.1
+                    amountIncrease: () => {
+                        let cur = Config.get("theme.transparency.opacity", 0.85);
+                        if (cur < 1.0) {
+                            let nextVal = Math.min(1.0, parseFloat((cur + 0.05).toFixed(2)));
+                            Config.updateKey("theme.transparency.opacity", nextVal);
+                        }
+                    }
+                    amountDecrease: () => {
+                        let cur = Config.get("theme.transparency.opacity", 0.85);
+                        if (cur > 0.1) {
+                            let nextVal = Math.max(0.1, parseFloat((cur - 0.05).toFixed(2)));
+                            Config.updateKey("theme.transparency.opacity", nextVal);
+                        }
+                    }
+                    isFloat: true
+                    decimals: 2
+                    withIcon: true
+                    iconCode: "contrast"
+                }
+
+                GenericToggleOption {
+                    message: "Enable Quickshell background blur"
+                    option: Config.get("theme.transparency.blur", true)
+                    toRun: () => {
+                        let val = !Config.get("theme.transparency.blur", true);
+                        Config.updateKey("theme.transparency.blur", val);
+                        return val;
+                    }
+                    withIcon: true
+                    iconCode: "blur_on"
+                }
+
+                GenericTitle {
+                    Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                    Layout.preferredHeight: 20
+                    Layout.topMargin: 15
+                    text: "Application Windows (Hyprland)"
+                    iconCode: "filter_none"
+                }
+
+                GenericSeperator {
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    Layout.topMargin: 5
+                    Layout.preferredWidth: pageWrapper.width
+                    Layout.preferredHeight: 3
+                }
+
+                GenericToggleOption {
+                    message: "Enable window transparency"
+                    option: Config.get("hyprland.transparency.enabled", false)
+                    toRun: () => {
+                        let val = !Config.get("hyprland.transparency.enabled", false);
+                        Config.updateKey("hyprland.transparency.enabled", val);
+                        return val;
+                    }
+                    withIcon: true
+                    iconCode: "filter_none"
+                }
+
+                GenericNumberOption {
+                    visible: Config.get("hyprland.transparency.enabled", false)
+                    message: "Active window opacity"
+                    value: Config.get("hyprland.transparency.activeOpacity", 0.95)
+                    maxValue: 1.0
+                    minValue: 0.1
+                    amountIncrease: () => {
+                        let cur = Config.get("hyprland.transparency.activeOpacity", 0.95);
+                        if (cur < 1.0) {
+                            let nextVal = Math.min(1.0, parseFloat((cur + 0.05).toFixed(2)));
+                            Config.updateKey("hyprland.transparency.activeOpacity", nextVal);
+                        }
+                    }
+                    amountDecrease: () => {
+                        let cur = Config.get("hyprland.transparency.activeOpacity", 0.95);
+                        if (cur > 0.1) {
+                            let nextVal = Math.max(0.1, parseFloat((cur - 0.05).toFixed(2)));
+                            Config.updateKey("hyprland.transparency.activeOpacity", nextVal);
+                        }
+                    }
+                    isFloat: true
+                    decimals: 2
+                    withIcon: true
+                    iconCode: "desktop_windows"
+                }
+
+                GenericNumberOption {
+                    visible: Config.get("hyprland.transparency.enabled", false)
+                    message: "Inactive window opacity"
+                    value: Config.get("hyprland.transparency.inactiveOpacity", 0.85)
+                    maxValue: 1.0
+                    minValue: 0.1
+                    amountIncrease: () => {
+                        let cur = Config.get("hyprland.transparency.inactiveOpacity", 0.85);
+                        if (cur < 1.0) {
+                            let nextVal = Math.min(1.0, parseFloat((cur + 0.05).toFixed(2)));
+                            Config.updateKey("hyprland.transparency.inactiveOpacity", nextVal);
+                        }
+                    }
+                    amountDecrease: () => {
+                        let cur = Config.get("hyprland.transparency.inactiveOpacity", 0.85);
+                        if (cur > 0.1) {
+                            let nextVal = Math.max(0.1, parseFloat((cur - 0.05).toFixed(2)));
+                            Config.updateKey("hyprland.transparency.inactiveOpacity", nextVal);
+                        }
+                    }
+                    isFloat: true
+                    decimals: 2
+                    withIcon: true
+                    iconCode: "filter_none"
+                }
+
+                GenericToggleOption {
+                    message: "Enable window background blur"
+                    option: Config.get("hyprland.blur.enabled", true)
+                    toRun: () => {
+                        let val = !Config.get("hyprland.blur.enabled", true);
+                        Config.updateKey("hyprland.blur.enabled", val);
+                        return val;
+                    }
+                    withIcon: true
+                    iconCode: "lens_blur"
                 }
 
             }

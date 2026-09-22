@@ -120,7 +120,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 height: slider.trackHeight
                 radius: Math.min(height / 2, slider.sliderRadius)
-                color: slider.isHovered ? Colours.palette.surface_container_highest : Qt.alpha(Colours.palette.surface_container_high, 0.85)
+                color: slider.isHovered ? Transparency.colorFor("popup", Colours.palette.surface_container_highest) : Transparency.applyAlpha(Colours.palette.surface_container_high, 0.85)
 
                 Behavior on color {
                     ColorAnimation {
@@ -147,7 +147,7 @@ Item {
                     if (!slider.isEnabled)
                         return Colours.palette.surface_container;
 
-                    return slider.isHovered ? Colours.palette.primary : Qt.alpha(Colours.palette.primary, 0.88);
+                    return slider.isHovered ? Colours.palette.primary : Transparency.applyAlpha(Colours.palette.primary, 0.88);
                 }
 
                 Behavior on color {
@@ -171,7 +171,7 @@ Item {
                 radius: Math.min(width / 2, slider.sliderRadius)
                 anchors.verticalCenter: parent.verticalCenter
                 x: Math.max(0, Math.min(parent.width - width, slider.normalizedProgress * (parent.width - width)))
-                color: slider.isEnabled ? (slider.isHovered ? Colours.palette.on_primary_container : Colours.palette.primary) : Colours.palette.outline
+                color: slider.isEnabled ? (slider.isHovered ? Colours.palette.on_primary_container : Colours.palette.primary) : Colours.palette.outline // Intentionally opaque handle
                 opacity: (slider.normalizedProgress > 0.02 && slider.normalizedProgress < 0.98) ? 1 : (slider.isHovered ? 1 : 0.8)
 
                 Behavior on color {

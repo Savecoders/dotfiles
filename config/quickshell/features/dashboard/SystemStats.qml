@@ -59,7 +59,7 @@ Item {
                 fgColor: Colours.palette.primary
                 subTextColor: Colours.palette.on_surface
                 bgColor: Qt.alpha(Colours.palette.outline, 0.25)
-                innerCircleColor: Qt.alpha(Colours.palette.surface_container_highest, 0.6)
+                innerCircleColor: Transparency.applyAlpha(Colours.palette.surface_container_highest, 0.6)
             }
 
         }
@@ -99,7 +99,7 @@ Item {
                 fgColor: Colours.palette.primary
                 subTextColor: Colours.palette.on_surface
                 bgColor: Qt.alpha(Colours.palette.outline, 0.25)
-                innerCircleColor: Qt.alpha(Colours.palette.surface_container_highest, 0.6)
+                innerCircleColor: Transparency.applyAlpha(Colours.palette.surface_container_highest, 0.6)
             }
 
         }
@@ -139,7 +139,7 @@ Item {
                 fgColor: (Thermal.temp || 0) > 75 ? Colours.palette.error : Colours.palette.primary
                 subTextColor: (Thermal.temp || 0) > 75 ? Colours.palette.error : Colours.palette.on_surface
                 bgColor: Qt.alpha(Colours.palette.outline, 0.25)
-                innerCircleColor: Qt.alpha(Colours.palette.surface_container_highest, 0.6)
+                innerCircleColor: Transparency.applyAlpha(Colours.palette.surface_container_highest, 0.6)
             }
 
         }

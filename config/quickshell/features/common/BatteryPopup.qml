@@ -126,9 +126,9 @@ AnchoredPopup {
                     scale: pressed ? 0.98 : 1
                     color: {
                         if (isSelected)
-                            return hovered ? Colours.palette.primary_container : Colours.palette.surface_container_high;
+                            return hovered ? Transparency.colorFor("focus") : Transparency.colorFor("popup");
 
-                        return hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container_low;
+                        return hovered ? Transparency.colorFor("popup") : Transparency.colorFor("internalbg");
                     }
                     border.color: isSelected ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
                     border.width: isSelected ? 2 : 1
@@ -241,7 +241,6 @@ AnchoredPopup {
                     useDefaultRadius: true
                     Layout.fillWidth: true
                     Layout.preferredHeight: 50
-                    color: Colours.palette.surface_container_low
                     border.color: Colours.palette.outline_variant
                     border.width: 1
 

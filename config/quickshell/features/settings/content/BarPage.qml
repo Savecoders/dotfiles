@@ -106,8 +106,8 @@ Item {
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     Layout.preferredHeight: 25
                     Layout.topMargin: 25
-                    text: "Transparency & Margins"
-                    iconCode: "opacity"
+                    text: "Margins"
+                    iconCode: "fullscreen"
                 }
 
                 GenericSeperator {
@@ -115,30 +115,6 @@ Item {
                     Layout.topMargin: 5
                     Layout.preferredWidth: pageWrapper.width
                     Layout.preferredHeight: 3
-                }
-
-                GenericNumberOption {
-                    message: "Bar opacity (transparency)"
-                    value: Config.get("bar.opacity", 0.95)
-                    maxValue: 1
-                    minValue: 0.1
-                    amountIncrease: () => {
-                        let cur = Config.get("bar.opacity", 0.95);
-                        if (cur < 1) {
-                            let nextVal = Math.min(1, parseFloat((cur + 0.05).toFixed(2)));
-                            Config.updateKey("bar.opacity", nextVal);
-                        }
-                    }
-                    amountDecrease: () => {
-                        let cur = Config.get("bar.opacity", 0.95);
-                        if (cur > 0.1) {
-                            let nextVal = Math.max(0.1, parseFloat((cur - 0.05).toFixed(2)));
-                            Config.updateKey("bar.opacity", nextVal);
-                        }
-                    }
-                    isFloat: true
-                    withIcon: true
-                    iconCode: "opacity"
                 }
 
                 GenericNumberOption {
@@ -224,7 +200,6 @@ Item {
                     Layout.preferredHeight: widgetReorderColumn.implicitHeight + 40
                     Layout.topMargin: 12
                     radius: Config.get("borderRadius", 20)
-                    color: Colours.palette.surface_container
                     border.width: 1
                     border.color: Colours.palette.outline_variant
 
@@ -473,7 +448,6 @@ Item {
                                     width: Math.min(parent.width - 40, Math.max(200, wantedWidth))
                                     height: 48
                                     radius: Config.settings.borderRadius
-                                    color: Colours.palette.surface_container_high
                                     border.width: 1.5
                                     border.color: Colours.palette.outline
 
