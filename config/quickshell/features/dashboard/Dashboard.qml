@@ -18,6 +18,15 @@ SlideOverWindow {
     contentComponent: Component {
         Item {
             anchors.fill: parent
+            focus: true
+            Keys.onEscapePressed: {
+                if (IPCLoader.dashboardWifiView)
+                    IPCLoader.dashboardWifiView = false;
+                else if (IPCLoader.dashboardBluetoothView)
+                    IPCLoader.dashboardBluetoothView = false;
+                else
+                    IPCLoader.isDashboardOpen = false;
+            }
 
             MouseArea {
                 property int startX
@@ -69,7 +78,7 @@ SlideOverWindow {
 
                     MusicCard {
                         cardHeight: 108
-                        cardColor: Qt.alpha(Colours.palette.surface, 0.85)
+                        cardColor: Transparency.colorFor("common")
                         borderColor: Qt.alpha(Colours.palette.outline, 0.25)
                         Layout.fillWidth: true
                         Layout.leftMargin: 20

@@ -13,7 +13,7 @@ Item {
     property real barWidth: 3
     property real timelineHeight: 18
     property color primaryColor: Colours.palette.primary
-    property color inactiveBarColor: Qt.alpha(Colours.palette.surface_container_highest, 0.85)
+    property color inactiveBarColor: Transparency.applyAlpha(Colours.palette.surface_container_highest, 0.85)
     property color needleColor: Colours.palette.on_surface
     readonly property bool hasPlayer: Media.activePlayer != null
     readonly property real trackLength: {

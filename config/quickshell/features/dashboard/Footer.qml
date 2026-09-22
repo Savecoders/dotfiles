@@ -32,7 +32,7 @@ Item {
             else if (hovered)
                 return Colours.palette.primary_container;
             else
-                return Colours.palette.surface_container;
+                return Transparency.colorFor("pane");
         }
 
         function getTextColour() {
@@ -166,14 +166,13 @@ Item {
 
         property bool hovered: false
 
-        variant: "internalbg"
+        variant: hovered ? "popup" : "pane"
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 15
         anchors.right: parent.right
         anchors.rightMargin: 0
         height: 30
         width: 30
-        color: hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container
         radius: hovered ? Math.max(4, Config.settings.borderRadius - 4) : Math.max(4, Config.settings.borderRadius - 8)
 
         Text {
@@ -234,7 +233,6 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: 20
         radius: Config.settings.borderRadius
-        color: Colours.palette.surface_container
         opacity: root.isPowerMenuOpen ? 1 : 0
         visible: height == 30 ? false : true
         border.width: 1

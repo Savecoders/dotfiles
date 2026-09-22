@@ -19,7 +19,6 @@ StyledRect {
     useDefaultRadius: false
     Layout.preferredWidth: rWidth
     Layout.preferredHeight: rHeight
-    color: Colours.palette.surface_container
     border.width: 1
     border.color: isToggled ? "transparent" : Qt.alpha(Colours.palette.outline, 0.5)
     radius: Config.settings.borderRadius + 15
@@ -35,7 +34,7 @@ StyledRect {
         anchors.left: parent.left
         anchors.leftMargin: (parent.rWidth / 2) - (width / 2)
         radius: parent.radius
-        color: root.isToggled ? Colours.palette.primary : Colours.palette.surface_container
+        color: root.isToggled ? Colours.palette.primary : Transparency.colorFor(variant)
 
         StyledRect {
             variant: "focus"

@@ -22,7 +22,6 @@ StyledRect {
     variant: "popup"
     width: 144
     height: 144
-    color: Colours.palette.surface_container
     radius: Config.get("borderRadius", 16)
     border.color: Qt.alpha(Colours.palette.outline, 0.15)
     border.width: 1

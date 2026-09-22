@@ -74,6 +74,9 @@ Loader {
                 color: "transparent"
                 exclusionMode: ExclusionMode.Ignore
                 visible: true
+                focusable: root.isOpen
+                WlrLayershell.layer: WlrLayer.Overlay
+                WlrLayershell.keyboardFocus: root.isOpen ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
                 implicitWidth: root.isBarVertical ? (root.panelWidth + root.barClearance) : (root.panelWidth + (root.sideMargin * 2))
                 implicitHeight: root.isBarVertical ? (root.panelHeight + root.sideMargin) : (root.panelHeight + root.barClearance)
 
@@ -107,7 +110,7 @@ Loader {
 
                         variant: "popup"
                         anchors.fill: parent
-                        color: Colours.palette.surface
+                        color: Transparency.colorFor(variant)
                         radius: Config.settings.borderRadius ?? 8
                         border.color: Qt.alpha(Colours.palette.outline, 0.15)
                         border.width: 1

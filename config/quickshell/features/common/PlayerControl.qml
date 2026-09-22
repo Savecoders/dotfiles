@@ -21,7 +21,7 @@ StyledRect {
     variant: "internalbg"
     width: 35
     height: 35
-    color: isHovered ? root.bgColourHovered : root.bgColour
+    color: isHovered ? Transparency.applyAlpha(root.bgColourHovered, 1.0) : Transparency.applyAlpha(root.bgColour, 1.0)
     radius: isHovered ? Math.max(4, Config.settings.borderRadius - 6) : Math.max(4, Config.settings.borderRadius - 10)
 
     Text {

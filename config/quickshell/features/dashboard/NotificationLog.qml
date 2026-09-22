@@ -17,7 +17,11 @@ StyledRect {
     variant: "common"
     anchors.fill: parent
     radius: Config.settings.borderRadius
-    color: Colours.palette.surface
+
+    // The parent SlideOverWindow panel already paints the background. Painting a
+    // second translucent layer here stacks alpha (~0.83 * ~0.85 => ~0.97) and makes
+    // the Notification Center look opaque even when transparency is enabled.
+    color: "transparent"
     clip: true
 
     ColumnLayout {
@@ -53,7 +57,7 @@ StyledRect {
                 Layout.preferredHeight: 34
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 radius: isHovered ? Math.max(4, Config.settings.borderRadius - 10) : Math.max(4, Config.settings.borderRadius - 6)
-                color: isHovered ? Colours.palette.primary : Colours.palette.surface_container
+                color: isHovered ? Colours.palette.primary : Transparency.colorFor(variant)
 
                 RowLayout {
                     anchors.centerIn: parent

@@ -1057,7 +1057,6 @@ Item {
         useDefaultRadius: true
         Layout.fillWidth: true
         scale: pressed ? 0.98 : 1
-        color: Colours.palette.surface_container_low
         border.color: isSelected ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
         border.width: isSelected ? 2 : 1
 

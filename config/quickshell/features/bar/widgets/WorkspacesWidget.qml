@@ -83,6 +83,7 @@ Item {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.preferredWidth: isVertical ? (root.width - Styling.spacing.xxxl) : (isActive ? metrics.activeSlotSize : (hovered ? metrics.hoverSlotSize : metrics.restSlotSize))
                 Layout.preferredHeight: isVertical ? (isActive ? metrics.activeSlotSize : (hovered ? metrics.hoverSlotSize : metrics.restSlotSize)) : (root.height - Styling.spacing.xxxl)
+                // Intentionally opaque: workspace chips require solid contrast for active/window indicators
                 color: {
                     if (isActive)
                         return Colours.palette.primary;

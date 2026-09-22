@@ -222,7 +222,6 @@ Item {
 
                             background: StyledRect {
                                 variant: "internalbg"
-                                color: Colours.palette.surface_container
                                 radius: Math.max(4, Config.get("borderRadius", 20) - 12)
                                 border.color: dirInput.activeFocus ? Colours.palette.primary : Qt.alpha(Colours.palette.outline, 0.5)
                                 border.width: 1
@@ -239,7 +238,7 @@ Item {
                             Layout.preferredWidth: 34
                             Layout.preferredHeight: 32
                             radius: Math.max(4, Config.get("borderRadius", 20) - 12)
-                            color: hovered ? Colours.palette.surface_container_highest : Colours.palette.surface_container
+                            color: hovered ? Transparency.colorFor("popup", Colours.palette.surface_container_highest) : Transparency.colorFor("pane")
                             border.color: Qt.alpha(Colours.palette.outline, 0.5)
                             border.width: 1
 

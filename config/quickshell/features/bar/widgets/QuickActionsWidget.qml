@@ -22,7 +22,7 @@ StyledRect {
     topRightRadius: hovered ? metrics.radiusInnerSmall : metrics.radiusCollapsed
     bottomLeftRadius: metrics.radiusInnerSmall
     bottomRightRadius: metrics.radiusInnerSmall
-    color: isColoured ? Qt.alpha(Colours.palette.primary, metrics.widgetAlpha) : Qt.alpha(Colours.palette.surface, metrics.widgetAlpha)
+    color: isColoured ? Transparency.applyAlpha(Colours.palette.primary, 0.95) : Transparency.colorFor(variant)
     border.width: 0.5
     border.color: Qt.alpha(Colours.palette.outline, 0.15)
 

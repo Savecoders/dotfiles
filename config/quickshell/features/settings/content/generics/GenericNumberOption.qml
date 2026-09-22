@@ -18,6 +18,7 @@ RowLayout {
     required property var amountIncrease
     required property var amountDecrease
     property bool isFloat: false
+    property int decimals: 2
     property bool withIcon: false
     property string iconCode: "settings"
     property int iconSize: 20
@@ -70,6 +71,7 @@ RowLayout {
         amountIncrease: root.amountIncrease
         amountDecrease: root.amountDecrease
         isFloat: root.isFloat
+        decimals: root.decimals
     }
 
 }

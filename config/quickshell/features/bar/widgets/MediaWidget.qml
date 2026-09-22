@@ -20,7 +20,7 @@ StyledRect {
     width: implicitWidth
     height: implicitHeight
     visible: hasPlayer
-    color: hovered ? Qt.alpha(Colours.palette.surface_container_high, 0.85) : Qt.alpha(Colours.palette.surface, 0.8)
+    color: hovered ? Transparency.colorFor("popup") : Transparency.colorFor(variant)
     border.width: 0.5
     border.color: Qt.alpha(Colours.palette.outline, 0.15)
     topLeftRadius: hovered ? Math.max(0, Config.settings.borderRadius - 2) : 8

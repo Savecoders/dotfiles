@@ -131,7 +131,6 @@ RowLayout {
             variant: control.focus ? "focus" : "internalbg"
             implicitWidth: 120
             implicitHeight: 32
-            color: Colours.palette.surface_container
             border.color: control.focus ? Colours.palette.primary : Qt.alpha(Colours.palette.outline, 0.5)
             border.width: 1
             radius: Math.max(6, Config.settings.borderRadius - 10)
@@ -160,7 +159,6 @@ RowLayout {
                 border.color: Qt.alpha(Colours.palette.outline, 0.4)
                 border.width: 1
                 radius: Math.max(8, Config.settings.borderRadius - 8)
-                color: Colours.palette.surface_container_high
             }
 
         }

@@ -12,7 +12,7 @@ StyledRect {
     property string iconGlyph: "notifications"
     property color activeColor: Colours.palette.primary
     property color activeContentColor: Colours.palette.on_primary
-    property color inactiveColor: Qt.alpha(Colours.palette.surface, 0.8)
+    property color inactiveColor: Transparency.colorFor("internalbg")
     property color inactiveContentColor: Qt.alpha(Colours.palette.on_surface, 0.8)
     property bool hovered: false
     property string tooltipText: ""

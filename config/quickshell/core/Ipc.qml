@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import qs.core
 import qs.features
 import qs.services
 pragma Singleton
@@ -74,6 +75,20 @@ Singleton {
         }
 
         target: "global"
+    }
+
+    IpcHandler {
+        function transparencyState(): string {
+            return JSON.stringify({
+                "enabled": Transparency.enabled,
+                "opacity": Transparency.opacity,
+                "rawAdapterEnabled": Config.settings.theme.transparency.enabled,
+                "configGetEnabled": Config.get("theme.transparency.enabled", false),
+                "popupColor": String(Transparency.colorFor("popup"))
+            });
+        }
+
+        target: "debug"
     }
 
 }

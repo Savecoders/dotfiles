@@ -132,7 +132,7 @@ AnchoredPopup {
                             useDefaultRadius: true
                             Layout.fillWidth: true
                             Layout.preferredHeight: 30
-                            color: hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container_low
+                            color: hovered ? Transparency.colorFor("popup") : Transparency.colorFor("internalbg")
                             border.color: isSelected ? Colours.palette.primary : (hovered ? Colours.palette.outline : Qt.alpha(Colours.palette.outline, 0.2))
                             border.width: isSelected ? 2 : 1
 
