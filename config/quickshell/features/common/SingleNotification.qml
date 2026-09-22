@@ -255,7 +255,6 @@ ClippingRectangle {
             border.width: 0
             Layout.fillHeight: true
             Layout.preferredWidth: iconSize + 22
-            color: Colours.palette.surface_container_low
 
             ClippingWrapperRectangle {
                 anchors.centerIn: parent
@@ -401,7 +400,7 @@ ClippingRectangle {
                         Layout.preferredWidth: 20
                         Layout.preferredHeight: 20
                         radius: Styling.spacing.sm
-                        color: hovered ? Colours.palette.surface_container_highest : "transparent"
+                        color: hovered ? Transparency.colorFor(variant) : "transparent"
                         visible: !!(modelData && modelData.body && modelData.body.length > 40)
 
                         Text {
@@ -481,7 +480,7 @@ ClippingRectangle {
                             Layout.fillWidth: true
                             Layout.preferredHeight: 28
                             radius: Math.max(4, Config.get("borderRadius", 8) - 4)
-                            color: hovered ? Colours.palette.primary : Colours.palette.surface_container_high
+                            color: hovered ? Colours.palette.primary : Transparency.colorFor(variant)
 
                             Text {
                                 anchors.centerIn: parent
@@ -527,8 +526,6 @@ ClippingRectangle {
         height: Styling.radius.xs
         width: singleNotif.popup ? parent.width : 0
         anchors.bottom: parent.bottom
-        color: Colours.palette.primary
-        opacity: 0.8
         visible: singleNotif.popup && Config.get("notifications.showTimeoutBar", true)
     }
 
