@@ -6,8 +6,8 @@ pragma Singleton
 Singleton {
     id: root
 
-    readonly property bool enabled: Config.get("theme.transparency.enabled", false)
-    readonly property real opacity: Config.get("theme.transparency.opacity", 0.85)
+    readonly property bool enabled: Config.settings.theme.transparency.enabled
+    readonly property real opacity: Config.settings.theme.transparency.opacity
 
     function factorFor(variant) {
         switch (variant) {

@@ -9,11 +9,11 @@ Singleton {
     id: root
 
     readonly property bool isHyprland: Compositor.require("hyprland")
-    readonly property bool shellBlurEnabled: Config.get("theme.transparency.blur", true)
-    readonly property bool windowTransparencyEnabled: Config.get("hyprland.transparency.enabled", false)
-    readonly property real windowActiveOpacity: Config.get("hyprland.transparency.activeOpacity", 0.95)
-    readonly property real windowInactiveOpacity: Config.get("hyprland.transparency.inactiveOpacity", 0.85)
-    readonly property bool windowBlurEnabled: Config.get("hyprland.blur.enabled", true)
+    readonly property bool shellBlurEnabled: Config.settings.theme.transparency.blur
+    readonly property bool windowTransparencyEnabled: Config.settings.hyprland.transparency.enabled
+    readonly property real windowActiveOpacity: Config.settings.hyprland.transparency.activeOpacity
+    readonly property real windowInactiveOpacity: Config.settings.hyprland.transparency.inactiveOpacity
+    readonly property bool windowBlurEnabled: Config.settings.hyprland.blur.enabled
 
     property bool _initialized: false
     property string _lastGenLua: ""
