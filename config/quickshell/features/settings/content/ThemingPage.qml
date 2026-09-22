@@ -665,7 +665,7 @@ Item {
 
                 GenericToggleOption {
                     message: "Enable Quickshell transparency"
-                    option: Config.get("theme.transparency.enabled", false)
+                    option: Config.settings.theme.transparency.enabled
                     toRun: () => {
                         let val = !Config.get("theme.transparency.enabled", false);
                         Config.updateKey("theme.transparency.enabled", val);
@@ -676,9 +676,9 @@ Item {
                 }
 
                 GenericNumberOption {
-                    visible: Config.get("theme.transparency.enabled", false)
+                    visible: Config.settings.theme.transparency.enabled
                     message: "Quickshell components opacity"
-                    value: Config.get("theme.transparency.opacity", 0.85)
+                    value: Config.settings.theme.transparency.opacity
                     maxValue: 1.0
                     minValue: 0.1
                     amountIncrease: () => {
@@ -703,7 +703,7 @@ Item {
 
                 GenericToggleOption {
                     message: "Enable Quickshell background blur"
-                    option: Config.get("theme.transparency.blur", true)
+                    option: Config.settings.theme.transparency.blur
                     toRun: () => {
                         let val = !Config.get("theme.transparency.blur", true);
                         Config.updateKey("theme.transparency.blur", val);
@@ -730,7 +730,7 @@ Item {
 
                 GenericToggleOption {
                     message: "Enable window transparency"
-                    option: Config.get("hyprland.transparency.enabled", false)
+                    option: Config.settings.hyprland.transparency.enabled
                     toRun: () => {
                         let val = !Config.get("hyprland.transparency.enabled", false);
                         Config.updateKey("hyprland.transparency.enabled", val);
@@ -741,9 +741,9 @@ Item {
                 }
 
                 GenericNumberOption {
-                    visible: Config.get("hyprland.transparency.enabled", false)
+                    visible: Config.settings.hyprland.transparency.enabled
                     message: "Active window opacity"
-                    value: Config.get("hyprland.transparency.activeOpacity", 0.95)
+                    value: Config.settings.hyprland.transparency.activeOpacity
                     maxValue: 1.0
                     minValue: 0.1
                     amountIncrease: () => {
@@ -767,9 +767,9 @@ Item {
                 }
 
                 GenericNumberOption {
-                    visible: Config.get("hyprland.transparency.enabled", false)
+                    visible: Config.settings.hyprland.transparency.enabled
                     message: "Inactive window opacity"
-                    value: Config.get("hyprland.transparency.inactiveOpacity", 0.85)
+                    value: Config.settings.hyprland.transparency.inactiveOpacity
                     maxValue: 1.0
                     minValue: 0.1
                     amountIncrease: () => {
@@ -794,7 +794,7 @@ Item {
 
                 GenericToggleOption {
                     message: "Enable window background blur"
-                    option: Config.get("hyprland.blur.enabled", true)
+                    option: Config.settings.hyprland.blur.enabled
                     toRun: () => {
                         let val = !Config.get("hyprland.blur.enabled", true);
                         Config.updateKey("hyprland.blur.enabled", val);
