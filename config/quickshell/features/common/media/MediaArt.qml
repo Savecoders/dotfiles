@@ -17,7 +17,7 @@ ClippingWrapperRectangle {
     implicitHeight: artSize
     width: implicitWidth
     height: implicitHeight
-    color: Qt.alpha(Colours.palette.surface_container_highest, 0.8)
+    color: Transparency.applyAlpha(Colours.palette.surface_container_highest, 0.8)
 
     Item {
         anchors.fill: parent

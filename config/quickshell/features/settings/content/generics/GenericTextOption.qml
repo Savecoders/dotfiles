@@ -57,7 +57,6 @@ RowLayout {
         background: StyledRect {
             variant: "internalbg"
             useDefaultRadius: false
-            color: Colours.palette.surface_container
             radius: Math.max(4, Config.settings.borderRadius - 12)
             border.color: inputField.activeFocus ? Colours.palette.primary : Qt.alpha(Colours.palette.outline, 0.5)
             border.width: 1

@@ -87,11 +87,10 @@ Item {
                 property bool isSelected: root.currentPosition === posKey
                 property bool hovered: false
 
-                variant: "internalbg"
+                variant: hovered ? "popup" : "internalbg"
                 useDefaultRadius: true
                 Layout.fillWidth: true
                 Layout.preferredHeight: 96
-                color: hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container_low
                 border.color: isSelected ? Colours.palette.primary : (hovered ? Colours.palette.outline : Qt.alpha(Colours.palette.outline, 0.2))
                 border.width: isSelected ? 2 : 1
 
@@ -106,13 +105,16 @@ Item {
                         height: 40
 
                         // Monitor Screen Body
-                        Rectangle {
+                        StyledRect {
                             id: screenBody
 
+                            variant: "internalbg"
+                            useDefaultRadius: false
+                            customRadius: 5
+                            radius: 5
                             width: 56
                             height: 32
-                            radius: 5
-                            color: Colours.palette.surface_container_lowest
+                            color: Transparency.colorFor(variant, Colours.palette.surface_container_lowest)
                             border.color: pCard.isSelected ? Colours.palette.primary : Colours.palette.outline_variant
                             border.width: 1
 

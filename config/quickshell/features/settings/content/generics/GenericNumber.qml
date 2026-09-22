@@ -17,20 +17,20 @@ StyledRect {
     required property var amountIncrease
     required property var amountDecrease
     required property bool isFloat
+    property int decimals: 2
 
     function format() {
         if (root.isFloat)
-            return root.value.toFixed(1);
+            return root.value.toFixed(root.decimals);
         else
             return root.value;
     }
 
-    variant: "internalbg"
+    variant: isHovered ? "popup" : "pane"
     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-    color: isHovered ? Colours.palette.surface_container_high : Colours.palette.surface_container
     radius: Config.settings.borderRadius - 5
     Layout.preferredHeight: 29
-    Layout.preferredWidth: 68
+    Layout.preferredWidth: root.isFloat ? 80 : 68
 
     HoverHandler {
         parent: parent

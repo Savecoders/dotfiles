@@ -59,7 +59,7 @@ Item {
             radius: root.playRadius
             bgColour: Colours.palette.primary
             colour: Colours.palette.on_primary
-            bgColourHovered: Qt.alpha(Colours.palette.primary, 0.85)
+            bgColourHovered: Transparency.applyAlpha(Colours.palette.primary, 0.85)
             colourHovered: Colours.palette.on_primary
             Layout.alignment: Qt.AlignCenter
         }

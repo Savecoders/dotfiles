@@ -20,6 +20,7 @@ StyledRect {
     border.width: 0
     Layout.preferredWidth: hovered ? 110 : 70
     Layout.preferredHeight: 30
+    // Intentionally opaque: power menu action button requires solid contrast on hover
     color: hovered ? Colours.palette.primary_container : "transparent"
     radius: Math.max(4, Config.settings.borderRadius - 10)
 

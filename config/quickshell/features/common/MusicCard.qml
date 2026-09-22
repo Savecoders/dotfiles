@@ -13,7 +13,7 @@ ClippingWrapperRectangle {
 
     property int cardHeight: 64
     property real cardRadius: Config.get("borderRadius", 4)
-    property color cardColor: Qt.rgba(0, 0, 0, 0.5)
+    property color cardColor: Transparency.applyAlpha(Colours.palette.surface, 0.85)
     property color borderColor: Qt.rgba(1, 1, 1, 0.15)
     readonly property bool isCompact: cardHeight <= 70
     readonly property bool hasPlayer: Media.activePlayer != null
@@ -54,7 +54,7 @@ ClippingWrapperRectangle {
         // Dark Overlay
         StyledRect {
             anchors.fill: parent
-            color: Qt.alpha(Colours.palette.surface, 0.4)
+            color: Transparency.applyAlpha(Colours.palette.surface, 0.4)
             radius: root.radius
             useDefaultRadius: false
             border.width: 0
