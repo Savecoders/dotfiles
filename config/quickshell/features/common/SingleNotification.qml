@@ -171,7 +171,7 @@ ClippingRectangle {
 
     }
     radius: Config.get("borderRadius", 20)
-    color: singleNotif.popup ? Colours.palette.surface_container : Qt.alpha(Colours.palette.surface_container_low, 0.7)
+    color: singleNotif.popup ? Transparency.colorFor("pane") : Transparency.colorFor("internalbg")
     border.color: Qt.alpha(Colours.palette.outline, 0.15)
     border.width: 1
     implicitWidth: ListView.view ? ListView.view.width : 400

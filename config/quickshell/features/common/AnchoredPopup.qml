@@ -95,7 +95,7 @@ Loader {
                     useDefaultRadius: true
                     width: root.cardWidth
                     height: innerContentLoader.item ? (innerContentLoader.item.implicitHeight + (root.contentMargin * 2)) : 200
-                    color: Colours.palette.surface
+                    color: Transparency.colorFor(variant)
                     border.color: Colours.palette.outline_variant
                     border.width: 1
                     opacity: root.isOpen ? 1 : 0

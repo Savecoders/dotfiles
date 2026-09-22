@@ -108,7 +108,7 @@ Loader {
 
                         variant: "pane"
                         anchors.fill: parent
-                        color: Colours.palette.surface
+                        color: Transparency.colorFor(variant)
                         radius: Config.settings.borderRadius
 
                         Text {

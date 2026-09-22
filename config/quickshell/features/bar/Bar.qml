@@ -59,7 +59,6 @@ Scope {
                 readonly property int workspacesFallbackLength: 160
                 readonly property int bottomLayoutFallbackLength: 180
                 readonly property real marginFallback: 16
-                readonly property real opacityFallback: 0.9
                 readonly property real radiusOuter: Config.settings.borderRadius
             }
 
@@ -119,8 +118,7 @@ Scope {
                 anchors.bottomMargin: barWindow.isVertical ? (Config.settings.bar.expand ? marginVal : 0) : (barWindow.pos === "bottom" ? barWindow.effectiveMargin : marginVal)
                 width: barWindow.isVertical ? metrics.barThickness : (Config.settings.bar.expand ? (barWindow.width - (marginVal * 2)) : dynamicWidth)
                 height: barWindow.isVertical ? (Config.settings.bar.expand ? (barWindow.height - (marginVal * 2)) : dynamicHeight) : metrics.barThickness
-                color: Qt.alpha(Colours.palette.surface, Config.settings.bar.opacity !== undefined ? Config.settings.bar.opacity : metrics.opacityFallback)
-                border.width: barWindow.isFloating ? 1 : 0
+                color: Transparency.colorFor(variant)
                 border.color: barWindow.isFloating ? Qt.alpha(Colours.palette.outline, 0.15) : "transparent"
                 topLeftRadius: cornerRadius("tl")
                 topRightRadius: cornerRadius("tr")

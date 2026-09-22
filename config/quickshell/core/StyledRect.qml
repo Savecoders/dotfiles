@@ -9,22 +9,11 @@ Rectangle {
     property bool useDefaultRadius: true
     property int customRadius: 0
 
+    readonly property bool transparencyEnabled: Transparency.enabled
+    readonly property real globalOpacity: Transparency.opacity
+
     radius: useDefaultRadius ? Config.get("borderRadius", 20) : root.customRadius
-    color: {
-        switch (variant) {
-        case "pane":
-            return Qt.alpha(Colours.palette.surface_container, 0.95);
-        case "popup":
-            return Qt.alpha(Colours.palette.surface_container_high, 0.98);
-        case "internalbg":
-            return Qt.alpha(Colours.palette.surface_container_low, 0.8);
-        case "focus":
-            return Qt.alpha(Colours.palette.primary_container, 0.9);
-        case "common":
-        default:
-            return Colours.palette.surface;
-        }
-    }
+    color: Transparency.colorFor(variant)
     border.color: {
         switch (variant) {
         case "focus":
