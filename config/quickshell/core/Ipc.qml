@@ -78,7 +78,7 @@ Singleton {
     }
 
     IpcHandler {
-        function transparencyState(): string {
+        function transparencyState() : string {
             return JSON.stringify({
                 "enabled": Transparency.enabled,
                 "opacity": Transparency.opacity,

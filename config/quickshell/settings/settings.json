@@ -8,7 +8,6 @@
             "workspaces"
         ],
         "margin": 8,
-        "opacity": 0.6,
         "position": "bottom",
         "rightWidgets": [
             "systray",
@@ -111,6 +110,23 @@
     "secondPreviousWallpaper": "/home/save/Pictures/Wallpapers/dark/a_tree_in_a_forest.png",
     "shell": {
         "version": "1.0.0"
+    },
+    "theme": {
+        "transparency": {
+            "enabled": false,
+            "opacity": 0.85,
+            "blur": true
+        }
+    },
+    "hyprland": {
+        "transparency": {
+            "enabled": false,
+            "activeOpacity": 0.95,
+            "inactiveOpacity": 0.85
+        },
+        "blur": {
+            "enabled": true
+        }
     },
     "usePfpInsteadOfLogo": false,
     "wallpaperToSet": "/home/save/Pictures/Wallpapers/dark/in.JPG",

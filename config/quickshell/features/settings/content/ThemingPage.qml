@@ -679,12 +679,12 @@ Item {
                     visible: Config.settings.theme.transparency.enabled
                     message: "Quickshell components opacity"
                     value: Config.settings.theme.transparency.opacity
-                    maxValue: 1.0
+                    maxValue: 1
                     minValue: 0.1
                     amountIncrease: () => {
                         let cur = Config.get("theme.transparency.opacity", 0.85);
-                        if (cur < 1.0) {
-                            let nextVal = Math.min(1.0, parseFloat((cur + 0.05).toFixed(2)));
+                        if (cur < 1) {
+                            let nextVal = Math.min(1, parseFloat((cur + 0.05).toFixed(2)));
                             Config.updateKey("theme.transparency.opacity", nextVal);
                         }
                     }
@@ -744,12 +744,12 @@ Item {
                     visible: Config.settings.hyprland.transparency.enabled
                     message: "Active window opacity"
                     value: Config.settings.hyprland.transparency.activeOpacity
-                    maxValue: 1.0
+                    maxValue: 1
                     minValue: 0.1
                     amountIncrease: () => {
                         let cur = Config.get("hyprland.transparency.activeOpacity", 0.95);
-                        if (cur < 1.0) {
-                            let nextVal = Math.min(1.0, parseFloat((cur + 0.05).toFixed(2)));
+                        if (cur < 1) {
+                            let nextVal = Math.min(1, parseFloat((cur + 0.05).toFixed(2)));
                             Config.updateKey("hyprland.transparency.activeOpacity", nextVal);
                         }
                     }
@@ -770,12 +770,12 @@ Item {
                     visible: Config.settings.hyprland.transparency.enabled
                     message: "Inactive window opacity"
                     value: Config.settings.hyprland.transparency.inactiveOpacity
-                    maxValue: 1.0
+                    maxValue: 1
                     minValue: 0.1
                     amountIncrease: () => {
                         let cur = Config.get("hyprland.transparency.inactiveOpacity", 0.85);
-                        if (cur < 1.0) {
-                            let nextVal = Math.min(1.0, parseFloat((cur + 0.05).toFixed(2)));
+                        if (cur < 1) {
+                            let nextVal = Math.min(1, parseFloat((cur + 0.05).toFixed(2)));
                             Config.updateKey("hyprland.transparency.inactiveOpacity", nextVal);
                         }
                     }

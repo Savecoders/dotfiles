@@ -32,12 +32,14 @@ StyledRect {
     Layout.preferredHeight: rHeight
     Layout.alignment: root.collapsed ? Qt.AlignHCenter : Qt.AlignLeft
     color: {
+        // Intentionally opaque accent when selected
+
         if (root.selected == root.number)
-            return Colours.palette.primary; // Intentionally opaque accent when selected
+            return Colours.palette.primary;
         else if (isHovered)
-            return Transparency.applyAlpha(bgColourHovered, 1.0);
+            return Transparency.applyAlpha(bgColourHovered, 1);
         else
-            return bgColour === "transparent" ? "transparent" : Transparency.applyAlpha(bgColour, 1.0);
+            return bgColour === "transparent" ? "transparent" : Transparency.applyAlpha(bgColour, 1);
     }
     radius: root.collapsed ? 20 : Math.max(6, Config.settings.borderRadius - 8)
 

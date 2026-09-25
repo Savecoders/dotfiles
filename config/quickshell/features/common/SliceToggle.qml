@@ -50,8 +50,8 @@ StyledRect {
             return switchMouseArea.containsMouse ? Transparency.colorFor("popup") : "transparent";
 
         if (root.isToggled)
-            return Colours.palette.primary; // Intentionally opaque accent when active
-
+            return Colours.palette.primary;
+ // Intentionally opaque accent when active
         if (leftMouseArea.containsMouse || compactMouseArea.containsMouse)
             return Transparency.colorFor("popup");
 

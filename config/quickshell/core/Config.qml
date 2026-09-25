@@ -141,6 +141,8 @@ Singleton {
             property JsonObject lockscreen
             property JsonObject misc
             property JsonObject shell
+            property JsonObject theme
+            property JsonObject hyprland
 
             onWeatherLocationChanged: {
                 Weather.reload();
@@ -152,7 +154,6 @@ Singleton {
                 property bool workspacesCenterAligned: true
                 property bool expand: false
                 property string position: "left"
-                property real opacity: 0.95
                 property int margin: 10
                 property var leftWidgets: ["icon", "workspaces"]
                 property var rightWidgets: ["systray", "cpu", "ram", "temp", "battery", "notifications", "quickactions", "recording"]
@@ -228,18 +229,23 @@ Singleton {
                 property bool keepAwake: false
                 property bool lockBeforeSuspend: true
                 property bool fadeDimEnabled: true
-                property JsonObject ac: JsonObject {
+                property JsonObject ac
+                property JsonObject battery
+
+                ac: JsonObject {
                     property int dimTimeout: 120
                     property int lockTimeout: 300
                     property int dpmsTimeout: 360
                     property int suspendTimeout: 1800
                 }
-                property JsonObject battery: JsonObject {
+
+                battery: JsonObject {
                     property int dimTimeout: 60
                     property int lockTimeout: 180
                     property int dpmsTimeout: 240
                     property int suspendTimeout: 600
                 }
+
             }
 
             lockscreen: JsonObject {
@@ -258,6 +264,34 @@ Singleton {
 
             shell: JsonObject {
                 property string version: "1.0.0"
+            }
+
+            theme: JsonObject {
+                property JsonObject transparency
+
+                transparency: JsonObject {
+                    property bool enabled: false
+                    property real opacity: 0.85
+                    property bool blur: true
+                }
+
+            }
+
+            hyprland: JsonObject {
+                property JsonObject transparency
+
+                transparency: JsonObject {
+                    property bool enabled: false
+                    property real activeOpacity: 0.95
+                    property real inactiveOpacity: 0.85
+                }
+
+                property JsonObject blur
+
+                blur: JsonObject {
+                    property bool enabled: true
+                }
+
             }
 
         }

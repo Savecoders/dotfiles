@@ -21,7 +21,7 @@ Singleton {
             return 0.95;
         case "common":
         default:
-            return 1.0;
+            return 1;
         }
     }
 
@@ -47,14 +47,15 @@ Singleton {
             return col;
 
         let factor = factorFor(variant);
-        return Qt.alpha(col, Math.max(0.05, Math.min(1.0, opacity * factor)));
+        return Qt.alpha(col, Math.max(0.05, Math.min(1, opacity * factor)));
     }
 
     function applyAlpha(col, factor) {
         if (!enabled)
             return col;
 
-        let f = (factor !== undefined && factor !== null) ? factor : 1.0;
-        return Qt.alpha(col, Math.max(0.05, Math.min(1.0, opacity * f)));
+        let f = (factor !== undefined && factor !== null) ? factor : 1;
+        return Qt.alpha(col, Math.max(0.05, Math.min(1, opacity * f)));
     }
+
 }

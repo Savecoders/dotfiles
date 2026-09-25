@@ -33,6 +33,7 @@ Item {
         color: root.innerCircleColor
         visible: root.innerCircleColor !== "transparent" && root.innerCircleColor.a > 0
     }
+
     // Hardware-accelerated GPU progress ring
     Shape {
         id: shape
@@ -57,6 +58,7 @@ Item {
                 startAngle: 0
                 sweepAngle: 360
             }
+
         }
 
         // Active progress ring
@@ -77,7 +79,9 @@ Item {
                 startAngle: -90
                 sweepAngle: Math.max(0, Math.min(1, root.value)) * 360
             }
+
         }
+
     }
 
     ColumnLayout {

@@ -15,9 +15,8 @@ StyledRect {
     property bool hovered: mouseArea.containsMouse
     property bool pressed: mouseArea.pressed
     // Default primitives
-    readonly property real defaultHeight: 38
-    readonly property real pressedScale: 0.98
-    readonly property int pressAnimDuration: 80 // Faster response for tactile press feedback
+    readonly property real defaultHeight: 32
+    property int btnRadius: Math.max(4, Config.get("borderRadius", 16) - 10)
     readonly property int borderWidth: 1
     // Centralized style palette map per variant
     readonly property var variantStyle: ({
@@ -83,13 +82,14 @@ StyledRect {
             console.warn(`MButton: unknown btnVariant "${btnVariant}", falling back to "primary".`);
 
     }
-    useDefaultRadius: true
+    useDefaultRadius: false
+    customRadius: root.btnRadius
+    radius: root.btnRadius
     implicitHeight: defaultHeight
     implicitWidth: btnVariant === "iconOnly" ? defaultHeight : (contentRow.implicitWidth + (Styling.spacing.md * 2))
     Layout.preferredHeight: defaultHeight
     Layout.preferredWidth: btnVariant === "iconOnly" ? defaultHeight : -1
     Layout.fillWidth: btnVariant !== "iconOnly"
-    scale: pressed ? pressedScale : 1
     opacity: root.enabled ? 1 : 0.45
     border.width: borderWidth
     color: pressed ? currentStyle.bgPressed : (hovered ? currentStyle.bgHover : currentStyle.bg)
@@ -187,14 +187,6 @@ StyledRect {
     Behavior on opacity {
         PropertyAnimation {
             duration: Config.settings.animationSpeed ?? 150
-            easing.type: Easing.OutQuad
-        }
-
-    }
-
-    Behavior on scale {
-        NumberAnimation {
-            duration: root.pressAnimDuration
             easing.type: Easing.OutQuad
         }
 
