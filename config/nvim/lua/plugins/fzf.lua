@@ -3,6 +3,50 @@ return {
   cmd = "FzfLua",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   keys = {
+    -- Files & Find (leader + f)
+    {
+      "<leader>ff",
+      function()
+        require("fzf-lua").files({ hidden = true })
+      end,
+      desc = "Find Files",
+    },
+    {
+      "<leader>fr",
+      function()
+        require("fzf-lua").oldfiles()
+      end,
+      desc = "Recent Files",
+    },
+    {
+      "<leader>fb",
+      function()
+        require("fzf-lua").buffers()
+      end,
+      desc = "Find Buffers",
+    },
+    {
+      "<leader>fg",
+      function()
+        require("fzf-lua").live_grep({ hidden = true })
+      end,
+      desc = "Live Grep",
+    },
+    {
+      "<leader>fs",
+      function()
+        require("fzf-lua").live_grep({ hidden = true })
+      end,
+      desc = "Live Grep (cwd)",
+    },
+    {
+      "<leader>fc",
+      function()
+        require("fzf-lua").grep_cword()
+      end,
+      desc = "Find String Under Cursor",
+    },
+
     -- Quick access
     {
       ";r",

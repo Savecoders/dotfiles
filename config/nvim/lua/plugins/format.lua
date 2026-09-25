@@ -1,4 +1,5 @@
 return {
+  -- Formatting via conform.nvim
   {
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
@@ -24,7 +25,7 @@ return {
         if not vim.g.autoformat_enabled then
           return
         end
-        return { timeout_ms = 500, lsp_format = "never" }
+        return { timeout_ms = 1000, lsp_fallback = true }
       end,
     },
   },

@@ -35,14 +35,6 @@ return {
     },
   },
 
-  -- default colorscheme
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "matugen",
-    },
-  },
-
   -- toggle transparency with <leader>tt
   {
     "xiyaowong/transparent.nvim",
@@ -58,5 +50,16 @@ return {
         "FloatBorder",
       },
     },
+  },
+
+  -- load default colorscheme
+  {
+    dir = vim.fn.stdpath("config") .. "/colors",
+    name = "matugen-colorscheme",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      pcall(vim.cmd.colorscheme, "matugen")
+    end,
   },
 }

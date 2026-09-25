@@ -62,6 +62,14 @@ return {
             cond = lazy_status.has_updates,
             color = { fg = "#419CFF" },
           },
+          {
+            function()
+              return vim.g.autoformat_enabled and "󰉼 fmt" or "󰉼 fmt"
+            end,
+            color = function()
+              return vim.g.autoformat_enabled and { fg = "#a6e3a1" } or { fg = "#f38ba8" }
+            end,
+          },
           { "encoding" },
           { "fileformat", symbols = { unix = "󰣇 " } },
           { "filetype" },

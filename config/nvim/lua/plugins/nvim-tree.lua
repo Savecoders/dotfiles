@@ -1,6 +1,7 @@
+-- File explorer
 return {
   "nvim-tree/nvim-tree.lua",
-  cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+  cmd = { "NvimTreeToggle", "NvimTreeFocus", "NvimTreeFindFileToggle" },
   lazy = false,
   config = function()
     -- remove background color from the nvimtree window (ui fix)
