@@ -11,7 +11,6 @@ StyledRect {
     required property var modelData
     readonly property var deviceData: modelData
     property bool expanded: false
-
     readonly property string address: (deviceData && deviceData.address) ? deviceData.address : ""
     readonly property string name: (deviceData && deviceData.name) ? deviceData.name : "Unknown Device"
     readonly property string iconName: (deviceData && deviceData.icon) ? deviceData.icon : "bluetooth"
@@ -21,7 +20,6 @@ StyledRect {
     readonly property bool isConnectingThis: BluetoothService.isConnecting && BluetoothService.connectingAddress === root.address
     readonly property bool batteryAvailable: deviceData ? !!deviceData.batteryAvailable : false
     readonly property int battery: (deviceData && deviceData.battery !== undefined) ? deviceData.battery : -1
-
     readonly property color fgColor: Colours.palette.on_surface
     readonly property color fgSubColor: Colours.palette.on_surface_variant
 
@@ -54,13 +52,12 @@ StyledRect {
         cursorShape: Qt.PointingHandCursor
         onClicked: {
             if (!root.expanded) {
-                if (root.isConnected) {
+                if (root.isConnected)
                     root.expanded = true;
-                } else if (root.isPaired) {
+                else if (root.isPaired)
                     BluetoothService.connectDevice(root.address);
-                } else {
+                else
                     BluetoothService.pairDevice(root.address);
-                }
             }
         }
     }
@@ -93,6 +90,7 @@ StyledRect {
                     font.pixelSize: 20
                     color: root.isConnected ? Colours.palette.primary : Colours.palette.on_surface
                 }
+
             }
 
             // Name & Status Column
@@ -134,10 +132,18 @@ StyledRect {
 
                             Text {
                                 text: {
-                                    if (root.battery >= 90) return "battery_full";
-                                    if (root.battery >= 60) return "battery_5_bar";
-                                    if (root.battery >= 40) return "battery_3_bar";
-                                    if (root.battery >= 15) return "battery_1_bar";
+                                    if (root.battery >= 90)
+                                        return "battery_full";
+
+                                    if (root.battery >= 60)
+                                        return "battery_5_bar";
+
+                                    if (root.battery >= 40)
+                                        return "battery_3_bar";
+
+                                    if (root.battery >= 15)
+                                        return "battery_1_bar";
+
                                     return "battery_alert";
                                 }
                                 font.family: Config.get("iconFont", "Material Symbols Rounded")
@@ -152,7 +158,9 @@ StyledRect {
                                 font.weight: Font.Bold
                                 color: root.isConnected ? Colours.palette.primary : Colours.palette.on_primary_container
                             }
+
                         }
+
                     }
 
                     // Status Badge (Connected / Paired)
@@ -177,19 +185,25 @@ StyledRect {
                             font.weight: Font.DemiBold
                             color: root.isConnected ? Colours.palette.on_primary : Colours.palette.on_surface_variant
                         }
+
                     }
+
                 }
 
                 Text {
                     text: {
                         if (root.isConnectingThis)
                             return "Connecting...";
+
                         if (root.isPairingThis)
                             return "Pairing...";
+
                         if (root.isConnected)
                             return root.battery >= 0 ? `Connected • ${root.battery}% battery` : "Connected";
+
                         if (root.isPaired)
                             return "Paired";
+
                         return "Available to pair • " + root.address;
                     }
                     font.family: Config.get("font", "SF Pro Display")
@@ -198,6 +212,7 @@ StyledRect {
                     elide: Text.ElideRight
                     Layout.fillWidth: true
                 }
+
             }
 
             // Quick Connect / Disconnect / Pair button (when collapsed)
@@ -257,6 +272,7 @@ StyledRect {
                 iconSize: 18
                 onClicked: root.expanded = !root.expanded
             }
+
         }
 
         // Expanded Section: Device management details
@@ -292,6 +308,7 @@ StyledRect {
                     color: root.fgSubColor
                     Layout.fillWidth: true
                 }
+
             }
 
             // Action buttons row
@@ -384,8 +401,11 @@ StyledRect {
                         BluetoothService.pairDevice(root.address);
                     }
                 }
+
             }
+
         }
+
     }
 
     Behavior on implicitHeight {
@@ -393,6 +413,7 @@ StyledRect {
             duration: Config.get("animationSpeed", 200)
             easing.type: Easing.OutCubic
         }
+
     }
 
     Behavior on color {
@@ -400,5 +421,7 @@ StyledRect {
             duration: Config.get("animationSpeed", 200)
             easing.type: Easing.InSine
         }
+
     }
+
 }

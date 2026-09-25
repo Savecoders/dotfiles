@@ -18,6 +18,7 @@ ShellRoot {
             EyeProtection;
             Ipc;
             Idle;
+            HyprlandDecoration;
         });
         deferredInitTimer.start();
     }
@@ -34,6 +35,8 @@ ShellRoot {
         interval: 2000
         repeat: false
         onTriggered: {
+            WifiService;
+            BluetoothService;
             if (Config.settings.nightmodeOnStartup)
                 Nightmode.turnOn();
             else

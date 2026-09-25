@@ -26,31 +26,16 @@ Singleton {
     property real recordingWidth: 0
     property real recordingHeight: 0
     property var recordingScreen: null
+    property bool isWifiOpen: false
+    property real wifiX: 0
+    property real wifiY: 0
+    property real wifiWidth: 0
+    property real wifiHeight: 0
+    property var wifiScreen: null
+    property bool dashboardWifiView: false
+    property bool dashboardBluetoothView: false
     property var widgetGeometries: ({
     })
-
-    onIsLockscreenOpenChanged: {
-        if (root.isLockscreenOpen) {
-            root.isDashboardOpen = false;
-            root.isSettingsOpen = false;
-            root.isBatteryOpen = false;
-            root.isRecordingOpen = false;
-            root.isNotificationsOpen = false;
-        }
-    }
-
-    Connections {
-        target: Idle
-        function onMonitorsOffChanged() {
-            if (Idle.monitorsOff) {
-                root.isDashboardOpen = false;
-                root.isSettingsOpen = false;
-                root.isBatteryOpen = false;
-                root.isRecordingOpen = false;
-                root.isNotificationsOpen = false;
-            }
-        }
-    }
 
     function calculateItemGeometry(item) {
         if (!item)
@@ -144,6 +129,38 @@ Singleton {
         root.isBatteryOpen = true;
     }
 
+    function toggleWifi() {
+        if (root.isDashboardOpen && root.dashboardWifiView) {
+            root.isDashboardOpen = false;
+            root.dashboardWifiView = false;
+        } else {
+            root.dashboardBluetoothView = false;
+            root.dashboardWifiView = true;
+            root.isDashboardOpen = true;
+            WifiService.scan(true);
+        }
+    }
+
+    function toggleWifiAt(item) {
+        toggleWifi();
+    }
+
+    function toggleBluetooth() {
+        if (root.isDashboardOpen && root.dashboardBluetoothView) {
+            root.isDashboardOpen = false;
+            root.dashboardBluetoothView = false;
+        } else {
+            root.dashboardWifiView = false;
+            root.dashboardBluetoothView = true;
+            root.isDashboardOpen = true;
+            BluetoothService.scan(true);
+        }
+    }
+
+    function toggleBluetoothAt(item) {
+        toggleBluetooth();
+    }
+
     function toggleLoadingScreen() {
         root.isLoadingScreenOpen = !root.isLoadingScreenOpen;
     }
@@ -178,6 +195,42 @@ Singleton {
             return ;
 
         root.isNotificationsOpen = !root.isNotificationsOpen;
+    }
+
+    onIsDashboardOpenChanged: {
+        if (!root.isDashboardOpen) {
+            root.dashboardWifiView = false;
+            root.dashboardBluetoothView = false;
+        }
+    }
+    onIsLockscreenOpenChanged: {
+        if (root.isLockscreenOpen) {
+            root.isDashboardOpen = false;
+            root.isSettingsOpen = false;
+            root.isBatteryOpen = false;
+            root.isRecordingOpen = false;
+            root.isNotificationsOpen = false;
+            root.isWifiOpen = false;
+            root.dashboardWifiView = false;
+            root.dashboardBluetoothView = false;
+        }
+    }
+
+    Connections {
+        function onMonitorsOffChanged() {
+            if (Idle.monitorsOff) {
+                root.isDashboardOpen = false;
+                root.isSettingsOpen = false;
+                root.isBatteryOpen = false;
+                root.isRecordingOpen = false;
+                root.isNotificationsOpen = false;
+                root.isWifiOpen = false;
+                root.dashboardWifiView = false;
+                root.dashboardBluetoothView = false;
+            }
+        }
+
+        target: Idle
     }
 
     Connections {
@@ -236,6 +289,10 @@ Singleton {
 
         function toggleBattery() {
             root.toggleBattery();
+        }
+
+        function toggleWifi() {
+            root.toggleWifi();
         }
 
         function toggleRecording() {

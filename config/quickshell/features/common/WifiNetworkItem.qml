@@ -40,14 +40,14 @@ StyledRect {
     }
     implicitHeight: root.expanded ? (mainCol.implicitHeight + 16) : 48
     Layout.fillWidth: true
-
     onExpandedChanged: {
-        if (root.expanded && !root.isConnected) {
+        if (root.expanded && !root.isConnected)
             Qt.callLater(() => {
                 if (passwordInput)
                     passwordInput.forceActiveFocus();
+
             });
-        }
+
     }
 
     // Card background click to toggle expansion / connect
@@ -353,17 +353,14 @@ StyledRect {
                         focus: root.expanded && !root.isConnected
                         activeFocusOnTab: true
                         cursorVisible: activeFocus
-
                         onPressed: {
                             passwordInput.forceActiveFocus();
                         }
-
                         Keys.onReturnPressed: {
                             if (root.ssid !== "")
                                 WifiService.connectToNetwork(root.ssid, passwordInput.text);
 
                         }
-
                         Keys.onEscapePressed: {
                             root.expanded = false;
                         }

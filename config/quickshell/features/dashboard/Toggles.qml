@@ -15,9 +15,9 @@ import qs.services
 Item {
     id: root
 
-    property int fHeight: 184
-    property int spacing: Styling.spacing.xl
-    property int rowHeight: 88
+    property int rowHeight: 102
+    property int spacing: Styling.spacing.xxl
+    property int fHeight: (2 * rowHeight) + spacing
     readonly property int availWidth: root.width > 0 ? root.width : 475
     readonly property int cubeWidth: Math.floor((availWidth - 3 * spacing) / 4)
     readonly property int wideWidth: 2 * cubeWidth + spacing
@@ -27,13 +27,14 @@ Item {
     Layout.fillWidth: true
     Layout.leftMargin: 20
     Layout.rightMargin: 20
-    Layout.preferredHeight: contentColumn.implicitHeight
-    implicitHeight: contentColumn.implicitHeight
+    Layout.preferredHeight: root.fHeight
+    implicitHeight: root.fHeight
+    height: root.fHeight
 
     ColumnLayout {
         id: contentColumn
 
-        width: parent.width
+        visible: !IPCLoader.dashboardWifiView && !IPCLoader.dashboardBluetoothView
         anchors.fill: parent
         spacing: root.spacing
 
@@ -42,7 +43,7 @@ Item {
             Layout.preferredHeight: root.rowHeight
             spacing: root.spacing
 
-            Toggle {
+            SliceToggle {
                 rWidth: root.wideWidth
                 rHeight: root.rowHeight
                 isToggled: Network.getBool()
@@ -59,32 +60,37 @@ Item {
                     else
                         return "Connected";
                 }
-                iconCode: Network.getIcon()
+                icon: Network.getIcon()
+                showChevron: true
                 toRun: () => {
-                    return Quickshell.execDetached([`${Quickshell.shellDir}/lib/network.out`]);
+                    Network.toggle();
+                }
+                toRunChevron: () => {
+                    IPCLoader.dashboardWifiView = true;
+                    WifiService.scan(true);
                 }
             }
 
-            Toggle {
+            SliceToggle {
                 rWidth: root.cubeWidth
                 rHeight: root.rowHeight
                 compact: true
                 isToggled: Idle.keepAwake
                 bigText: Idle.keepAwake ? "Keep\nAwake" : "Caffeine"
-                iconCode: "coffee"
+                icon: "coffee"
                 iconSize: 25
                 toRun: () => {
                     return Idle.toggleKeepAwake();
                 }
             }
 
-            Toggle {
+            SliceToggle {
                 rWidth: root.lastCubeWidth
                 rHeight: root.rowHeight
                 compact: true
                 isToggled: Notifications.popupInhibited
                 bigText: Notifications.popupInhibited ? "Do Not\nDisturb" : "Disturb"
-                iconCode: Notifications.popupInhibited ? "do_not_disturb_on" : "do_not_disturb_off"
+                icon: Notifications.popupInhibited ? "do_not_disturb_on" : "do_not_disturb_off"
                 iconSize: 25
                 toRun: () => {
                     return Notifications.toggleDND();
@@ -98,7 +104,7 @@ Item {
             Layout.preferredHeight: root.rowHeight
             spacing: root.spacing
 
-            Toggle {
+            SliceToggle {
                 rWidth: root.wideWidth
                 rHeight: root.rowHeight
                 isToggled: Bluetooth.getBool()
@@ -111,19 +117,24 @@ Item {
                     else
                         return "Connected";
                 }
-                iconCode: Bluetooth.getIcon()
+                icon: Bluetooth.getIcon()
+                showChevron: true
                 toRun: () => {
                     return Bluetooth.toggle();
                 }
+                toRunChevron: () => {
+                    IPCLoader.dashboardBluetoothView = true;
+                    BluetoothService.scan(true);
+                }
             }
 
-            Toggle {
+            SliceToggle {
                 rWidth: root.lastWideWidth
                 rHeight: root.rowHeight
                 isToggled: Nightmode.isNightmodeOn
                 bigText: Nightmode.isNightmodeOn ? "Nightmode On" : "Nightmode Off"
                 smallText: Nightmode.isNightmodeOn ? "Warm temperature" : "Cool temperature"
-                iconCode: Nightmode.isNightmodeOn ? "bedtime" : "bedtime_off"
+                icon: Nightmode.isNightmodeOn ? "bedtime" : "bedtime_off"
                 toRun: () => {
                     return Nightmode.toggle();
                 }
@@ -131,6 +142,20 @@ Item {
 
         }
 
+    }
+
+    WifiSection {
+        id: wifiSection
+
+        visible: IPCLoader.dashboardWifiView
+        anchors.fill: parent
+    }
+
+    BluetoothSection {
+        id: bluetoothSection
+
+        visible: IPCLoader.dashboardBluetoothView
+        anchors.fill: parent
     }
 
 }

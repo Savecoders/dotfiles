@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import qs.services
 pragma Singleton
 
 Singleton {
@@ -18,6 +19,33 @@ Singleton {
 
     function getIcon() {
         return root.iconName;
+    }
+
+    function disconnectActive() {
+        if (WifiService.activeSsid !== "")
+            WifiService.disconnectNetwork(WifiService.activeSsid);
+
+        if (root.textLabel !== "" && root.textLabel !== "Disconnected" && root.textLabel !== "Network Off") {
+            let ethCmd = "nmcli connection down id \"" + root.textLabel + "\" 2>/dev/null; DEV=$(nmcli -t -f DEVICE,TYPE device status 2>/dev/null | grep ':ethernet$' | head -n1 | cut -d: -f1); [ -n \"$DEV\" ] && nmcli device disconnect \"$DEV\" 2>/dev/null || true";
+            Quickshell.execDetached(["sh", "-c", ethCmd]);
+        }
+        let allCmd = "for u in $(nmcli -t -f UUID connection show --active 2>/dev/null); do nmcli connection down uuid \"$u\" 2>/dev/null; done; DEV=$(nmcli -t -f DEVICE,TYPE device status 2>/dev/null | grep -E ':(wifi|ethernet)$' | head -n1 | cut -d: -f1); [ -n \"$DEV\" ] && nmcli device disconnect \"$DEV\" 2>/dev/null || true";
+        Quickshell.execDetached(["sh", "-c", allCmd]);
+        root.textLabel = "Disconnected";
+        root.stateName = "disconnected";
+        WifiService.activeSsid = "";
+        WifiService.activeSignal = 0;
+        WifiService.scan(false);
+    }
+
+    function toggle() {
+        if (root.getBool()) {
+            root.disconnectActive();
+        } else {
+            let cmd = "nmcli networking on 2>/dev/null; DEV=$(nmcli -t -f DEVICE,TYPE device status 2>/dev/null | grep -E ':(ethernet|wifi)$' | head -n1 | cut -d: -f1); [ -n \"$DEV\" ] && nmcli device connect \"$DEV\" 2>/dev/null || nmcli radio wifi on";
+            Quickshell.execDetached(["sh", "-c", cmd]);
+            WifiService.scan(true);
+        }
     }
 
     Process {

@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Bluetooth as QsBluetooth
 import Quickshell.Io
+import qs.services
 pragma Singleton
 
 Singleton {
@@ -46,20 +47,10 @@ Singleton {
     }
 
     function toggle() {
-        const adapter = QsBluetooth.Bluetooth.defaultAdapter;
-        const isCurrentlyEnabled = adapter && adapter.state === QsBluetooth.BluetoothAdapterState.Enabled;
-        const willEnable = !isCurrentlyEnabled;
-        if (willEnable) {
-            rfkillUnblock.running = true;
-        } else {
-            if (adapter) {
-                try {
-                    adapter.enabled = false;
-                } catch (e) {
-                }
-            }
-            Quickshell.execDetached(["bluetoothctl", "power", "off"]);
-        }
+        BluetoothService.toggleBluetooth();
+        Qt.callLater(() => {
+            root.updateStatus();
+        });
         refreshTimer.restart();
     }
 
@@ -85,6 +76,7 @@ Singleton {
     Connections {
         function onStateChanged() {
             root.updateStatus();
+            BluetoothService.refreshDevices();
         }
 
         target: QsBluetooth.Bluetooth.defaultAdapter

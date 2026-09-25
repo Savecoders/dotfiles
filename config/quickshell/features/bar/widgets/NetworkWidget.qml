@@ -17,6 +17,6 @@ ResourceWidget {
     fgColor: isConnected ? Accents.blue : Colours.palette.on_surface_variant
     onClicked: {
         Tooltip.hide();
-        IPCLoader.toggleDashboard();
+        IPCLoader.toggleWifiAt(root);
     }
 }
