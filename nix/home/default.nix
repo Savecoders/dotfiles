@@ -22,7 +22,7 @@ let
 
   # Config directories that Matugen rewrites at runtime. When Matugen is enabled
   # these are seeded as writable copies (activation) instead of store symlinks.
-  matugenDirs = [ "kitty" "hypr" "wezterm" "cava" "qt5ct" "qt6ct" "zed" ];
+  matugenDirs = [ "kitty" "hypr" "wezterm" "cava" "qt5ct" "qt6ct" "zed" "nvim" ];
 
   seedDirCalls = lib.concatMapStringsSep "\n"
     (name: ''seed_dir ${../../config/${name}} "$HOME/.config/${name}" preserve'')
@@ -145,7 +145,6 @@ in {
       "fastfetch".source = ../../config/fastfetch;
       "herdr".source = ../../config/herdr;
       "kvantum".source = ../../config/kvantum;
-      "nvim".source = ../../config/nvim;
       "obsidian".source = ../../config/obsidian;
       "picom".source = ../../config/picom;
       "ranger".source = ../../config/ranger;
