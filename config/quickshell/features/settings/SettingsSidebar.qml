@@ -16,7 +16,7 @@ Item {
     id: root
 
     property int location: SettingsControl.settingsLocation
-    property bool collapsed: false
+    readonly property bool collapsed: Config.settings.misc.settingsSidebarCollapsed
 
     ColumnLayout {
         anchors.fill: parent
@@ -70,7 +70,7 @@ Item {
                     cursorShape: Qt.PointingHandCursor
                     onEntered: collapseBtn.hovered = true
                     onExited: collapseBtn.hovered = false
-                    onClicked: root.collapsed = !root.collapsed
+                    onClicked: Config.updateKey("misc.settingsSidebarCollapsed", !root.collapsed)
                 }
 
                 Behavior on color {
