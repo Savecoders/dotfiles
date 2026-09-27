@@ -600,27 +600,142 @@ Item {
                     iconCode: "palette"
                 }
 
-                GenericNumberOption {
-                    message: "Matugen source color index"
-                    value: Config.get("colours.sourceColorIndex", 0)
-                    maxValue: 4
-                    minValue: 0
-                    amountIncrease: () => {
-                        let cur = Config.get("colours.sourceColorIndex", 0);
-                        if (cur < 4) {
-                            Config.updateKey("colours.sourceColorIndex", cur + 1);
-                            Wallpaper.changeColourProp();
+                RowLayout {
+                    spacing: Styling.spacing.xxl
+                    Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                    Layout.preferredWidth: pageWrapper.width
+                    Layout.preferredHeight: 50
+                    height: 50
+                    visible: (Config.settings.colours ? Config.settings.colours.enableScheme : Config.get("colours.enableScheme", true)) && !(Config.settings.colours ? Config.settings.colours.useCustom : Config.get("colours.useCustom", false))
+
+                    Text {
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                        text: "colorize"
+                        font.family: Config.settings.iconFont
+                        font.pixelSize: 20
+                        color: Qt.alpha(Colours.palette.on_surface, 0.75)
+
+                        Behavior on color {
+                            PropertyAnimation {
+                                duration: Config.settings.animationSpeed
+                                easing.type: Easing.InSine
+                            }
                         }
                     }
-                    amountDecrease: () => {
-                        let cur = Config.get("colours.sourceColorIndex", 0);
-                        if (cur > 0) {
-                            Config.updateKey("colours.sourceColorIndex", cur - 1);
-                            Wallpaper.changeColourProp();
+
+                    Text {
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                        Layout.fillWidth: true
+                        text: "Matugen source colors"
+                        font.family: Config.settings.font
+                        font.pixelSize: Styling.fontSize.md
+                        color: Qt.alpha(Colours.palette.on_surface, 0.9)
+
+                        Behavior on color {
+                            PropertyAnimation {
+                                duration: Config.settings.animationSpeed
+                                easing.type: Easing.InSine
+                            }
                         }
                     }
-                    withIcon: true
-                    iconCode: "colorize"
+
+                    RowLayout {
+                        Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                        spacing: Styling.spacing.md
+
+                        RowLayout {
+                            visible: Wallpaper.sourceColorsLoading || !Wallpaper.sourceColors || Wallpaper.sourceColors.length === 0
+                            spacing: Styling.spacing.xs
+
+                            Text {
+                                text: "progress_activity"
+                                font.family: Config.settings.iconFont
+                                font.pixelSize: 16
+                                color: Qt.alpha(Colours.palette.on_surface, 0.5)
+                                visible: Wallpaper.sourceColorsLoading
+                            }
+
+                            Text {
+                                text: Wallpaper.sourceColorsLoading ? "…" : "no colors"
+                                font.family: Config.settings.font
+                                font.pixelSize: Styling.fontSize.sm
+                                color: Qt.alpha(Colours.palette.on_surface, 0.5)
+                            }
+                        }
+
+                        RowLayout {
+                            visible: !Wallpaper.sourceColorsLoading && Wallpaper.sourceColors && Wallpaper.sourceColors.length > 0
+                            spacing: Styling.spacing.sm
+
+                            Repeater {
+                                model: Wallpaper.sourceColors ? Wallpaper.sourceColors.slice(0, 5) : []
+
+                                StyledRect {
+                                    id: swatchRect
+
+                                    required property var modelData
+                                    required property int index
+
+                                    readonly property bool isActive: (Config.settings.colours ? Config.settings.colours.sourceColorIndex : 0) === swatchRect.index
+
+                                    variant: "common"
+                                    useDefaultRadius: false
+                                    customRadius: 12
+                                    radius: 12
+                                    Layout.preferredWidth: 24
+                                    Layout.preferredHeight: 24
+                                    color: swatchRect.modelData
+                                    border.color: swatchRect.isActive ? Colours.palette.primary : Colours.palette.outline
+                                    border.width: swatchRect.isActive ? 2 : 1
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        cursorShape: Qt.PointingHandCursor
+                                        onClicked: {
+                                            Config.updateKey("colours.sourceColorIndex", swatchRect.index);
+                                            Wallpaper.changeColourProp();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        StyledRect {
+                            id: refreshBtn
+
+                            property bool hovered: refreshMouseArea.containsMouse
+
+                            variant: "internalbg"
+                            useDefaultRadius: false
+                            customRadius: 14
+                            radius: 14
+                            Layout.preferredWidth: 28
+                            Layout.preferredHeight: 28
+                            color: hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container
+                            border.color: hovered ? Colours.palette.outline : Colours.palette.outline_variant
+                            border.width: 1
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: "refresh"
+                                font.family: Config.settings.iconFont
+                                font.pixelSize: 18
+                                color: refreshBtn.hovered ? Colours.palette.primary : Qt.alpha(Colours.palette.on_surface, 0.8)
+                            }
+
+                            MouseArea {
+                                id: refreshMouseArea
+
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    Wallpaper.refreshSourceColors();
+                                }
+                            }
+                        }
+                    }
                 }
 
                 GenericToggleOption {

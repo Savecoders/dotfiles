@@ -8,6 +8,8 @@ Singleton {
     id: root
 
     property var wallpapersList: []
+    property var sourceColors: []
+    property bool sourceColorsLoading: false
     property string homeDir: Quickshell.env("HOME") || ""
     property var _tempBuffer: []
 
@@ -85,8 +87,64 @@ Singleton {
         });
     }
 
+    function refreshSourceColors() {
+        let clean = cleanWallpaperPath(Config.get("currentWallpaper", ""));
+        if (!clean || clean === "")
+            return ;
+
+        root.sourceColorsLoading = true;
+        sourceColorsProc.running = false;
+        sourceColorsProc.command = ["matugen", "image", clean, "--show-source-colors"];
+        sourceColorsProc.running = true;
+    }
+
+    Connections {
+        target: Config.settings ? Config.settings : null
+
+        function onCurrentWallpaperChanged() {
+            root.refreshSourceColors();
+        }
+    }
+
     Component.onCompleted: {
         reloadWallpapers();
+        refreshSourceColors();
+    }
+
+    Process {
+        id: sourceColorsProc
+
+        running: false
+
+        stdout: StdioCollector {
+            id: sourceColorsCollector
+        }
+
+        onExited: (exitCode) => {
+            let out = sourceColorsCollector.text || "";
+            let code = exitCode;
+            Qt.callLater(() => {
+                root.sourceColorsLoading = false;
+                let colors = [];
+                if (code === 0) {
+                    let hexRegex = /^#[0-9A-Fa-f]{6}$/;
+                    let lines = out.split("\n");
+                    for (let i = 0; i < lines.length; i++) {
+                        let line = lines[i].trim();
+                        if (hexRegex.test(line)) {
+                            colors.push(line);
+                            if (colors.length >= 5)
+                                break;
+                        }
+                    }
+                }
+                root.sourceColors = colors;
+                let savedIndex = Config.get("colours.sourceColorIndex", 0);
+                if (savedIndex >= colors.length && savedIndex > 0)
+                    Config.updateKey("colours.sourceColorIndex", 0);
+
+            });
+        }
     }
 
     Process {
