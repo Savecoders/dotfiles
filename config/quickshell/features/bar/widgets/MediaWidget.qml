@@ -62,17 +62,11 @@ StyledRect {
             Layout.alignment: Qt.AlignCenter
         }
 
-        MediaTimeline {
+        AudioVisualizer {
             isVertical: root.isVertical
-            showTimestamps: false
-            barWidth: 2
-            timelineHeight: 12
-            barHeights: [0.3, 0.6, 0.9, 0.5, 0.8, 1, 0.4, 0.7, 0.95, 0.6, 0.35, 0.8, 0.5, 0.75]
+            isPlaying: Media.isPlaying
+            barColor: Colours.palette.primary
             Layout.alignment: Qt.AlignCenter
-            Layout.fillWidth: !root.isVertical
-            Layout.fillHeight: root.isVertical
-            Layout.preferredWidth: root.isVertical ? 12 : 56
-            Layout.preferredHeight: root.isVertical ? 56 : 12
         }
 
         PlayerControl {
