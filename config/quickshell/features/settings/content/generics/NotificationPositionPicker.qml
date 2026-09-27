@@ -11,7 +11,7 @@ RowLayout {
     spacing: Styling.spacing.xxl
     Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
     Layout.preferredWidth: pageWrapper.width
-    Layout.preferredHeight: 78
+    Layout.preferredHeight: 120
 
     Text {
         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
@@ -37,11 +37,8 @@ RowLayout {
         useDefaultRadius: false
         customRadius: Math.max(4, Config.settings.borderRadius - 12)
         radius: customRadius
-        width: 140
-        height: 78
-        Layout.preferredWidth: 140
-        Layout.preferredHeight: 78
-        Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+        Layout.fillWidth: true
+        Layout.preferredHeight: 112
         border.color: Colours.palette.outline_variant
         border.width: 1
 
@@ -54,13 +51,13 @@ RowLayout {
 
             variant: "common"
             useDefaultRadius: false
-            customRadius: 4
-            radius: 4
-            width: 16
-            height: 16
+            customRadius: 6
+            radius: 6
+            width: 24
+            height: 24
             anchors.top: parent.top
             anchors.left: parent.left
-            anchors.margins: 8
+            anchors.margins: 10
 
             color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container)
             border.color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
@@ -99,13 +96,13 @@ RowLayout {
 
             variant: "common"
             useDefaultRadius: false
-            customRadius: 4
-            radius: 4
-            width: 16
-            height: 16
+            customRadius: 6
+            radius: 6
+            width: 24
+            height: 24
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.margins: 8
+            anchors.margins: 10
 
             color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container)
             border.color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
@@ -144,13 +141,13 @@ RowLayout {
 
             variant: "common"
             useDefaultRadius: false
-            customRadius: 4
-            radius: 4
-            width: 16
-            height: 16
+            customRadius: 6
+            radius: 6
+            width: 24
+            height: 24
             anchors.top: parent.top
             anchors.right: parent.right
-            anchors.margins: 8
+            anchors.margins: 10
 
             color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container)
             border.color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
@@ -189,13 +186,13 @@ RowLayout {
 
             variant: "common"
             useDefaultRadius: false
-            customRadius: 4
-            radius: 4
-            width: 16
-            height: 16
+            customRadius: 6
+            radius: 6
+            width: 24
+            height: 24
             anchors.bottom: parent.bottom
             anchors.left: parent.left
-            anchors.margins: 8
+            anchors.margins: 10
 
             color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container)
             border.color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
@@ -234,13 +231,13 @@ RowLayout {
 
             variant: "common"
             useDefaultRadius: false
-            customRadius: 4
-            radius: 4
-            width: 16
-            height: 16
+            customRadius: 6
+            radius: 6
+            width: 24
+            height: 24
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.margins: 8
+            anchors.margins: 10
 
             color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container)
             border.color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
@@ -279,13 +276,13 @@ RowLayout {
 
             variant: "common"
             useDefaultRadius: false
-            customRadius: 4
-            radius: 4
-            width: 16
-            height: 16
+            customRadius: 6
+            radius: 6
+            width: 24
+            height: 24
             anchors.bottom: parent.bottom
             anchors.right: parent.right
-            anchors.margins: 8
+            anchors.margins: 10
 
             color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container)
             border.color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
