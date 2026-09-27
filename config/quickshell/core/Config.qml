@@ -174,11 +174,15 @@ Singleton {
                 property string genType: "scheme-expressive"
                 property string mode: "dark"
                 property bool useCustom: false
+                property int sourceColorIndex: 0
 
                 onEnableSchemeChanged: {
                     Wallpaper.changeColourProp();
                 }
                 onGenTypeChanged: {
+                    Wallpaper.changeColourProp();
+                }
+                onSourceColorIndexChanged: {
                     Wallpaper.changeColourProp();
                 }
                 onModeChanged: {
