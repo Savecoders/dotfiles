@@ -70,8 +70,18 @@ Out of scope: matugen templates/config.toml, other settings pages, Nix mirror.
 - Delivery strategy: `ask-on-risk` (default). Forecast ≈ 150-180 authored lines
   (< 400) and no chained-PR recommendation -> single work-unit commit on a
   feature branch (we were on `main`; branch created before first write).
-- RDD: on (decided by default). Native review candidate = the work-unit commit;
-  assess with `--base-ref main --committed-only` after the commit exists.
+- RDD: on (decided by default). Native review candidate = the work-unit commit
+  (406446e). Assessment history:
+  - From opencode runtime: `unassessable` -> treated as high/due, but native
+    review cannot run on OpenCode V2 (ineligible transport); surfaced to user.
+  - From codex runtime (user-ordered, driven via herdr agent w1:pA):
+    `gentle-ai.review-assessment/v1`: risk **medium** (executable_change in
+    config/quickshell/core/Config.qml), 4 paths, 301 changed lines,
+    `review_due: false` (under_budget). No START required, no consent, no
+    receipt. Boundary stays pending until the slice reaches the ~400-line
+    delivery budget. Preflight untracked inventory:
+    sha256:579927cca9199d245dbf08bd7ef5f49b467869e61895894e7f68418ee5e9f66f.
+    Orchestrator spot-check re-ran the same assess: identical result, exit 0.
 
 ## Acceptance criteria
 - ThemingPage shows swatches of the candidate source colors of the current
@@ -88,3 +98,5 @@ Out of scope: matugen templates/config.toml, other settings pages, Nix mirror.
 - [x] Orchestrator spot-check: structural readback of all three files + qmllint
       re-run (exit 0). Router-decision risk: none found.
 - [x] Work-unit commit created on the feature branch (see git log for hash).
+- [x] Native RDD review settled via codex runtime (herdr): medium / under_budget
+      -> review not due, no START; recorded above with inventory digest.
