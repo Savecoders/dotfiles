@@ -73,21 +73,7 @@ Item {
                     iconCode: "do_not_disturb_on"
                 }
 
-                GenericSelectOption {
-                    message: "Notification Position"
-                    options: ["top-right", "top-left", "top-center", "bottom-right", "bottom-left", "bottom-center"]
-                    currentIndex: {
-                        let pos = Config.get("notifications.position", "top-right");
-                        let idx = ["top-right", "top-left", "top-center", "bottom-right", "bottom-left", "bottom-center"].indexOf(pos);
-                        return idx !== -1 ? idx : 0;
-                    }
-                    toRun: (index) => {
-                        let list = ["top-right", "top-left", "top-center", "bottom-right", "bottom-left", "bottom-center"];
-                        let selected = list[index];
-                        Config.updateKey("notifications.position", selected);
-                    }
-                    withIcon: true
-                    iconCode: "vertical_align_bottom"
+                NotificationPositionPicker {
                 }
 
                 GenericNumberOption {
