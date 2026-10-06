@@ -63,8 +63,11 @@ Item {
             useDefaultRadius: false
             customRadius: Math.max(6, Config.settings.borderRadius - 12)
             radius: customRadius
-            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignRight
+            Layout.preferredWidth: 400
             Layout.preferredHeight: 140
+            implicitWidth: 400
+            implicitHeight: 140
             border.color: Colours.palette.outline_variant
             border.width: 1
 
