@@ -102,6 +102,18 @@ Item {
                     iconCode: "align_vertical_center"
                 }
 
+                GenericToggleOption {
+                    message: "Orient battery icon with bar"
+                    option: Config.get("bar.orientBatteryIcon", true)
+                    toRun: () => {
+                        let newValue = !Config.get("bar.orientBatteryIcon", true);
+                        Config.updateKey("bar.orientBatteryIcon", newValue);
+                        return newValue;
+                    }
+                    withIcon: true
+                    iconCode: "battery_charging_full"
+                }
+
                 GenericTitle {
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     Layout.preferredHeight: 25

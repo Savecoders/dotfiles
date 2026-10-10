@@ -152,6 +152,7 @@ Singleton {
                 property bool floating: true
                 property bool smoothEdgesShown: false
                 property bool workspacesCenterAligned: true
+                property bool orientBatteryIcon: true
                 property bool expand: false
                 property string position: "left"
                 property int margin: 10
@@ -295,6 +296,7 @@ Singleton {
 
                 blur: JsonObject {
                     property bool enabled: true
+                    property int size: 4
                 }
 
             }

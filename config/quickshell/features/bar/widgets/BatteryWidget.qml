@@ -8,6 +8,7 @@ StyledRect {
     id: root
 
     property bool isVertical: false
+    readonly property bool shouldOrientVertical: root.isVertical && (Config.settings.bar ? Config.settings.bar.orientBatteryIcon !== false : true)
     readonly property int batPercent: (Power.percent !== undefined) ? Power.percent : 100
     readonly property bool isCharging: !!Power.charging
     readonly property string tooltipText: "Battery: " + root.batPercent + "% (" + (root.isCharging ? (root.batPercent === 100 ? "Full" : "Charging") : "Discharging") + ")" + (Power.powerDrawWatts > 0 ? (" • " + Power.powerDrawWatts + " W") : "") + " • " + Power.activeProfile
@@ -57,7 +58,7 @@ StyledRect {
         Text {
             id: iconText
 
-            text: Power.getBatteryIcon()
+            text: Power.getBatteryIcon(root.shouldOrientVertical)
             font.family: Config.settings.iconFont
             font.pixelSize: root.isVertical ? Styling.fontSize.title : Styling.fontSize.lg
             color: root.fgColor

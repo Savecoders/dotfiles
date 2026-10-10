@@ -8,6 +8,7 @@
             "workspaces"
         ],
         "margin": 8,
+        "orientBatteryIcon": true,
         "position": "bottom",
         "rightWidgets": [
             "systray",
@@ -125,7 +126,8 @@
             "inactiveOpacity": 0.85
         },
         "blur": {
-            "enabled": true
+            "enabled": true,
+            "size": 4
         }
     },
     "usePfpInsteadOfLogo": false,

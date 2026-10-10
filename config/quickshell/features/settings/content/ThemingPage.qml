@@ -338,14 +338,11 @@ Item {
 
                     }
 
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
                     // Whisker-style Search Input Field
                     StyledRect {
                         variant: "internalbg"
-                        Layout.preferredWidth: 200
+                        Layout.fillWidth: true
+                        Layout.minimumWidth: 200
                         Layout.preferredHeight: 32
                         radius: Math.max(4, Config.settings.borderRadius - 12)
                         border.color: searchInput.activeFocus ? Colours.palette.primary : Qt.alpha(Colours.palette.outline, 0.3)
@@ -917,6 +914,28 @@ Item {
                     }
                     withIcon: true
                     iconCode: "lens_blur"
+                }
+
+                GenericNumberOption {
+                    visible: Config.settings.hyprland.blur.enabled
+                    message: "Window blur strength (size)"
+                    value: Config.settings.hyprland.blur.size ?? 4
+                    maxValue: 16
+                    minValue: 1
+                    amountIncrease: () => {
+                        let cur = Config.get("hyprland.blur.size", 4);
+                        if (cur < 16) {
+                            Config.updateKey("hyprland.blur.size", cur + 1);
+                        }
+                    }
+                    amountDecrease: () => {
+                        let cur = Config.get("hyprland.blur.size", 4);
+                        if (cur > 1) {
+                            Config.updateKey("hyprland.blur.size", cur - 1);
+                        }
+                    }
+                    withIcon: true
+                    iconCode: "blur_linear"
                 }
 
             }
