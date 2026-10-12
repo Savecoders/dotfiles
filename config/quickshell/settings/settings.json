@@ -15,7 +15,8 @@
             "weather",
             "notifications",
             "quickactions",
-            "recording"
+            "recording",
+            "time"
         ],
         "smoothEdgesShown": true,
         "workspacesCenterAligned": false

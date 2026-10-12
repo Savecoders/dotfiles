@@ -617,7 +617,9 @@ Item {
                                 duration: Config.settings.animationSpeed
                                 easing.type: Easing.InSine
                             }
+
                         }
+
                     }
 
                     Text {
@@ -633,7 +635,9 @@ Item {
                                 duration: Config.settings.animationSpeed
                                 easing.type: Easing.InSine
                             }
+
                         }
+
                     }
 
                     RowLayout {
@@ -658,6 +662,7 @@ Item {
                                 font.pixelSize: Styling.fontSize.sm
                                 color: Qt.alpha(Colours.palette.on_surface, 0.5)
                             }
+
                         }
 
                         RowLayout {
@@ -672,7 +677,6 @@ Item {
 
                                     required property var modelData
                                     required property int index
-
                                     readonly property bool isActive: (Config.settings.colours ? Config.settings.colours.sourceColorIndex : 0) === swatchRect.index
 
                                     variant: "common"
@@ -694,8 +698,11 @@ Item {
                                             Wallpaper.changeColourProp();
                                         }
                                     }
+
                                 }
+
                             }
+
                         }
 
                         StyledRect {
@@ -731,8 +738,11 @@ Item {
                                     Wallpaper.refreshSourceColors();
                                 }
                             }
+
                         }
+
                     }
+
                 }
 
                 GenericToggleOption {
@@ -924,15 +934,15 @@ Item {
                     minValue: 1
                     amountIncrease: () => {
                         let cur = Config.get("hyprland.blur.size", 4);
-                        if (cur < 16) {
+                        if (cur < 16)
                             Config.updateKey("hyprland.blur.size", cur + 1);
-                        }
+
                     }
                     amountDecrease: () => {
                         let cur = Config.get("hyprland.blur.size", 4);
-                        if (cur > 1) {
+                        if (cur > 1)
                             Config.updateKey("hyprland.blur.size", cur - 1);
-                        }
+
                     }
                     withIcon: true
                     iconCode: "blur_linear"

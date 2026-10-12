@@ -30,7 +30,6 @@ Singleton {
         let winBlurSize = Math.max(1, Math.min(16, root.windowBlurSize));
         let shBlur = shellBlurEnabled;
         let ignoreAlpha = 0.05;
-
         let evalLua = "hl.config({ decoration = { active_opacity = " + active.toFixed(2) + ", inactive_opacity = " + inactive.toFixed(2) + ", blur = { enabled = " + winBlur + ", size = " + winBlurSize + " } } }); hl.layer_rule({ name = 'quickshell-blur', match = { namespace = 'quickshell' }, blur = " + shBlur + ", ignore_alpha = " + ignoreAlpha + " })";
         if (evalLua !== root._lastEvalLua) {
             root._lastEvalLua = evalLua;

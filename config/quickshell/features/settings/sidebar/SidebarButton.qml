@@ -32,8 +32,6 @@ StyledRect {
     Layout.preferredHeight: rHeight
     Layout.alignment: root.collapsed ? Qt.AlignHCenter : Qt.AlignLeft
     color: {
-        // Intentionally opaque accent when selected
-
         if (root.selected == root.number)
             return Colours.palette.primary;
         else if (isHovered)

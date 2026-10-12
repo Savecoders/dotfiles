@@ -87,7 +87,6 @@ Item {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.margins: 14
-
                 color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container)
                 border.color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
                 border.width: isActive ? 2 : 1
@@ -135,7 +134,6 @@ Item {
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.margins: 14
-
                 color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container)
                 border.color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
                 border.width: isActive ? 2 : 1
@@ -183,7 +181,6 @@ Item {
                 anchors.top: parent.top
                 anchors.right: parent.right
                 anchors.margins: 14
-
                 color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container)
                 border.color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
                 border.width: isActive ? 2 : 1
@@ -231,7 +228,6 @@ Item {
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
                 anchors.margins: 14
-
                 color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container)
                 border.color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
                 border.width: isActive ? 2 : 1
@@ -279,7 +275,6 @@ Item {
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.margins: 14
-
                 color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container)
                 border.color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
                 border.width: isActive ? 2 : 1
@@ -327,7 +322,6 @@ Item {
                 anchors.bottom: parent.bottom
                 anchors.right: parent.right
                 anchors.margins: 14
-
                 color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.surface_container_high : Colours.palette.surface_container)
                 border.color: isActive ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
                 border.width: isActive ? 2 : 1

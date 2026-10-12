@@ -306,8 +306,8 @@ Singleton {
         onRunningChanged: {
             if (!running)
                 Qt.callLater(() => {
-                    root.refreshDevices();
-                });
+                root.refreshDevices();
+            });
 
         }
     }
@@ -359,8 +359,8 @@ Singleton {
         onRunningChanged: {
             if (!running)
                 Qt.callLater(() => {
-                    root.refreshDevices();
-                });
+                root.refreshDevices();
+            });
 
         }
     }

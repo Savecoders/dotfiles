@@ -63,7 +63,6 @@ Singleton {
             else
                 return "battery_full";
         }
-
         if (root.charging)
             return "battery_android_bolt";
 
