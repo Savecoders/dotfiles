@@ -29,9 +29,9 @@ StyledRect {
     QtObject {
         id: metrics
 
-        readonly property int minLength: 96
-        readonly property int paddingH: 24
-        readonly property int paddingV: 20
+        readonly property int minLength: isVertical ? thicknessV : thicknessH
+        readonly property int paddingH: 16
+        readonly property int paddingV: 14
         readonly property int thicknessV: 36
         readonly property int thicknessH: 32
         readonly property real radiusCollapsed: 8
@@ -44,9 +44,14 @@ StyledRect {
 
         anchors.centerIn: parent
         isVertical: root.isVertical
-        showClock: true
+        showClock: false
         showNetwork: true
+        onlyActiveNetwork: true
         showBluetooth: true
+        showKeepAwake: true
+        showNightmode: true
+        showDnd: true
+        showFallback: true
         contentColor: root.isColoured ? Colours.palette.on_primary : Qt.alpha(Colours.palette.on_surface, metrics.widgetAlpha)
     }
 

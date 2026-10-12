@@ -27,10 +27,10 @@ QtObject {
         "widgetId": "quickactions",
         "displayName": "Quick Status & Actions",
         "iconCode": "dashboard",
-        "previewIcon": "schedule",
-        "previewIcons": ["schedule", "wifi"],
-        "previewText": "12:34",
-        "previewWidth": 90
+        "previewIcon": "tune",
+        "previewIcons": ["tune", "wifi"],
+        "previewText": "Status",
+        "previewWidth": 72
     }, {
         "widgetId": "battery",
         "displayName": "Battery",
@@ -73,6 +73,13 @@ QtObject {
         "previewIcon": "music_note",
         "previewText": "Play",
         "previewWidth": 76
+    }, {
+        "widgetId": "time",
+        "displayName": "Clock & Calendar",
+        "iconCode": "schedule",
+        "previewIcon": "schedule",
+        "previewText": "12:34",
+        "previewWidth": 72
     }]
 
     function definitionForId(widgetId) {

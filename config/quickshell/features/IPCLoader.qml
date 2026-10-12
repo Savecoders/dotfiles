@@ -20,6 +20,12 @@ Singleton {
     property real batteryWidth: 0
     property real batteryHeight: 0
     property var batteryScreen: null
+    property bool isCalendarOpen: false
+    property real calendarX: 0
+    property real calendarY: 0
+    property real calendarWidth: 0
+    property real calendarHeight: 0
+    property var calendarScreen: null
     property bool isRecordingOpen: false
     property real recordingX: 0
     property real recordingY: 0
@@ -129,6 +135,26 @@ Singleton {
         root.isBatteryOpen = true;
     }
 
+    function toggleCalendar() {
+        root.isCalendarOpen = !root.isCalendarOpen;
+    }
+
+    function toggleCalendarAt(item) {
+        if (root.isCalendarOpen) {
+            root.isCalendarOpen = false;
+            return ;
+        }
+        if (item) {
+            let geo = setWidgetGeometry("calendar", item);
+            root.calendarX = geo.x;
+            root.calendarY = geo.y;
+            root.calendarWidth = geo.width;
+            root.calendarHeight = geo.height;
+            root.calendarScreen = geo.screen;
+        }
+        root.isCalendarOpen = true;
+    }
+
     function toggleWifi() {
         if (root.isDashboardOpen && root.dashboardWifiView) {
             root.isDashboardOpen = false;
@@ -208,6 +234,7 @@ Singleton {
             root.isDashboardOpen = false;
             root.isSettingsOpen = false;
             root.isBatteryOpen = false;
+            root.isCalendarOpen = false;
             root.isRecordingOpen = false;
             root.isNotificationsOpen = false;
             root.isWifiOpen = false;
@@ -222,6 +249,7 @@ Singleton {
                 root.isDashboardOpen = false;
                 root.isSettingsOpen = false;
                 root.isBatteryOpen = false;
+                root.isCalendarOpen = false;
                 root.isRecordingOpen = false;
                 root.isNotificationsOpen = false;
                 root.isWifiOpen = false;
@@ -289,6 +317,10 @@ Singleton {
 
         function toggleBattery() {
             root.toggleBattery();
+        }
+
+        function toggleCalendar() {
+            root.toggleCalendar();
         }
 
         function toggleWifi() {

@@ -157,7 +157,7 @@ Singleton {
                 property string position: "left"
                 property int margin: 10
                 property var leftWidgets: ["icon", "workspaces"]
-                property var rightWidgets: ["systray", "cpu", "ram", "temp", "battery", "notifications", "quickactions", "recording"]
+                property var rightWidgets: ["systray", "cpu", "ram", "temp", "battery", "notifications", "quickactions", "recording", "time"]
             }
 
             desktop: JsonObject {
@@ -285,14 +285,13 @@ Singleton {
 
             hyprland: JsonObject {
                 property JsonObject transparency
+                property JsonObject blur
 
                 transparency: JsonObject {
                     property bool enabled: false
                     property real activeOpacity: 0.95
                     property real inactiveOpacity: 0.85
                 }
-
-                property JsonObject blur
 
                 blur: JsonObject {
                     property bool enabled: true

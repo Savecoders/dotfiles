@@ -43,10 +43,10 @@ StyledRect {
     onExpandedChanged: {
         if (root.expanded && !root.isConnected)
             Qt.callLater(() => {
-                if (passwordInput)
-                    passwordInput.forceActiveFocus();
+            if (passwordInput)
+                passwordInput.forceActiveFocus();
 
-            });
+        });
 
     }
 

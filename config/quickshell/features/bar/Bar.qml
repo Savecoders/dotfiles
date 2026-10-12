@@ -85,7 +85,8 @@ Scope {
                     "temp": tempComp,
                     "battery": batteryComp,
                     "weather": weatherComp,
-                    "media": mediaComp
+                    "media": mediaComp,
+                    "time": timeComp
                 })
 
                 function cornerRadius(corner) {
@@ -233,6 +234,16 @@ Scope {
                     id: mediaComp
 
                     MediaWidget {
+                        isVertical: barWindow.isVertical
+                    }
+
+                }
+
+                Component {
+                    id: timeComp
+
+                    TimeWidget {
+                        Layout.alignment: barWindow.isVertical ? Qt.AlignHCenter : Qt.AlignVCenter
                         isVertical: barWindow.isVertical
                     }
 

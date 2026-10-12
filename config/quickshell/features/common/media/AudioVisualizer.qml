@@ -19,28 +19,22 @@ Item {
     implicitHeight: isVertical ? (5 * barThickness + 4 * barSpacing) : maxBarSize
 
     Repeater {
-        model: [
-            {
-                "durations": [260, 200, 280, 220],
-                "targets": [10, 4, 14, 5]
-            },
-            {
-                "durations": [200, 270, 190, 250],
-                "targets": [15, 6, 12, 4]
-            },
-            {
-                "durations": [280, 220, 250, 210],
-                "targets": [8, 16, 7, 14]
-            },
-            {
-                "durations": [210, 260, 200, 270],
-                "targets": [14, 5, 15, 6]
-            },
-            {
-                "durations": [250, 210, 270, 220],
-                "targets": [7, 12, 4, 10]
-            }
-        ]
+        model: [{
+            "durations": [260, 200, 280, 220],
+            "targets": [10, 4, 14, 5]
+        }, {
+            "durations": [200, 270, 190, 250],
+            "targets": [15, 6, 12, 4]
+        }, {
+            "durations": [280, 220, 250, 210],
+            "targets": [8, 16, 7, 14]
+        }, {
+            "durations": [210, 260, 200, 270],
+            "targets": [14, 5, 15, 6]
+        }, {
+            "durations": [250, 210, 270, 220],
+            "targets": [7, 12, 4, 10]
+        }]
 
         delegate: StyledRect {
             id: bar
@@ -53,7 +47,6 @@ Item {
             border.width: 0
             radius: root.barThickness / 2
             color: root.isPlaying ? root.barColor : root.restingColor
-
             x: root.isVertical ? (parent.width - width) / 2 : (index * (root.barThickness + root.barSpacing))
             y: root.isVertical ? (index * (root.barThickness + root.barSpacing)) : (parent.height - height) / 2
             width: root.isVertical ? currentSize : root.barThickness
@@ -118,8 +111,6 @@ Item {
             }
 
             Connections {
-                target: root
-
                 function onIsPlayingChanged() {
                     if (root.isPlaying) {
                         stopAnim.stop();
@@ -129,6 +120,8 @@ Item {
                         stopAnim.restart();
                     }
                 }
+
+                target: root
             }
 
             Behavior on color {

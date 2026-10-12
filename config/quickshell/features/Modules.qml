@@ -4,6 +4,7 @@ import Quickshell.Io
 import qs.core
 import qs.features
 import qs.features.bar
+import qs.features.bar.widgets
 import qs.features.common
 import qs.features.dashboard
 import qs.features.desktop
@@ -12,6 +13,16 @@ import qs.features.notificationslist
 import qs.features.settings
 
 Scope {
+    CalendarPopup {
+        isOpen: IPCLoader.isCalendarOpen
+        anchorX: IPCLoader.calendarX
+        anchorY: IPCLoader.calendarY
+        anchorWidth: IPCLoader.calendarWidth
+        anchorHeight: IPCLoader.calendarHeight
+        targetScreen: IPCLoader.calendarScreen
+        onDismissed: IPCLoader.isCalendarOpen = false
+    }
+
     BatteryPopup {
         isBatteryOpen: IPCLoader.isBatteryOpen
     }
