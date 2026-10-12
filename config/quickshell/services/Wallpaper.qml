@@ -98,28 +98,23 @@ Singleton {
         sourceColorsProc.running = true;
     }
 
-    Connections {
-        target: Config.settings ? Config.settings : null
-
-        function onCurrentWallpaperChanged() {
-            root.refreshSourceColors();
-        }
-    }
-
     Component.onCompleted: {
         reloadWallpapers();
         refreshSourceColors();
+    }
+
+    Connections {
+        function onCurrentWallpaperChanged() {
+            root.refreshSourceColors();
+        }
+
+        target: Config.settings ? Config.settings : null
     }
 
     Process {
         id: sourceColorsProc
 
         running: false
-
-        stdout: StdioCollector {
-            id: sourceColorsCollector
-        }
-
         onExited: (exitCode) => {
             let out = sourceColorsCollector.text || "";
             let code = exitCode;
@@ -135,6 +130,7 @@ Singleton {
                             colors.push(line);
                             if (colors.length >= 5)
                                 break;
+
                         }
                     }
                 }
@@ -145,6 +141,11 @@ Singleton {
 
             });
         }
+
+        stdout: StdioCollector {
+            id: sourceColorsCollector
+        }
+
     }
 
     Process {
