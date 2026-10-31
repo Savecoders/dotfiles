@@ -107,7 +107,7 @@ in {
     ++ toolsDeps
     ++ shellDeps
     ++ lib.optionals (cfg.wm.hyprland.enable || cfg.wm.awesome.enable) [ pkgs.xwayland ]
-    ++ lib.optionals cfg.wm.hyprland.enable wmHyprDeps
+    ++ lib.optionals cfg.wm.hyprland.enable (wmHyprDeps ++ [ pkgs.nodejs pkgs.util-linux ])
     ++ lib.optionals cfg.wm.awesome.enable wmAwesomeDeps
     ++ lib.optionals cfg.media.enable mediaDeps
     ++ lib.optionals cfg.ocr.enable ocrDeps
@@ -139,6 +139,7 @@ in {
       "quickshell/features".source = ../../config/quickshell/features;
       "quickshell/services".source = ../../config/quickshell/services;
       "quickshell/lib".source = ../../config/quickshell/lib;
+      "quickshell/scripts".source = ../../config/quickshell/scripts;
       "matugen".source = ../../config/matugen;
       "btop".source = ../../config/btop;
       "dunst".source = ../../config/dunst;
