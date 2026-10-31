@@ -309,6 +309,11 @@ Item {
                         Layout.preferredHeight: 3
                     }
 
+                    DisplayArrangementEditor {
+                        Layout.fillWidth: true
+                        activeMonitor: root.selectedMonName
+                    }
+
                     // Subtitle / Instruction
                     ColumnLayout {
                         Layout.fillWidth: true
@@ -326,6 +331,7 @@ Item {
                             }
 
                             Text {
+                                objectName: "connectedDisplaysHeading"
                                 text: "Connected Displays"
                                 font.family: Config.settings.font
                                 font.pixelSize: Styling.fontSize.title
