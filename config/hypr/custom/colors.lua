@@ -1,2 +1,2 @@
--- You can make colors overrides here
+-- Custom color overrides.
 return {}

@@ -19,6 +19,7 @@ ShellRoot {
             Ipc;
             Idle;
             HyprlandDecoration;
+            DisplayArrangement;
         });
         deferredInitTimer.start();
     }

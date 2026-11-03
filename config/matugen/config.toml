@@ -21,7 +21,6 @@ post_hook = 'kitten themes --reload-in=all matugen'
 [templates.hypr]
 input_path = '~/.config/matugen/templates/hypr-colors.lua'
 output_path = '~/.config/hypr/config/colors.lua'
-post_hook = 'hyprctl reload'
 
 [templates.vicinae]
 input_path = '~/.config/matugen/templates/vicinae.toml'

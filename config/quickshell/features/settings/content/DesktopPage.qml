@@ -309,6 +309,11 @@ Item {
                         Layout.preferredHeight: 3
                     }
 
+                    DisplayArrangementEditor {
+                        Layout.fillWidth: true
+                        activeMonitor: root.selectedMonName
+                    }
+
                     // Subtitle / Instruction
                     ColumnLayout {
                         Layout.fillWidth: true
@@ -326,6 +331,7 @@ Item {
                             }
 
                             Text {
+                                objectName: "connectedDisplaysHeading"
                                 text: "Connected Displays"
                                 font.family: Config.settings.font
                                 font.pixelSize: Styling.fontSize.title
@@ -358,145 +364,25 @@ Item {
                         clip: true
                         model: root.screenList
 
-                        delegate: StyledRect {
+                        delegate: MonitorCard {
                             id: monCard
+                            objectName: "displayCard_" + modelData.name
 
                             required property var modelData
                             readonly property bool isSelected: root.selectedMonName === monCard.modelData.name
                             readonly property bool isTarget: root.currentTarget === monCard.modelData.name || (root.currentTarget === "" && monCard.modelData.name === "all")
-                            property bool hovered: mouseArea.containsMouse
 
-                            variant: "internalbg"
-                            useDefaultRadius: true
                             width: 172
                             height: 102
-                            color: Colours.palette.surface_container_low
-                            border.color: isSelected ? Colours.palette.primary : (hovered ? Colours.palette.outline : Colours.palette.outline_variant)
-                            border.width: isSelected ? 2 : 1
-
-                            ColumnLayout {
-                                anchors.centerIn: parent
-                                spacing: 4
-
-                                // Illustration
-                                Item {
-                                    Layout.alignment: Qt.AlignHCenter
-                                    width: 56
-                                    height: 36
-
-                                    // All Displays: Dual monitor illustration
-                                    Item {
-                                        anchors.fill: parent
-                                        visible: monCard.modelData.isAll
-
-                                        StyledRect {
-                                            width: 32
-                                            height: 22
-                                            radius: 4
-                                            useDefaultRadius: false
-                                            x: 4
-                                            y: 4
-                                            color: Colours.palette.surface_container_lowest
-                                            border.color: monCard.isSelected ? Colours.palette.primary : Colours.palette.outline_variant
-                                            border.width: 1
-                                        }
-
-                                        StyledRect {
-                                            width: 32
-                                            height: 22
-                                            radius: 4
-                                            useDefaultRadius: false
-                                            x: 20
-                                            y: 8
-                                            color: monCard.isTarget ? Colours.palette.primary_container : Colours.palette.surface_container_low
-                                            border.color: monCard.isSelected ? Colours.palette.primary : Colours.palette.outline_variant
-                                            border.width: 1
-                                        }
-
-                                    }
-
-                                    // Single Monitor illustration
-                                    Item {
-                                        anchors.fill: parent
-                                        visible: !monCard.modelData.isAll
-
-                                        StyledRect {
-                                            id: screenBody
-
-                                            width: 52
-                                            height: 26
-                                            radius: 4
-                                            useDefaultRadius: false
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            color: monCard.isTarget ? Colours.palette.surface_container_high : Colours.palette.surface_container_lowest
-                                            border.color: monCard.isSelected ? Colours.palette.primary : Colours.palette.outline_variant
-                                            border.width: 1
-
-                                            Text {
-                                                anchors.centerIn: parent
-                                                text: monCard.modelData.name
-                                                font.family: Config.settings.font
-                                                font.pixelSize: Styling.fontSize.caption
-                                                font.weight: Font.Bold
-                                                color: monCard.isSelected ? Colours.palette.primary : Colours.palette.on_surface_variant
-                                                elide: Text.ElideRight
-                                                width: parent.width - 4
-                                                horizontalAlignment: Text.AlignHCenter
-                                            }
-
-                                        }
-
-                                        StyledRect {
-                                            id: stem
-
-                                            width: 6
-                                            height: 4
-                                            radius: 1
-                                            useDefaultRadius: false
-                                            color: monCard.isSelected ? Colours.palette.primary : Colours.palette.outline_variant
-                                            anchors.top: screenBody.bottom
-                                            anchors.horizontalCenter: screenBody.horizontalCenter
-                                        }
-
-                                        StyledRect {
-                                            width: 22
-                                            height: 2
-                                            radius: 1
-                                            useDefaultRadius: false
-                                            color: monCard.isSelected ? Colours.palette.primary : Colours.palette.outline_variant
-                                            anchors.top: stem.bottom
-                                            anchors.horizontalCenter: screenBody.horizontalCenter
-                                        }
-
-                                    }
-
-                                }
-
-                                // Labels
-                                Text {
-                                    Layout.alignment: Qt.AlignHCenter
-                                    text: monCard.modelData.label
-                                    font.family: Config.settings.font
-                                    font.pixelSize: Styling.fontSize.sm
-                                    font.weight: monCard.isSelected ? Font.Bold : Font.Medium
-                                    color: Colours.palette.on_surface
-                                    elide: Text.ElideRight
-                                }
-
-                                Text {
-                                    Layout.alignment: Qt.AlignHCenter
-                                    text: monCard.modelData.res
-                                    font.family: Config.settings.font
-                                    font.pixelSize: Styling.fontSize.xs
-                                    color: Colours.palette.on_surface_variant
-                                    elide: Text.ElideRight
-                                }
-
-                            }
+                            label: monCard.modelData.label
+                            resolution: monCard.modelData.res
+                            selected: monCard.isSelected
+                            target: monCard.isTarget
+                            allDisplays: monCard.modelData.isAll
+                            hovered: mouseArea.containsMouse
 
                             MouseArea {
                                 id: mouseArea
-
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 cursorShape: Qt.PointingHandCursor
@@ -508,15 +394,6 @@ Item {
                                         Config.updateKey("desktop.targetScreen", monCard.modelData.name);
                                 }
                             }
-
-                            Behavior on border.color {
-                                PropertyAnimation {
-                                    duration: Config.settings.animationSpeed ?? 150
-                                    easing.type: Easing.OutQuad
-                                }
-
-                            }
-
                         }
 
                     }

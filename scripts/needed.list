@@ -38,6 +38,8 @@ wireplumber
 playerctl
 polkit-kde-agent
 quickshell
+nodejs
+util-linux
 vicinae-bin
 rofi
 kitty
