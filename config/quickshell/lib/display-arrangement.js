@@ -94,6 +94,8 @@ class Controller {
         this.recovery = '';
         this.recoveryGeneration = '';
         this.queue = Promise.resolve();
+        this.synchronizedEpoch = '';
+        this.stopping = false;
     }
     request(action, data = {}) {
         const operation = this.queue.then(() => this.execute(action, data));
@@ -104,9 +106,14 @@ class Controller {
         return { phase: this.recovery ? 'recovery' : this.pending ? 'confirming' : 'idle',
             token: this.pending?.token || '', deadline: this.pending?.deadline || 0, error: this.recovery };
     }
-    async snapshot() {
+    async snapshot({ allowMissing = false } = {}) {
         const proof = await this.adapter.identity();
-        const monitors = geometry(await this.adapter.snapshot());
+        const raw = await this.adapter.snapshot({ allowMissing });
+        const monitors = allowMissing && raw.length === 0 ? [] : geometry(raw);
+        if (this.adapter.limited) {
+            this.adapter.guard(proof.generation);
+            proof.positions = Object.fromEntries(monitors.map(m => [m.name, `${m.x}x${m.y}`]));
+        }
         if (!proof || typeof proof.generation !== 'string' || !proof.positions
             || monitors.some(m => typeof proof.positions[m.name] !== 'string')) {
             throw new Error('Rule identity is unavailable. Reload the updated Hyprland configuration.');
@@ -123,10 +130,10 @@ class Controller {
         let previous = null;
         const automaticNames = Array.isArray(automatic) ? automatic : [automatic];
         for (let attempt = 0; attempt <= attempts; attempt++) {
-            const actual = await this.snapshot();
+            const actual = await this.snapshot({ allowMissing });
             if (actual.proof.generation !== generation) throw new Error('Display topology or rules changed during apply.');
-            const comparable = allowMissing ? expected.filter(m => actual.monitors.some(a => a.name === m.name)) : expected;
-            const observed = allowMissing ? actual.monitors.filter(m => comparable.some(e => e.name === m.name)) : actual.monitors;
+            const comparable = allowMissing && !this.adapter.limited ? expected.filter(m => actual.monitors.some(a => a.name === m.name)) : expected;
+            const observed = allowMissing && !this.adapter.limited ? actual.monitors.filter(m => comparable.some(e => e.name === m.name)) : actual.monitors;
             if (same(topology(comparable), topology(observed)) && comparable.every(m => {
                 const monitor = observed.find(a => a.name === m.name);
                 return automaticNames.includes(m.name) || (monitor.x === m.x && monitor.y === m.y);
@@ -140,16 +147,81 @@ class Controller {
         }
         throw new Error('The compositor did not apply the requested geometry.');
     }
+    recordMove(monitor, current) {
+        const expected = positions(current.monitors, [monitor]);
+        this.pending.journal.push({ name: monitor.name, position: current.proof.positions[monitor.name], monitors: current.monitors, expected });
+        this.pending.expected = expected;
+        return expected;
+    }
+    async recoverLimited() {
+        const pending = this.pending;
+        if (!pending) return this.status();
+        pending.recovering = true;
+        pending.retryAt = this.clock() + 1000;
+        this.recovery = 'Rollback pending. The journal is retained; reconnect the original displays and restore event observation. Editing and confirmation are blocked.';
+        try {
+            const current = await this.snapshot({ allowMissing: true });
+            const generation = current.proof.generation;
+            const original = pending.before.monitors;
+            if (!current.monitors.length) throw new Error('Waiting for the original displays to return.');
+            const states = [original, pending.expected || original,
+                ...pending.journal.flatMap(entry => entry.expected ? [entry.monitors, entry.expected] : [entry.monitors])];
+            for (const monitor of current.monitors) {
+                const before = original.find(m => m.name === monitor.name);
+                if (!before || !same(topology([before]), topology([monitor]))) {
+                    throw new Error(`Display ${monitor.name} no longer matches the original identity/geometry.`);
+                }
+                const recognized = states.some(state => state.some(m => same(m, monitor)));
+                // Numeric baseline readback is an accepted rule assumption, not rule identity proof.
+                const baseline = generation !== pending.before.proof.generation && monitor.y === 0
+                    && monitor.x === (monitor.name === 'eDP-1' ? 0 : 1920);
+                if (!recognized && !baseline) throw new Error(`Ambiguous position for ${monitor.name}; no recovery moves were sent.`);
+            }
+            const target = positions(current.monitors, original.filter(m => current.monitors.some(a => a.name === m.name)));
+            const plan = movementPlan(current.monitors, target);
+            let expected = current.monitors;
+            for (const monitor of plan) {
+                const observed = await this.waitFor(expected, generation, { allowMissing: true });
+                expected = this.recordMove(monitor, observed);
+                await this.adapter.move(monitor.name, `${monitor.x}x${monitor.y}`, generation);
+                await this.waitFor(expected, generation, { allowMissing: true });
+            }
+            const restored = await this.waitFor(target, generation, { allowMissing: true });
+            const missing = original.filter(m => !restored.monitors.some(a => a.name === m.name));
+            if (missing.length) throw new Error(`Surviving displays restored; waiting for ${missing.map(m => m.name).join(', ')}. Returning outputs must be reconciled before editing resumes.`);
+            if (!same(restored.monitors, original)) throw new Error('Original geometry is not fully restored.');
+            this.adapter.guard(generation);
+            this.pending = null;
+            this.recovery = '';
+            this.synchronizedEpoch = generation;
+        } catch (error) {
+            this.recoveryGeneration = pending.before.proof.generation;
+            this.recovery = `Rollback incomplete: ${error.message} Journal retained; leave the controller running. Resolve ambiguous state or restore matching displays/event observation. Confirmed state was not changed.`;
+        }
+        return this.status();
+    }
     async rollback() {
         const pending = this.pending;
         if (!pending) return this.status();
+        if (this.adapter.limited) {
+            await this.recoverLimited();
+            if (this.pending) throw new Error(this.recovery);
+            return this.status();
+        }
         const errors = [];
+        let expected = pending.expected || pending.before.monitors;
         for (const entry of [...pending.journal].reverse()) {
             try {
+                const current = await this.snapshot();
+                if (current.proof.generation !== pending.before.proof.generation
+                    || (!same(current.monitors, expected) && !same(current.monitors, entry.monitors))) {
+                    throw new Error('External display change detected; inverse moves were not sent.');
+                }
                 await this.adapter.move(entry.name, entry.position, pending.before.proof.generation);
                 await this.waitFor(entry.monitors, pending.before.proof.generation, {
-                    allowMissing: true, automatic: entry.position.startsWith('auto') ? entry.name : ''
+                    allowMissing: !this.adapter.limited, automatic: entry.position.startsWith('auto') ? entry.name : ''
                 });
+                expected = entry.monitors;
             } catch (error) { errors.push(error.message); }
             // Continuing past a failed inverse move could collide with a monitor that did not move.
             if (errors.length) break;
@@ -157,7 +229,7 @@ class Controller {
         this.pending = null;
         if (errors.length) {
             this.recoveryGeneration = pending.before.proof.generation;
-            this.recovery = `Rollback incomplete: ${errors.join(' ')} Reload Hyprland to restore configured rules.`;
+            this.recovery = `Rollback incomplete: ${errors.join(' ')} Stop other display managers and restore the exact numeric rules, then reload Hyprland. Confirmed state was not changed.`;
             throw new Error(this.recovery);
         }
         return this.status();
@@ -172,8 +244,7 @@ class Controller {
             for (const monitor of plan) {
                 if (this.clock() >= this.pending.deadline) throw new Error('The apply deadline expired.');
                 const current = await this.waitFor(expected, before.proof.generation);
-                this.pending.journal.push({ name: monitor.name, position: current.proof.positions[monitor.name], monitors: current.monitors });
-                expected = positions(expected, [monitor]);
+                expected = this.recordMove(monitor, current);
                 await this.adapter.move(monitor.name, `${monitor.x}x${monitor.y}`, before.proof.generation);
                 await this.waitFor(expected, before.proof.generation);
             }
@@ -196,26 +267,81 @@ class Controller {
         });
         return this.waitFor(expected, current.proof.generation, { automatic });
     }
-    async replaySaved(before = null) {
-        const saved = await this.store.read();
+    savedTarget(saved, monitors) {
+        if (saved.version !== 1 || !same(saved.topology, topology(monitors))
+            || !Array.isArray(saved.positions) || saved.positions.length !== monitors.length) {
+            throw new Error('Saved display topology does not match. Back up the saved layout and restore the matching outputs before replay.');
+        }
+        return positions(monitors, saved.positions);
+    }
+    async replaySaved(before = null, saved = undefined) {
+        if (saved === undefined) saved = await this.store.read();
         if (!saved) return this.status();
         before = before || await this.snapshot();
-        if (saved.version !== 1 || !same(saved.topology, topology(before.monitors))) {
-            throw new Error('Saved display topology does not match. Confirm a new arrangement.');
-        }
-        const target = positions(before.monitors, saved.positions);
+        const target = this.savedTarget(saved, before.monitors);
         if (same(target, before.monitors)) return this.status();
         return this.apply(before, saved.positions, true);
     }
+    async synchronizeLimited() {
+        if (!this.adapter.limited || this.pending || this.synchronizedEpoch === this.adapter.epoch) return;
+        const generation = this.adapter.epoch;
+        this.synchronizedEpoch = generation;
+        this.recovery = '';
+        try {
+            // A confirmed layout may already be active when only the daemon restarts.
+            const saved = await this.store.read();
+            await this.adapter.prepareReplay(raw => {
+                const monitors = geometry(raw);
+                const confirmed = saved && same(this.savedTarget(saved, monitors), monitors);
+                const baseline = monitors.every(m => m.y === 0 && m.x === (m.name === 'eDP-1' ? 0 : 1920));
+                return confirmed || baseline;
+            });
+            this.adapter.guard(generation);
+            const before = await this.snapshot();
+            this.adapter.guard(generation);
+            const confirmed = saved && same(this.savedTarget(saved, before.monitors), before.monitors);
+            const baseline = before.monitors.every(m => m.y === 0 && m.x === (m.name === 'eDP-1' ? 0 : 1920));
+            if (!confirmed && !baseline) throw new Error('Display geometry changed after startup/reload sampling.');
+            await this.replaySaved(before, saved);
+        } catch (error) {
+            this.recoveryGeneration = this.synchronizedEpoch;
+            this.recovery = this.pending ? this.recovery
+                : `Display replay stopped: ${error.message} No automatic migration was performed. Resolve the configuration and reload Hyprland, or restore event observation.`;
+        }
+    }
     async execute(action, data) {
+        if (this.stopping) throw new Error('The display controller is stopping.');
+        if (action === 'shutdown') {
+            if (this.pending) throw new Error('Pending rollback is unresolved. Keep the controller running and reconnect the original displays/event observation.');
+            this.stopping = true;
+            return this.status();
+        }
+        const previousToken = this.pending?.token;
+        if (this.adapter.limited) {
+            try { await this.adapter.ensureObservation(); }
+            catch (error) {
+                if (this.pending) this.pending.recovering = true;
+                this.recovery = `Event observation unavailable: ${error.message} Reconnecting; unresolved rollback is retained and editing/confirmation are blocked.`;
+                if (action === 'status' || action === 'tick') return this.status();
+                throw new Error(this.recovery);
+            }
+            if (this.pending && (this.pending.recovering || this.pending.before.proof.generation !== this.adapter.epoch)) {
+                this.pending.recovering = true;
+                if (this.clock() >= (this.pending.retryAt || 0)) await this.recoverLimited();
+            }
+        }
+        await this.synchronizeLimited();
+        if (previousToken && !this.pending && (action === 'confirm' || action === 'revert')) {
+            throw new Error(this.recovery || 'Pending preview was recovered after a display transition. Review the restored layout before editing.');
+        }
         if (action === 'status' || (action === 'tick' && this.recovery)) return this.status();
-        if (this.recovery && action === 'replay') {
+        if (this.recovery && action === 'replay' && !this.adapter.limited) {
             const current = await this.snapshot();
             if (current.proof.generation !== this.recoveryGeneration) this.recovery = '';
         }
         if (this.recovery) throw new Error(this.recovery);
         if (action === 'snapshot') return this.snapshot();
-        if (this.pending) {
+        if (this.pending && !this.adapter.limited) {
             const current = await this.snapshot();
             if (current.proof.epoch && this.pending.before.proof.epoch && current.proof.epoch !== this.pending.before.proof.epoch) {
                 this.pending = null;
@@ -262,9 +388,9 @@ class Controller {
         if (this.pending) throw new Error('A display change is awaiting confirmation.');
         if (action === 'apply') {
             const before = await this.snapshot();
-            // A configuration reload replaces the proven generation without changing
-            // the connected geometry, so the draft remains valid against the new proof.
-            if (!data.snapshot || !isDeepStrictEqual(before.monitors, data.snapshot.monitors))
+            // Limited mode rejects drafts from a previous observed reload, even at identical coordinates.
+            if (!data.snapshot || !isDeepStrictEqual(before.monitors, data.snapshot.monitors)
+                || (this.adapter.limited && before.proof.generation !== data.snapshot.proof?.generation))
                 throw new Error('Display topology or positions changed. Refresh the draft.');
             return this.apply(before, data.positions);
         }

@@ -154,15 +154,22 @@ Singleton {
         }
     }
 
-    Component.onCompleted: {
-        if (available)
+    function initialize() {
+        if (available && !busy)
             send("status", {});
     }
+
+    onAvailableChanged: {
+        if (available)
+            Qt.callLater(root.initialize);
+    }
+
+    Component.onCompleted: initialize()
 
     Timer {
         interval: 500
         repeat: true
-        running: root.available && root.phase === "confirming"
+        running: root.available && (root.phase === "confirming" || root.phase === "recovery")
         onTriggered: root.send("status", {})
     }
 

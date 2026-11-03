@@ -42,15 +42,15 @@ ColumnLayout {
         (baseCanvasHeight - canvas.inset * 2) / Math.max(1, Geometry.bounds(live).height)))
     readonly property int remaining: Math.max(0, Math.ceil((controller.deadline - now) / 1000))
     readonly property string status: {
-        if (controller.error) return controller.error + " Use Refresh after resolving the controller or Hyprland bridge error.";
-        if (controller.phase === "confirming") return "Review the applied arrangement, then Keep or Revert. Unconfirmed changes revert automatically.";
-        if (controller.phase === "recovery") return "Display recovery is required. Reload Hyprland, then Refresh.";
+        if (controller.error) return controller.error + " Resolve the controller or configuration error, then Refresh.";
+        if (controller.phase === "confirming") return "Review the applied arrangement, then Keep or Revert. The running controller attempts rollback after 15 seconds; external changes can prevent recovery.";
+        if (controller.phase === "recovery") return "Display recovery is pending. Leave the controller running and reconnect the original displays; editing resumes only after the retained rollback is resolved.";
         if (!live.length) return "No connected displays reported by Hyprland.";
         if (!supported) return "Unsupported display geometry or mirroring. Disable mirroring, then Refresh.";
         if (localError) return localError;
         if (controller.busy) return "Waiting for the display controller…";
         if (invalid) return invalid;
-        if (!snapshotBaseline) return "Apply unavailable. Refresh to verify the Hyprland bridge and monitor rules.";
+        if (!snapshotBaseline) return "Apply unavailable. Refresh to verify the limited Quickshell display adapter.";
         return changed ? "Draft only. Apply to preview this arrangement." : "Drag a display or enter logical X/Y coordinates. Changes stay in the draft until Apply.";
     }
 
@@ -76,7 +76,7 @@ ColumnLayout {
         if (!refreshPending || controller.busy || controller.phase !== "idle") return;
         refreshPending = false;
         if (!controller.refresh())
-            localError = "Display controller unavailable. Enable the Hyprland bridge and reload Hyprland, then Refresh.";
+            localError = "Display controller unavailable. Check Quickshell initialization and migrate any legacy bridge/controller, then Refresh.";
     }
 
     function move(name, x, y, project) {
