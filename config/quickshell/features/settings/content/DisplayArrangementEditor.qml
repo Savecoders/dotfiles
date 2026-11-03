@@ -343,14 +343,14 @@ ColumnLayout {
             objectName: "arrangementKeep"
             text: "Keep"
             visible: root.controller.phase === "confirming"
-            enabled: !root.controller.busy && root.remaining > 0
+            enabled: !root.controller.confirmationBusy && root.remaining > 0
             onClicked: root.controller.confirm()
         }
         ActionButton {
             objectName: "arrangementRevert"
             text: "Revert"
             visible: root.controller.phase === "confirming"
-            enabled: !root.controller.busy
+            enabled: !root.controller.confirmationBusy
             onClicked: root.controller.revert()
         }
     }

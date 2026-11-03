@@ -11,6 +11,8 @@ Singleton {
     readonly property var monitorsInfo: Hyprland.monitorsInfo
     readonly property bool available: Hyprland.isHyprland
     property bool busy: false
+    readonly property bool confirmationBusy: _pendingAction !== null || (busy && _action !== "status")
+    property var _pendingAction: null
     property string phase: "idle"
     property string error: ""
     property string token: ""
@@ -45,18 +47,17 @@ Singleton {
     }
 
     function send(action, data) {
-        if (busy || !available)
+        if (!available || _pendingAction !== null)
             return false;
-        busy = true;
-        error = "";
-        _action = action;
-        _stdout = "";
-        _stderr = "";
-        _stdoutDone = false;
-        _stderrDone = false;
-        _exited = false;
-        helper.command = ["node", Quickshell.shellDir + "/scripts/display-arrangement.js", action, JSON.stringify(data)];
-        helper.running = true;
+        if (busy) {
+            if (_action !== "status" || phase !== "confirming" || token === ""
+                || (action !== "confirm" && action !== "revert") || data.token !== token
+                || (action === "confirm" && deadline <= Date.now()))
+                return false;
+            _pendingAction = {action: action, data: {token: data.token}};
+            return true;
+        }
+        requestRunner.start(action, data);
         return true;
     }
 
@@ -86,6 +87,7 @@ Singleton {
 
     function complete() {
         const action = _action;
+        const pending = _pendingAction;
         const stdout = _stdout;
         const stderr = _stderr;
         const unsuccessful = _exitCode !== 0 || _exitStatus !== 0;
@@ -123,6 +125,33 @@ Singleton {
             root.failed(action, message);
         else
             root.finished(action, result);
+        if (pending !== null) {
+            if (!message && root.available && root.phase === "confirming" && root.error === ""
+                && root.token === pending.data.token
+                && (pending.action !== "confirm" || root.deadline > Date.now())) {
+                requestRunner.start(pending.action, pending.data);
+            } else {
+                root.failed(pending.action, root.error || "Display confirmation changed. Review the current state before trying again.");
+            }
+            root._pendingAction = null;
+        }
+    }
+
+    QtObject {
+        id: requestRunner
+
+        function start(action, data) {
+            root._action = action;
+            root.busy = true;
+            root.error = "";
+            root._stdout = "";
+            root._stderr = "";
+            root._stdoutDone = false;
+            root._stderrDone = false;
+            root._exited = false;
+            helper.command = ["node", Quickshell.shellDir + "/scripts/display-arrangement.js", action, JSON.stringify(data)];
+            helper.running = true;
+        }
     }
 
     Component.onCompleted: {
