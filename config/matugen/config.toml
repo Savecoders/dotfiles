@@ -21,21 +21,6 @@ post_hook = 'kitten themes --reload-in=all matugen'
 [templates.hypr]
 input_path = '~/.config/matugen/templates/hypr-colors.lua'
 output_path = '~/.config/hypr/config/colors.lua'
-# Accept both integrations so updating this hook before Hyprland is safe.
-# Only configurations lacking either integration retain the legacy full reload.
-post_hook = '''
-if result=$(hyprctl repl 'local colors = _savior_hypr_colors or package.loaded["config.theme"]; if colors == nil then return "THEME1:legacy" end; if type(colors) ~= "table" or type(colors.refresh) ~= "function" then return "THEME1:error" end; return colors.refresh()'); then
-    case "$result" in
-        THEME1:ok) exit 0 ;;
-        THEME1:legacy)
-            printf '%s\n' 'Hyprland uses the previous theme integration; reload remains enabled until it is updated.' >&2
-            exec hyprctl reload
-            ;;
-    esac
-fi
-printf '%s\n' 'Hyprland theme update failed; no reload was requested.' >&2
-exit 1
-'''
 
 [templates.vicinae]
 input_path = '~/.config/matugen/templates/vicinae.toml'
