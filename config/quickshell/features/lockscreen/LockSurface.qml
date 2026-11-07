@@ -25,6 +25,9 @@ StyledRect {
     readonly property bool showPowerBtn: Config.get("lockscreen.showPowerBtn", true)
     readonly property real configBorderRadius: Config.get("borderRadius", 4)
     readonly property real cardRadius: root.configBorderRadius
+    // The blurred path hides fine detail, so its texture can be decoded at half
+    // the surface resolution. The unblurred wallpaper keeps the full bound.
+    readonly property real blurSourceScale: 0.5
     readonly property Theme
     theme: Theme {
         primary: Colours.palette.primary
@@ -80,7 +83,12 @@ StyledRect {
 
         anchors.fill: parent
         source: Config.get("currentWallpaper", "")
-        sourceSize: Qt.size(width > 0 ? width : Screen.width, height > 0 ? height : Screen.height)
+        sourceSize: {
+            const scale = root.blurBackground ? root.blurSourceScale : 1;
+            const baseWidth = width > 0 ? width : Screen.width;
+            const baseHeight = height > 0 ? height : Screen.height;
+            return Qt.size(Math.max(1, Math.round(baseWidth * scale)), Math.max(1, Math.round(baseHeight * scale)));
+        }
         fillMode: Image.PreserveAspectCrop
         asynchronous: false
         cache: false
