@@ -44,6 +44,10 @@ ClippingWrapperRectangle {
             anchors.fill: bgArt
             source: bgArt
             visible: bgArt.visible
+            // The card clips to its rounded rectangle, so the default blur
+            // padding only allocates an oversized effect item outside the
+            // visible area. Qt recommends disabling it for background blur.
+            autoPaddingEnabled: false
             blurEnabled: true
             blurMax: 32
             blur: 0.95

@@ -105,20 +105,49 @@ Singleton {
     }
 
     function destroyNotif(notif) {
+        if (!notif)
+            return ;
+
+        // destroy() is deferred, so the native object can still emit a change
+        // for this wrapper after it has left root.list. Mark it first so its
+        // handler cannot remove a replacement wrapper that reuses the id.
+        notif.retiring = true;
+
         if (notif.timer) {
+            notif.timer.stop();
             notif.timer.destroy();
             notif.timer = null;
         }
         notif.destroy();
     }
 
+    function trackedNotificationFor(id) {
+        const tracked = notifServer.trackedNotifications.values;
+        const index = tracked.findIndex((notif) => {
+            return notif && notif.id + root.idOffset === id;
+        });
+        return index === -1 ? null : tracked[index];
+    }
+
+    // Manual discard and automatic history eviction must both release the
+    // server-owned notification object, otherwise it stays tracked forever.
+    // The close reason is kept distinct: dismiss for user intent, expire for
+    // retention cleanup.
+    function closeTrackedNotification(id, expired) {
+        const notification = trackedNotificationFor(id);
+        if (!notification)
+            return ;
+
+        if (expired)
+            notification.expire();
+        else
+            notification.dismiss();
+    }
+
     function discardNotification(id) {
         console.log("[Notifications] Discarding notification with ID: " + id);
         const index = root.list.findIndex((notif) => {
             return notif.notificationId === id;
-        });
-        const notifServerIndex = notifServer.trackedNotifications.values.findIndex((notif) => {
-            return notif.id + root.idOffset === id;
         });
         if (index !== -1) {
             const notif = root.list[index];
@@ -128,8 +157,7 @@ Singleton {
             destroyNotif(notif);
             scheduleSave();
         }
-        if (notifServerIndex !== -1)
-            notifServer.trackedNotifications.values[notifServerIndex].dismiss();
+        closeTrackedNotification(id, false);
 
         root.discard(id); // Emit signal
     }
@@ -273,7 +301,9 @@ Singleton {
                     return n.time >= cutoff;
                 });
                 oldNotifs.forEach((n) => {
-                    return destroyNotif(n);
+                    const id = n.notificationId;
+                    destroyNotif(n);
+                    closeTrackedNotification(id, true);
                 });
                 saveDebouncerTimer.restart();
             }
@@ -300,17 +330,25 @@ Singleton {
                 "time": Date.now()
             });
             root.list = root.list.concat([newNotifObject]);
-            // Enforce max notifications limit
-            while (root.list.length > root.maxNotifications) {
-                const oldNotif = root.list.shift();
-                destroyNotif(oldNotif);
+            // Enforce max notifications limit. Evict in one list replacement so
+            // popup bindings cannot keep referencing an evicted wrapper, and
+            // release the server object and popup timer of every dropped entry.
+            const overflow = root.list.length - root.maxNotifications;
+            if (overflow > 0) {
+                const evicted = root.list.slice(0, overflow);
+                root.list = root.list.slice(overflow);
+                evicted.forEach((notif) => {
+                    const id = notif.notificationId;
+                    destroyNotif(notif);
+                    closeTrackedNotification(id, true);
+                });
             }
             // Popup
             if (!root.popupInhibited) {
                 newNotifObject.popup = true;
                 root.playNotificationSound();
                 if (notification.expireTimeout != 0)
-                    newNotifObject.timer = notifTimerComponent.createObject(root, {
+                    newNotifObject.timer = notifTimerComponent.createObject(newNotifObject, {
                     "notificationId": newNotifObject.notificationId,
                     "interval": notification.expireTimeout < 0 ? Config.get("notifications.timeout", 6000) : notification.expireTimeout
                 });
@@ -341,7 +379,10 @@ Singleton {
             try {
                 const parsed = JSON.parse(fileContents);
                 if (Array.isArray(parsed)) {
-                    const newList = parsed.map((notif) => {
+                    // Never restore more entries than the live retention cap, and
+                    // remember the highest saved id even if old entries are dropped.
+                    const restoredEntries = parsed.slice(-root.maxNotifications);
+                    const newList = restoredEntries.map((notif) => {
                         return notifComponent.createObject(root, {
                             "notificationId": notif.notificationId,
                             "actions": [],
@@ -354,14 +395,24 @@ Singleton {
                             "urgency": notif.urgency
                         });
                     });
-                    Qt.callLater(() => {
-                        root.list = newList;
-                        let maxId = 0;
-                        root.list.forEach((notif) => {
+                    let maxId = 0;
+                    parsed.forEach((notif) => {
+                        if (notif && typeof notif.notificationId === "number")
                             maxId = Math.max(maxId, notif.notificationId);
+
+                    });
+                    Qt.callLater(() => {
+                        // Replace the previous list explicitly instead of orphaning
+                        // its wrappers and leaving their server objects tracked.
+                        const previous = root.list;
+                        root.list = newList;
+                        previous.forEach((notif) => {
+                            const id = notif.notificationId;
+                            root.destroyNotif(notif);
+                            root.closeTrackedNotification(id, true);
                         });
-                        console.log("[Notifications] File loaded");
                         root.idOffset = maxId;
+                        console.log("[Notifications] File loaded");
                         root.initDone();
                     });
                 }
@@ -400,22 +451,35 @@ Singleton {
         property double time
         property string urgency: (notification && notification.urgency) ? notification.urgency.toString() : "normal"
         property Timer timer
+        // Set before the wrapper is retired from root.list. A retiring wrapper
+        // must not trigger discard for a replacement that reuses its id.
+        property bool retiring: false
 
         onNotificationChanged: {
-            if (notification === null)
+            if (notification === null && !wrapper.retiring)
                 root.discardNotification(notificationId);
 
         }
     }
 
     component NotifTimer: Timer {
+        id: notifTimer
+
         required property int notificationId
 
         interval: 5000
         running: true
         onTriggered: () => {
-            root.timeoutNotification(notificationId);
-            destroy();
+            root.timeoutNotification(notifTimer.notificationId);
+            // Detach from the wrapper before this timer deletes itself so the
+            // wrapper never keeps a dangling timer reference.
+            const index = root.list.findIndex((notif) => {
+                return notif.notificationId === notifTimer.notificationId;
+            });
+            if (index !== -1)
+                root.list[index].timer = null;
+
+            notifTimer.destroy();
         }
     }
 

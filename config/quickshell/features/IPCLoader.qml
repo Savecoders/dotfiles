@@ -20,6 +20,7 @@ Singleton {
     property real batteryWidth: 0
     property real batteryHeight: 0
     property var batteryScreen: null
+    property var batteryAnchorItem: null
     property bool isCalendarOpen: false
     property real calendarX: 0
     property real calendarY: 0
@@ -32,6 +33,7 @@ Singleton {
     property real recordingWidth: 0
     property real recordingHeight: 0
     property var recordingScreen: null
+    property var recordingAnchorItem: null
     property bool isWifiOpen: false
     property real wifiX: 0
     property real wifiY: 0
@@ -96,6 +98,9 @@ Singleton {
     }
 
     function toggleRecording() {
+        if (!root.isRecordingOpen)
+            root.recordingAnchorItem = null;
+
         root.isRecordingOpen = !root.isRecordingOpen;
     }
 
@@ -111,11 +116,17 @@ Singleton {
             root.recordingWidth = geo.width;
             root.recordingHeight = geo.height;
             root.recordingScreen = geo.screen;
+            root.recordingAnchorItem = item;
+        } else {
+            root.recordingAnchorItem = null;
         }
         root.isRecordingOpen = true;
     }
 
     function toggleBattery() {
+        if (!root.isBatteryOpen)
+            root.batteryAnchorItem = null;
+
         root.isBatteryOpen = !root.isBatteryOpen;
     }
 
@@ -131,6 +142,9 @@ Singleton {
             root.batteryWidth = geo.width;
             root.batteryHeight = geo.height;
             root.batteryScreen = geo.screen;
+            root.batteryAnchorItem = item;
+        } else {
+            root.batteryAnchorItem = null;
         }
         root.isBatteryOpen = true;
     }

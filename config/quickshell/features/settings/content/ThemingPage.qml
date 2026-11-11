@@ -428,7 +428,10 @@ Item {
                     orientation: ListView.Horizontal
                     spacing: Styling.spacing.xl
                     clip: true
-                    cacheBuffer: 300
+                    // Cache buffer extends spatial delegate retention on both
+                    // sides of the viewport; it is not a thumbnail count or a
+                    // measured decoded-memory reduction.
+                    cacheBuffer: 150
                     model: root.filteredWallpapers
 
                     Text {

@@ -16,6 +16,8 @@ AnchoredPopup {
     anchorY: IPCLoader.recordingY
     anchorWidth: IPCLoader.recordingWidth
     anchorHeight: IPCLoader.recordingHeight
+    targetScreen: IPCLoader.recordingScreen
+    anchorItem: IPCLoader.recordingAnchorItem
     cardWidth: 320
     onDismissed: IPCLoader.isRecordingOpen = false
 

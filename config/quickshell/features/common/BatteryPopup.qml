@@ -16,6 +16,8 @@ AnchoredPopup {
     anchorY: IPCLoader.batteryY
     anchorWidth: IPCLoader.batteryWidth
     anchorHeight: IPCLoader.batteryHeight
+    targetScreen: IPCLoader.batteryScreen
+    anchorItem: IPCLoader.batteryAnchorItem
     cardWidth: 320
     onDismissed: IPCLoader.isBatteryOpen = false
 
